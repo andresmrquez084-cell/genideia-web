@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Nosotros — GENIDEIA IA">
+
+  <!-- ── HERO NOSOTROS ─────────────────────────────────────── -->
+  <section class="max-w-5xl mx-auto px-6 pt-28 pb-16 text-center" style="position:relative; overflow:hidden;">
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:min(600px,100%); height:360px; background:radial-gradient(ellipse at center, rgba(74,184,255,0.09) 0%, transparent 68%); pointer-events:none; z-index:0;" aria-hidden="true"></div>
+    <div style="position:relative; z-index:1;">
+      <p
+        class="hero-animate text-xs font-medium mb-7 uppercase"
+        data-delay="1"
+        style="color:#4ab8ff; letter-spacing:3px;"
+      >
+        Quiénes somos
+      </p>
+      <h1
+        class="hero-animate mb-7"
+        data-delay="2"
+        style="font-family:'Cormorant Garamond',serif; font-weight:700; line-height:1.05; letter-spacing:-1px; font-size:clamp(2.5rem, 6vw, 4.5rem);"
+      >
+        Una historia personal.<br />
+        <span style="color:#a0a0a0; font-weight:300; font-style:italic;">Una alianza estratégica.</span>
+      </h1>
+      <p
+        class="hero-animate mx-auto leading-relaxed max-w-xl text-lg"
+        data-delay="3"
+        style="color:#a0a0a0; font-weight:300;"
+      >
+        GENIDEIA IA nació de la convicción de que la tecnología bien aplicada
+        puede cambiar la forma en que los negocios en América Latina operan y crecen.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── HISTORIA DE ANDRÉS ────────────────────────────────── -->
+  <section style="border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
+    <div class="max-w-3xl mx-auto px-6">
+
+      <div class="mb-16" data-reveal>
+        <span style="color:#4ab8ff; font-size:0.65rem; letter-spacing:2.5px; font-weight:500;" class="uppercase mb-6 block">
+          Andrés Albornoz
+        </span>
+        <h2
+          style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.8rem, 4vw, 3rem);"
+          class="mb-8"
+        >
+          Del problema propio a la solución para otros
+        </h2>
+
+        <div class="space-y-5" style="color:#a0a0a0; font-weight:300; line-height:1.85; font-size:1rem;">
+          <p data-reveal data-delay="1">
+            Empecé a explorar la automatización e inteligencia artificial no como tendencia,
+            sino como respuesta a una frustración real: procesos manuales, tiempo perdido,
+            negocios que dejaban dinero sobre la mesa por falta de sistemas.
+          </p>
+          <p data-reveal data-delay="2">
+            Lo que empezó como curiosidad se convirtió en oficio. Aprendí a construir
+            bots de WhatsApp, workflows de n8n, sistemas de contenido automatizado.
+            Y lo más importante: aprendí a entender el problema antes de proponer la solución.
+          </p>
+          <p data-reveal data-delay="3">
+            Hoy trabajo desde Montevideo con negocios de Uruguay y la región, ayudándolos
+            a crecer sin tener que estar presentes las 24 horas. Marketing que genera demanda,
+            automatizaciones que operan solas, herramientas a medida.
+          </p>
+        </div>
+      </div>
+
+      <!-- Divisor -->
+      <div style="border-top:1px solid rgba(255,255,255,0.07);" class="my-16"></div>
+
+      <!-- GENIDEIA IA -->
+      <div data-reveal>
+        <span style="color:#4ab8ff; font-size:0.65rem; letter-spacing:2.5px; font-weight:500;" class="uppercase mb-6 block">
+          GENIDEIA IA
+        </span>
+        <h2
+          style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.8rem, 4vw, 3rem);"
+          class="mb-8"
+        >
+          La alianza que escala la visión
+        </h2>
+
+        <div class="space-y-5" style="color:#a0a0a0; font-weight:300; line-height:1.85; font-size:1rem;">
+          <p data-reveal data-delay="1">
+            GENIDEIA IA es la estructura que permite hacer esto a mayor escala.
+            Una alianza entre dos socios con enfoque complementario: visión estratégica
+            y ejecución técnica trabajando en paralelo.
+          </p>
+          <p data-reveal data-delay="2">
+            No somos una agencia tradicional. No vendemos paquetes cerrados ni soluciones
+            de estantería. Cada proyecto empieza con una pregunta: ¿cuál es el problema real?
+          </p>
+          <p data-reveal data-delay="3">
+            Operamos en la intersección de marketing digital, automatización e inteligencia artificial,
+            con foco en PyMEs latinoamericanas que quieren crecer de forma inteligente —
+            sin depender de más horas de trabajo manual.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── VALORES / FORMA DE TRABAJAR ──────────────────────── -->
+  <section
+    style="background:#0d0d0d; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);"
+    class="py-24"
+  >
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16" data-reveal>
+        <h2
+          style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
+          class="mb-4"
+        >
+          Cómo trabajamos
+        </h2>
+        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-lg mx-auto">
+          Tres principios que guían cada proyecto.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-10">
+        {[
+          {
+            num: '01',
+            titulo: 'Problema primero',
+            desc: 'Antes de proponer cualquier solución, entendemos qué está pasando realmente en el negocio. Las herramientas vienen después.',
+          },
+          {
+            num: '02',
+            titulo: 'Sin sobre-ingeniería',
+            desc: 'Si se resuelve con algo simple, usamos algo simple. La complejidad tiene que justificarse con resultados, no con tecnología por la tecnología.',
+          },
+          {
+            num: '03',
+            titulo: 'Presencia posterior',
+            desc: 'No entregamos y desaparecemos. Medimos, ajustamos y seguimos. El éxito del cliente es el único indicador que nos importa.',
+          },
+        ].map((v, i) => (
+          <div data-reveal data-delay={String(i + 1)}>
+            <p
+              style="font-family:'Cormorant Garamond',serif; font-weight:700; color:#4ab8ff; line-height:1;"
+              class="text-7xl mb-5"
+            >
+              {v.num}
+            </p>
+            <h3 style="color:#e8e8e8; font-weight:500;" class="text-lg mb-3">
+              {v.titulo}
+            </h3>
+            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed">
+              {v.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ───────────────────────────────────────────────── -->
+  <section class="max-w-3xl mx-auto px-6 py-28 text-center" data-reveal>
+    <h2
+      style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
+      class="mb-5"
+    >
+      ¿Tiene sentido trabajar juntos?
+    </h2>
+    <p style="color:#a0a0a0; font-weight:300;" class="text-lg mb-10 leading-relaxed">
+      Contame dónde estás y vemos si somos la opción correcta para tu momento.
+    </p>
+    <a
+      href="https://wa.me/59892302941"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="background:#4ab8ff; color:#0a0a0a; font-weight:600;"
+      class="px-10 py-4 rounded-lg hover:opacity-90 transition-opacity inline-block text-base"
+    >
+      Hablar por WhatsApp
+    </a>
+    <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-sm mt-5">
+      Sin compromiso · Respondemos en menos de 24 horas
+    </p>
+  </section>
+
+</BaseLayout>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+</script>

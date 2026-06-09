@@ -1,0 +1,547 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const servicios = [
+  {
+    tag: 'Servicio I',
+    nombre: 'Marketing Digital',
+    desc: 'Posicionamiento, contenido y estructura para que los clientes te encuentren y te elijan antes de que vos les hables.',
+    items: [
+      'Estrategia y calendario de contenido',
+      'Optimización de perfil y presencia web',
+      'Estructura de comunicación orientada a conversión',
+    ],
+    para: 'Para negocios que quieren construir demanda real antes de escalar.',
+  },
+  {
+    tag: 'Servicio II',
+    nombre: 'Automatización',
+    desc: 'Bots, workflows y sistemas IA para que tu negocio atienda, agende y opere — sin que vos estés presente.',
+    items: [
+      'Bot de WhatsApp a medida',
+      'Workflows y automatizaciones con n8n',
+      'Integración con las herramientas que ya usás',
+    ],
+    para: 'Para negocios con demanda que quieren crecer sin contratar más gente.',
+  },
+];
+
+const herramientas = [
+  {
+    nombre: 'Bot de WhatsApp para negocios',
+    desc: 'Atiende consultas, agenda turnos y confirma reservas en automático — las 24 horas, sin intervención humana.',
+    videoId: 'JLFq5mAblxc',
+  },
+  {
+    nombre: 'Sistema de contenido para inmobiliarias',
+    desc: 'Genera y publica contenido de propiedades de forma automatizada. Presencia constante con mínimo esfuerzo manual.',
+    videoId: 'jPMODHsfLlA',
+  },
+];
+
+const clientes = [
+  {
+    nombre: 'Sara Centro Estético',
+    rubro: 'Estética y bienestar',
+    ubicacion: 'Montevideo, Uruguay',
+    trabajo: ['Web a medida', 'Marketing digital'],
+  },
+  {
+    nombre: 'Hecho con el Alma',
+    rubro: 'Curaduría de arte',
+    ubicacion: 'Uruguay',
+    trabajo: ['Plataforma web', 'Sistema de contenido'],
+  },
+];
+
+const pasos = [
+  {
+    num: '01',
+    titulo: 'Diagnóstico',
+    desc: 'Analizamos tu negocio y definimos qué hace falta: marketing, automatización o los dos.',
+  },
+  {
+    num: '02',
+    titulo: 'Construcción',
+    desc: 'Diseñamos y ejecutamos. Web, contenido, bot, workflow — según lo que resuelve tu caso.',
+  },
+  {
+    num: '03',
+    titulo: 'Seguimiento',
+    desc: 'Medimos resultados y ajustamos. No entregamos y desaparecemos.',
+  },
+];
+---
+
+<BaseLayout title="GENIDEIA IA — Marketing y Automatización para PyMEs">
+
+  <!-- ── HERO ───────────────────────────────────────────────── -->
+  <section class="max-w-5xl mx-auto px-6 pt-28 pb-20 text-center" style="position:relative; overflow:hidden;">
+    <!-- Glow radial azul -->
+    <div style="position:absolute; top:45%; left:50%; transform:translate(-50%,-50%); width:min(720px,100%); height:420px; background:radial-gradient(ellipse at center, rgba(74,184,255,0.11) 0%, transparent 68%); pointer-events:none; z-index:0;" aria-hidden="true"></div>
+    <div style="position:relative; z-index:1;">
+    <p
+      class="hero-animate text-xs font-medium mb-7 uppercase"
+      data-delay="1"
+      style="color:#4ab8ff; letter-spacing:3px;"
+    >
+      Marketing · Automatización · IA · Herramientas a medida
+    </p>
+    <h1
+      class="hero-animate mb-7"
+      data-delay="2"
+      style="font-family:'Cormorant Garamond',serif; font-weight:700; line-height:1.0; letter-spacing:-1.5px; font-size:clamp(3rem, 7.5vw, 5.5rem);"
+    >
+      Describí el problema.<br />
+      <span style="color:#a0a0a0; font-weight:300; font-style:italic;">Construimos la solución.</span>
+    </h1>
+    <p
+      class="hero-animate mx-auto mb-10 leading-relaxed max-w-xl text-lg"
+      data-delay="3"
+      style="color:#a0a0a0; font-weight:300;"
+    >
+      Marketing, automatización e IA a la medida de lo que tu negocio
+      necesita. Sin soluciones predefinidas.
+    </p>
+    <div class="hero-animate flex flex-col sm:flex-row gap-4 justify-center mb-10" data-delay="4">
+      <a
+        href="https://wa.me/59892302941"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="background:#4ab8ff; color:#0a0a0a; font-weight:600;"
+        class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity"
+      >
+        Hablemos por WhatsApp
+      </a>
+      <a
+        href="#diagnostico"
+        style="border:1px solid rgba(255,255,255,0.12); color:#a0a0a0;"
+        class="px-8 py-3.5 rounded-lg hover:border-[#4ab8ff] hover:text-[#4ab8ff] transition-colors"
+      >
+        Diagnóstico gratis →
+      </a>
+    </div>
+    <p class="hero-animate text-sm" data-delay="5" style="color:rgba(160,160,160,0.4); font-weight:300; letter-spacing:0.5px;">
+      2 clientes activos · Basados en Montevideo, Uruguay
+    </p>
+    </div><!-- /z-index:1 -->
+  </section>
+
+  <!-- ── SERVICIOS ─────────────────────────────────────────── -->
+  <section
+    id="servicios"
+    style="border-top:1px solid rgba(255,255,255,0.07);"
+    class="py-24"
+  >
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16" data-reveal>
+        <h2
+          style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
+          class="mb-4"
+        >
+          Dos servicios. Un sistema.
+        </h2>
+        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-lg mx-auto">
+          Podés entrar por cualquiera según tu momento. Si no sabés cuál es tu caso,
+          te ayudamos a identificarlo.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-6">
+        {servicios.map((s, i) => (
+          <div
+            class="card-hover rounded-xl p-8 flex flex-col"
+            style="background:#111111; border:1px solid rgba(255,255,255,0.07);"
+            data-reveal
+            data-delay={String(i + 1)}
+          >
+            <span
+              style="color:#4ab8ff; font-size:0.65rem; letter-spacing:2.5px; font-weight:500;"
+              class="uppercase mb-5 block"
+            >
+              {s.tag}
+            </span>
+            <h3
+              style="font-family:'Cormorant Garamond',serif; font-weight:700; color:#e8e8e8; font-size:clamp(1.5rem, 3vw, 2rem);"
+              class="mb-3"
+            >
+              {s.nombre}
+            </h3>
+            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed mb-7">
+              {s.desc}
+            </p>
+            <ul class="space-y-3 mb-7 flex-1">
+              {s.items.map(item => (
+                <li style="color:#a0a0a0; font-weight:300;" class="text-sm flex items-start gap-3">
+                  <span style="color:#4ab8ff; flex-shrink:0; margin-top:1px;">→</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p
+              style="color:rgba(160,160,160,0.45); border-top:1px solid rgba(255,255,255,0.07); font-weight:300;"
+              class="text-xs pt-5 mb-5 leading-relaxed"
+            >
+              {s.para}
+            </p>
+            <a
+              href="https://wa.me/59892302941"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="color:#4ab8ff; font-weight:400;"
+              class="text-sm hover:opacity-70 transition-opacity"
+            >
+              Consultar por este servicio →
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HERRAMIENTAS ──────────────────────────────────────── -->
+  <section
+    id="herramientas"
+    style="background:#0d0d0d; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);"
+    class="py-24"
+  >
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16" data-reveal>
+        <h2
+          style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
+          class="mb-4"
+        >
+          Herramientas
+        </h2>
+        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-lg mx-auto">
+          Productos desarrollados que podés contratar de forma independiente
+          — o como parte de un proceso mayor.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-6">
+        {herramientas.map((h, i) => (
+          <div
+            class="card-hover rounded-xl p-8 flex flex-col"
+            style="background:#111111; border:1px solid rgba(255,255,255,0.07);"
+            data-reveal
+            data-delay={String(i + 1)}
+          >
+            <div class="flex items-center gap-3 mb-5">
+              <span
+                style="color:#4ab8ff; background:rgba(74,184,255,0.08); border:1px solid rgba(74,184,255,0.2); font-size:0.65rem; letter-spacing:2px;"
+                class="uppercase px-2.5 py-1 rounded font-medium"
+              >
+                Producto independiente
+              </span>
+              <span
+                style="color:rgba(160,160,160,0.35); font-size:0.65rem; letter-spacing:1.5px;"
+                class="uppercase"
+              >
+                Demo disponible
+              </span>
+            </div>
+            <h3 style="color:#e8e8e8; font-weight:500;" class="text-lg mb-3 flex-1">
+              {h.nombre}
+            </h3>
+            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed mb-7">
+              {h.desc}
+            </p>
+            {h.videoId && (
+              <div style="border-radius:0.5rem; overflow:hidden; margin-bottom:1.75rem;" class="aspect-video">
+                <iframe
+                  src={`https://www.youtube.com/embed/${h.videoId}`}
+                  title={`Demo — ${h.nombre}`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                  style="width:100%; height:100%; border:none;"
+                ></iframe>
+              </div>
+            )}
+            <a
+              href="https://wa.me/59892302941"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="color:#4ab8ff; font-weight:400;"
+              class="text-sm hover:opacity-70 transition-opacity"
+            >
+              {h.videoId ? 'Implementar esta herramienta →' : 'Pedir demo →'}
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CLIENTES ──────────────────────────────────────────── -->
+  <section id="clientes" class="py-24">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16" data-reveal>
+        <h2
+          style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
+          class="mb-4"
+        >
+          Clientes
+        </h2>
+        <p style="color:#a0a0a0; font-weight:300;" class="text-lg">
+          Con quiénes estamos trabajando ahora.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-6">
+        {clientes.map((c, i) => (
+          <div
+            class="card-hover rounded-xl p-8"
+            style="background:#111111; border:1px solid rgba(255,255,255,0.07);"
+            data-reveal
+            data-delay={String(i + 1)}
+          >
+            <p
+              style="color:#4ab8ff; font-size:0.65rem; letter-spacing:2.5px; font-weight:500;"
+              class="uppercase mb-4"
+            >
+              {c.rubro} · {c.ubicacion}
+            </p>
+            <h3 style="color:#e8e8e8; font-weight:500;" class="text-xl mb-5">
+              {c.nombre}
+            </h3>
+            <div class="flex flex-wrap gap-2 mb-6">
+              {c.trabajo.map(t => (
+                <span
+                  style="color:#a0a0a0; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);"
+                  class="text-xs px-3 py-1 rounded-full font-light"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+            <p
+              style="color:rgba(160,160,160,0.35); border-top:1px solid rgba(255,255,255,0.07); font-weight:300;"
+              class="text-xs pt-4"
+            >
+              Sitio en desarrollo · Casos de uso próximamente
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CÓMO FUNCIONA ─────────────────────────────────────── -->
+  <section
+    style="background:#0d0d0d; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);"
+    class="py-24"
+  >
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16" data-reveal>
+        <h2
+          style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
+          class="mb-4"
+        >
+          ¿Cómo funciona?
+        </h2>
+        <p style="color:#a0a0a0; font-weight:300;" class="text-lg">
+          El proceso aplica a los dos servicios.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-10">
+        {pasos.map((p, i) => (
+          <div data-reveal data-delay={String(i + 1)}>
+            <p
+              style="font-family:'Cormorant Garamond',serif; font-weight:700; color:#4ab8ff; line-height:1;"
+              class="text-7xl mb-5"
+            >
+              {p.num}
+            </p>
+            <h3 style="color:#e8e8e8; font-weight:500;" class="text-lg mb-3">
+              {p.titulo}
+            </h3>
+            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed">
+              {p.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DIAGNÓSTICO ──────────────────────────────────────── -->
+  <section
+    id="diagnostico"
+    style="border-top:1px solid rgba(255,255,255,0.07);"
+    class="py-24"
+  >
+    <div class="max-w-2xl mx-auto px-6">
+      <div class="text-center mb-12" data-reveal>
+        <h2
+          style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
+          class="mb-4"
+        >
+          ¿Cuál es el desafío de tu negocio?
+        </h2>
+        <p style="color:#a0a0a0; font-weight:300;" class="text-lg leading-relaxed">
+          Describilo en tus palabras. En base a eso te presentamos cómo podemos ayudarte
+          — y si no existe la solución, la construimos.
+        </p>
+      </div>
+
+      <form
+        id="diagnostico-form"
+        name="diagnostico"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        class="space-y-5"
+        data-reveal
+      >
+        <input type="hidden" name="form-name" value="diagnostico" />
+        <p class="hidden"><input name="bot-field" /></p>
+
+        <!-- Área -->
+        <div>
+          <label style="color:#a0a0a0; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
+            Área del problema
+          </label>
+          <select name="area" required class="form-input">
+            <option value="">Seleccioná una categoría</option>
+            <option>Ventas y captación de clientes</option>
+            <option>Atención al cliente</option>
+            <option>Operaciones y procesos internos</option>
+            <option>Contenido y marketing digital</option>
+            <option>Administración y organización</option>
+            <option>Otro / No sé cómo clasificarlo</option>
+          </select>
+        </div>
+
+        <!-- Problema -->
+        <div>
+          <label style="color:#a0a0a0; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
+            Describí el problema
+          </label>
+          <textarea
+            name="problema"
+            rows="5"
+            required
+            placeholder="¿Qué está pasando en tu negocio? ¿Qué te gustaría resolver o mejorar?"
+            class="form-input resize-none"
+          ></textarea>
+        </div>
+
+        <!-- Nombre -->
+        <div>
+          <label style="color:#a0a0a0; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
+            Tu nombre <span style="color:rgba(160,160,160,0.4);">(opcional)</span>
+          </label>
+          <input
+            name="nombre"
+            type="text"
+            placeholder="Para personalizar la respuesta"
+            class="form-input"
+          />
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          style="background:#4ab8ff; color:#0a0a0a; font-weight:600; width:100%;"
+          class="py-3.5 rounded-lg hover:opacity-90 transition-opacity text-base"
+        >
+          Analizar mi caso →
+        </button>
+        <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-xs text-center">
+          Se abre WhatsApp con tu mensaje ya armado · Respondemos en menos de 24 horas
+        </p>
+      </form>
+
+      <!-- Success state -->
+      <div id="diagnostico-success" class="hidden text-center py-8" data-reveal>
+        <p style="color:#4ab8ff; font-size:1.5rem; margin-bottom:1rem;">✓</p>
+        <p style="color:#e8e8e8; font-weight:500;" class="text-lg mb-2">¡Perfecto!</p>
+        <p style="color:#a0a0a0; font-weight:300;">
+          Se abrió WhatsApp con tu mensaje. En menos de 24 horas te respondemos con una propuesta.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA FINAL ─────────────────────────────────────────── -->
+  <section id="contactar" class="max-w-3xl mx-auto px-6 py-28 text-center" data-reveal>
+    <h2
+      style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
+      class="mb-5"
+    >
+      ¿Dónde está tu negocio hoy?
+    </h2>
+    <p style="color:#a0a0a0; font-weight:300;" class="text-lg mb-10 leading-relaxed">
+      Contame en qué punto estás y vemos juntos cuál es el siguiente paso.
+    </p>
+    <a
+      href="https://wa.me/59892302941"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="background:#4ab8ff; color:#0a0a0a; font-weight:600;"
+      class="px-10 py-4 rounded-lg hover:opacity-90 transition-opacity inline-block text-base"
+    >
+      Hablar por WhatsApp
+    </a>
+    <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-sm mt-5">
+      Sin compromiso · Respondemos en menos de 24 horas
+    </p>
+  </section>
+
+</BaseLayout>
+
+<script>
+  // ── Scroll reveal ──────────────────────────────────────────
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+
+  // ── Diagnóstico form ───────────────────────────────────────
+  const form = document.getElementById('diagnostico-form') as HTMLFormElement | null;
+  const successDiv = document.getElementById('diagnostico-success');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const data = new FormData(form);
+    const area     = (data.get('area')     as string) || '';
+    const problema = (data.get('problema') as string) || '';
+    const nombre   = (data.get('nombre')   as string) || '';
+
+    // Construir mensaje de WhatsApp
+    const nombreTexto = nombre ? `Hola, soy ${nombre}.` : 'Hola,';
+    const areaTexto   = area   ? `\n\n*Área:* ${area}` : '';
+    const msg = `${nombreTexto} me gustaría un diagnóstico para mi negocio.${areaTexto}\n\n*Problema:*\n${problema}`;
+    const waUrl = `https://wa.me/59892302941?text=${encodeURIComponent(msg)}`;
+    window.open(waUrl, '_blank');
+
+    // Enviar a Netlify Forms en segundo plano
+    try {
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+      });
+    } catch (_) {
+      // Si falla el envío a Netlify no interrumpimos el flujo
+    }
+
+    // Mostrar éxito
+    form.classList.add('hidden');
+    if (successDiv) {
+      successDiv.classList.remove('hidden');
+      successDiv.classList.add('is-visible');
+    }
+  });
+</script>
