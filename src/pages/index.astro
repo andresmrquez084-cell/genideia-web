@@ -41,16 +41,53 @@ const herramientas = [
 
 const clientes = [
   {
-    nombre: 'Sara Centro Estético',
-    rubro: 'Estética y bienestar',
-    ubicacion: 'Montevideo, Uruguay',
-    trabajo: ['Web a medida', 'Marketing digital'],
-  },
-  {
     nombre: 'Hecho con el Alma',
     rubro: 'Curaduría de arte',
     ubicacion: 'Uruguay',
     trabajo: ['Plataforma web', 'Sistema de contenido'],
+    url: 'https://hechoconelalma.shop',
+  },
+  {
+    nombre: "Donher's",
+    rubro: 'Relojes y accesorios',
+    ubicacion: 'Uruguay',
+    trabajo: ['E-commerce', 'MercadoPago'],
+    url: 'https://donhers-web.vercel.app',
+  },
+  {
+    nombre: 'TBO Express',
+    rubro: 'Cadetería y delivery',
+    ubicacion: 'Tacuarembó, Uruguay',
+    trabajo: ['Web a medida', 'Captación'],
+    url: 'https://cadete-web.vercel.app',
+  },
+  {
+    nombre: 'LOPA',
+    rubro: 'Tienda online',
+    ubicacion: 'Uruguay',
+    trabajo: ['E-commerce', 'Branding'],
+    url: 'https://lopa-store.vercel.app',
+  },
+  {
+    nombre: 'Sara Centro Estético',
+    rubro: 'Estética y bienestar',
+    ubicacion: 'Montevideo, Uruguay',
+    trabajo: ['Web a medida', 'Marketing digital'],
+    url: 'https://centroesteticosara.netlify.app',
+  },
+  {
+    nombre: 'Lorena Da Silva',
+    rubro: 'Inmobiliaria · Imperium',
+    ubicacion: 'Montevideo, Uruguay',
+    trabajo: ['Marca personal', 'Landing'],
+    url: 'https://landing-tau-ruddy.vercel.app',
+  },
+  {
+    nombre: 'Allison Hernández',
+    rubro: 'Inmobiliaria · Imperium',
+    ubicacion: 'Montevideo, Uruguay',
+    trabajo: ['Marca personal', 'Landing'],
+    url: 'https://allison-imperium.vercel.app',
   },
 ];
 
@@ -122,7 +159,7 @@ const pasos = [
       </a>
     </div>
     <p class="hero-animate text-sm" data-delay="5" style="color:rgba(160,160,160,0.4); font-weight:300; letter-spacing:0.5px;">
-      2 clientes activos · Basados en Montevideo, Uruguay
+      7 proyectos en producción · Montevideo, Uruguay
     </p>
     </div><!-- /z-index:1 -->
   </section>
@@ -284,17 +321,20 @@ const pasos = [
           Clientes
         </h2>
         <p style="color:#a0a0a0; font-weight:300;" class="text-lg">
-          Con quiénes estamos trabajando ahora.
+          Negocios reales, ya en producción. Entrá a cada uno.
         </p>
       </div>
 
-      <div class="grid sm:grid-cols-2 gap-6">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {clientes.map((c, i) => (
-          <div
-            class="card-hover rounded-xl p-8"
+          <a
+            href={c.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card-hover rounded-xl p-8 block"
             style="background:#111111; border:1px solid rgba(255,255,255,0.07);"
             data-reveal
-            data-delay={String(i + 1)}
+            data-delay={String((i % 3) + 1)}
           >
             <p
               style="color:#4ab8ff; font-size:0.65rem; letter-spacing:2.5px; font-weight:500;"
@@ -316,12 +356,12 @@ const pasos = [
               ))}
             </div>
             <p
-              style="color:rgba(160,160,160,0.35); border-top:1px solid rgba(255,255,255,0.07); font-weight:300;"
+              style="color:#4ab8ff; border-top:1px solid rgba(255,255,255,0.07); font-weight:400;"
               class="text-xs pt-4"
             >
-              Sitio en desarrollo · Casos de uso próximamente
+              Ver sitio →
             </p>
-          </div>
+          </a>
         ))}
       </div>
     </div>
