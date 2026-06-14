@@ -91,21 +91,44 @@ const clientes = [
   },
 ];
 
-const pasos = [
+// Las fases del socio de crecimiento (metodologia/07-fases-cliente).
+// Versión pública: el camino + que cada fase se desbloquea con evidencia. Sin pricing ni datos internos.
+const fases = [
+  {
+    num: '00',
+    nombre: 'Diagnóstico y estrategia',
+    desc: 'Entendemos tu negocio, tu cliente y contra quién competís de verdad. Salís con un norte claro: tu dolor real y el mensaje que te diferencia.',
+    puerta: 'Avanzás cuando tenés tu posicionamiento definido y te ves reflejado.',
+  },
   {
     num: '01',
-    titulo: 'Diagnóstico',
-    desc: 'Analizamos tu negocio y definimos qué hace falta: marketing, automatización o los dos.',
+    nombre: 'Fundación',
+    desc: 'Tu presencia profesional, lista para recibir clientes: web, marca, perfiles y canales — y tu punto de partida medido.',
+    puerta: 'Avanzás cuando estás LIVE y con tu baseline documentado.',
   },
   {
     num: '02',
-    titulo: 'Construcción',
-    desc: 'Diseñamos y ejecutamos. Web, contenido, bot, workflow — según lo que resuelve tu caso.',
+    nombre: 'Tracción',
+    desc: 'Generamos flujo: contenido que atrae a tu cliente ideal, lo conversa y lo convierte en venta.',
+    puerta: 'Avanzás cuando hay demanda comprobada: leads y ventas que demuestran que el sistema funciona.',
   },
   {
     num: '03',
-    titulo: 'Seguimiento',
-    desc: 'Medimos resultados y ajustamos. No entregamos y desaparecemos.',
+    nombre: 'Consolidación',
+    desc: 'Con demanda probada, elevamos el ticket y afinamos la conversión. Empezás a capturar el valor que creaste.',
+    puerta: 'Avanzás cuando facturás notoriamente más que en tu punto de partida.',
+  },
+  {
+    num: '04',
+    nombre: 'Automatización',
+    desc: 'Cuando ya hay volumen, la IA atiende y vende sola. Bots, flujos y reportes que te devuelven el tiempo.',
+    puerta: 'Avanzás cuando lo que antes era manual corre solo.',
+  },
+  {
+    num: '05',
+    nombre: 'Expansión',
+    desc: 'Nuevos frentes sobre un negocio que ya es una máquina: más líneas, más zonas, más productos.',
+    puerta: 'Cada frente nuevo arranca apalancado en todo lo construido.',
   },
 ];
 
@@ -397,42 +420,62 @@ const chips = [
     </div>
   </section>
 
-  <!-- ── CÓMO FUNCIONA ─────────────────────────────────────── -->
+  <!-- ── FASES · SOCIO DE CRECIMIENTO ──────────────────────── -->
   <section
+    id="fases"
     style="background:#0d0d0d; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);"
     class="py-24"
   >
-    <div class="max-w-5xl mx-auto px-6">
+    <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16" data-reveal>
+        <p style="color:#4ab8ff; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Socio de crecimiento</p>
         <h2
           style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
           class="mb-4"
         >
-          ¿Cómo funciona?
+          Te acompañamos fase por fase
         </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg">
-          El proceso aplica a los dos servicios.
+        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-2xl mx-auto leading-relaxed">
+          No te vendemos todo de una. Cada fase se desbloquea cuando los números muestran
+          que estás listo para la próxima. Solo avanzás si funciona.
         </p>
       </div>
 
-      <div class="grid sm:grid-cols-3 gap-10">
-        {pasos.map((p, i) => (
-          <div data-reveal data-delay={String(i + 1)}>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {fases.map((f, i) => (
+          <div
+            class="card-hover rounded-xl p-7 flex flex-col"
+            style="background:#111111; border:1px solid rgba(255,255,255,0.07);"
+            data-reveal
+            data-delay={String((i % 3) + 1)}
+          >
             <p
               style="font-family:'Cormorant Garamond',serif; font-weight:700; color:#4ab8ff; line-height:1;"
-              class="text-7xl mb-5"
+              class="text-5xl mb-4"
             >
-              {p.num}
+              {f.num}
             </p>
-            <h3 style="color:#e8e8e8; font-weight:500;" class="text-lg mb-3">
-              {p.titulo}
+            <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; color:#e8e8e8; font-size:1.5rem;" class="mb-3">
+              {f.nombre}
             </h3>
-            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed">
-              {p.desc}
+            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed mb-5 flex-1">
+              {f.desc}
+            </p>
+            <p
+              style="color:rgba(160,160,160,0.7); border-top:1px solid rgba(255,255,255,0.07); font-weight:300;"
+              class="text-xs pt-4 leading-relaxed"
+            >
+              <span style="color:#4ab8ff; font-weight:500;">→ </span>{f.puerta}
             </p>
           </div>
         ))}
       </div>
+
+      <p class="text-center mt-12" data-reveal>
+        <a href="#diagnostico" style="color:#4ab8ff; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
+          ¿En qué fase está tu negocio? Empecemos por el diagnóstico →
+        </a>
+      </p>
     </div>
   </section>
 
