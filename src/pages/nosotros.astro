@@ -1,5 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Los responsables detrás de la EMPRESA (esta es la web de la marca, no un perfil personal;
+// cada socio tendrá su landing personal aparte que enlaza acá).
+// Para sumar la foto: dejarla en /public/img/ y completar `foto`. Andrés indica nombre/rol del socio.
+const responsables = [
+  {
+    nombre: 'Andrés Albornoz',
+    rol: 'Co-fundador',
+    linea: 'Estrategia, ejecución y la cara frente a cada cliente.',
+    foto: '', // ej: '/img/responsable-andres.jpg'
+  },
+  {
+    nombre: '[ Nombre del socio ]',
+    rol: 'Co-fundador',
+    linea: 'Respaldo técnico y operativo del sistema.',
+    foto: '',
+  },
+];
 ---
 
 <BaseLayout title="Nosotros — GENIDEIA IA">
@@ -20,8 +38,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         data-delay="2"
         style="font-family:'Cormorant Garamond',serif; font-weight:700; line-height:1.05; letter-spacing:-1px; font-size:clamp(2.5rem, 6vw, 4.5rem);"
       >
-        Una historia personal.<br />
-        <span style="color:#a0a0a0; font-weight:300; font-style:italic;">Una alianza estratégica.</span>
+        Una empresa con responsables.<br />
+        <span style="color:#a0a0a0; font-weight:300; font-style:italic;">Con nombre, apellido y cara.</span>
       </h1>
       <p
         class="hero-animate mx-auto leading-relaxed max-w-xl text-lg"
@@ -34,37 +52,49 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- ── HISTORIA DE ANDRÉS ────────────────────────────────── -->
+  <!-- ── RESPONSABLES + EMPRESA ────────────────────────────── -->
   <section style="border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
     <div class="max-w-3xl mx-auto px-6">
 
+      <!-- Los responsables detrás de la empresa (2 encuadres para fotos) -->
       <div class="mb-16" data-reveal>
         <span style="color:#4ab8ff; font-size:0.65rem; letter-spacing:2.5px; font-weight:500;" class="uppercase mb-6 block">
-          Andrés Albornoz
+          Quiénes están al frente
         </span>
         <h2
           style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.8rem, 4vw, 3rem);"
-          class="mb-8"
+          class="mb-4"
         >
-          Del problema propio a la solución para otros
+          Los responsables detrás de esto
         </h2>
+        <p style="color:#a0a0a0; font-weight:300;" class="text-lg mb-10 leading-relaxed">
+          Dos socios, un mismo compromiso: que tu negocio crezca — y que sepas quién está atrás.
+        </p>
 
-        <div class="space-y-5" style="color:#a0a0a0; font-weight:300; line-height:1.85; font-size:1rem;">
-          <p data-reveal data-delay="1">
-            Empecé a explorar la automatización e inteligencia artificial no como tendencia,
-            sino como respuesta a una frustración real: procesos manuales, tiempo perdido,
-            negocios que dejaban dinero sobre la mesa por falta de sistemas.
-          </p>
-          <p data-reveal data-delay="2">
-            Lo que empezó como curiosidad se convirtió en oficio. Aprendí a construir
-            bots de WhatsApp, workflows de n8n, sistemas de contenido automatizado.
-            Y lo más importante: aprendí a entender el problema antes de proponer la solución.
-          </p>
-          <p data-reveal data-delay="3">
-            Hoy trabajo desde Montevideo con negocios de Uruguay y la región, ayudándolos
-            a crecer sin tener que estar presentes las 24 horas. Marketing que genera demanda,
-            automatizaciones que operan solas, herramientas a medida.
-          </p>
+        <div class="grid sm:grid-cols-2 gap-6">
+          {responsables.map((r) => (
+            <div class="rounded-xl overflow-hidden" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal>
+              <!-- Encuadre de foto -->
+              <div style="aspect-ratio:4/5; background:linear-gradient(180deg, rgba(74,184,255,0.10), rgba(255,255,255,0.02)); border-bottom:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; justify-content:center;">
+                {r.foto ? (
+                  <img src={r.foto} alt={r.nombre} style="width:100%; height:100%; object-fit:cover;" />
+                ) : (
+                  <div class="text-center" style="color:rgba(74,184,255,0.5);">
+                    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" style="margin:0 auto;">
+                      <circle cx="12" cy="8" r="4" />
+                      <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" />
+                    </svg>
+                    <p style="font-size:0.58rem; letter-spacing:2px;" class="uppercase mt-2">Foto</p>
+                  </div>
+                )}
+              </div>
+              <div class="p-5 text-center">
+                <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; color:#e8e8e8; font-size:1.4rem;">{r.nombre}</h3>
+                <p style="color:#4ab8ff; font-size:0.62rem; letter-spacing:2px;" class="uppercase mt-1">{r.rol}</p>
+                <p style="color:#a0a0a0; font-weight:300;" class="text-sm mt-3 leading-relaxed">{r.linea}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
