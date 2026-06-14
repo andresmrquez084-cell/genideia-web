@@ -185,8 +185,9 @@ const chips = [
       <!-- Derecha: brain-globe + chips flotantes -->
       <div class="hero-animate order-first lg:order-last" data-delay="3" style="position:relative;">
         <div class="hero-glow" style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(74,184,255,0.18) 0%, transparent 62%); z-index:0;" aria-hidden="true"></div>
-        <img class="hero-brain" src="/img/hero-brain.png" alt="Red neuronal · IA a medida" width="640" height="640" loading="eager"
-          style="position:relative; z-index:1; width:100%; max-width:480px; margin:0 auto; display:block; mix-blend-mode:screen;" />
+        <div style="position:relative; z-index:1; width:100%; max-width:480px; aspect-ratio:1; margin:0 auto;">
+          <canvas id="hero-net" style="width:100%; height:100%; display:block;" aria-hidden="true"></canvas>
+        </div>
         <div class="hidden lg:block">
           {chips.map((c) => (
             <div class="hero-chip" style={`position:absolute; z-index:2; ${c.pos} background:rgba(17,17,17,0.72); backdrop-filter:blur(8px); border:1px solid rgba(74,184,255,0.22); border-radius:10px; padding:10px 14px; max-width:200px;`}>
@@ -660,30 +661,126 @@ const chips = [
 </script>
 
 <style>
-  /* Movimiento del recurso del hero: flotación + respiración del glow + chips a la deriva */
-  @keyframes heroFloat {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50%      { transform: translateY(-12px) scale(1.015); }
-  }
+  /* El centro es la red animada en canvas. El glow respira y los chips derivan apenas. */
   @keyframes heroGlowPulse {
-    0%, 100% { opacity: 0.7; transform: scale(1); }
-    50%      { opacity: 1; transform: scale(1.07); }
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50%      { opacity: 1; transform: scale(1.08); }
   }
   @keyframes heroChipFloat {
     0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-7px); }
+    50%      { transform: translateY(-6px); }
   }
-
-  .hero-brain { animation: heroFloat 6s ease-in-out infinite; will-change: transform; }
-  .hero-glow  { animation: heroGlowPulse 5s ease-in-out infinite; }
-  .hero-chip  { animation: heroChipFloat 5s ease-in-out infinite; will-change: transform; }
+  .hero-glow { animation: heroGlowPulse 5s ease-in-out infinite; }
+  .hero-chip { animation: heroChipFloat 5s ease-in-out infinite; will-change: transform; }
   .hero-chip:nth-child(1) { animation-delay: 0s; }
   .hero-chip:nth-child(2) { animation-delay: 0.8s; }
   .hero-chip:nth-child(3) { animation-delay: 1.6s; }
   .hero-chip:nth-child(4) { animation-delay: 2.4s; }
-
-  /* Accesibilidad: si el usuario pidió menos movimiento, lo apagamos */
   @media (prefers-reduced-motion: reduce) {
-    .hero-brain, .hero-glow, .hero-chip { animation: none; }
+    .hero-glow, .hero-chip { animation: none; }
   }
 </style>
+
+<script>
+  // Red neuronal que se ARMA y DESARMA: partículas que convergen en una esfera de nodos
+  // conectados (constelación), rotan en 3D y se dispersan — en loop infinito.
+  (() => {
+    const canvas = document.getElementById('hero-net');
+    if (!(canvas instanceof HTMLCanvasElement)) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const N = window.innerWidth < 640 ? 64 : 90;
+    const golden = Math.PI * (3 - Math.sqrt(5));
+    const pts = [];
+    for (let i = 0; i < N; i++) {
+      const y = 1 - (i / (N - 1)) * 2;          // -1..1
+      const r = Math.sqrt(Math.max(0, 1 - y * y));
+      const th = golden * i;
+      pts.push({
+        x: Math.cos(th) * r, y, z: Math.sin(th) * r,       // destino: esfera
+        sx: Math.random() * 2 - 1, sy: Math.random() * 2 - 1, sz: Math.random() * 2 - 1, // disperso
+      });
+    }
+
+    let W = 0, H = 0, DPR = 1;
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      W = rect.width; H = rect.height;
+      canvas.width = Math.round(W * DPR);
+      canvas.height = Math.round(H * DPR);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Ciclo: arma → sostiene → desarma → pausa
+    const T_A = 2200, T_H = 2400, T_D = 2000, T_H2 = 700;
+    const CYCLE = T_A + T_H + T_D + T_H2;
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    function assembly(ms) {
+      const t = ms % CYCLE;
+      if (t < T_A) return ease(t / T_A);
+      if (t < T_A + T_H) return 1;
+      if (t < T_A + T_H + T_D) return 1 - ease((t - T_A - T_H) / T_D);
+      return 0;
+    }
+
+    let angle = 0;
+    const start = performance.now();
+    const SCATTER = 2.3;
+    function frame(now) {
+      const ms = now - start;
+      const a = reduced ? 1 : assembly(ms);
+      if (!reduced) angle += 0.0018;
+      const R = Math.min(W, H) * 0.34;
+      const cx = W / 2, cy = H / 2;
+      const cos = Math.cos(angle), sin = Math.sin(angle);
+      ctx.clearRect(0, 0, W, H);
+
+      const pr = [];
+      for (const p of pts) {
+        const X = p.sx * SCATTER + (p.x - p.sx * SCATTER) * a;
+        const Y = p.sy * SCATTER + (p.y - p.sy * SCATTER) * a;
+        const Z = p.sz * SCATTER + (p.z - p.sz * SCATTER) * a;
+        const rx = X * cos - Z * sin;
+        const rz = X * sin + Z * cos;
+        const depth = Math.max(0, Math.min(1, (rz + 1.5) / 3));
+        pr.push({ x: cx + rx * R, y: cy + Y * R, depth });
+      }
+
+      const D = R * 0.6;
+      ctx.lineWidth = 0.7;
+      for (let i = 0; i < N; i++) {
+        for (let j = i + 1; j < N; j++) {
+          const dx = pr[i].x - pr[j].x, dy = pr[i].y - pr[j].y;
+          const d = Math.hypot(dx, dy);
+          if (d < D) {
+            const al = (1 - d / D) * 0.5 * (0.25 + 0.75 * a);
+            ctx.strokeStyle = 'rgba(74,184,255,' + al.toFixed(3) + ')';
+            ctx.beginPath();
+            ctx.moveTo(pr[i].x, pr[i].y);
+            ctx.lineTo(pr[j].x, pr[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      ctx.shadowColor = 'rgba(74,184,255,0.9)';
+      ctx.shadowBlur = 6;
+      for (const q of pr) {
+        const rad = 1.2 + q.depth * 2.2;
+        ctx.fillStyle = 'rgba(150,210,255,' + (0.45 + q.depth * 0.5).toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.arc(q.x, q.y, rad, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.shadowBlur = 0;
+
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+</script>
