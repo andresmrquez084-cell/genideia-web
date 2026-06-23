@@ -32,6 +32,15 @@ const pasos = [
   { n: '02', t: 'Diseño e implementación', d: 'Armo el sistema a tu medida y lo dejo funcionando, integrado a lo que ya usás.' },
   { n: '03', t: 'Soporte y mejora', d: 'No te entrego y desaparezco: mido, ajusto y lo hago crecer con tu negocio.' },
 ];
+
+// Prueba real — la casilla del benchmark: anti-humo + mostrar lo ejecutado de verdad.
+// ⚠️ Guardarraíl: NO inventar casos de automatización de clientes (todavía no hay facturados).
+// Lo real = sistemas digitales construidos + automatización de la propia operación.
+const pruebas = [
+  { t: 'Webs y tiendas online en producción', d: 'Sitios y e-commerce con pagos reales por MercadoPago, atendiendo clientes hoy. No son maquetas: están en vivo.' },
+  { t: 'El sistema con el que opero mi empresa', d: 'Me construí mi propio panel para manejar GENIDEIA: clientes, finanzas y contenido en un solo lugar. Lo que te ofrezco, lo uso yo primero.' },
+  { t: 'Mi propia operación, automatizada', d: 'Reportes, seguimiento y producción de contenido que corren solos. Te muestro el detrás de escena, sin filtro.' },
+];
 ---
 
 <!DOCTYPE html>
@@ -98,11 +107,7 @@ const pasos = [
       <div class="hero-animate order-first lg:order-last" data-delay="3" style="position:relative;">
         <div class="hero-glow" style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(74,184,255,0.16) 0%, transparent 64%); z-index:0;" aria-hidden="true"></div>
         <div style="position:relative; z-index:1; width:100%; max-width:380px; aspect-ratio:4/5; margin:0 auto; border-radius:16px; overflow:hidden; border:1px solid rgba(74,184,255,0.2); background:linear-gradient(180deg, rgba(74,184,255,0.10), rgba(255,255,255,0.02)); display:flex; align-items:center; justify-content:center;">
-          <!-- Cuando esté la foto: reemplazar este div por  <img src="/img/andres.jpg" alt="Andrés Albornoz" style="width:100%; height:100%; object-fit:cover;" /> -->
-          <div class="text-center" style="color:rgba(74,184,255,0.5);">
-            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" style="margin:0 auto;"><circle cx="12" cy="8" r="4" /><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" /></svg>
-            <p style="font-size:0.6rem; letter-spacing:2px;" class="uppercase mt-2">Foto</p>
-          </div>
+          <img src="/img/andres.jpg" alt="Andrés Albornoz — automatización de empresas con IA" style="width:100%; height:100%; object-fit:cover; object-position:center 25%; display:block;" />
         </div>
       </div>
     </div>
@@ -157,6 +162,36 @@ const pasos = [
     </div>
   </section>
 
+  <!-- ── PRUEBA REAL (la casilla: sin humo, lo ya construido) ─ -->
+  <section style="border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16" data-reveal>
+        <p style="color:#4ab8ff; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Sin humo</p>
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
+          No te vendo el sueño.<br />Te muestro lo que ya construí.
+        </h2>
+        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-xl mx-auto">
+          El mundo de la IA está lleno de promesas y de cursos para "hacerte rico". Yo prefiero mostrarte sistemas funcionando de verdad.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-6">
+        {pruebas.map((p, i) => (
+          <div class="card-hover rounded-xl p-7 flex flex-col" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String((i % 3) + 1)}>
+            <div style="width:38px; height:38px; display:flex; align-items:center; justify-content:center; border-radius:8px; background:rgba(74,184,255,0.08); border:1px solid rgba(74,184,255,0.2); color:#4ab8ff;" class="mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; color:#e8e8e8; font-size:1.4rem;" class="mb-3">{p.t}</h3>
+            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed">{p.d}</p>
+          </div>
+        ))}
+      </div>
+      <!-- TODO Andrés: cuando tengas el OK de los clientes, acá pueden ir 3-4 logos o links a los proyectos en vivo (con permiso). -->
+      <p class="text-center mt-10 text-sm" style="color:rgba(160,160,160,0.5); font-weight:300;" data-reveal>
+        ¿Querés ver casos concretos? Te los muestro en la llamada — proyectos en vivo, no capturas.
+      </p>
+    </div>
+  </section>
+
   <!-- ── CÓMO TRABAJO ──────────────────────────────────────── -->
   <section style="background:#0d0d0d; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-24">
     <div class="max-w-5xl mx-auto px-6">
@@ -197,6 +232,10 @@ const pasos = [
               Me meto en tu operación, entiendo cómo funciona tu empresa de verdad y armo el sistema
               que te saca el trabajo repetitivo de encima. Y me quedo: lo mido y lo mejoro con vos.
             </p>
+            <p>
+              No te voy a prometer que facturás millones ni te vendo un curso para que montes tu agencia.
+              <strong style="color:#e8e8e8; font-weight:500;">Te construyo el sistema, te muestro lo real y me quedo a medirlo.</strong>
+            </p>
           </div>
           <a href="#tu-problema" style="color:#4ab8ff; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity inline-block mt-6">
             Contame tu caso →
@@ -206,7 +245,10 @@ const pasos = [
         <!-- Video (placeholder hasta grabarlo) -->
         <div data-reveal data-delay="1">
           <div style="aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(74,184,255,0.2); background:linear-gradient(180deg, rgba(74,184,255,0.08), rgba(255,255,255,0.02)); display:flex; align-items:center; justify-content:center;">
-            <!-- Cuando esté el video: reemplazar por <iframe src="https://www.youtube.com/embed/ID" ...></iframe> o <video controls>...</video> -->
+            <!-- VIDEO: guion en  guion-video-landing-andres.md  (6 beats, 60-90s).
+                 Cuando esté grabado y subido, reemplazar este <div> por el embed:
+                 YouTube → <iframe src="https://www.youtube.com/embed/ID" style="width:100%;height:100%;border:0;" allowfullscreen></iframe>
+                 o archivo propio → <video controls style="width:100%;height:100%;object-fit:cover;"><source src="/video/andres.mp4" type="video/mp4" /></video> -->
             <div class="text-center" style="color:rgba(74,184,255,0.6);">
               <div style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(74,184,255,0.4); display:flex; align-items:center; justify-content:center; margin:0 auto;">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
