@@ -1,45 +1,39 @@
 ---
-// Landing personal de Andrés Albornoz (co-fundador de GENIDEIA) — foco: automatización de empresas.
-// Extensión de la web de la marca: misma identidad visual, página única orientada a conversión.
-// Voz en PRIMERA PERSONA (es la marca personal de Andrés, a diferencia de la web de empresa).
+// Landing personal de Andrés Albornoz — automatización de empresas.
+// Estructura en 4 pasos simples: Quién soy · Qué hago · Cómo lo hago · Trabajar conmigo.
+// Poco texto, muchos CTA, foto + slots de video (presentación natural de Andrés).
 import '../styles/global.css';
 
 const WA = '59892302941';
 const waMsg = encodeURIComponent('Hola Andrés, me gustaría automatizar algo en mi empresa. Te cuento:');
 const waUrl = `https://wa.me/${WA}?text=${waMsg}`;
 
-// Dolores que resuelve la automatización (el "¿te suena?")
-const problemas = [
-  'Respondés las mismas consultas todo el día, a toda hora, por WhatsApp.',
-  'Se te escapan clientes porque no llegás a contestar a tiempo.',
-  'Cargás datos, mandás recordatorios y seguís pedidos a mano — horas que no vuelven.',
-  'Si vos (o una persona clave) no está, el negocio se frena.',
+const queHago = [
+  'Un bot de WhatsApp que atiende y agenda solo, 24/7.',
+  'Workflows que conectan tus apps y hacen el trabajo repetitivo.',
+  'Seguimiento automático: ningún cliente queda sin respuesta.',
+  'Reportes que se actualizan solos, sin cargar nada a mano.',
 ];
-
-// Ejemplos concretos de lo que puedo automatizar
-const ejemplos = [
-  { t: 'Bot de WhatsApp', d: 'Atiende consultas, agenda turnos, califica clientes y responde al instante — 24/7, sin que muevas un dedo.' },
-  { t: 'Workflows con n8n', d: 'Conecto tus herramientas para que los procesos corran solos: del formulario al CRM, al email, al recordatorio.' },
-  { t: 'Seguimiento automático', d: 'Recordatorios, nurturing de leads y avisos de estado de pedido. Ningún cliente queda sin respuesta.' },
-  { t: 'Reportería en vivo', d: 'Los números de tu negocio actualizados solos. El dato como subproducto, sin que nadie cargue nada a mano.' },
-  { t: 'Integraciones a medida', d: 'Que tu web, tu planilla, MercadoPago y tu agenda se hablen entre sí. Se acabó el copiar y pegar.' },
-  { t: 'Procesos internos', d: 'Eso repetitivo que te come el día —facturas, altas, avisos— pasa a correr en automático.' },
+const comoLoHago = [
+  { n: '01', t: 'Diagnóstico', d: 'Entiendo tu operación y dónde se te va el tiempo. Gratis.' },
+  { n: '02', t: 'Lo construyo', d: 'Armo el sistema a tu medida y lo dejo funcionando.' },
+  { n: '03', t: 'Mido y mejoro', d: 'No entrego y desaparezco: me quedo a que rinda.' },
 ];
-
-// Cómo trabajo (proceso simple)
-const pasos = [
-  { n: '01', t: 'Diagnóstico', d: 'Entiendo tu operación y detecto dónde se te va el tiempo. Gratis, sin compromiso.' },
-  { n: '02', t: 'Diseño e implementación', d: 'Armo el sistema a tu medida y lo dejo funcionando, integrado a lo que ya usás.' },
-  { n: '03', t: 'Soporte y mejora', d: 'No te entrego y desaparezco: mido, ajusto y lo hago crecer con tu negocio.' },
+const trabajar = [
+  { n: '01', t: 'Me escribís tu caso', d: 'Por el formulario o WhatsApp. Te respondo yo.' },
+  { n: '02', t: 'Vemos qué automatizar', d: 'Te digo por dónde empezar — sin compromiso.' },
+  { n: '03', t: 'Lo construyo', d: 'Queda funcionando, integrado a lo que ya usás.' },
 ];
-
-// Prueba real — la casilla del benchmark: anti-humo + mostrar lo ejecutado de verdad.
-// ⚠️ Guardarraíl: NO inventar casos de automatización de clientes (todavía no hay facturados).
-// Lo real = sistemas digitales construidos + automatización de la propia operación.
-const pruebas = [
-  { t: 'Webs y tiendas online en producción', d: 'Sitios y e-commerce con pagos reales por MercadoPago, atendiendo clientes hoy. No son maquetas: están en vivo.' },
-  { t: 'El sistema con el que opero mi empresa', d: 'Me construí mi propio panel para manejar GENIDEIA: clientes, finanzas y contenido en un solo lugar. Lo que te ofrezco, lo uso yo primero.' },
-  { t: 'Mi propia operación, automatizada', d: 'Reportes, seguimiento y producción de contenido que corren solos. Te muestro el detrás de escena, sin filtro.' },
+// Soluciones en video (las mismas que viven en la web de GENIDEIA Company → YouTube).
+const videos = [
+  { id: 'JLFq5mAblxc', t: 'Bot de WhatsApp para negocios', d: 'Atiende, agenda turnos y confirma reservas solo — 24/7.' },
+  { id: 'jPMODHsfLlA', t: 'Sistema de contenido para inmobiliarias', d: 'Genera y publica contenido de propiedades en automático.' },
+];
+// Testimonios — placeholders. Reemplazar por reales (NADA inventado).
+const testimonios = [
+  { nombre: 'Cliente', rol: 'Próximamente', texto: 'Acá va el testimonio real de un cliente con el que trabajé.' },
+  { nombre: 'Cliente', rol: 'Próximamente', texto: 'Resultados concretos, en palabras de quien los vivió.' },
+  { nombre: 'Cliente', rol: 'Próximamente', texto: 'Prueba real — la cargamos apenas estén.' },
 ];
 ---
 
@@ -49,237 +43,191 @@ const pruebas = [
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Andrés Albornoz — Automatización de empresas con IA</title>
-  <meta name="description" content="Automatizo empresas con IA: bots de WhatsApp, workflows e integraciones para que tu negocio atienda, venda y opere solo. Andrés Albornoz, co-fundador de GENIDEIA." />
+  <meta name="description" content="Automatizo empresas con IA: bots de WhatsApp, workflows e integraciones para que tu negocio atienda, venda y opere solo. Andrés Albornoz." />
   <meta property="og:title" content="Andrés Albornoz — Automatización de empresas" />
   <meta property="og:description" content="Que tu empresa funcione sola. Bots, workflows e IA a medida." />
   <meta property="og:type" content="website" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 </head>
-<body style="background:#0a0a0a; color:#e8e8e8; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;">
+<body style="background:#0A0F17; color:#e8e8e8; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;">
 
-  <!-- ── HEADER MINIMAL ────────────────────────────────────── -->
+  <!-- ── HEADER ──────────────────────────────────────────────── -->
   <header style="background:rgba(10,10,10,0.92); border-bottom:1px solid rgba(255,255,255,0.07);" class="sticky top-0 z-50 backdrop-blur">
     <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
       <a href="/andres" class="flex items-baseline gap-2">
-        <span style="font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:600; color:#e8e8e8; letter-spacing:0.5px;">Andrés Albornoz</span>
-        <span style="color:#4ab8ff; font-size:0.6rem; letter-spacing:2px;" class="uppercase hidden sm:inline">Automatización</span>
+        <span style="font-family:'Cinzel',serif; font-size:1.15rem; font-weight:600; color:#e8e8e8; letter-spacing:0.5px;">Andrés Albornoz</span>
+        <span style="color:#00A3FF; font-size:0.6rem; letter-spacing:2px;" class="uppercase hidden sm:inline">Automatización</span>
       </a>
       <div class="flex items-center gap-4">
-        <a href="/" style="color:#a0a0a0; font-size:0.72rem; letter-spacing:1px;" class="uppercase hover:text-[#4ab8ff] transition-colors hidden sm:inline">GENIDEIA</a>
-        <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:#4ab8ff; color:#0a0a0a; font-weight:600; font-size:0.78rem;" class="px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Hablemos</a>
+        <a href="/" style="color:#a0a0a0; font-size:0.72rem; letter-spacing:1px;" class="uppercase hover:text-[#00A3FF] transition-colors hidden sm:inline">GENIDEIA Company</a>
+        <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:#00A3FF; color:#0A0F17; font-weight:600; font-size:0.78rem;" class="px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Hablemos</a>
       </div>
     </nav>
   </header>
 
   <!-- ── HERO ──────────────────────────────────────────────── -->
-  <section class="max-w-6xl mx-auto px-6 pt-20 pb-16" style="position:relative; overflow:hidden;">
+  <section class="max-w-6xl mx-auto px-6 pt-20 pb-20">
     <div class="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
-      <div style="position:relative; z-index:2;">
-        <p class="hero-animate text-xs font-medium mb-6 uppercase" data-delay="1" style="color:#4ab8ff; letter-spacing:3px;">
-          Automatización de empresas con IA
-        </p>
-        <h1 class="hero-animate mb-6" data-delay="2" style="font-family:'Cormorant Garamond',serif; font-weight:700; line-height:1.0; letter-spacing:-1.5px; font-size:clamp(2.6rem, 6vw, 4.6rem);">
-          Que tu empresa<br />
-          <span style="color:#a0a0a0; font-weight:300; font-style:italic;">funcione sola.</span>
+      <div>
+        <p class="text-xs font-medium mb-6 uppercase" style="color:#00A3FF; letter-spacing:3px;">Automatización de empresas con IA</p>
+        <h1 class="mb-6" style="font-family:'Cinzel',serif; font-weight:700; line-height:1.0; letter-spacing:-1.5px; font-size:clamp(2.6rem, 6vw, 4.6rem);">
+          Que tu empresa<br /><span style="color:#a0a0a0; font-weight:300; font-style:italic;">funcione sola.</span>
         </h1>
-        <p class="hero-animate mb-9 leading-relaxed max-w-lg text-lg" data-delay="3" style="color:#a0a0a0; font-weight:300;">
-          ¿Tu día se va respondiendo lo mismo, persiguiendo clientes y haciendo tareas a mano?
-          Estás en el lugar indicado. Automatizo empresas con IA para que atiendan, vendan y operen
-          <strong style="color:#e8e8e8; font-weight:500;">sin depender de que estés vos</strong>.
+        <p class="mb-9 leading-relaxed max-w-md text-lg" style="color:#a0a0a0; font-weight:300;">
+          Te saco el trabajo repetitivo de encima con IA — para que atiendas, vendas y operes sin depender de que estés vos.
         </p>
-        <div class="hero-animate flex flex-col sm:flex-row gap-4 mb-8" data-delay="4">
-          <a href="#tu-problema" style="background:#4ab8ff; color:#0a0a0a; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">
-            Contame qué automatizar →
-          </a>
-          <a href={waUrl} target="_blank" rel="noopener noreferrer" style="border:1px solid rgba(255,255,255,0.12); color:#a0a0a0;" class="px-8 py-3.5 rounded-lg hover:border-[#4ab8ff] hover:text-[#4ab8ff] transition-colors text-center">
-            Hablemos por WhatsApp
-          </a>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#trabajar" style="background:#00A3FF; color:#0A0F17; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">Quiero automatizar →</a>
+          <a href="#quien" style="border:1px solid rgba(255,255,255,0.12); color:#a0a0a0;" class="px-8 py-3.5 rounded-lg hover:border-[#00A3FF] hover:text-[#00A3FF] transition-colors text-center">Conocé cómo</a>
         </div>
-        <p class="hero-animate text-sm" data-delay="5" style="color:rgba(160,160,160,0.45); font-weight:300; letter-spacing:0.5px;">
-          Sistemas reales, funcionando hoy · Montevideo, Uruguay
-        </p>
       </div>
-
       <!-- Foto de Andrés -->
-      <div class="hero-animate order-first lg:order-last" data-delay="3" style="position:relative;">
-        <div class="hero-glow" style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(74,184,255,0.16) 0%, transparent 64%); z-index:0;" aria-hidden="true"></div>
-        <div style="position:relative; z-index:1; width:100%; max-width:380px; aspect-ratio:4/5; margin:0 auto; border-radius:16px; overflow:hidden; border:1px solid rgba(74,184,255,0.2); background:linear-gradient(180deg, rgba(74,184,255,0.10), rgba(255,255,255,0.02)); display:flex; align-items:center; justify-content:center;">
+      <div class="order-first lg:order-last" style="position:relative;">
+        <div class="hero-glow" style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,163,255,0.16) 0%, transparent 64%); z-index:0;" aria-hidden="true"></div>
+        <div style="position:relative; z-index:1; width:100%; max-width:380px; aspect-ratio:4/5; margin:0 auto; border-radius:16px; overflow:hidden; border:1px solid rgba(0,163,255,0.2);">
           <img src="/img/andres.jpg" alt="Andrés Albornoz — automatización de empresas con IA" style="width:100%; height:100%; object-fit:cover; object-position:center 25%; display:block;" />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── EL PROBLEMA ───────────────────────────────────────── -->
-  <section style="background:#0d0d0d; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-24">
-    <div class="max-w-4xl mx-auto px-6">
-      <div class="text-center mb-14" data-reveal>
-        <p style="color:#4ab8ff; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">¿Te suena?</p>
-        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
-          El trabajo que hacés a mano<br />una máquina lo hace mejor
-        </h2>
+  <!-- ── 01 · QUIÉN SOY ────────────────────────────────────── -->
+  <section id="quien" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
+    <div class="max-w-5xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+      <div data-reveal>
+        <p style="color:#00A3FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">01 · Quién soy</p>
+        <h2 style="font-family:'Cinzel',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-5">Soy Andrés Albornoz.</h2>
+        <p style="color:#a0a0a0; font-weight:300;" class="text-lg leading-relaxed mb-7">
+          Cofundador de GENIDEIA Company. Construyo sistemas con IA que le sacan a tu empresa el trabajo repetitivo de encima — y me quedo a que funcionen.
+        </p>
+        <a href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00A3FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">Hablemos →</a>
       </div>
-      <div class="grid sm:grid-cols-2 gap-4">
-        {problemas.map((p, i) => (
+      <!-- Video: presentación natural -->
+      <div data-reveal data-delay="1">
+        <div style="aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(0,163,255,0.2); background:linear-gradient(180deg, rgba(0,163,255,0.08), rgba(255,255,255,0.02)); display:flex; align-items:center; justify-content:center;">
+          <!-- VIDEO: reemplazar por <video controls ...> o <iframe> de YouTube. Guion: guion-video-presentacion-andres.md -->
+          <div class="text-center" style="color:rgba(0,163,255,0.6);">
+            <div style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(0,163,255,0.4); display:flex; align-items:center; justify-content:center; margin:0 auto;"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+            <p style="font-size:0.62rem; letter-spacing:2px; margin-top:12px;" class="uppercase">Video · te lo cuento yo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 02 · QUÉ HAGO ─────────────────────────────────────── -->
+  <section id="que" class="py-24">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="mb-12" data-reveal>
+        <p style="color:#00A3FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">02 · Qué hago</p>
+        <h2 style="font-family:'Cinzel',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);">Automatizo lo que te quita tiempo.</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4 mb-12">
+        {queHago.map((q, i) => (
           <div class="rounded-xl p-6 flex items-start gap-4" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String((i % 2) + 1)}>
-            <span style="color:#4ab8ff; flex-shrink:0; font-family:'Cormorant Garamond',serif; font-size:1.4rem; line-height:1;">✕</span>
-            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed">{p}</p>
+            <span style="color:#00A3FF; flex-shrink:0; font-family:'Cinzel',serif; font-size:1.4rem; line-height:1;">✓</span>
+            <p style="color:#cfcfcf; font-weight:300;" class="leading-relaxed">{q}</p>
           </div>
         ))}
       </div>
-      <p class="text-center mt-10 text-lg" style="color:#e8e8e8; font-weight:300;" data-reveal>
-        No es un problema de esfuerzo. Es un problema de <span style="color:#4ab8ff;">sistema</span>.
-      </p>
-    </div>
-  </section>
-
-  <!-- ── QUÉ HAGO / EJEMPLOS ───────────────────────────────── -->
-  <section class="py-24">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-16" data-reveal>
-        <p style="color:#4ab8ff; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Qué puedo automatizar</p>
-        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
-          Ejemplos de lo que resuelvo
-        </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-xl mx-auto">
-          Cada empresa es distinta. Esto es lo que más se repite — tu caso lo definimos juntos.
-        </p>
+      <div class="mb-8" data-reveal>
+        <p style="color:#00A3FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-2">Soluciones funcionando</p>
+        <p style="color:#a0a0a0; font-weight:300;" class="text-lg">No son promesas. Mirá un par andando:</p>
       </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {ejemplos.map((e, i) => (
-          <div class="card-hover rounded-xl p-7 flex flex-col" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String((i % 3) + 1)}>
-            <div style="width:38px; height:38px; display:flex; align-items:center; justify-content:center; border-radius:8px; background:rgba(74,184,255,0.08); border:1px solid rgba(74,184,255,0.2); color:#4ab8ff;" class="mb-5">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.5 2.5M16.5 16.5L19 19M19 5l-2.5 2.5M7.5 16.5L5 19"/><circle cx="12" cy="12" r="3"/></svg>
+      <div class="grid sm:grid-cols-2 gap-6 mb-10">
+        {videos.map((v) => (
+          <div data-reveal>
+            <div style="aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(0,163,255,0.2);">
+              <iframe src={`https://www.youtube.com/embed/${v.id}`} title={v.t} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%; height:100%; border:none; display:block;"></iframe>
             </div>
-            <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; color:#e8e8e8; font-size:1.4rem;" class="mb-3">{e.t}</h3>
-            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed">{e.d}</p>
+            <p style="color:#e8e8e8; font-weight:500;" class="mt-3">{v.t}</p>
+            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed">{v.d}</p>
           </div>
         ))}
+      </div>
+      <div class="text-center" data-reveal>
+        <a href="#trabajar" style="background:#00A3FF; color:#0A0F17; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block">¿Cuál te sacaría más peso? Contame →</a>
       </div>
     </div>
   </section>
 
-  <!-- ── PRUEBA REAL (la casilla: sin humo, lo ya construido) ─ -->
-  <section style="border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
+  <!-- ── 03 · CÓMO LO HAGO ─────────────────────────────────── -->
+  <section id="como" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-24">
     <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-16" data-reveal>
-        <p style="color:#4ab8ff; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Sin humo</p>
-        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
-          No te vendo el sueño.<br />Te muestro lo que ya construí.
-        </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-xl mx-auto">
-          El mundo de la IA está lleno de promesas y de cursos para "hacerte rico". Yo prefiero mostrarte sistemas funcionando de verdad.
-        </p>
+      <div class="mb-12" data-reveal>
+        <p style="color:#00A3FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">03 · Cómo lo hago</p>
+        <h2 style="font-family:'Cinzel',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-3">Sistemas reales, no humo.</h2>
+        <p style="color:#a0a0a0; font-weight:300;" class="text-lg">Lo que te ofrezco, lo uso en mi propia empresa primero.</p>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-8 mb-14">
+        {comoLoHago.map((p, i) => (
+          <div data-reveal data-delay={String(i + 1)}>
+            <p style="font-family:'Cinzel',serif; font-weight:700; color:#00A3FF; line-height:1;" class="text-6xl mb-4">{p.n}</p>
+            <h3 style="color:#e8e8e8; font-weight:500;" class="text-lg mb-2">{p.t}</h3>
+            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed">{p.d}</p>
+          </div>
+        ))}
+      </div>
+      <div class="grid lg:grid-cols-2 gap-8 items-center">
+        <div data-reveal>
+          <div style="aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(0,163,255,0.2); background:linear-gradient(180deg, rgba(0,163,255,0.08), rgba(255,255,255,0.02)); display:flex; align-items:center; justify-content:center;">
+            <div class="text-center" style="color:rgba(0,163,255,0.6);">
+              <div style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(0,163,255,0.4); display:flex; align-items:center; justify-content:center; margin:0 auto;"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+              <p style="font-size:0.62rem; letter-spacing:2px; margin-top:12px;" class="uppercase">Video · cómo trabajo</p>
+            </div>
+          </div>
+        </div>
+        <div data-reveal data-delay="1" class="text-center lg:text-left">
+          <p style="color:#a0a0a0; font-weight:300;" class="text-lg mb-6">Te muestro un sistema funcionando, en vivo, sin vueltas.</p>
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:#00A3FF; color:#0A0F17; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block">Hablemos por WhatsApp →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIOS ───────────────────────────────────────── -->
+  <section id="testimonios" class="py-24">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12" data-reveal>
+        <p style="color:#00A3FF; font-size:0.8rem; letter-spacing:4px; font-weight:600;" class="uppercase">Testimonios</p>
       </div>
       <div class="grid sm:grid-cols-3 gap-6">
-        {pruebas.map((p, i) => (
-          <div class="card-hover rounded-xl p-7 flex flex-col" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String((i % 3) + 1)}>
-            <div style="width:38px; height:38px; display:flex; align-items:center; justify-content:center; border-radius:8px; background:rgba(74,184,255,0.08); border:1px solid rgba(74,184,255,0.2); color:#4ab8ff;" class="mb-5">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-            </div>
-            <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; color:#e8e8e8; font-size:1.4rem;" class="mb-3">{p.t}</h3>
-            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed">{p.d}</p>
+        {testimonios.map((t) => (
+          <div class="rounded-xl p-6" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal>
+            <p style="color:#cfcfcf; font-weight:300; font-style:italic;" class="leading-relaxed mb-5">“{t.texto}”</p>
+            <p style="color:#e8e8e8; font-weight:500;" class="text-sm">{t.nombre}</p>
+            <p style="color:#00A3FF; font-weight:300; letter-spacing:1px;" class="text-xs uppercase">{t.rol}</p>
           </div>
         ))}
       </div>
-      <!-- TODO Andrés: cuando tengas el OK de los clientes, acá pueden ir 3-4 logos o links a los proyectos en vivo (con permiso). -->
-      <p class="text-center mt-10 text-sm" style="color:rgba(160,160,160,0.5); font-weight:300;" data-reveal>
-        ¿Querés ver casos concretos? Te los muestro en la llamada — proyectos en vivo, no capturas.
-      </p>
+      <p class="text-center mt-8 text-sm" style="color:rgba(160,160,160,0.4); font-weight:300;" data-reveal>Testimonios reales de clientes — en camino.</p>
     </div>
   </section>
 
-  <!-- ── CÓMO TRABAJO ──────────────────────────────────────── -->
-  <section style="background:#0d0d0d; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-24">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-16" data-reveal>
-        <p style="color:#4ab8ff; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Cómo trabajo</p>
-        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
-          Simple, a tu medida, con soporte
-        </h2>
-      </div>
-      <div class="grid sm:grid-cols-3 gap-10">
-        {pasos.map((p, i) => (
-          <div data-reveal data-delay={String(i + 1)}>
-            <p style="font-family:'Cormorant Garamond',serif; font-weight:700; color:#4ab8ff; line-height:1;" class="text-7xl mb-5">{p.n}</p>
-            <h3 style="color:#e8e8e8; font-weight:500;" class="text-lg mb-3">{p.t}</h3>
-            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed">{p.d}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SOBRE MÍ + VIDEO ──────────────────────────────────── -->
-  <section id="sobre-mi" class="py-24">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <!-- Quién soy (acá sí menciono que soy co-fundador) -->
-        <div data-reveal>
-          <p style="color:#4ab8ff; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-5">Quién te va a acompañar</p>
-          <h2 style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.9rem, 4.5vw, 3rem);" class="mb-6">
-            Te lo cuento yo mismo
-          </h2>
-          <div class="space-y-4" style="color:#a0a0a0; font-weight:300; line-height:1.8;">
-            <p>
-              Soy <strong style="color:#e8e8e8; font-weight:500;">Andrés Albornoz</strong>, co-fundador de GENIDEIA.
-              No vas a hablar con un call center ni con una agencia que te entrega algo y desaparece.
-            </p>
-            <p>
-              Me meto en tu operación, entiendo cómo funciona tu empresa de verdad y armo el sistema
-              que te saca el trabajo repetitivo de encima. Y me quedo: lo mido y lo mejoro con vos.
-            </p>
-            <p>
-              No te voy a prometer que facturás millones ni te vendo un curso para que montes tu agencia.
-              <strong style="color:#e8e8e8; font-weight:500;">Te construyo el sistema, te muestro lo real y me quedo a medirlo.</strong>
-            </p>
-          </div>
-          <a href="#tu-problema" style="color:#4ab8ff; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity inline-block mt-6">
-            Contame tu caso →
-          </a>
-        </div>
-
-        <!-- Video (placeholder hasta grabarlo) -->
-        <div data-reveal data-delay="1">
-          <div style="aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(74,184,255,0.2); background:linear-gradient(180deg, rgba(74,184,255,0.08), rgba(255,255,255,0.02)); display:flex; align-items:center; justify-content:center;">
-            <!-- VIDEO: guion en  guion-video-landing-andres.md  (6 beats, 60-90s).
-                 Cuando esté grabado y subido, reemplazar este <div> por el embed:
-                 YouTube → <iframe src="https://www.youtube.com/embed/ID" style="width:100%;height:100%;border:0;" allowfullscreen></iframe>
-                 o archivo propio → <video controls style="width:100%;height:100%;object-fit:cover;"><source src="/video/andres.mp4" type="video/mp4" /></video> -->
-            <div class="text-center" style="color:rgba(74,184,255,0.6);">
-              <div style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(74,184,255,0.4); display:flex; align-items:center; justify-content:center; margin:0 auto;">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-              </div>
-              <p style="font-size:0.62rem; letter-spacing:2px; margin-top:12px;" class="uppercase">Video · próximamente</p>
-            </div>
-          </div>
-          <p style="color:rgba(160,160,160,0.4); font-weight:300;" class="text-xs mt-3 text-center">
-            Acá va un video corto donde te muestro, con ejemplos, cómo puedo ayudar a tu empresa.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── TU PROBLEMA (FORM) ────────────────────────────────── -->
-  <section id="tu-problema" class="py-24" style="border-top:1px solid rgba(255,255,255,0.07);">
-    <div class="max-w-2xl mx-auto px-6">
+  <!-- ── 04 · TRABAJAR CONMIGO ─────────────────────────────── -->
+  <section id="trabajar" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
+    <div class="max-w-3xl mx-auto px-6">
       <div class="text-center mb-12" data-reveal>
-        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
-          ¿Qué te gustaría automatizar?
-        </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg leading-relaxed">
-          Contámelo en tus palabras. Te respondo con una idea concreta de cómo resolverlo
-          — y si hace falta, lo construyo.
-        </p>
+        <p style="color:#00A3FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">04 · Trabajar conmigo</p>
+        <h2 style="font-family:'Cinzel',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.4rem);" class="mb-4">Empezamos con un diagnóstico gratis.</h2>
+        <p style="color:#a0a0a0; font-weight:300;" class="text-lg">Sin compromiso. Te digo qué automatizar primero en tu negocio.</p>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-6 mb-12">
+        {trabajar.map((p, i) => (
+          <div class="rounded-xl p-5 text-center" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String(i + 1)}>
+            <p style="font-family:'Cinzel',serif; font-weight:700; color:#00A3FF;" class="text-3xl mb-2">{p.n}</p>
+            <h3 style="color:#e8e8e8; font-weight:500;" class="mb-1">{p.t}</h3>
+            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed">{p.d}</p>
+          </div>
+        ))}
       </div>
 
       <form id="auto-form" class="space-y-5" data-reveal>
         <div>
-          <label style="color:#a0a0a0; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">Área a automatizar</label>
+          <label style="color:#a0a0a0; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">¿Qué te gustaría automatizar?</label>
           <select name="area" required class="form-input">
             <option value="">Elegí una opción</option>
             <option>Atención al cliente / WhatsApp</option>
@@ -292,61 +240,41 @@ const pruebas = [
         </div>
         <div>
           <label style="color:#a0a0a0; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">Contame qué pasa hoy</label>
-          <textarea name="problema" rows="5" required placeholder="¿Qué tarea te come el día? ¿Dónde se te escapan clientes o tiempo?" class="form-input resize-none"></textarea>
+          <textarea name="problema" rows="4" required placeholder="¿Qué tarea te quita más tiempo? ¿Dónde se te escapan clientes?" class="form-input resize-none"></textarea>
         </div>
         <div>
           <label style="color:#a0a0a0; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">Tu nombre / empresa <span style="color:rgba(160,160,160,0.4);">(opcional)</span></label>
           <input name="nombre" type="text" placeholder="Para personalizar la respuesta" class="form-input" />
         </div>
-        <button type="submit" style="background:#4ab8ff; color:#0a0a0a; font-weight:600; width:100%;" class="py-3.5 rounded-lg hover:opacity-90 transition-opacity text-base">
-          Enviar y hablar por WhatsApp →
-        </button>
-        <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-xs text-center">
-          Se abre WhatsApp con tu mensaje ya armado · Te respondo en menos de 24 horas
-        </p>
+        <button type="submit" style="background:#00A3FF; color:#0A0F17; font-weight:600; width:100%;" class="py-3.5 rounded-lg hover:opacity-90 transition-opacity text-base">Enviar y hablar por WhatsApp →</button>
+        <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-xs text-center">Se abre WhatsApp con tu mensaje ya armado · Te respondo en menos de 24 horas</p>
       </form>
 
-      <div id="auto-success" class="hidden text-center py-8" data-reveal>
-        <p style="color:#4ab8ff; font-size:1.5rem; margin-bottom:1rem;">✓</p>
+      <div id="auto-success" class="hidden text-center py-8">
+        <p style="color:#00A3FF; font-size:1.5rem; margin-bottom:1rem;">✓</p>
         <p style="color:#e8e8e8; font-weight:500;" class="text-lg mb-2">¡Listo!</p>
         <p style="color:#a0a0a0; font-weight:300;">Se abrió WhatsApp con tu mensaje. Te respondo con una propuesta concreta.</p>
       </div>
     </div>
   </section>
 
-  <!-- ── CTA FINAL ─────────────────────────────────────────── -->
-  <section class="max-w-3xl mx-auto px-6 py-28 text-center" style="border-top:1px solid rgba(255,255,255,0.07);" data-reveal>
-    <h2 style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-5">
-      Dejá de hacer a mano<br />lo que una máquina puede hacer sola
-    </h2>
-    <p style="color:#a0a0a0; font-weight:300;" class="text-lg mb-10 leading-relaxed">
-      Contame en qué punto está tu empresa y vemos juntos qué automatizar primero.
-    </p>
-    <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:#4ab8ff; color:#0a0a0a; font-weight:600;" class="px-10 py-4 rounded-lg hover:opacity-90 transition-opacity inline-block text-base">
-      Hablar por WhatsApp
-    </a>
-    <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-sm mt-5">Sin compromiso · Respondo en menos de 24 horas</p>
-  </section>
-
   <!-- ── FOOTER ────────────────────────────────────────────── -->
   <footer style="border-top:1px solid rgba(255,255,255,0.07);" class="py-10">
     <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm" style="color:#a0a0a0;">
       <div>
-        <p style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:#e8e8e8;">Andrés Albornoz</p>
-        <p style="font-weight:300; font-size:0.8rem;">Co-fundador de <a href="/" style="color:#4ab8ff;">GENIDEIA</a> · Automatización de empresas</p>
+        <p style="font-family:'Cinzel',serif; font-size:1.05rem; color:#e8e8e8;">Andrés Albornoz</p>
+        <p style="font-weight:300; font-size:0.8rem;">Cofundador de <a href="/" style="color:#00A3FF;">GENIDEIA Company</a> · Automatización de empresas</p>
       </div>
-      <a href={waUrl} target="_blank" rel="noopener noreferrer" style="font-weight:300;" class="hover:text-[#4ab8ff] transition-colors">WhatsApp +598 92 302 941</a>
+      <a href={waUrl} target="_blank" rel="noopener noreferrer" style="font-weight:300;" class="hover:text-[#00A3FF] transition-colors">WhatsApp +598 92 302 941</a>
     </div>
   </footer>
 
-  <!-- Scroll reveal -->
   <script>
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('[data-reveal]').forEach((el) => obs.observe(el));
 
-    // Form → WhatsApp
     const form = document.getElementById('auto-form');
     const ok = document.getElementById('auto-success');
     form?.addEventListener('submit', (ev) => {
