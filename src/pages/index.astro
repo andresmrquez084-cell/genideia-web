@@ -132,6 +132,8 @@ const socios = [
     desc: 'Automatiza los procesos de las PyMEs y construye la solución a medida: bots de WhatsApp, n8n, webs y sistemas con IA. Domina las herramientas y arma la solución en sí.',
     ig: 'https://instagram.com/andresalbornozia',
     handle: '@andresalbornozia',
+    linkedin: 'https://www.linkedin.com/in/andres-albornoz-b498823a4',
+    wsp: 'https://wa.me/59892302941',
     foto: '/img/andres.jpg',
   },
   {
@@ -140,6 +142,8 @@ const socios = [
     desc: 'Lleva los anuncios: Meta, Instagram, Google, TikTok y LinkedIn. Estudia el mercado, contacta y produce el contenido de las campañas que traen clientes.',
     ig: 'https://instagram.com/tadeogranadaa',
     handle: '@tadeogranadaa',
+    linkedin: '',
+    wsp: 'https://wa.me/59892267601',
     foto: '', // → /img/tadeo.jpg cuando esté
   },
 ];
@@ -305,7 +309,11 @@ const chips = [
               <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.4rem;" class="leading-tight">{s.nombre}</h3>
               <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:1px; font-weight:500;" class="uppercase mt-1 mb-3">{s.rol}</p>
               <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-3">{s.desc}</p>
-              <a href={s.ig} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="text-xs font-light hover:opacity-70 transition-opacity">{s.handle} →</a>
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
+                <a href={s.ig} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">{s.handle}</a>
+                {s.linkedin && <a href={s.linkedin} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">LinkedIn</a>}
+                {s.wsp && <a href={s.wsp} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">WhatsApp</a>}
+              </div>
             </div>
           </div>
         ))}
@@ -813,7 +821,7 @@ const chips = [
       Hablar por WhatsApp
     </a>
     <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-sm mt-5">
-      Sin compromiso · Respondemos en menos de 24 horas
+      Respondemos en menos de 24 horas
     </p>
   </section>
 

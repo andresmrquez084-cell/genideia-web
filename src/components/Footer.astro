@@ -2,17 +2,52 @@
 const year = new Date().getFullYear();
 ---
 
-<footer style="border-top:1px solid rgba(255,255,255,0.07);" class="py-8 mt-16">
-  <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm" style="color:#B8BEC7;">
-    <span style="font-weight:300; letter-spacing:0.5px;">© {year} GENIDEIA IA — Montevideo, Uruguay</span>
-    <a
-      href="https://wa.me/59892302941"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="hover:text-[#00C8FF] transition-colors"
-      style="font-weight:300;"
-    >
-      WhatsApp +598 92 302 941
-    </a>
+<footer style="border-top:1px solid rgba(255,255,255,0.07);" class="py-12 mt-16">
+  <div class="max-w-5xl mx-auto px-6 grid gap-8 sm:grid-cols-3 text-sm" style="color:#B8BEC7;">
+
+    <!-- Empresa -->
+    <div>
+      <p style="font-family:'Montserrat',sans-serif; font-weight:700; color:#F2F4F7; letter-spacing:1px;">
+        GENIDEIA <span style="font-weight:500; color:#B8BEC7;">Company</span>
+      </p>
+      <p style="font-weight:300;" class="mt-2 leading-relaxed">
+        Soluciones con Inteligencia Artificial<br />
+        Montevideo, Uruguay
+      </p>
+    </div>
+
+    <!-- Contacto -->
+    <div>
+      <p style="color:#F2F4F7; font-weight:500; font-size:0.7rem; letter-spacing:1.5px;" class="uppercase mb-3">Contacto</p>
+      <ul class="space-y-2" style="font-weight:300;">
+        <li>
+          <a href="https://wa.me/59892302941" target="_blank" rel="noopener noreferrer" class="hover:text-[#00C8FF] transition-colors">
+            WhatsApp +598 92 302 941
+          </a>
+        </li>
+        <li>
+          <a href="mailto:genideiaconsultoraia@gmail.com" class="hover:text-[#00C8FF] transition-colors">
+            genideiaconsultoraia@gmail.com
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Redes -->
+    <div>
+      <p style="color:#F2F4F7; font-weight:500; font-size:0.7rem; letter-spacing:1.5px;" class="uppercase mb-3">Redes</p>
+      <ul class="space-y-2" style="font-weight:300;">
+        <li>
+          <a href="https://youtube.com/@genideiacompany" target="_blank" rel="noopener noreferrer" class="hover:text-[#00C8FF] transition-colors">
+            YouTube · @genideiacompany
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="max-w-5xl mx-auto px-6 mt-10 pt-6" style="border-top:1px solid rgba(255,255,255,0.05);">
+    <p style="color:rgba(160,160,160,0.5); font-weight:300; font-size:0.75rem;">© {year} GENIDEIA IA — Montevideo, Uruguay</p>
   </div>
 </footer>
