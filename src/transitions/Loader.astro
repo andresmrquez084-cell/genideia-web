@@ -1,0 +1,24 @@
+---
+/**
+ * GENIDEIA — Loader inicial. Va al INICIO del <body>, primer elemento.
+ * transition:persist evita que reaparezca en cada navegación con ClientRouter.
+ *
+ *   <body>
+ *     <Loader logoSrc="/logo.svg" />
+ *     ...
+ *   </body>
+ *
+ * Props:
+ *   logoSrc - ruta del logo a mostrar (opcional). Sin logo, muestra un spinner.
+ */
+interface Props {
+  logoSrc?: string;
+}
+const { logoSrc } = Astro.props;
+---
+
+<div id="tr-loader" transition:persist>
+  {logoSrc
+    ? <img class="tr-loader-mark" src={logoSrc} alt="" width="72" height="72" />
+    : <div class="tr-loader-spin"></div>}
+</div>

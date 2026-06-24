@@ -1,6 +1,8 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Loader from '../transitions/Loader.astro';
+import '../transitions/transitions.css';
 import '../styles/global.css';
 
 interface Props {
@@ -28,9 +30,11 @@ const { title, description = 'GENIDEIA IA — Automatización con IA para PyMEs 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script>import '../transitions/reveal.js';</script>
     <title>{title}</title>
   </head>
   <body style="background:#07080D radial-gradient(ellipse 90% 55% at 50% -8%, rgba(0,200,255,0.10), transparent 62%) no-repeat fixed; color:#F2F4F7; font-family:'Poppins',sans-serif; -webkit-font-smoothing:antialiased;" class="min-h-screen flex flex-col">
+    <Loader logoSrc="/img/logo-nav.png" />
     <Nav />
     <main class="flex-1">
       <slot />

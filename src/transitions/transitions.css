@@ -1,0 +1,130 @@
+/* ============================================================================
+   GENIDEIA — Sistema de transiciones web reutilizable
+   Capas: tokens · page transitions · scroll reveals · micro-interacciones · loader
+   Portable: funciona en cualquier proyecto. En Astro las page transitions se
+   activan con <ClientRouter /> (incluido en Transitions.astro).
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   1. TOKENS — ajustá estos valores por marca y listo.
+   --------------------------------------------------------------------------- */
+:root {
+  --tr-dur-fast: 180ms;
+  --tr-dur: 420ms;
+  --tr-dur-slow: 700ms;
+
+  /* Curvas: easeOut expresivo para entradas, in-out simétrico para loops */
+  --tr-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --tr-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --tr-distance: 24px;      /* cuánto se desplazan los reveals */
+  --tr-stagger: 90ms;       /* retardo entre hijos en cascada */
+  --tr-loader-bg: #07080D;  /* fondo del loader inicial */
+  --tr-loader-fg: #00C8FF;  /* color de la marca/spinner del loader */
+}
+
+/* ---------------------------------------------------------------------------
+   2. PAGE TRANSITIONS — Astro View Transitions / View Transitions API.
+   Personaliza el crossfade que aplica <ClientRouter />.
+   --------------------------------------------------------------------------- */
+@keyframes tr-fade-in   { from { opacity: 0 } to { opacity: 1 } }
+@keyframes tr-fade-out  { from { opacity: 1 } to { opacity: 0 } }
+@keyframes tr-slide-in  { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: none } }
+
+::view-transition-old(root) {
+  animation: tr-fade-out var(--tr-dur) var(--tr-ease) both;
+}
+::view-transition-new(root) {
+  animation: tr-slide-in var(--tr-dur) var(--tr-ease) both;
+}
+
+/* ---------------------------------------------------------------------------
+   3. SCROLL REVEALS — elementos que aparecen al entrar al viewport.
+   Uso: <div data-reveal="fade-up">. reveal.js agrega .is-visible.
+   Variantes: fade · fade-up · fade-down · fade-left · fade-right · zoom
+   --------------------------------------------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  transition: opacity var(--tr-dur) var(--tr-ease),
+              transform var(--tr-dur) var(--tr-ease);
+  will-change: opacity, transform;
+}
+[data-reveal="fade-up"]    { transform: translateY(var(--tr-distance)); }
+[data-reveal="fade-down"]  { transform: translateY(calc(var(--tr-distance) * -1)); }
+[data-reveal="fade-left"]  { transform: translateX(var(--tr-distance)); }
+[data-reveal="fade-right"] { transform: translateX(calc(var(--tr-distance) * -1)); }
+[data-reveal="zoom"]       { transform: scale(0.92); }
+[data-reveal="fade"]       { transform: none; }
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------------------------------------------------------------------------
+   4. MICRO-INTERACCIONES — clases utilitarias para hover/active/links.
+   --------------------------------------------------------------------------- */
+.tr-lift {
+  transition: transform var(--tr-dur-fast) var(--tr-ease),
+              box-shadow var(--tr-dur-fast) var(--tr-ease);
+}
+.tr-lift:hover { transform: translateY(-4px); }
+
+.tr-press { transition: transform var(--tr-dur-fast) var(--tr-ease); }
+.tr-press:active { transform: scale(0.97); }
+
+/* Link con subrayado que crece de izquierda a derecha */
+.tr-underline { position: relative; text-decoration: none; }
+.tr-underline::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 100%; height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--tr-dur) var(--tr-ease);
+}
+.tr-underline:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* ---------------------------------------------------------------------------
+   5. LOADER INICIAL — overlay que tapa el primer paint y se desvanece al cargar.
+   --------------------------------------------------------------------------- */
+#tr-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: var(--tr-loader-bg);
+  color: var(--tr-loader-fg);
+  transition: opacity var(--tr-dur-slow) var(--tr-ease),
+              visibility var(--tr-dur-slow) var(--tr-ease);
+}
+#tr-loader[data-hidden] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.tr-loader-mark { animation: tr-pulse 1.2s var(--tr-ease-in-out) infinite; }
+.tr-loader-spin {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 3px solid currentColor;
+  border-top-color: transparent;
+  animation: tr-spin 0.8s linear infinite;
+}
+@keyframes tr-pulse { 0%,100% { opacity: .4; transform: scale(.96) } 50% { opacity: 1; transform: scale(1) } }
+@keyframes tr-spin  { to { transform: rotate(360deg) } }
+
+/* ---------------------------------------------------------------------------
+   6. ACCESIBILIDAD — respeta a quien pidió menos movimiento. No negociable.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  #tr-loader { display: none !important; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; }
+  .tr-lift, .tr-press { transition: none !important; }
+  .tr-underline::after { transition: none !important; }
+  .tr-loader-mark, .tr-loader-spin { animation: none !important; }
+}
