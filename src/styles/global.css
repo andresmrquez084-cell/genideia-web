@@ -4,8 +4,8 @@
   --color-brand: #00C8FF;
   --color-bg-deep: #0A0F1A;
   --color-bg-soft: #0B1324;
-  --color-silver: #e8e8e8;
-  --color-silver-dim: #a0a0a0;
+  --color-silver: #F2F4F7;
+  --color-silver-dim: #B8BEC7;
 }
 
 /* Prose styles para posts del diario */
@@ -15,7 +15,7 @@
   font-weight: 600;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
-  color: #e8e8e8;
+  color: #F2F4F7;
   letter-spacing: 0.3px;
 }
 .prose h3 {
@@ -24,11 +24,11 @@
   font-weight: 600;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
-  color: #e8e8e8;
+  color: #F2F4F7;
 }
 .prose p {
   margin-bottom: 1rem;
-  color: #a0a0a0;
+  color: #B8BEC7;
   line-height: 1.75;
   font-weight: 300;
 }
@@ -36,13 +36,13 @@
   list-style: disc;
   padding-left: 1.5rem;
   margin-bottom: 1rem;
-  color: #a0a0a0;
+  color: #B8BEC7;
 }
 .prose ol {
   list-style: decimal;
   padding-left: 1.5rem;
   margin-bottom: 1rem;
-  color: #a0a0a0;
+  color: #B8BEC7;
 }
 .prose li {
   margin-bottom: 0.35rem;
@@ -57,7 +57,7 @@
   padding: 0.1rem 0.4rem;
   border-radius: 0.25rem;
   font-size: 0.875rem;
-  color: #e8e8e8;
+  color: #F2F4F7;
 }
 .prose pre {
   background: #0B1324;
@@ -72,13 +72,13 @@
   padding: 0;
 }
 .prose strong {
-  color: #e8e8e8;
+  color: #F2F4F7;
   font-weight: 600;
 }
 .prose blockquote {
   border-left: 3px solid #00C8FF;
   padding-left: 1rem;
-  color: #a0a0a0;
+  color: #B8BEC7;
   font-style: italic;
   margin-bottom: 1rem;
 }
@@ -132,7 +132,7 @@ body::before {
   display: block;
   height: 1.5px;
   width: 100%;
-  background: #a0a0a0;
+  background: #B8BEC7;
   border-radius: 2px;
   transition: transform 0.25s ease, opacity 0.25s ease;
   transform-origin: center;
@@ -169,7 +169,7 @@ body::before {
   font-weight: 400;
   letter-spacing: 0.3px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #a0a0a0;
+  color: #B8BEC7;
   background: transparent;
   cursor: pointer;
   transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
@@ -210,7 +210,7 @@ body::before {
   background: #0B1324;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 0.5rem;
-  color: #e8e8e8;
+  color: #F2F4F7;
   font-size: 0.9rem;
   font-weight: 300;
   padding: 0.75rem 1rem;
@@ -236,5 +236,5 @@ select.form-input {
 }
 select.form-input option {
   background: #0B1324;
-  color: #e8e8e8;
+  color: #F2F4F7;
 }

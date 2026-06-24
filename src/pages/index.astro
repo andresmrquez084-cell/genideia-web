@@ -201,17 +201,17 @@ const chips = [
         </p>
         <h1 class="hero-animate mb-6" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.0; letter-spacing:-1.5px; font-size:clamp(2.6rem, 6vw, 4.6rem);">
           Que tu negocio funcione<br />
-          <span style="color:#a0a0a0; font-weight:300; font-style:italic;">sin depender de vos.</span>
+          <span style="color:#B8BEC7; font-weight:300; font-style:italic;">sin depender de vos.</span>
         </h1>
         <!-- TAGLINE: a confirmar por Andrés -->
-        <p class="hero-animate mb-9 leading-relaxed max-w-lg text-lg" data-delay="3" style="color:#a0a0a0; font-weight:300;">
+        <p class="hero-animate mb-9 leading-relaxed max-w-lg text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
           Sistemas, automatización y ads para que tu PyME crezca sin depender de vos. Construimos la operación y traemos los clientes — a medida, no de molde.
         </p>
         <div class="hero-animate flex flex-col sm:flex-row gap-4 mb-8" data-delay="4">
-          <a href="https://wa.me/59892302941" target="_blank" rel="noopener noreferrer" style="background:#00C8FF; color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">
+          <a href="https://wa.me/59892302941" target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">
             Hablemos por WhatsApp
           </a>
-          <a href="#diagnostico" style="border:1px solid rgba(255,255,255,0.12); color:#a0a0a0;" class="px-8 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors text-center">
+          <a href="#diagnostico" style="border:1px solid rgba(255,255,255,0.12); color:#B8BEC7;" class="px-8 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors text-center">
             Diagnóstico gratis →
           </a>
         </div>
@@ -230,7 +230,7 @@ const chips = [
           {chips.map((c) => (
             <div class="hero-chip" style={`position:absolute; z-index:2; ${c.pos} background:rgba(17,17,17,0.72); backdrop-filter:blur(8px); border:1px solid rgba(0,200,255,0.22); border-radius:10px; padding:10px 14px; max-width:200px;`}>
               <p style="color:#00C8FF; font-size:0.6rem; letter-spacing:1.5px; font-weight:600;" class="uppercase">{c.label}</p>
-              <p style="color:#a0a0a0; font-size:0.72rem; font-weight:300; line-height:1.3; margin-top:2px;">{c.sub}</p>
+              <p style="color:#B8BEC7; font-size:0.72rem; font-weight:300; line-height:1.3; margin-top:2px;">{c.sub}</p>
             </div>
           ))}
         </div>
@@ -248,8 +248,8 @@ const chips = [
       <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-6" data-reveal data-delay="1">
         {logos.map((l) => (
           <a href={l.url} target="_blank" rel="noopener noreferrer" class="text-center" style="opacity:0.65;">
-            <span style="font-family:'Montserrat',sans-serif; font-size:1.25rem; font-weight:600; color:#e8e8e8; letter-spacing:0.5px; display:block; line-height:1.1;">{l.nombre}</span>
-            <span style="color:#a0a0a0; font-size:0.58rem; letter-spacing:1.5px; font-weight:400;" class="uppercase">{l.rubro}</span>
+            <span style="font-family:'Montserrat',sans-serif; font-size:1.25rem; font-weight:600; color:#F2F4F7; letter-spacing:0.5px; display:block; line-height:1.1;">{l.nombre}</span>
+            <span style="color:#B8BEC7; font-size:0.58rem; letter-spacing:1.5px; font-weight:400;" class="uppercase">{l.rubro}</span>
           </a>
         ))}
       </div>
@@ -264,7 +264,7 @@ const chips = [
         <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
           Una empresa con cara, no una agencia anónima.
         </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-xl mx-auto">
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-xl mx-auto">
           Dos socios que entran por frentes distintos —automatización y ads— y convergen
           en un solo objetivo: hacer crecer tu negocio.
         </p>
@@ -290,9 +290,9 @@ const chips = [
                 : <span style="color:rgba(160,160,160,0.4); font-size:0.55rem; letter-spacing:1.5px;" class="uppercase">Foto</span>}
             </div>
             <div class="min-w-0">
-              <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#e8e8e8; font-size:1.4rem;" class="leading-tight">{s.nombre}</h3>
+              <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.4rem;" class="leading-tight">{s.nombre}</h3>
               <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:1px; font-weight:500;" class="uppercase mt-1 mb-3">{s.rol}</p>
-              <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed mb-3">{s.desc}</p>
+              <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-3">{s.desc}</p>
               <a href={s.ig} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="text-xs font-light hover:opacity-70 transition-opacity">{s.handle} →</a>
             </div>
           </div>
@@ -316,7 +316,7 @@ const chips = [
         >
           Dos frentes que convergen.
         </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-lg mx-auto">
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-lg mx-auto">
           Automatizamos tu operación y traemos clientes con ads. Podés entrar por el frente
           que más te urge — o por los dos.
         </p>
@@ -337,17 +337,17 @@ const chips = [
               {s.tag}
             </span>
             <h3
-              style="font-family:'Montserrat',sans-serif; font-weight:700; color:#e8e8e8; font-size:clamp(1.5rem, 3vw, 2rem);"
+              style="font-family:'Montserrat',sans-serif; font-weight:700; color:#F2F4F7; font-size:clamp(1.5rem, 3vw, 2rem);"
               class="mb-3"
             >
               {s.nombre}
             </h3>
-            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed mb-7">
+            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-7">
               {s.desc}
             </p>
             <ul class="space-y-3 mb-7 flex-1">
               {s.items.map(item => (
-                <li style="color:#a0a0a0; font-weight:300;" class="text-sm flex items-start gap-3">
+                <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-3">
                   <span style="color:#00C8FF; flex-shrink:0; margin-top:1px;">→</span>
                   {item}
                 </li>
@@ -388,7 +388,7 @@ const chips = [
         >
           Sistemas con IA, ya funcionando.
         </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-lg mx-auto">
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-lg mx-auto">
           Productos con IA que podés contratar de forma independiente
           — o como parte de un proceso mayor.
         </p>
@@ -416,10 +416,10 @@ const chips = [
                 Demo disponible
               </span>
             </div>
-            <h3 style="color:#e8e8e8; font-weight:500;" class="text-lg mb-3 flex-1">
+            <h3 style="color:#F2F4F7; font-weight:500;" class="text-lg mb-3 flex-1">
               {h.nombre}
             </h3>
-            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed mb-7">
+            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-7">
               {h.desc}
             </p>
             {h.videoId && (
@@ -458,7 +458,7 @@ const chips = [
         >
           Clientes
         </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg">
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">
           Negocios reales, ya en producción — construidos con IA. Entrá a cada uno.
         </p>
       </div>
@@ -480,13 +480,13 @@ const chips = [
             >
               {c.rubro} · {c.ubicacion}
             </p>
-            <h3 style="color:#e8e8e8; font-weight:500;" class="text-xl mb-5">
+            <h3 style="color:#F2F4F7; font-weight:500;" class="text-xl mb-5">
               {c.nombre}
             </h3>
             <div class="flex flex-wrap gap-2 mb-6">
               {c.trabajo.map(t => (
                 <span
-                  style="color:#a0a0a0; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);"
+                  style="color:#B8BEC7; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);"
                   class="text-xs px-3 py-1 rounded-full font-light"
                 >
                   {t}
@@ -520,7 +520,7 @@ const chips = [
         >
           Diagnóstico, construcción y seguimiento.
         </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-2xl mx-auto leading-relaxed">
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-2xl mx-auto leading-relaxed">
           Nuestro método: entendemos, construimos y medimos. Solo seguimos si funciona — lo medimos juntos.
         </p>
       </div>
@@ -539,10 +539,10 @@ const chips = [
             >
               {p.num}
             </p>
-            <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#e8e8e8; font-size:1.5rem;" class="mb-3">
+            <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.5rem;" class="mb-3">
               {p.nombre}
             </h3>
-            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed flex-1">
+            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed flex-1">
               {p.desc}
             </p>
           </div>
@@ -568,7 +568,7 @@ const chips = [
         >
           Arrancar es simple.
         </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-2xl mx-auto leading-relaxed">
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-2xl mx-auto leading-relaxed">
           Del primer mensaje a tener el sistema andando — sin vueltas ni letra chica.
         </p>
       </div>
@@ -587,10 +587,10 @@ const chips = [
             >
               {p.num}
             </p>
-            <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#e8e8e8; font-size:1.5rem;" class="mb-3">
+            <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.5rem;" class="mb-3">
               {p.nombre}
             </h3>
-            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed flex-1">
+            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed flex-1">
               {p.desc}
             </p>
           </div>
@@ -621,7 +621,7 @@ const chips = [
         >
           Lo que dicen los que ya trabajaron con nosotros.
         </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-lg mx-auto">
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-lg mx-auto">
           Frases reales de clientes — próximamente.
         </p>
       </div>
@@ -635,11 +635,11 @@ const chips = [
             data-delay={String(i + 1)}
           >
             <p style="color:#00C8FF; font-family:'Montserrat',sans-serif; font-size:2.5rem; line-height:0.6;" class="mb-4">“</p>
-            <p style="color:#a0a0a0; font-weight:300; font-style:italic;" class="text-sm leading-relaxed flex-1 mb-6">
+            <p style="color:#B8BEC7; font-weight:300; font-style:italic;" class="text-sm leading-relaxed flex-1 mb-6">
               {t.frase}
             </p>
             <div style="border-top:1px solid rgba(255,255,255,0.07);" class="pt-4">
-              <p style="color:#e8e8e8; font-weight:500;" class="text-sm">{t.cliente}</p>
+              <p style="color:#F2F4F7; font-weight:500;" class="text-sm">{t.cliente}</p>
               <p style="color:rgba(160,160,160,0.5); font-size:0.7rem; letter-spacing:1px;" class="uppercase mt-1">{t.rubro}</p>
             </div>
           </div>
@@ -659,7 +659,7 @@ const chips = [
         >
           Negocios reales que ya confían en nosotros.
         </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-lg mx-auto">
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-lg mx-auto">
           Marcas y emprendimientos uruguayos con los que ya trabajamos.
         </p>
       </div>
@@ -673,8 +673,8 @@ const chips = [
             class="card-hover rounded-xl px-7 py-6 text-center flex flex-col items-center justify-center"
             style="background:#111111; border:1px solid rgba(255,255,255,0.07); min-width:170px;"
           >
-            <span style="font-family:'Montserrat',sans-serif; font-size:1.4rem; font-weight:600; color:#e8e8e8; letter-spacing:0.5px; line-height:1.1;">{c.nombre}</span>
-            <span style="color:#a0a0a0; font-size:0.6rem; letter-spacing:1.5px; font-weight:400;" class="uppercase mt-2">{c.rubro}</span>
+            <span style="font-family:'Montserrat',sans-serif; font-size:1.4rem; font-weight:600; color:#F2F4F7; letter-spacing:0.5px; line-height:1.1;">{c.nombre}</span>
+            <span style="color:#B8BEC7; font-size:0.6rem; letter-spacing:1.5px; font-weight:400;" class="uppercase mt-2">{c.rubro}</span>
           </a>
         ))}
       </div>
@@ -695,7 +695,7 @@ const chips = [
         >
           ¿Cuál es el desafío de tu negocio?
         </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg leading-relaxed">
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed">
           Describilo en tus palabras. En base a eso te presentamos cómo podemos ayudarte
           — y si no existe la solución, la construimos.
         </p>
@@ -715,7 +715,7 @@ const chips = [
 
         <!-- Área -->
         <div>
-          <label style="color:#a0a0a0; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
+          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
             Área del problema
           </label>
           <select name="area" required class="form-input">
@@ -731,7 +731,7 @@ const chips = [
 
         <!-- Problema -->
         <div>
-          <label style="color:#a0a0a0; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
+          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
             Describí el problema
           </label>
           <textarea
@@ -745,7 +745,7 @@ const chips = [
 
         <!-- Nombre -->
         <div>
-          <label style="color:#a0a0a0; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
+          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
             Tu nombre <span style="color:rgba(160,160,160,0.4);">(opcional)</span>
           </label>
           <input
@@ -759,7 +759,7 @@ const chips = [
         <!-- Submit -->
         <button
           type="submit"
-          style="background:#00C8FF; color:#0A0F1A; font-weight:600; width:100%;"
+          style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; width:100%;"
           class="py-3.5 rounded-lg hover:opacity-90 transition-opacity text-base"
         >
           Analizar mi caso →
@@ -772,8 +772,8 @@ const chips = [
       <!-- Success state -->
       <div id="diagnostico-success" class="hidden text-center py-8" data-reveal>
         <p style="color:#00C8FF; font-size:1.5rem; margin-bottom:1rem;">✓</p>
-        <p style="color:#e8e8e8; font-weight:500;" class="text-lg mb-2">¡Perfecto!</p>
-        <p style="color:#a0a0a0; font-weight:300;">
+        <p style="color:#F2F4F7; font-weight:500;" class="text-lg mb-2">¡Perfecto!</p>
+        <p style="color:#B8BEC7; font-weight:300;">
           Se abrió WhatsApp con tu mensaje. En menos de 24 horas te respondemos con una propuesta.
         </p>
       </div>
@@ -788,14 +788,14 @@ const chips = [
     >
       ¿Dónde está tu negocio hoy?
     </h2>
-    <p style="color:#a0a0a0; font-weight:300;" class="text-lg mb-10 leading-relaxed">
+    <p style="color:#B8BEC7; font-weight:300;" class="text-lg mb-10 leading-relaxed">
       Contame en qué punto estás y vemos juntos cuál es el siguiente paso.
     </p>
     <a
       href="https://wa.me/59892302941"
       target="_blank"
       rel="noopener noreferrer"
-      style="background:#00C8FF; color:#0A0F1A; font-weight:600;"
+      style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;"
       class="px-10 py-4 rounded-lg hover:opacity-90 transition-opacity inline-block text-base"
     >
       Hablar por WhatsApp
