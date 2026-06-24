@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand: #4ab8ff;
-  --color-bg-deep: #0a0a0a;
-  --color-bg-soft: #111111;
+  --color-brand: #00C8FF;
+  --color-bg-deep: #0A0F1A;
+  --color-bg-soft: #0B1324;
   --color-silver: #e8e8e8;
   --color-silver-dim: #a0a0a0;
 }
 
 /* Prose styles para posts del diario */
 .prose h2 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
   margin-top: 2rem;
@@ -19,7 +19,7 @@
   letter-spacing: 0.3px;
 }
 .prose h3 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.25rem;
   font-weight: 600;
   margin-top: 1.5rem;
@@ -49,7 +49,7 @@
   font-weight: 300;
 }
 .prose a {
-  color: #4ab8ff;
+  color: #00C8FF;
   text-decoration: underline;
 }
 .prose code {
@@ -60,7 +60,7 @@
   color: #e8e8e8;
 }
 .prose pre {
-  background: #111111;
+  background: #0B1324;
   border: 1px solid rgba(255,255,255,0.07);
   padding: 1rem 1.25rem;
   border-radius: 0.5rem;
@@ -76,7 +76,7 @@
   font-weight: 600;
 }
 .prose blockquote {
-  border-left: 3px solid #4ab8ff;
+  border-left: 3px solid #00C8FF;
   padding-left: 1rem;
   color: #a0a0a0;
   font-style: italic;
@@ -175,13 +175,13 @@ body::before {
   transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 .feed-pill:hover {
-  color: var(--pill-color, #4ab8ff);
-  border-color: var(--pill-color, #4ab8ff);
+  color: var(--pill-color, #00C8FF);
+  border-color: var(--pill-color, #00C8FF);
 }
 .feed-pill.active {
-  background: var(--pill-color, #4ab8ff);
-  color: #0a0a0a;
-  border-color: var(--pill-color, #4ab8ff);
+  background: var(--pill-color, #00C8FF);
+  color: #0A0F1A;
+  border-color: var(--pill-color, #00C8FF);
   font-weight: 600;
 }
 
@@ -207,7 +207,7 @@ body::before {
 .form-input {
   display: block;
   width: 100%;
-  background: #111111;
+  background: #0B1324;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 0.5rem;
   color: #e8e8e8;
@@ -235,6 +235,6 @@ select.form-input {
   cursor: pointer;
 }
 select.form-input option {
-  background: #111111;
+  background: #0B1324;
   color: #e8e8e8;
 }
