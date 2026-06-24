@@ -153,8 +153,8 @@ body::before {
   transition: box-shadow 0.35s ease, transform 0.35s ease;
 }
 .card-hover:hover {
-  box-shadow: 0 0 40px rgba(74, 184, 255, 0.07),
-              0 0 0 1px rgba(74, 184, 255, 0.22);
+  box-shadow: 0 0 40px rgba(0, 200, 255, 0.07),
+              0 0 0 1px rgba(0, 200, 255, 0.22);
   transform: translateY(-3px);
 }
 
@@ -191,16 +191,16 @@ body::before {
               opacity 0.22s ease;
 }
 .feed-card:hover {
-  box-shadow: 0 0 35px var(--tipo-glow, rgba(74,184,255,0.06)),
-              0 0 0 1px var(--tipo-border, rgba(74,184,255,0.15));
+  box-shadow: 0 0 35px var(--tipo-glow, rgba(0,200,255,0.06)),
+              0 0 0 1px var(--tipo-border, rgba(0,200,255,0.15));
   transform: translateY(-3px);
 }
 .feed-card-featured {
   transition: box-shadow 0.3s ease, opacity 0.22s ease;
 }
 .feed-card-featured:hover {
-  box-shadow: 0 0 55px var(--tipo-glow, rgba(74,184,255,0.07)),
-              0 0 0 1px var(--tipo-border, rgba(74,184,255,0.2));
+  box-shadow: 0 0 55px var(--tipo-glow, rgba(0,200,255,0.07)),
+              0 0 0 1px var(--tipo-border, rgba(0,200,255,0.2));
 }
 
 /* ── Form inputs ─────────────────────────────────────────── */
@@ -222,8 +222,8 @@ body::before {
   color: rgba(160, 160, 160, 0.35);
 }
 .form-input:focus {
-  border-color: rgba(74, 184, 255, 0.5);
-  box-shadow: 0 0 0 3px rgba(74, 184, 255, 0.07);
+  border-color: rgba(0, 200, 255, 0.5);
+  box-shadow: 0 0 0 3px rgba(0, 200, 255, 0.07);
 }
 select.form-input {
   appearance: none;
@@ -237,4 +237,93 @@ select.form-input {
 select.form-input option {
   background: #0B1324;
   color: #F2F4F7;
+}
+
+/* ════════════════════════════════════════════════════════════
+   GENIDEIA — Sistema visual (tokens · motion · utilidades)
+   ════════════════════════════════════════════════════════════ */
+:root {
+  --gen-bg-main: #07080D;
+  --gen-bg-secondary: #0A0F1A;
+  --gen-surface: #101526;
+  --gen-blue-electric: #00C8FF;
+  --gen-blue-tech: #007BFF;
+  --gen-cyan: #22D3EE;
+  --gen-white: #F2F4F7;
+  --gen-gray-metal: #B8BEC7;
+  --gen-muted: rgba(242, 244, 247, 0.68);
+  --gen-border: rgba(0, 200, 255, 0.18);
+  --gen-glow-soft: rgba(0, 200, 255, 0.18);
+  --gen-glow-strong: rgba(0, 123, 255, 0.38);
+  --motion-fast: 160ms;
+  --motion-base: 260ms;
+  --motion-slow: 700ms;
+  --motion-ambient: 12s;
+  --gen-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gen-bg {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(0, 123, 255, 0.18), transparent 32%),
+    radial-gradient(circle at 20% 80%, rgba(0, 200, 255, 0.10), transparent 28%),
+    var(--gen-bg-main);
+}
+.gen-panel {
+  background: rgba(16, 21, 38, 0.72);
+  border: 1px solid rgba(0, 200, 255, 0.14);
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+}
+.gen-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.7), transparent);
+}
+.gen-text-gradient {
+  background: linear-gradient(90deg, #F2F4F7, #00C8FF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--motion-slow) var(--gen-ease),
+              transform var(--motion-slow) var(--gen-ease);
+}
+.reveal-up.is-visible { opacity: 1; transform: translateY(0); }
+
+.glow-hover {
+  transition: border-color var(--motion-base) ease, box-shadow var(--motion-base) ease, transform var(--motion-base) ease;
+}
+.glow-hover:hover {
+  border-color: rgba(0, 200, 255, 0.45);
+  box-shadow: 0 0 32px rgba(0, 200, 255, 0.14);
+  transform: translateY(-3px);
+}
+
+@keyframes genideiaFloat {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -10px, 0); }
+}
+@keyframes genideiaGlowPulse {
+  0%, 100% { opacity: 0.55; filter: blur(0px); }
+  50% { opacity: 0.9; filter: blur(1px); }
+}
+@keyframes genideiaCircuitDrift {
+  0% { transform: translateX(0); opacity: 0.28; }
+  50% { opacity: 0.5; }
+  100% { transform: translateX(24px); opacity: 0.28; }
+}
+.gen-float { animation: genideiaFloat var(--motion-ambient) ease-in-out infinite; }
+.gen-glow-pulse { animation: genideiaGlowPulse 5s ease-in-out infinite; }
+.gen-circuit-drift { animation: genideiaCircuitDrift 16s ease-in-out infinite alternate; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
