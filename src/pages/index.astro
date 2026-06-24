@@ -233,12 +233,12 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
         </p>
       </div>
 
-      <!-- Derecha: símbolo GII con glow pulsante + float -->
+      <!-- Derecha: el isotipo GII se arma y desarma con partículas (canvas) -->
       <div class="hero-animate order-first lg:order-last" data-delay="3" style="position:relative;">
         <div class="hero-glow" style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,200,255,0.22) 0%, transparent 60%); z-index:0;" aria-hidden="true"></div>
-        <div class="gen-float" style="position:relative; z-index:1; width:100%; max-width:460px; aspect-ratio:1; margin:0 auto;">
-          <img src="/img/symbol-gii.png" alt="GENIDEIA Company" loading="eager" width="700" height="700"
-            style="width:100%; height:100%; object-fit:contain; -webkit-mask-image:radial-gradient(circle at center, #000 55%, transparent 74%); mask-image:radial-gradient(circle at center, #000 55%, transparent 74%);" />
+        <div style="position:relative; z-index:1; width:100%; max-width:480px; aspect-ratio:1; margin:0 auto;">
+          <canvas id="hero-logo" style="width:100%; height:100%; display:block;" aria-hidden="true"></canvas>
+          <img src="/img/symbol-gii.png" alt="GENIDEIA Company" width="700" height="700" style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none;" />
         </div>
       </div>
 
@@ -863,27 +863,14 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
 </style>
 
 <script>
-  // Red neuronal que se ARMA y DESARMA: partículas que convergen en una esfera de nodos
-  // conectados (constelación), rotan en 3D y se dispersan — en loop infinito.
+  // El isotipo GII se ARMA y DESARMA: partículas que convergen en la silueta del logo
+  // (muestreada de la imagen) y se dispersan — en loop infinito.
   (() => {
-    const canvas = document.getElementById('hero-net');
+    const canvas = document.getElementById('hero-logo');
     if (!(canvas instanceof HTMLCanvasElement)) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const N = window.innerWidth < 640 ? 64 : 90;
-    const golden = Math.PI * (3 - Math.sqrt(5));
-    const pts = [];
-    for (let i = 0; i < N; i++) {
-      const y = 1 - (i / (N - 1)) * 2;          // -1..1
-      const r = Math.sqrt(Math.max(0, 1 - y * y));
-      const th = golden * i;
-      pts.push({
-        x: Math.cos(th) * r, y, z: Math.sin(th) * r,       // destino: esfera
-        sx: Math.random() * 2 - 1, sy: Math.random() * 2 - 1, sz: Math.random() * 2 - 1, // disperso
-      });
-    }
 
     let W = 0, H = 0, DPR = 1;
     function resize() {
@@ -897,8 +884,43 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
     resize();
     window.addEventListener('resize', resize);
 
-    // Ciclo: arma → sostiene → desarma → pausa
-    const T_A = 2200, T_H = 2400, T_D = 2000, T_H2 = 700;
+    const MAX = window.innerWidth < 640 ? 320 : 560;
+    let pts = [];
+
+    function buildTargets(img) {
+      const S = 150;
+      const off = document.createElement('canvas');
+      off.width = S; off.height = S;
+      const octx = off.getContext('2d');
+      if (!octx) return;
+      octx.drawImage(img, 0, 0, S, S);
+      let data;
+      try { data = octx.getImageData(0, 0, S, S).data; } catch (e) { return; }
+      const raw = [];
+      for (let y = 0; y < S; y += 2) {
+        for (let x = 0; x < S; x += 2) {
+          const i = (y * S + x) * 4;
+          const a = data[i + 3];
+          const bright = (data[i] + data[i + 1] + data[i + 2]) / 3;
+          const nx = (x / S) * 2 - 1, ny = (y / S) * 2 - 1;
+          if (nx * nx + ny * ny > 1) continue;          // recorte circular
+          if (a > 40 && bright > 95) raw.push([nx, ny]); // sólo anillo + GII + glow
+        }
+      }
+      const stride = Math.max(1, Math.floor(raw.length / MAX));
+      pts = [];
+      for (let i = 0; i < raw.length; i += stride) {
+        pts.push({
+          x: raw[i][0], y: raw[i][1],
+          sx: (Math.random() * 2 - 1) * 1.9,
+          sy: (Math.random() * 2 - 1) * 1.9,
+          r: 0.8 + Math.random() * 1.1,
+          a0: 0.35 + Math.random() * 0.45,
+        });
+      }
+    }
+
+    const T_A = 2400, T_H = 2000, T_D = 2000, T_H2 = 650;
     const CYCLE = T_A + T_H + T_D + T_H2;
     const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
     function assembly(ms) {
@@ -909,59 +931,26 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
       return 0;
     }
 
-    let angle = 0;
-    const start = performance.now();
-    const SCATTER = 2.3;
+    let started = 0;
     function frame(now) {
-      const ms = now - start;
-      const a = reduced ? 1 : assembly(ms);
-      if (!reduced) angle += 0.0018;
-      const R = Math.min(W, H) * 0.34;
+      if (!started) started = now;
+      const a = reduced ? 1 : assembly(now - started);
+      const R = Math.min(W, H) * 0.44;
       const cx = W / 2, cy = H / 2;
-      const cos = Math.cos(angle), sin = Math.sin(angle);
       ctx.clearRect(0, 0, W, H);
-
-      const pr = [];
       for (const p of pts) {
-        const X = p.sx * SCATTER + (p.x - p.sx * SCATTER) * a;
-        const Y = p.sy * SCATTER + (p.y - p.sy * SCATTER) * a;
-        const Z = p.sz * SCATTER + (p.z - p.sz * SCATTER) * a;
-        const rx = X * cos - Z * sin;
-        const rz = X * sin + Z * cos;
-        const depth = Math.max(0, Math.min(1, (rz + 1.5) / 3));
-        pr.push({ x: cx + rx * R, y: cy + Y * R, depth });
-      }
-
-      const D = R * 0.6;
-      ctx.lineWidth = 0.7;
-      for (let i = 0; i < N; i++) {
-        for (let j = i + 1; j < N; j++) {
-          const dx = pr[i].x - pr[j].x, dy = pr[i].y - pr[j].y;
-          const d = Math.hypot(dx, dy);
-          if (d < D) {
-            const al = (1 - d / D) * 0.5 * (0.25 + 0.75 * a);
-            ctx.strokeStyle = 'rgba(0,200,255,' + al.toFixed(3) + ')';
-            ctx.beginPath();
-            ctx.moveTo(pr[i].x, pr[i].y);
-            ctx.lineTo(pr[j].x, pr[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      ctx.shadowColor = 'rgba(0,200,255,0.9)';
-      ctx.shadowBlur = 6;
-      for (const q of pr) {
-        const rad = 1.2 + q.depth * 2.2;
-        ctx.fillStyle = 'rgba(150,210,255,' + (0.45 + q.depth * 0.5).toFixed(3) + ')';
+        const X = p.sx + (p.x - p.sx) * a;
+        const Y = p.sy + (p.y - p.sy) * a;
+        ctx.fillStyle = 'rgba(130,215,255,' + (p.a0 * (0.3 + 0.7 * a)).toFixed(3) + ')';
         ctx.beginPath();
-        ctx.arc(q.x, q.y, rad, 0, Math.PI * 2);
+        ctx.arc(cx + X * R, cy + Y * R, p.r * (0.7 + 0.3 * a), 0, Math.PI * 2);
         ctx.fill();
       }
-      ctx.shadowBlur = 0;
-
       requestAnimationFrame(frame);
     }
-    requestAnimationFrame(frame);
+
+    const img = new Image();
+    img.onload = () => { buildTargets(img); if (pts.length) requestAnimationFrame(frame); };
+    img.src = '/img/symbol-gii.png';
   })();
 </script>
