@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "andres.genideiacompany.com" }],
+      "destination": "/andres"
+    }
+  ]
+}
