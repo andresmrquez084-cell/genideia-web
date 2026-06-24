@@ -626,48 +626,6 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
     </div>
   </section>
 
-  <!-- ── TESTIMONIOS ───────────────────────────────────────── -->
-  <!-- TESTIMONIOS: Andrés pasa frases reales -->
-  <section
-    id="testimonios"
-    style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);"
-    class="py-24"
-  >
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-16" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Testimonios</p>
-        <h2
-          style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
-          class="mb-4"
-        >
-          Lo que dicen los que ya trabajaron con nosotros.
-        </h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-lg mx-auto">
-          Frases reales de clientes — próximamente.
-        </p>
-      </div>
-
-      <div class="grid sm:grid-cols-3 gap-6">
-        {testimonios.map((t, i) => (
-          <div
-            class="card-hover rounded-xl p-7 flex flex-col"
-            style="background:#111111; border:1px solid rgba(255,255,255,0.07);"
-            data-reveal
-            data-delay={String(i + 1)}
-          >
-            <p style="color:#00C8FF; font-family:'Montserrat',sans-serif; font-size:2.5rem; line-height:0.6;" class="mb-4">“</p>
-            <p style="color:#B8BEC7; font-weight:300; font-style:italic;" class="text-sm leading-relaxed flex-1 mb-6">
-              {t.frase}
-            </p>
-            <div style="border-top:1px solid rgba(255,255,255,0.07);" class="pt-4">
-              <p style="color:#F2F4F7; font-weight:500;" class="text-sm">{t.cliente}</p>
-              <p style="color:rgba(160,160,160,0.5); font-size:0.7rem; letter-spacing:1px;" class="uppercase mt-1">{t.rubro}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
 
   <!-- ── QUIÉNES YA CONFIARON (vitrina de clientes reales) ─── -->
   <section id="confiaron" class="py-24">
