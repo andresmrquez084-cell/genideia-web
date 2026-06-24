@@ -235,8 +235,8 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
 
       <!-- Derecha: el isotipo GII se arma y desarma con partículas (canvas) -->
       <div class="hero-animate order-first lg:order-last" data-delay="3" style="position:relative;">
-        <div class="hero-glow" style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,200,255,0.28) 0%, transparent 64%); z-index:0;" aria-hidden="true"></div>
-        <div style="position:relative; z-index:1; width:100%; max-width:600px; aspect-ratio:1; margin:0 auto;">
+        <div class="hero-glow" style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,200,255,0.30) 0%, transparent 66%); z-index:0;" aria-hidden="true"></div>
+        <div style="position:relative; z-index:1; width:100%; max-width:720px; aspect-ratio:1; margin:0 auto;">
           <canvas id="hero-logo" style="width:100%; height:100%; display:block;" aria-hidden="true"></canvas>
           <img src="/img/symbol-gii.png" alt="GENIDEIA Company" width="700" height="700" style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none;" />
         </div>
@@ -915,7 +915,7 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
           sx: (Math.random() * 2 - 1) * 1.9,
           sy: (Math.random() * 2 - 1) * 1.9,
           r: 0.95 + Math.random() * 1.3,
-          a0: 0.45 + Math.random() * 0.45,
+          a0: 0.5 + Math.random() * 0.45,
         });
       }
     }
@@ -935,7 +935,7 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
     function frame(now) {
       if (!started) started = now;
       const a = reduced ? 1 : assembly(now - started);
-      const R = Math.min(W, H) * 0.49;
+      const R = Math.min(W, H) * 0.54;
       const cx = W / 2, cy = H / 2;
       ctx.clearRect(0, 0, W, H);
       for (const p of pts) {
