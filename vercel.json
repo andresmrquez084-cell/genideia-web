@@ -1,9 +1,10 @@
 {
-  "rewrites": [
+  "redirects": [
     {
       "source": "/",
       "has": [{ "type": "host", "value": "andres.genideiacompany.com" }],
-      "destination": "/andres"
+      "destination": "/andres",
+      "permanent": false
     }
   ]
 }
