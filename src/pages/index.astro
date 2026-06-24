@@ -1,22 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Los dos frentes: cada socio entra por uno distinto y convergen en hacer crecer al cliente.
+// Qué hacemos: una base (la arma el equipo) + dos frentes (cada socio) que convergen en hacer crecer al cliente.
 const servicios = [
   {
-    tag: 'Frente I · Andrés Albornoz',
-    nombre: 'Automatización & soluciones',
-    desc: 'Automatizamos los procesos internos de tu empresa y construimos la solución a medida. No solo asesoramos: lo armamos nosotros, con las herramientas, recursos y procedimientos que hagan falta.',
+    tag: 'Punto de partida · Equipo GENIDEIA',
+    nombre: 'Creación & optimización',
+    desc: 'El punto de partida que arma todo el equipo: dejamos tu negocio existiendo de forma profesional y listo para recibir clientes. La base sobre la que después se escala.',
     items: [
-      'Bot de WhatsApp a medida',
-      'Workflows y automatizaciones con n8n',
-      'Webs, e-commerce y sistemas internos con IA',
-      'Integración con las herramientas que ya usás',
+      'Branding aplicado: logo, paleta, tipografías y sistema visual',
+      'Perfiles optimizados según tu nicho (Instagram, WhatsApp Business, Google Business)',
+      'Web o landing mobile-first, llave en mano',
+      'Medio de pago si vendés online (Mercado Pago)',
+      'Baseline documentado: el punto de partida para medir resultados',
     ],
-    para: 'Para empresas que necesitan automatizar sus procesos internos y dejar de depender de hacer todo a mano.',
+    para: 'Para empresas que necesitan una presencia profesional sólida antes de escalar con ads o automatización.',
   },
   {
-    tag: 'Frente II · Tadeo Granada',
+    tag: 'Frente · Tadeo Granada',
     nombre: 'Publicidad / Ads',
     desc: 'Anuncios de todo tipo que traen clientes: estrategia, segmentación y creatividades para campañas pagas en los canales donde está tu mercado.',
     items: [
@@ -26,6 +27,18 @@ const servicios = [
       'Contenido y creatividades para anuncios',
     ],
     para: 'Para empresas que ya tienen su operación estable y están listas para instalar anuncios y escalar la demanda.',
+  },
+  {
+    tag: 'Frente · Andrés Albornoz',
+    nombre: 'Automatización & soluciones',
+    desc: 'Automatizamos los procesos internos de tu empresa y construimos la solución a medida. No solo asesoramos: lo armamos nosotros, con las herramientas, recursos y procedimientos que hagan falta.',
+    items: [
+      'Bot de WhatsApp a medida',
+      'Workflows y automatizaciones con n8n',
+      'Webs, e-commerce y sistemas internos con IA',
+      'Integración con las herramientas que ya usás',
+    ],
+    para: 'Para empresas que necesitan automatizar sus procesos internos y dejar de depender de hacer todo a mano.',
   },
 ];
 
@@ -334,15 +347,15 @@ const chips = [
           style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
           class="mb-4"
         >
-          Dos frentes que convergen.
+          Una base y dos frentes que convergen.
         </h2>
         <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-lg mx-auto">
-          Automatizamos tu operación y traemos clientes con ads. Podés entrar por el frente
-          que más te urge — o por los dos.
+          Primero dejamos tu base profesional lista. Sobre eso, cada socio suma su frente
+          —anuncios y automatización— y convergen en hacer crecer tu negocio.
         </p>
       </div>
 
-      <div class="grid sm:grid-cols-2 gap-6">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {servicios.map((s, i) => (
           <div
             class="card-hover rounded-xl p-8 flex flex-col"
