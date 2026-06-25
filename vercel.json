@@ -5,6 +5,12 @@
       "has": [{ "type": "host", "value": "andres.genideiacompany.com" }],
       "destination": "/andres",
       "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "tadeo.genideiacompany.com" }],
+      "destination": "/tadeo",
+      "permanent": false
     }
   ]
 }

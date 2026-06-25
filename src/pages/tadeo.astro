@@ -1,0 +1,267 @@
+---
+// Landing personal de Tadeo Granada — publicidad y ads para empresas.
+// Misma estructura que la de Andrés (4 pasos): Quién soy · Qué hago · Cómo lo hago · Trabajar conmigo.
+import Loader from '../transitions/Loader.astro';
+import '../transitions/transitions.css';
+import '../styles/global.css';
+
+const WA = '59892267601';
+const waMsg = encodeURIComponent('Hola Tadeo, quiero traer más clientes con anuncios. Te cuento:');
+const waUrl = `https://wa.me/${WA}?text=${waMsg}`;
+
+const queHago = [
+  'Campañas en Meta e Instagram que llegan a tu cliente ideal.',
+  'Google Ads para captar a quien ya te está buscando.',
+  'TikTok y LinkedIn Ads, según dónde está tu mercado.',
+  'Creatividades + optimización continua con métricas (CPL, CPA, ROAS).',
+];
+const comoLoHago = [
+  { n: '01', t: 'Diagnóstico', d: 'Analizo tu negocio, tu cliente y tu competencia. Gratis.' },
+  { n: '02', t: 'Lanzo las campañas', d: 'Segmentación, creativos y setup (Pixel / GA4). Salgo a buscarte clientes.' },
+  { n: '03', t: 'Optimizo y mido', d: 'Sigo CPL, CPA y ROAS. Lo que no rinde, se corrige.' },
+];
+const trabajar = [
+  { n: '01', t: 'Me escribís tu caso', d: 'Por el formulario o WhatsApp. Te respondo yo.' },
+  { n: '02', t: 'Vemos qué canal conviene', d: 'Te digo por dónde empezar a traer clientes.' },
+  { n: '03', t: 'Lanzamos y medimos', d: 'Campañas activas, con números claros desde el día uno.' },
+];
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tadeo Granada — Publicidad y Ads para empresas</title>
+  <meta name="description" content="Diseño y gestiono tus anuncios en Meta, Instagram, Google y TikTok para que tu empresa reciba clientes de forma constante y medible. Tadeo Granada." />
+  <meta property="og:title" content="Tadeo Granada — Publicidad y Ads" />
+  <meta property="og:description" content="Más clientes, todos los meses. Campañas de ads que rinden y se miden." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://genideiacompany.com/og-genideia.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://genideiacompany.com/og-genideia.png" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>import '../transitions/reveal.js';</script>
+</head>
+<body style="background:#07080D radial-gradient(ellipse 90% 55% at 50% -8%, rgba(0,200,255,0.10), transparent 62%) no-repeat fixed; color:#F2F4F7; font-family:'Poppins',sans-serif; -webkit-font-smoothing:antialiased;">
+  <Loader logoSrc="/img/logo-nav.png" />
+
+  <!-- ── HEADER ──────────────────────────────────────────────── -->
+  <header style="background:rgba(10,10,10,0.92); border-bottom:1px solid rgba(255,255,255,0.07);" class="sticky top-0 z-50 backdrop-blur">
+    <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <a href="/tadeo" class="flex items-baseline gap-2">
+        <span style="font-family:'Montserrat',sans-serif; font-size:1.15rem; font-weight:600; color:#F2F4F7; letter-spacing:0.5px;">Tadeo Granada</span>
+        <span style="color:#00C8FF; font-size:0.6rem; letter-spacing:2px;" class="uppercase hidden sm:inline">Ads</span>
+      </a>
+      <div class="flex items-center gap-4">
+        <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; font-size:0.78rem;" class="px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Hablemos</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ── HERO ──────────────────────────────────────────────── -->
+  <section class="max-w-6xl mx-auto px-6 pt-20 pb-20">
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+      <div>
+        <p class="text-xs font-medium mb-6 uppercase" style="color:#00C8FF; letter-spacing:3px;">Publicidad &amp; Ads para empresas</p>
+        <h1 class="mb-6" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.0; letter-spacing:-1.5px; font-size:clamp(2.6rem, 6vw, 4.6rem);">
+          Más clientes,<br /><span style="color:#B8BEC7; font-weight:300; font-style:italic;">todos los meses.</span>
+        </h1>
+        <p class="mb-9 leading-relaxed max-w-md text-lg" style="color:#B8BEC7; font-weight:300;">
+          Diseño y gestiono tus anuncios — Meta, Instagram, Google, TikTok — para que tu empresa reciba clientes de forma constante y medible.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#trabajar" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">Quiero más clientes →</a>
+          <a href="#quien" style="border:1px solid rgba(255,255,255,0.12); color:#B8BEC7;" class="px-8 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors text-center">Conocé cómo</a>
+        </div>
+      </div>
+      <!-- Foto de Tadeo -->
+      <div class="order-first lg:order-last" style="position:relative;">
+        <div class="hero-glow" style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,200,255,0.16) 0%, transparent 64%); z-index:0;" aria-hidden="true"></div>
+        <div style="position:relative; z-index:1; width:100%; max-width:380px; aspect-ratio:4/5; margin:0 auto; border-radius:16px; overflow:hidden; border:1px solid rgba(0,200,255,0.2);">
+          <img src="/img/tadeo.jpg" alt="Tadeo Granada — publicidad y ads para empresas" style="width:100%; height:100%; object-fit:cover; object-position:center 20%; display:block;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 01 · QUIÉN SOY ────────────────────────────────────── -->
+  <section id="quien" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
+    <div class="max-w-5xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+      <div data-reveal>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">01 · Quién soy</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-5">Soy Tadeo Granada.</h2>
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed mb-7">
+          Cofundador de GENIDEIA Company. Llevo la pauta: diseño, segmento y optimizo campañas de anuncios para que tu empresa consiga clientes de forma constante — y medible.
+        </p>
+        <a href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">Hablemos →</a>
+      </div>
+      <!-- Video: presentación natural -->
+      <div data-reveal data-delay="1">
+        <div style="aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2); background:linear-gradient(180deg, rgba(0,200,255,0.08), rgba(255,255,255,0.02)); display:flex; align-items:center; justify-content:center;">
+          <!-- VIDEO: reemplazar por <video controls ...> o <iframe> de YouTube cuando Tadeo lo grabe. -->
+          <div class="text-center" style="color:rgba(0,200,255,0.6);">
+            <div style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(0,200,255,0.4); display:flex; align-items:center; justify-content:center; margin:0 auto;"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+            <p style="font-size:0.62rem; letter-spacing:2px; margin-top:12px;" class="uppercase">Video · te lo cuento yo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 02 · QUÉ HAGO ─────────────────────────────────────── -->
+  <section id="que" class="py-24">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="mb-12" data-reveal>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">02 · Qué hago</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);">Traigo clientes con anuncios que rinden.</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4 mb-12">
+        {queHago.map((q, i) => (
+          <div class="card-hover rounded-xl p-6 flex items-start gap-4" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String((i % 2) + 1)}>
+            <span style="color:#00C8FF; flex-shrink:0; font-family:'Montserrat',sans-serif; font-size:1.4rem; line-height:1;">✓</span>
+            <p style="color:#cfcfcf; font-weight:300;" class="leading-relaxed">{q}</p>
+          </div>
+        ))}
+      </div>
+      <div class="text-center" data-reveal>
+        <a href="#trabajar" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block">¿Qué canal te traería más clientes? Escribime →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 03 · CÓMO LO HAGO ─────────────────────────────────── -->
+  <section id="como" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-24">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="mb-12" data-reveal>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">03 · Cómo lo hago</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-3">Pauta con método, no a ciegas.</h2>
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">Cada peso invertido se mide. Si no rinde, se ajusta.</p>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-8 mb-14">
+        {comoLoHago.map((p, i) => (
+          <div data-reveal data-delay={String(i + 1)}>
+            <p style="font-family:'Montserrat',sans-serif; font-weight:700; color:#00C8FF; line-height:1;" class="text-6xl mb-4">{p.n}</p>
+            <h3 style="color:#F2F4F7; font-weight:500;" class="text-lg mb-2">{p.t}</h3>
+            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{p.d}</p>
+          </div>
+        ))}
+      </div>
+      <div class="grid lg:grid-cols-2 gap-8 items-center">
+        <div data-reveal>
+          <div style="aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2); background:linear-gradient(180deg, rgba(0,200,255,0.08), rgba(255,255,255,0.02)); display:flex; align-items:center; justify-content:center;">
+            <div class="text-center" style="color:rgba(0,200,255,0.6);">
+              <div style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(0,200,255,0.4); display:flex; align-items:center; justify-content:center; margin:0 auto;"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+              <p style="font-size:0.62rem; letter-spacing:2px; margin-top:12px;" class="uppercase">Video · cómo trabajo</p>
+            </div>
+          </div>
+        </div>
+        <div data-reveal data-delay="1" class="text-center lg:text-left">
+          <p style="color:#B8BEC7; font-weight:300;" class="text-lg mb-6">Te muestro las campañas y los números, en vivo, sin vueltas.</p>
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block">Hablemos por WhatsApp →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 04 · TRABAJAR CONMIGO ─────────────────────────────── -->
+  <section id="trabajar" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="text-center mb-12" data-reveal>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">04 · Trabajar conmigo</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.4rem);" class="mb-4">Empezamos con un diagnóstico gratis.</h2>
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">Te digo qué canal te conviene para empezar a traer clientes.</p>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-6 mb-12">
+        {trabajar.map((p, i) => (
+          <div class="card-hover rounded-xl p-5 text-center" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String(i + 1)}>
+            <p style="font-family:'Montserrat',sans-serif; font-weight:700; color:#00C8FF;" class="text-3xl mb-2">{p.n}</p>
+            <h3 style="color:#F2F4F7; font-weight:500;" class="mb-1">{p.t}</h3>
+            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{p.d}</p>
+          </div>
+        ))}
+      </div>
+
+      <form id="auto-form" class="space-y-5" data-reveal>
+        <div>
+          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">¿Qué querés lograr con ads?</label>
+          <select name="area" required class="form-input">
+            <option value="">Elegí una opción</option>
+            <option>Más clientes / ventas</option>
+            <option>Más reservas o turnos</option>
+            <option>Dar a conocer la marca</option>
+            <option>Bajar el costo por cliente (CPL / CPA)</option>
+            <option>Escalar campañas que ya tengo</option>
+            <option>No sé / quiero asesorarme</option>
+          </select>
+        </div>
+        <div>
+          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">Describí tu situación actual</label>
+          <textarea name="problema" rows="4" required placeholder="¿Qué vendés? ¿Ya hiciste ads antes? ¿Cuál es tu objetivo?" class="form-input resize-none"></textarea>
+        </div>
+        <div>
+          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">Tu nombre / empresa <span style="color:rgba(160,160,160,0.4);">(opcional)</span></label>
+          <input name="nombre" type="text" placeholder="Para personalizar la respuesta" class="form-input" />
+        </div>
+        <button type="submit" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; width:100%;" class="py-3.5 rounded-lg hover:opacity-90 transition-opacity text-base">Enviar y hablar por WhatsApp →</button>
+        <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-xs text-center">Se abre WhatsApp con tu mensaje ya armado · Te respondo en menos de 24 horas</p>
+      </form>
+
+      <div id="auto-success" class="hidden text-center py-8">
+        <p style="color:#00C8FF; font-size:1.5rem; margin-bottom:1rem;">✓</p>
+        <p style="color:#F2F4F7; font-weight:500;" class="text-lg mb-2">¡Listo!</p>
+        <p style="color:#B8BEC7; font-weight:300;">Se abrió WhatsApp con tu mensaje. Te respondo con una propuesta concreta.</p>
+        <p class="text-sm mt-4" style="color:#B8BEC7; font-weight:300;">¿No se abrió? <a id="wa-fallback" href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; text-decoration:underline;">Abrí WhatsApp acá →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer style="border-top:1px solid rgba(255,255,255,0.07);" class="py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm" style="color:#B8BEC7;">
+      <div>
+        <p style="font-family:'Montserrat',sans-serif; font-size:1.05rem; color:#F2F4F7;">Tadeo Granada</p>
+        <p style="font-weight:300; font-size:0.8rem;">Cofundador de <a href="/" style="color:#00C8FF;">GENIDEIA Company</a> · Publicidad y Ads</p>
+      </div>
+      <a href={waUrl} target="_blank" rel="noopener noreferrer" style="font-weight:300;" class="hover:text-[#00C8FF] transition-colors">WhatsApp +598 92 267 601</a>
+    </div>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach((el) => obs.observe(el));
+
+    const form = document.getElementById('auto-form');
+    const ok = document.getElementById('auto-success');
+    form?.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const data = new FormData(form);
+      const area = (data.get('area') || '').toString();
+      const prob = (data.get('problema') || '').toString();
+      const nom = (data.get('nombre') || '').toString();
+      const hola = nom ? `Hola Tadeo, soy ${nom}.` : 'Hola Tadeo,';
+      const msg = `${hola} quiero traer clientes con ads: ${area}.\n\n*Mi situación:*\n${prob}`;
+      const waLink = `https://wa.me/59892267601?text=${encodeURIComponent(msg)}`;
+      const fb = document.getElementById('wa-fallback');
+      if (fb) fb.href = waLink;
+      window.open(waLink, '_blank');
+      form.classList.add('hidden');
+      ok?.classList.remove('hidden');
+      ok?.classList.add('is-visible');
+    });
+  </script>
+
+  <style>
+    @keyframes heroGlowPulse { 0%,100% { opacity:0.55; transform:scale(1); } 50% { opacity:1; transform:scale(1.08); } }
+    .hero-glow { animation: heroGlowPulse 5s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .hero-glow { animation: none; } }
+  </style>
+
+</body>
+</html>
