@@ -1,0 +1,98 @@
+{
+  "_LEEME": "Este es el archivo que edita Tadeo. Cambiá SOLO el texto entre comillas, nunca borres las comillas, las llaves { } ni las comas. El diseño y el resto de la web no se tocan desde acá. Para cambiar la foto: subí la nueva imagen como /public/img/tadeo.jpg (o cambiá la ruta en 'hero.foto').",
+
+  "whatsapp": "59892267601",
+  "whatsappMensajeInicial": "Hola Tadeo, quiero traer más clientes con anuncios. Te cuento:",
+
+  "seo": {
+    "titulo": "Tadeo Granada — Publicidad y Ads para empresas",
+    "descripcion": "Diseño y gestiono tus anuncios en Meta, Instagram, Google y TikTok para que tu empresa reciba clientes de forma constante y medible. Tadeo Granada.",
+    "ogTitulo": "Tadeo Granada — Publicidad y Ads",
+    "ogDescripcion": "Más clientes, todos los meses. Campañas de ads que rinden y se miden."
+  },
+
+  "marca": {
+    "nombre": "Tadeo Granada",
+    "etiqueta": "Ads",
+    "botonHablemos": "Hablemos"
+  },
+
+  "hero": {
+    "encabezado": "Publicidad & Ads para empresas",
+    "tituloLinea1": "Más clientes,",
+    "tituloLinea2": "todos los meses.",
+    "subtitulo": "Diseño y gestiono tus anuncios — Meta, Instagram, Google, TikTok — para que tu empresa reciba clientes de forma constante y medible.",
+    "botonPrimario": "Quiero más clientes →",
+    "botonSecundario": "Conocé cómo",
+    "foto": "/img/tadeo.jpg",
+    "fotoAlt": "Tadeo Granada — publicidad y ads para empresas"
+  },
+
+  "quienSoy": {
+    "encabezado": "01 · Quién soy",
+    "titulo": "Soy Tadeo Granada.",
+    "texto": "Cofundador de GENIDEIA Company. Llevo la pauta: diseño, segmento y optimizo campañas de anuncios para que tu empresa consiga clientes de forma constante — y medible.",
+    "enlace": "Hablemos →",
+    "videoEtiqueta": "Video · te lo cuento yo"
+  },
+
+  "queHago": {
+    "encabezado": "02 · Qué hago",
+    "titulo": "Traigo clientes con anuncios que rinden.",
+    "items": [
+      "Campañas en Meta e Instagram que llegan a tu cliente ideal.",
+      "Google Ads para captar a quien ya te está buscando.",
+      "TikTok y LinkedIn Ads, según dónde está tu mercado.",
+      "Creatividades + optimización continua con métricas (CPL, CPA, ROAS)."
+    ],
+    "boton": "¿Qué canal te traería más clientes? Escribime →"
+  },
+
+  "comoLoHago": {
+    "encabezado": "03 · Cómo lo hago",
+    "titulo": "Pauta con método, no a ciegas.",
+    "subtitulo": "Cada peso invertido se mide. Si no rinde, se ajusta.",
+    "pasos": [
+      { "n": "01", "t": "Diagnóstico", "d": "Analizo tu negocio, tu cliente y tu competencia. Gratis." },
+      { "n": "02", "t": "Lanzo las campañas", "d": "Segmentación, creativos y setup (Pixel / GA4). Salgo a buscarte clientes." },
+      { "n": "03", "t": "Optimizo y mido", "d": "Sigo CPL, CPA y ROAS. Lo que no rinde, se corrige." }
+    ],
+    "videoEtiqueta": "Video · cómo trabajo",
+    "textoVideo": "Te muestro las campañas y los números, en vivo, sin vueltas.",
+    "botonVideo": "Hablemos por WhatsApp →"
+  },
+
+  "trabajar": {
+    "encabezado": "04 · Trabajar conmigo",
+    "titulo": "Empezamos con un diagnóstico gratis.",
+    "subtitulo": "Te digo qué canal te conviene para empezar a traer clientes.",
+    "pasos": [
+      { "n": "01", "t": "Me escribís tu caso", "d": "Por el formulario o WhatsApp. Te respondo yo." },
+      { "n": "02", "t": "Vemos qué canal conviene", "d": "Te digo por dónde empezar a traer clientes." },
+      { "n": "03", "t": "Lanzamos y medimos", "d": "Campañas activas, con números claros desde el día uno." }
+    ],
+    "form": {
+      "labelObjetivo": "¿Qué querés lograr con ads?",
+      "opcionesObjetivo": [
+        "Más clientes / ventas",
+        "Más reservas o turnos",
+        "Dar a conocer la marca",
+        "Bajar el costo por cliente (CPL / CPA)",
+        "Escalar campañas que ya tengo",
+        "No sé / quiero asesorarme"
+      ],
+      "labelSituacion": "Describí tu situación actual",
+      "placeholderSituacion": "¿Qué vendés? ¿Ya hiciste ads antes? ¿Cuál es tu objetivo?",
+      "labelNombre": "Tu nombre / empresa",
+      "placeholderNombre": "Para personalizar la respuesta",
+      "boton": "Enviar y hablar por WhatsApp →",
+      "nota": "Se abre WhatsApp con tu mensaje ya armado · Te respondo en menos de 24 horas"
+    }
+  },
+
+  "footer": {
+    "nombre": "Tadeo Granada",
+    "rol": "Publicidad y Ads",
+    "whatsappTexto": "WhatsApp +598 92 267 601"
+  }
+}

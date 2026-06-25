@@ -1,30 +1,14 @@
 ---
 // Landing personal de Tadeo Granada — publicidad y ads para empresas.
 // Misma estructura que la de Andrés (4 pasos): Quién soy · Qué hago · Cómo lo hago · Trabajar conmigo.
+// ⚠️ TODO EL TEXTO EDITABLE vive en src/data/tadeo.json — Tadeo edita ese archivo, NO este.
 import Loader from '../transitions/Loader.astro';
 import '../transitions/transitions.css';
 import '../styles/global.css';
+import t from '../data/tadeo.json';
 
-const WA = '59892267601';
-const waMsg = encodeURIComponent('Hola Tadeo, quiero traer más clientes con anuncios. Te cuento:');
-const waUrl = `https://wa.me/${WA}?text=${waMsg}`;
-
-const queHago = [
-  'Campañas en Meta e Instagram que llegan a tu cliente ideal.',
-  'Google Ads para captar a quien ya te está buscando.',
-  'TikTok y LinkedIn Ads, según dónde está tu mercado.',
-  'Creatividades + optimización continua con métricas (CPL, CPA, ROAS).',
-];
-const comoLoHago = [
-  { n: '01', t: 'Diagnóstico', d: 'Analizo tu negocio, tu cliente y tu competencia. Gratis.' },
-  { n: '02', t: 'Lanzo las campañas', d: 'Segmentación, creativos y setup (Pixel / GA4). Salgo a buscarte clientes.' },
-  { n: '03', t: 'Optimizo y mido', d: 'Sigo CPL, CPA y ROAS. Lo que no rinde, se corrige.' },
-];
-const trabajar = [
-  { n: '01', t: 'Me escribís tu caso', d: 'Por el formulario o WhatsApp. Te respondo yo.' },
-  { n: '02', t: 'Vemos qué canal conviene', d: 'Te digo por dónde empezar a traer clientes.' },
-  { n: '03', t: 'Lanzamos y medimos', d: 'Campañas activas, con números claros desde el día uno.' },
-];
+const waMsg = encodeURIComponent(t.whatsappMensajeInicial);
+const waUrl = `https://wa.me/${t.whatsapp}?text=${waMsg}`;
 ---
 
 <!DOCTYPE html>
@@ -32,10 +16,10 @@ const trabajar = [
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tadeo Granada — Publicidad y Ads para empresas</title>
-  <meta name="description" content="Diseño y gestiono tus anuncios en Meta, Instagram, Google y TikTok para que tu empresa reciba clientes de forma constante y medible. Tadeo Granada." />
-  <meta property="og:title" content="Tadeo Granada — Publicidad y Ads" />
-  <meta property="og:description" content="Más clientes, todos los meses. Campañas de ads que rinden y se miden." />
+  <title>{t.seo.titulo}</title>
+  <meta name="description" content={t.seo.descripcion} />
+  <meta property="og:title" content={t.seo.ogTitulo} />
+  <meta property="og:description" content={t.seo.ogDescripcion} />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://genideiacompany.com/og-genideia.png" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -54,11 +38,11 @@ const trabajar = [
   <header style="background:rgba(10,10,10,0.92); border-bottom:1px solid rgba(255,255,255,0.07);" class="sticky top-0 z-50 backdrop-blur">
     <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
       <a href="/tadeo" class="flex items-baseline gap-2">
-        <span style="font-family:'Montserrat',sans-serif; font-size:1.15rem; font-weight:600; color:#F2F4F7; letter-spacing:0.5px;">Tadeo Granada</span>
-        <span style="color:#00C8FF; font-size:0.6rem; letter-spacing:2px;" class="uppercase hidden sm:inline">Ads</span>
+        <span style="font-family:'Montserrat',sans-serif; font-size:1.15rem; font-weight:600; color:#F2F4F7; letter-spacing:0.5px;">{t.marca.nombre}</span>
+        <span style="color:#00C8FF; font-size:0.6rem; letter-spacing:2px;" class="uppercase hidden sm:inline">{t.marca.etiqueta}</span>
       </a>
       <div class="flex items-center gap-4">
-        <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; font-size:0.78rem;" class="px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Hablemos</a>
+        <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; font-size:0.78rem;" class="px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">{t.marca.botonHablemos}</a>
       </div>
     </nav>
   </header>
@@ -67,23 +51,23 @@ const trabajar = [
   <section class="max-w-6xl mx-auto px-6 pt-20 pb-20">
     <div class="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
       <div>
-        <p class="text-xs font-medium mb-6 uppercase" style="color:#00C8FF; letter-spacing:3px;">Publicidad &amp; Ads para empresas</p>
+        <p class="text-xs font-medium mb-6 uppercase" style="color:#00C8FF; letter-spacing:3px;">{t.hero.encabezado}</p>
         <h1 class="mb-6" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.0; letter-spacing:-1.5px; font-size:clamp(2.6rem, 6vw, 4.6rem);">
-          Más clientes,<br /><span style="color:#B8BEC7; font-weight:300; font-style:italic;">todos los meses.</span>
+          {t.hero.tituloLinea1}<br /><span style="color:#B8BEC7; font-weight:300; font-style:italic;">{t.hero.tituloLinea2}</span>
         </h1>
         <p class="mb-9 leading-relaxed max-w-md text-lg" style="color:#B8BEC7; font-weight:300;">
-          Diseño y gestiono tus anuncios — Meta, Instagram, Google, TikTok — para que tu empresa reciba clientes de forma constante y medible.
+          {t.hero.subtitulo}
         </p>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="#trabajar" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">Quiero más clientes →</a>
-          <a href="#quien" style="border:1px solid rgba(255,255,255,0.12); color:#B8BEC7;" class="px-8 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors text-center">Conocé cómo</a>
+          <a href="#trabajar" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">{t.hero.botonPrimario}</a>
+          <a href="#quien" style="border:1px solid rgba(255,255,255,0.12); color:#B8BEC7;" class="px-8 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors text-center">{t.hero.botonSecundario}</a>
         </div>
       </div>
       <!-- Foto de Tadeo -->
       <div class="order-first lg:order-last" style="position:relative;">
         <div class="hero-glow" style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,200,255,0.16) 0%, transparent 64%); z-index:0;" aria-hidden="true"></div>
         <div style="position:relative; z-index:1; width:100%; max-width:380px; aspect-ratio:4/5; margin:0 auto; border-radius:16px; overflow:hidden; border:1px solid rgba(0,200,255,0.2);">
-          <img src="/img/tadeo.jpg" alt="Tadeo Granada — publicidad y ads para empresas" style="width:100%; height:100%; object-fit:cover; object-position:center 20%; display:block;" />
+          <img src={t.hero.foto} alt={t.hero.fotoAlt} style="width:100%; height:100%; object-fit:cover; object-position:center 20%; display:block;" />
         </div>
       </div>
     </div>
@@ -93,12 +77,12 @@ const trabajar = [
   <section id="quien" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
     <div class="max-w-5xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
       <div data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">01 · Quién soy</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-5">Soy Tadeo Granada.</h2>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">{t.quienSoy.encabezado}</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-5">{t.quienSoy.titulo}</h2>
         <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed mb-7">
-          Cofundador de GENIDEIA Company. Llevo la pauta: diseño, segmento y optimizo campañas de anuncios para que tu empresa consiga clientes de forma constante — y medible.
+          {t.quienSoy.texto}
         </p>
-        <a href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">Hablemos →</a>
+        <a href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">{t.quienSoy.enlace}</a>
       </div>
       <!-- Video: presentación natural -->
       <div data-reveal data-delay="1">
@@ -106,7 +90,7 @@ const trabajar = [
           <!-- VIDEO: reemplazar por <video controls ...> o <iframe> de YouTube cuando Tadeo lo grabe. -->
           <div class="text-center" style="color:rgba(0,200,255,0.6);">
             <div style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(0,200,255,0.4); display:flex; align-items:center; justify-content:center; margin:0 auto;"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-            <p style="font-size:0.62rem; letter-spacing:2px; margin-top:12px;" class="uppercase">Video · te lo cuento yo</p>
+            <p style="font-size:0.62rem; letter-spacing:2px; margin-top:12px;" class="uppercase">{t.quienSoy.videoEtiqueta}</p>
           </div>
         </div>
       </div>
@@ -117,11 +101,11 @@ const trabajar = [
   <section id="que" class="py-24">
     <div class="max-w-5xl mx-auto px-6">
       <div class="mb-12" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">02 · Qué hago</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);">Traigo clientes con anuncios que rinden.</h2>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">{t.queHago.encabezado}</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);">{t.queHago.titulo}</h2>
       </div>
       <div class="grid sm:grid-cols-2 gap-4 mb-12">
-        {queHago.map((q, i) => (
+        {t.queHago.items.map((q, i) => (
           <div class="card-hover rounded-xl p-6 flex items-start gap-4" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String((i % 2) + 1)}>
             <span style="color:#00C8FF; flex-shrink:0; font-family:'Montserrat',sans-serif; font-size:1.4rem; line-height:1;">✓</span>
             <p style="color:#cfcfcf; font-weight:300;" class="leading-relaxed">{q}</p>
@@ -129,7 +113,7 @@ const trabajar = [
         ))}
       </div>
       <div class="text-center" data-reveal>
-        <a href="#trabajar" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block">¿Qué canal te traería más clientes? Escribime →</a>
+        <a href="#trabajar" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block">{t.queHago.boton}</a>
       </div>
     </div>
   </section>
@@ -138,12 +122,12 @@ const trabajar = [
   <section id="como" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-24">
     <div class="max-w-5xl mx-auto px-6">
       <div class="mb-12" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">03 · Cómo lo hago</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-3">Pauta con método, no a ciegas.</h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">Cada peso invertido se mide. Si no rinde, se ajusta.</p>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">{t.comoLoHago.encabezado}</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-3">{t.comoLoHago.titulo}</h2>
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">{t.comoLoHago.subtitulo}</p>
       </div>
       <div class="grid sm:grid-cols-3 gap-8 mb-14">
-        {comoLoHago.map((p, i) => (
+        {t.comoLoHago.pasos.map((p, i) => (
           <div data-reveal data-delay={String(i + 1)}>
             <p style="font-family:'Montserrat',sans-serif; font-weight:700; color:#00C8FF; line-height:1;" class="text-6xl mb-4">{p.n}</p>
             <h3 style="color:#F2F4F7; font-weight:500;" class="text-lg mb-2">{p.t}</h3>
@@ -156,13 +140,13 @@ const trabajar = [
           <div style="aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2); background:linear-gradient(180deg, rgba(0,200,255,0.08), rgba(255,255,255,0.02)); display:flex; align-items:center; justify-content:center;">
             <div class="text-center" style="color:rgba(0,200,255,0.6);">
               <div style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(0,200,255,0.4); display:flex; align-items:center; justify-content:center; margin:0 auto;"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-              <p style="font-size:0.62rem; letter-spacing:2px; margin-top:12px;" class="uppercase">Video · cómo trabajo</p>
+              <p style="font-size:0.62rem; letter-spacing:2px; margin-top:12px;" class="uppercase">{t.comoLoHago.videoEtiqueta}</p>
             </div>
           </div>
         </div>
         <div data-reveal data-delay="1" class="text-center lg:text-left">
-          <p style="color:#B8BEC7; font-weight:300;" class="text-lg mb-6">Te muestro las campañas y los números, en vivo, sin vueltas.</p>
-          <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block">Hablemos por WhatsApp →</a>
+          <p style="color:#B8BEC7; font-weight:300;" class="text-lg mb-6">{t.comoLoHago.textoVideo}</p>
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block">{t.comoLoHago.botonVideo}</a>
         </div>
       </div>
     </div>
@@ -172,12 +156,12 @@ const trabajar = [
   <section id="trabajar" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
     <div class="max-w-3xl mx-auto px-6">
       <div class="text-center mb-12" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">04 · Trabajar conmigo</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.4rem);" class="mb-4">Empezamos con un diagnóstico gratis.</h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">Te digo qué canal te conviene para empezar a traer clientes.</p>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">{t.trabajar.encabezado}</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.4rem);" class="mb-4">{t.trabajar.titulo}</h2>
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">{t.trabajar.subtitulo}</p>
       </div>
       <div class="grid sm:grid-cols-3 gap-6 mb-12">
-        {trabajar.map((p, i) => (
+        {t.trabajar.pasos.map((p, i) => (
           <div class="card-hover rounded-xl p-5 text-center" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String(i + 1)}>
             <p style="font-family:'Montserrat',sans-serif; font-weight:700; color:#00C8FF;" class="text-3xl mb-2">{p.n}</p>
             <h3 style="color:#F2F4F7; font-weight:500;" class="mb-1">{p.t}</h3>
@@ -188,27 +172,22 @@ const trabajar = [
 
       <form id="auto-form" class="space-y-5" data-reveal>
         <div>
-          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">¿Qué querés lograr con ads?</label>
+          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">{t.trabajar.form.labelObjetivo}</label>
           <select name="area" required class="form-input">
             <option value="">Elegí una opción</option>
-            <option>Más clientes / ventas</option>
-            <option>Más reservas o turnos</option>
-            <option>Dar a conocer la marca</option>
-            <option>Bajar el costo por cliente (CPL / CPA)</option>
-            <option>Escalar campañas que ya tengo</option>
-            <option>No sé / quiero asesorarme</option>
+            {t.trabajar.form.opcionesObjetivo.map((o) => (<option>{o}</option>))}
           </select>
         </div>
         <div>
-          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">Describí tu situación actual</label>
-          <textarea name="problema" rows="4" required placeholder="¿Qué vendés? ¿Ya hiciste ads antes? ¿Cuál es tu objetivo?" class="form-input resize-none"></textarea>
+          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">{t.trabajar.form.labelSituacion}</label>
+          <textarea name="problema" rows="4" required placeholder={t.trabajar.form.placeholderSituacion} class="form-input resize-none"></textarea>
         </div>
         <div>
-          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">Tu nombre / empresa <span style="color:rgba(160,160,160,0.4);">(opcional)</span></label>
-          <input name="nombre" type="text" placeholder="Para personalizar la respuesta" class="form-input" />
+          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">{t.trabajar.form.labelNombre} <span style="color:rgba(160,160,160,0.4);">(opcional)</span></label>
+          <input name="nombre" type="text" placeholder={t.trabajar.form.placeholderNombre} class="form-input" />
         </div>
-        <button type="submit" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; width:100%;" class="py-3.5 rounded-lg hover:opacity-90 transition-opacity text-base">Enviar y hablar por WhatsApp →</button>
-        <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-xs text-center">Se abre WhatsApp con tu mensaje ya armado · Te respondo en menos de 24 horas</p>
+        <button type="submit" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; width:100%;" class="py-3.5 rounded-lg hover:opacity-90 transition-opacity text-base">{t.trabajar.form.boton}</button>
+        <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-xs text-center">{t.trabajar.form.nota}</p>
       </form>
 
       <div id="auto-success" class="hidden text-center py-8">
@@ -224,14 +203,14 @@ const trabajar = [
   <footer style="border-top:1px solid rgba(255,255,255,0.07);" class="py-10">
     <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm" style="color:#B8BEC7;">
       <div>
-        <p style="font-family:'Montserrat',sans-serif; font-size:1.05rem; color:#F2F4F7;">Tadeo Granada</p>
-        <p style="font-weight:300; font-size:0.8rem;">Cofundador de <a href="/" style="color:#00C8FF;">GENIDEIA Company</a> · Publicidad y Ads</p>
+        <p style="font-family:'Montserrat',sans-serif; font-size:1.05rem; color:#F2F4F7;">{t.footer.nombre}</p>
+        <p style="font-weight:300; font-size:0.8rem;">Cofundador de <a href="/" style="color:#00C8FF;">GENIDEIA Company</a> · {t.footer.rol}</p>
       </div>
-      <a href={waUrl} target="_blank" rel="noopener noreferrer" style="font-weight:300;" class="hover:text-[#00C8FF] transition-colors">WhatsApp +598 92 267 601</a>
+      <a href={waUrl} target="_blank" rel="noopener noreferrer" style="font-weight:300;" class="hover:text-[#00C8FF] transition-colors">{t.footer.whatsappTexto}</a>
     </div>
   </footer>
 
-  <script>
+  <script define:vars={{ wa: t.whatsapp }}>
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
@@ -247,7 +226,7 @@ const trabajar = [
       const nom = (data.get('nombre') || '').toString();
       const hola = nom ? `Hola Tadeo, soy ${nom}.` : 'Hola Tadeo,';
       const msg = `${hola} quiero traer clientes con ads: ${area}.\n\n*Mi situación:*\n${prob}`;
-      const waLink = `https://wa.me/59892267601?text=${encodeURIComponent(msg)}`;
+      const waLink = `https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;
       const fb = document.getElementById('wa-fallback');
       if (fb) fb.href = waLink;
       window.open(waLink, '_blank');
