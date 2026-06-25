@@ -2,13 +2,13 @@
   "_LEEME": "Este es el archivo que edita Tadeo. Cambiá SOLO el texto entre comillas, nunca borres las comillas, las llaves { } ni las comas. El diseño y el resto de la web no se tocan desde acá. Para cambiar la foto: subí la nueva imagen como /public/img/tadeo.jpg (o cambiá la ruta en 'hero.foto').",
 
   "whatsapp": "59892267601",
-  "whatsappMensajeInicial": "Hola Tadeo, quiero traer más clientes con anuncios. Te cuento:",
+  "whatsappMensajeInicial": "Hola Tadeo, quiero hacer crecer mi negocio con publicidad digital. Te cuento mi situación:",
 
   "seo": {
-    "titulo": "Tadeo Granada — Publicidad y Ads para empresas",
-    "descripcion": "Diseño y gestiono tus anuncios en Meta, Instagram, Google y TikTok para que tu empresa reciba clientes de forma constante y medible. Tadeo Granada.",
-    "ogTitulo": "Tadeo Granada — Publicidad y Ads",
-    "ogDescripcion": "Más clientes, todos los meses. Campañas de ads que rinden y se miden."
+    "titulo": "Tadeo Granada — Publicidad digital para empresas",
+    "descripcion": "Te ayudo a hacer crecer tu negocio con estrategia y publicidad digital. Analizamos juntos qué está funcionando, qué no y dónde conviene invertir para crecer de forma sostenible.",
+    "ogTitulo": "Tadeo Granada — Publicidad digital para empresas",
+    "ogDescripcion": "Crezcamos con estrategia, no por suerte. Estrategia y publicidad digital para hacer crecer tu negocio."
   },
 
   "marca": {
@@ -18,62 +18,62 @@
   },
 
   "hero": {
-    "encabezado": "Publicidad & Ads para empresas",
-    "tituloLinea1": "Más clientes,",
-    "tituloLinea2": "todos los meses.",
-    "subtitulo": "Diseño y gestiono tus anuncios — Meta, Instagram, Google, TikTok — para que tu empresa reciba clientes de forma constante y medible.",
-    "botonPrimario": "Quiero más clientes →",
-    "botonSecundario": "Conocé cómo",
+    "encabezado": "Publicidad digital para empresas",
+    "tituloLinea1": "Crezcamos con estrategia,",
+    "tituloLinea2": "no por suerte.",
+    "subtitulo": "Te ayudo a encontrar la mejor forma de atraer clientes para tu negocio. Analizamos juntos qué está funcionando, qué no y dónde conviene invertir para crecer de forma sostenible.",
+    "botonPrimario": "Hablemos →",
+    "botonSecundario": "Conocé cómo trabajo",
     "foto": "/img/tadeo.jpg",
-    "fotoAlt": "Tadeo Granada — publicidad y ads para empresas"
+    "fotoAlt": "Tadeo Granada — publicidad digital para empresas"
   },
 
   "quienSoy": {
     "encabezado": "01 · Quién soy",
-    "titulo": "Soy Tadeo Granada.",
-    "texto": "Cofundador de GENIDEIA Company. Llevo la pauta: diseño, segmento y optimizo campañas de anuncios para que tu empresa consiga clientes de forma constante — y medible.",
-    "enlace": "Hablemos →",
+    "titulo": "Soy Tadeo.",
+    "texto": "Trabajo ayudando a empresas a conseguir más clientes mediante publicidad digital. Pero antes de lanzar anuncios, me interesa entender cómo funciona tu negocio, quién es tu cliente y qué objetivos querés lograr. Porque una campaña no arregla un sistema roto. Y muchas veces el problema no está en los anuncios.",
+    "enlace": "Contame tu situación →",
     "videoEtiqueta": "Video · te lo cuento yo"
   },
 
   "queHago": {
     "encabezado": "02 · Qué hago",
-    "titulo": "Traigo clientes con anuncios que rinden.",
-    "intro": "Cualquiera puede “hacer anuncios”. Lo que cambia tu negocio es la pauta hecha con método: entender a quién le hablás, dónde está y qué lo mueve a comprar — y medir cada peso (costo por cliente, retorno de la inversión) hasta que las campañas dejen de ser un gasto y se vuelvan un canal que trae clientes todos los meses.",
+    "titulo": "Uso publicidad para ayudar a negocios a crecer.",
+    "intro": "Los anuncios son una herramienta. Lo importante es entender dónde están tus clientes, cómo toman decisiones y qué mensaje los hace actuar. Mi trabajo consiste en conectar esos puntos para que cada inversión tenga sentido y contribuya al crecimiento del negocio.",
     "items": [
-      "Campañas en Meta e Instagram que llegan a tu cliente ideal.",
-      "Google Ads para captar a quien ya te está buscando.",
-      "TikTok y LinkedIn Ads, según dónde está tu mercado.",
-      "Creatividades + optimización continua con métricas (CPL, CPA, ROAS)."
+      "Meta Ads para llegar a nuevas personas interesadas en lo que ofrecés.",
+      "Google Ads para aparecer cuando alguien ya está buscando una solución.",
+      "TikTok y LinkedIn Ads cuando realmente tienen sentido para tu mercado.",
+      "Optimización constante para mejorar resultados y tomar mejores decisiones."
     ],
-    "boton": "¿Qué canal te traería más clientes? Escribime →"
+    "boton": "¿Querés saber qué canal te conviene? Escribime →"
   },
 
   "comoLoHago": {
-    "encabezado": "03 · Cómo lo hago",
-    "titulo": "Pauta con método, no a ciegas.",
-    "subtitulo": "Cada peso invertido se mide. Si no rinde, se ajusta.",
+    "encabezado": "03 · Cómo trabajo",
+    "titulo": "Primero entendemos el problema. Después invertimos.",
+    "subtitulo": "No me interesa prender campañas por prender campañas. Primero analizo el negocio, la oferta y los objetivos. Después definimos juntos qué canal tiene más sentido. Y recién ahí empezamos a invertir.",
     "pasos": [
-      { "n": "01", "t": "Diagnóstico", "d": "Analizo tu negocio, tu cliente y tu competencia. Gratis." },
-      { "n": "02", "t": "Lanzo las campañas", "d": "Segmentación, creativos y setup (Pixel / GA4). Salgo a buscarte clientes." },
-      { "n": "03", "t": "Optimizo y mido", "d": "Sigo CPL, CPA y ROAS. Lo que no rinde, se corrige." }
+      { "n": "01", "t": "Entiendo tu situación", "d": "Conversamos sobre tu negocio, tus objetivos y los desafíos que enfrentás hoy." },
+      { "n": "02", "t": "Diseñamos una estrategia", "d": "Definimos qué canal utilizar, qué mensaje comunicar y cómo vamos a medir el progreso." },
+      { "n": "03", "t": "Lanzamos y mejoramos", "d": "Ponemos las campañas en marcha y optimizamos constantemente según los datos." }
     ],
     "videoEtiqueta": "Video · cómo trabajo",
-    "textoVideo": "Te muestro las campañas y los números, en vivo, sin vueltas.",
+    "textoVideo": "Te muestro exactamente cómo analizo, lanzo y optimizo campañas para mis clientes.",
     "botonVideo": "Hablemos por WhatsApp →"
   },
 
   "trabajar": {
-    "encabezado": "04 · Trabajar conmigo",
-    "titulo": "Empezamos con un diagnóstico gratis.",
-    "subtitulo": "Te digo qué canal te conviene para empezar a traer clientes.",
+    "encabezado": "04 · Diagnóstico gratuito",
+    "titulo": "Contame qué querés lograr.",
+    "subtitulo": "No importa si nunca hiciste publicidad o si ya invertiste antes. Cuanto más contexto tenga sobre tu negocio, mejor voy a poder ayudarte.",
     "pasos": [
-      { "n": "01", "t": "Me escribís tu caso", "d": "Por el formulario o WhatsApp. Te respondo yo." },
-      { "n": "02", "t": "Vemos qué canal conviene", "d": "Te digo por dónde empezar a traer clientes." },
-      { "n": "03", "t": "Lanzamos y medimos", "d": "Campañas activas, con números claros desde el día uno." }
+      { "n": "01", "t": "Me contás tu situación", "d": "Podés escribirme por el formulario o por WhatsApp." },
+      { "n": "02", "t": "Analizo tu caso", "d": "Reviso tu situación y detecto oportunidades de mejora." },
+      { "n": "03", "t": "Te recomiendo los próximos pasos", "d": "Te digo qué haría yo en tu lugar y por dónde empezaría." }
     ],
     "form": {
-      "labelObjetivo": "¿Qué querés lograr con ads?",
+      "labelObjetivo": "¿Qué querés lograr?",
       "opcionesObjetivo": [
         "Más clientes / ventas",
         "Más reservas o turnos",
@@ -82,18 +82,18 @@
         "Escalar campañas que ya tengo",
         "No sé / quiero asesorarme"
       ],
-      "labelSituacion": "Describí tu situación actual",
-      "placeholderSituacion": "¿Qué vendés? ¿Ya hiciste ads antes? ¿Cuál es tu objetivo?",
-      "labelNombre": "Tu nombre / empresa",
+      "labelSituacion": "Contame un poco sobre tu negocio",
+      "placeholderSituacion": "¿Qué vendés? ¿Cómo conseguís clientes hoy? ¿Qué te gustaría mejorar?",
+      "labelNombre": "Nombre o empresa",
       "placeholderNombre": "Para personalizar la respuesta",
       "boton": "Enviar y hablar por WhatsApp →",
-      "nota": "Se abre WhatsApp con tu mensaje ya armado · Te respondo en menos de 24 horas"
+      "nota": "Te responderé personalmente dentro de las próximas 24 horas."
     }
   },
 
   "footer": {
     "nombre": "Tadeo Granada",
-    "rol": "Publicidad y Ads",
+    "rol": "Estrategia, publicidad digital, automatización e IA",
     "whatsappTexto": "WhatsApp +598 92 267 601",
     "email": "tadeo@genideiacompany.com"
   }
