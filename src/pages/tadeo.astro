@@ -153,7 +153,30 @@ const waUrl = `https://wa.me/${t.whatsapp}?text=${waMsg}`;
     </div>
   </section>
 
-  <!-- ── 04 · TRABAJAR CONMIGO ─────────────────────────────── -->
+  <!-- ── 04 · DETRÁS DE LAS CAMPAÑAS ───────────────────────── -->
+  <section id="detras" class="py-24">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="mb-12" data-reveal>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">{t.detrasCampanas.encabezado}</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);">{t.detrasCampanas.titulo}</h2>
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed mt-5 max-w-2xl">{t.detrasCampanas.descripcion}</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+        {t.detrasCampanas.capacidades.map((c, i) => (
+          <div class="card-hover rounded-xl p-6" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String((i % 3) + 1)}>
+            <h3 style="color:#F2F4F7; font-weight:600;" class="text-lg mb-2">{c.t}</h3>
+            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{c.d}</p>
+          </div>
+        ))}
+      </div>
+      <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed max-w-2xl mb-8" data-reveal>{t.detrasCampanas.cierre}</p>
+      <div data-reveal>
+        <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block">{t.detrasCampanas.boton}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 05 · TRABAJAR CONMIGO ─────────────────────────────── -->
   <section id="trabajar" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
     <div class="max-w-3xl mx-auto px-6">
       <div class="text-center mb-12" data-reveal>
@@ -205,7 +228,7 @@ const waUrl = `https://wa.me/${t.whatsapp}?text=${waMsg}`;
     <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm" style="color:#B8BEC7;">
       <div>
         <p style="font-family:'Montserrat',sans-serif; font-size:1.05rem; color:#F2F4F7;">{t.footer.nombre}</p>
-        <p style="font-weight:300; font-size:0.8rem;">Cofundador de <a href="/" style="color:#00C8FF;">GENIDEIA Company</a> · {t.footer.rol}</p>
+        <p style="font-weight:300; font-size:0.8rem;">Fundador de <a href="/" style="color:#00C8FF;">GENIDEIA Company</a> · {t.footer.rol}</p>
       </div>
       <div class="flex flex-col sm:items-end gap-1">
         <a href={waUrl} target="_blank" rel="noopener noreferrer" style="font-weight:300;" class="hover:text-[#00C8FF] transition-colors">{t.footer.whatsappTexto}</a>

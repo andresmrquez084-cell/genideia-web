@@ -63,8 +63,24 @@
     "botonVideo": "Hablemos por WhatsApp →"
   },
 
+  "detrasCampanas": {
+    "encabezado": "04 · Detrás de las campañas",
+    "titulo": "Lo que ocurre detrás de cada campaña.",
+    "descripcion": "Aunque la estrategia siempre está primero, también trabajo todos los aspectos técnicos necesarios para que una campaña funcione correctamente.",
+    "capacidades": [
+      { "t": "Medición", "d": "Implementación y validación de Pixel, Conversion API, Google Analytics 4 y eventos de conversión." },
+      { "t": "Segmentación", "d": "Investigación de audiencias, comportamiento del consumidor y estructura de campañas." },
+      { "t": "Creatividades", "d": "Análisis y optimización de anuncios, mensajes y propuestas de valor." },
+      { "t": "Optimización", "d": "Seguimiento de métricas como CPL, CPA, CTR, ROAS y tasa de conversión." },
+      { "t": "Automatización", "d": "Integración de formularios, CRM, seguimiento de leads y procesos automáticos." },
+      { "t": "Inteligencia Artificial", "d": "Uso de IA para investigación, análisis, optimización y mejora continua de campañas." }
+    ],
+    "cierre": "La mayoría de las personas ve anuncios. Yo prefiero entender el sistema completo que hay detrás de ellos. Porque cuando el sistema funciona, los resultados suelen llegar de forma mucho más consistente.",
+    "boton": "Hablemos sobre tu negocio →"
+  },
+
   "trabajar": {
-    "encabezado": "04 · Trabajar conmigo",
+    "encabezado": "05 · Trabajar conmigo",
     "titulo": "Empezamos con un diagnóstico gratis.",
     "subtitulo": "Te digo qué canal te conviene para empezar a traer clientes.",
     "pasos": [
