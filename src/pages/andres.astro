@@ -2,6 +2,8 @@
 // Landing personal de Andrés Albornoz — automatización de empresas.
 // Estructura en 4 pasos simples: Quién soy · Qué hago · Cómo lo hago · Trabajar conmigo.
 // Poco texto, muchos CTA, foto + slots de video (presentación natural de Andrés).
+import Loader from '../transitions/Loader.astro';
+import '../transitions/transitions.css';
 import '../styles/global.css';
 
 const WA = '59892302941';
@@ -49,8 +51,10 @@ const videos = [
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>import '../transitions/reveal.js';</script>
 </head>
 <body style="background:#07080D radial-gradient(ellipse 90% 55% at 50% -8%, rgba(0,200,255,0.10), transparent 62%) no-repeat fixed; color:#F2F4F7; font-family:'Poppins',sans-serif; -webkit-font-smoothing:antialiased;">
+  <Loader logoSrc="/img/logo-nav.png" />
 
   <!-- ── HEADER ──────────────────────────────────────────────── -->
   <header style="background:rgba(10,10,10,0.92); border-bottom:1px solid rgba(255,255,255,0.07);" class="sticky top-0 z-50 backdrop-blur">
@@ -124,7 +128,7 @@ const videos = [
       </div>
       <div class="grid sm:grid-cols-2 gap-4 mb-12">
         {queHago.map((q, i) => (
-          <div class="rounded-xl p-6 flex items-start gap-4" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String((i % 2) + 1)}>
+          <div class="card-hover rounded-xl p-6 flex items-start gap-4" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String((i % 2) + 1)}>
             <span style="color:#00C8FF; flex-shrink:0; font-family:'Montserrat',sans-serif; font-size:1.4rem; line-height:1;">✓</span>
             <p style="color:#cfcfcf; font-weight:300;" class="leading-relaxed">{q}</p>
           </div>
@@ -196,7 +200,7 @@ const videos = [
       </div>
       <div class="grid sm:grid-cols-3 gap-6 mb-12">
         {trabajar.map((p, i) => (
-          <div class="rounded-xl p-5 text-center" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String(i + 1)}>
+          <div class="card-hover rounded-xl p-5 text-center" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String(i + 1)}>
             <p style="font-family:'Montserrat',sans-serif; font-weight:700; color:#00C8FF;" class="text-3xl mb-2">{p.n}</p>
             <h3 style="color:#F2F4F7; font-weight:500;" class="mb-1">{p.t}</h3>
             <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{p.d}</p>
