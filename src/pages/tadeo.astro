@@ -206,7 +206,10 @@ const waUrl = `https://wa.me/${t.whatsapp}?text=${waMsg}`;
         <p style="font-family:'Montserrat',sans-serif; font-size:1.05rem; color:#F2F4F7;">{t.footer.nombre}</p>
         <p style="font-weight:300; font-size:0.8rem;">Cofundador de <a href="/" style="color:#00C8FF;">GENIDEIA Company</a> · {t.footer.rol}</p>
       </div>
-      <a href={waUrl} target="_blank" rel="noopener noreferrer" style="font-weight:300;" class="hover:text-[#00C8FF] transition-colors">{t.footer.whatsappTexto}</a>
+      <div class="flex flex-col sm:items-end gap-1">
+        <a href={waUrl} target="_blank" rel="noopener noreferrer" style="font-weight:300;" class="hover:text-[#00C8FF] transition-colors">{t.footer.whatsappTexto}</a>
+        <a href={`mailto:${t.footer.email}`} style="font-weight:300;" class="hover:text-[#00C8FF] transition-colors">{t.footer.email}</a>
+      </div>
     </div>
   </footer>
 
