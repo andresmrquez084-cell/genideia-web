@@ -18,6 +18,32 @@ el objetivo es que pueda cambiar **qué dice** su página sin riesgo de romper n
 
 ---
 
+## 📥 Cómo traer el proyecto la primera vez
+
+Tadeo es **colaborador** del repositorio `genideia-web` en GitHub. Eso le deja editar, pero
+**NO publicar**: lo que se ve en la web real lo aprueba y sube Andrés (ver "Cómo se publica").
+
+1. Clonar el repo (una sola vez): `git clone https://github.com/andresmrquez084-cell/genideia-web.git`
+2. Entrar a la carpeta: `cd genideia-web`
+3. Antes de editar nada, crear tu propia rama de trabajo: `git checkout -b edicion-tadeo`
+
+Claude Code: si Tadeo ya tiene el repo, traé lo último (`git checkout main && git pull`) y volvé a
+crear/usar la rama `edicion-tadeo` antes de tocar archivos. **Nunca trabajes parado en `main`.**
+
+---
+
+## 🌿 Regla de git (NO publicar sin querer)
+
+`main` es la rama que está en vivo: **pushear a `main` publica la web automáticamente.** Por eso:
+
+- ✅ Trabajá SIEMPRE en la rama `edicion-tadeo` (o una rama nueva).
+- ❌ NUNCA hagas commit ni push a `main`.
+- ❌ NUNCA mergees a `main` — eso publica, y lo hace Andrés.
+
+Claude Code: confirmá con `git branch --show-current` que NO estás en `main` antes de commitear.
+
+---
+
 ## 🖥️ Cómo ver la landing en local (preview)
 
 1. Instalar dependencias (una sola vez): `npm install`
@@ -73,14 +99,19 @@ Claude Code, antes de dar por hecho un cambio:
 
 ## 🚀 Cómo se publica (importante)
 
-Los cambios que hacés acá son **locales** (los ve Tadeo en su compu). Para que aparezcan en la web real
-`genideiacompany.com/tadeo`, **la publicación final la hace Andrés** (la web se sube desde su cuenta).
+Los cambios que hacés acá son **locales y en tu rama** (`edicion-tadeo`). Para que aparezcan en la web
+real `genideiacompany.com/tadeo`, **la publicación final la hace Andrés**: él revisa tu cambio y lo mergea
+a `main` (ahí recién se publica).
 
-Cuando Tadeo esté conforme con los cambios:
-- Claude Code puede guardar los cambios (commit) y avisar.
-- **Tadeo le avisa a Andrés** que ya están listos para que él los publique.
+Cuando Tadeo esté conforme con los cambios, Claude Code:
+1. Confirma que NO está en `main` (`git branch --show-current` → debe decir `edicion-tadeo`).
+2. Guarda los cambios en la rama: `git add -A && git commit -m "actualizo textos de la landing"`.
+3. Sube la rama: `git push -u origin edicion-tadeo`.
+4. Abre un Pull Request hacia `main` (`gh pr create --base main` o desde la web de GitHub).
+5. **Tadeo le avisa a Andrés** que el PR está listo para revisar y publicar.
 
-(No intentes desplegar a producción vos — el deploy está atado a la cuenta de Andrés.)
+❌ No mergees el PR, no pushees a `main` y no intentes desplegar a producción vos — eso es trabajo de
+Andrés. Tu parte termina al abrir el PR y avisar.
 
 ---
 
