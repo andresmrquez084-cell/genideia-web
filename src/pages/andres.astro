@@ -110,14 +110,13 @@ const videos = [
         </p>
         <a href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">Hablemos →</a>
       </div>
-      <!-- Video: presentación natural -->
-      <div data-reveal data-delay="1">
-        <div style="aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2); background:linear-gradient(180deg, rgba(0,200,255,0.08), rgba(255,255,255,0.02)); display:flex; align-items:center; justify-content:center;">
-          <!-- VIDEO: reemplazar por <video controls ...> o <iframe> de YouTube. Guion: guion-video-presentacion-andres.md -->
-          <div class="text-center" style="color:rgba(0,200,255,0.6);">
-            <div style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(0,200,255,0.4); display:flex; align-items:center; justify-content:center; margin:0 auto;"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-            <p style="font-size:0.62rem; letter-spacing:2px; margin-top:12px;" class="uppercase">Video · te lo cuento yo</p>
-          </div>
+      <!-- Video: presentación natural (reel vertical 9:16) -->
+      <div data-reveal data-delay="1" class="flex justify-center lg:justify-end">
+        <div style="width:100%; max-width:300px; aspect-ratio:9/16; border-radius:16px; overflow:hidden; border:1px solid rgba(0,200,255,0.25); background:#0B1324; box-shadow:0 8px 40px rgba(0,200,255,0.10);">
+          <video controls playsinline preload="metadata" poster="/videos/presentacion-poster.jpg" style="width:100%; height:100%; object-fit:cover; display:block;">
+            <source src="/videos/presentacion.mp4" type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
         </div>
       </div>
     </div>
@@ -178,12 +177,12 @@ const videos = [
         ))}
       </div>
       <div class="grid lg:grid-cols-2 gap-8 items-center">
-        <div data-reveal>
-          <div style="aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2); background:linear-gradient(180deg, rgba(0,200,255,0.08), rgba(255,255,255,0.02)); display:flex; align-items:center; justify-content:center;">
-            <div class="text-center" style="color:rgba(0,200,255,0.6);">
-              <div style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(0,200,255,0.4); display:flex; align-items:center; justify-content:center; margin:0 auto;"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-              <p style="font-size:0.62rem; letter-spacing:2px; margin-top:12px;" class="uppercase">Video · cómo trabajo</p>
-            </div>
+        <div data-reveal class="flex justify-center lg:justify-start">
+          <div style="width:100%; max-width:300px; aspect-ratio:9/16; border-radius:16px; overflow:hidden; border:1px solid rgba(0,200,255,0.25); background:#0B1324; box-shadow:0 8px 40px rgba(0,200,255,0.10);">
+            <video controls playsinline preload="metadata" poster="/videos/como-trabajo-poster.jpg" style="width:100%; height:100%; object-fit:cover; display:block;">
+              <source src="/videos/como-trabajo.mp4" type="video/mp4" />
+              Tu navegador no soporta el video.
+            </video>
           </div>
         </div>
         <div data-reveal data-delay="1" class="text-center lg:text-left">
