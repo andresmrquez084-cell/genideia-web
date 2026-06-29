@@ -1,7 +1,7 @@
 ---
 // Landing personal de Andrés Albornoz — automatización de empresas.
-// Estructura en 4 pasos simples: Quién soy · Qué hago · Cómo lo hago · Trabajar conmigo.
-// Poco texto, muchos CTA, foto + slots de video (presentación natural de Andrés).
+// Flujo VSL guiado por video: Hero → Video 1 (primer paso) → [gate] Qué hago + Video 2 (presentación) → [gate] Diagnóstico.
+// Cada video desbloquea lo que sigue al terminar (VSL soft-gate) y muestra un CTA de cierre.
 import Loader from '../transitions/Loader.astro';
 import '../transitions/transitions.css';
 import '../styles/global.css';
@@ -86,41 +86,71 @@ const videos = [
         </p>
         <div class="flex flex-col sm:flex-row gap-4">
           <a href="#trabajar" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">Quiero automatizar →</a>
-          <a href="#quien" style="border:1px solid rgba(255,255,255,0.12); color:#B8BEC7;" class="px-8 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors text-center">Conocé cómo</a>
+          <a href="#paso1" style="border:1px solid rgba(255,255,255,0.12); color:#B8BEC7;" class="px-8 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors text-center">Conocé cómo</a>
         </div>
       </div>
-      <!-- Foto de Andrés -->
+      <!-- Foto de Andrés + chip Cofundador (baja a la presentación) -->
       <div class="order-first lg:order-last" style="position:relative;">
         <div class="hero-glow" style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,200,255,0.16) 0%, transparent 64%); z-index:0;" aria-hidden="true"></div>
         <div style="position:relative; z-index:1; width:100%; max-width:380px; aspect-ratio:4/5; margin:0 auto; border-radius:16px; overflow:hidden; border:1px solid rgba(0,200,255,0.2);">
           <img src="/img/andres.jpg" alt="Andrés Albornoz — automatización de empresas con IA" style="width:100%; height:100%; object-fit:cover; object-position:center 25%; display:block;" />
+          <!-- Chip identidad: nombre + rol, clickeable hacia la presentación -->
+          <a href="#presentacion" class="hero-chip" style="position:absolute; left:14px; bottom:14px; z-index:2; display:flex; align-items:center; gap:10px; padding:9px 14px; border-radius:12px; background:rgba(7,8,13,0.55); border:1px solid rgba(0,200,255,0.35); backdrop-filter:blur(8px); text-decoration:none;">
+            <span style="width:8px; height:8px; border-radius:50%; background:#00C8FF; box-shadow:0 0 10px #00C8FF; flex-shrink:0;"></span>
+            <span style="line-height:1.15;">
+              <span style="display:block; font-family:'Montserrat',sans-serif; font-weight:600; font-size:0.92rem; color:#F2F4F7;">Andrés Albornoz</span>
+              <span style="display:block; font-size:0.66rem; letter-spacing:1.5px; color:#00C8FF; text-transform:uppercase;">Cofundador · ver presentación →</span>
+            </span>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── 01 · QUIÉN SOY ────────────────────────────────────── -->
-  <section id="quien" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
-    <div class="max-w-5xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
-      <div data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">01 · Quién soy</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-5">Soy Andrés Albornoz.</h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed mb-7">
-          Cofundador de GENIDEIA Company. Construyo sistemas con IA que liberan a tu empresa del trabajo repetitivo — y acompaño hasta que funcionan.
-        </p>
-        <a href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">Hablemos →</a>
+  <!-- ── 01 · EL PRIMER PASO (video 1, gate inicial) ────────── -->
+  <section id="paso1" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-24">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="mb-12" data-reveal>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">01 · Empecemos</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-3">Sistemas reales, listos para producción.</h2>
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">Lo que te ofrezco, lo uso en mi propia empresa primero. Mirá cómo sería tu primer paso.</p>
       </div>
-      <!-- Video: presentación natural (reel vertical 9:16) -->
-      <div data-reveal data-delay="1" class="flex justify-center lg:justify-end">
-        <div style="width:100%; max-width:300px; aspect-ratio:9/16; border-radius:16px; overflow:hidden; border:1px solid rgba(0,200,255,0.25); background:#0B1324; box-shadow:0 8px 40px rgba(0,200,255,0.10);">
-          <video controls playsinline preload="metadata" poster="/videos/presentacion-poster.jpg" style="width:100%; height:100%; object-fit:cover; display:block;">
-            <source src="/videos/presentacion.mp4" type="video/mp4" />
-            Tu navegador no soporta el video.
-          </video>
+      <div class="grid sm:grid-cols-3 gap-8 mb-14">
+        {comoLoHago.map((p, i) => (
+          <div data-reveal data-delay={String(i + 1)}>
+            <p style="font-family:'Montserrat',sans-serif; font-weight:700; color:#00C8FF; line-height:1;" class="text-6xl mb-4">{p.n}</p>
+            <h3 style="color:#F2F4F7; font-weight:500;" class="text-lg mb-2">{p.t}</h3>
+            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{p.d}</p>
+          </div>
+        ))}
+      </div>
+      <div class="grid lg:grid-cols-2 gap-8 items-center">
+        <!-- Video 1: el primer paso (Parte 1) -->
+        <div data-reveal class="flex justify-center lg:justify-start">
+          <div class="video-wrap" data-video-wrap>
+            <video id="vid-paso1" data-gate-video playsinline preload="metadata" poster="/videos/como-trabajo-poster.jpg" style="width:100%; height:100%; object-fit:cover; display:block;">
+              <source src="/videos/como-trabajo.mp4" type="video/mp4" />
+              Tu navegador no soporta el video.
+            </video>
+            <!-- Portada-gancho -->
+            <button type="button" class="video-cover" data-video-cover aria-label="Reproducir video">
+              <span class="play-btn"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+              <span class="cover-hint">Mirá cómo sería<br/>tu primer paso</span>
+            </button>
+          </div>
+        </div>
+        <!-- Texto lateral + hint de bloqueo + CTA de cierre -->
+        <div data-reveal data-delay="1" class="text-center lg:text-left">
+          <p style="color:#B8BEC7; font-weight:300;" class="text-lg mb-6">Te muestro un sistema funcionando, en vivo, sin vueltas.</p>
+          <p class="lock-hint" data-lock-hint="paso1" style="color:rgba(0,200,255,0.7); font-size:0.8rem; letter-spacing:1px;"><span style="font-size:0.9rem;">🔒</span> Mirá el video para continuar</p>
+          <a href="#presentacion" data-video-cta="paso1" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="video-cta px-8 rounded-lg inline-block">Conocé quién está detrás →</a>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- ╔═══ GATE 1 — se desbloquea cuando termina el Video 1 ═══╗ -->
+  <div id="gate1" class="gate-locked">
 
   <!-- ── 02 · QUÉ HAGO ─────────────────────────────────────── -->
   <section id="que" class="py-24">
@@ -153,46 +183,41 @@ const videos = [
           </div>
         ))}
       </div>
-      <div class="text-center" data-reveal>
-        <a href="#trabajar" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block">¿Cuál te liberaría más tiempo? Escribime →</a>
-      </div>
     </div>
   </section>
 
-  <!-- ── 03 · CÓMO LO HAGO ─────────────────────────────────── -->
-  <section id="como" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-24">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="mb-12" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">03 · Cómo lo hago</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-3">Sistemas reales, listos para producción.</h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">Lo que te ofrezco, lo uso en mi propia empresa primero.</p>
+  <!-- ── 03 · QUIÉN SOY / PRESENTACIÓN (video 2, gate 2) ────── -->
+  <section id="presentacion" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-24">
+    <div class="max-w-5xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+      <div data-reveal>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">03 · Quién soy</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-5">Soy Andrés Albornoz.</h2>
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed mb-7">
+          Cofundador de GENIDEIA Company. Construyo sistemas con IA que liberan a tu empresa del trabajo repetitivo — y acompaño hasta que funcionan.
+        </p>
+        <p class="lock-hint" data-lock-hint="presentacion" style="color:rgba(0,200,255,0.7); font-size:0.8rem; letter-spacing:1px;"><span style="font-size:0.9rem;">🔒</span> Mirá el video para pedir tu diagnóstico</p>
+        <a href="#trabajar" data-video-cta="presentacion" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="video-cta px-8 rounded-lg inline-block">Pedí tu diagnóstico gratis →</a>
       </div>
-      <div class="grid sm:grid-cols-3 gap-8 mb-14">
-        {comoLoHago.map((p, i) => (
-          <div data-reveal data-delay={String(i + 1)}>
-            <p style="font-family:'Montserrat',sans-serif; font-weight:700; color:#00C8FF; line-height:1;" class="text-6xl mb-4">{p.n}</p>
-            <h3 style="color:#F2F4F7; font-weight:500;" class="text-lg mb-2">{p.t}</h3>
-            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{p.d}</p>
-          </div>
-        ))}
-      </div>
-      <div class="grid lg:grid-cols-2 gap-8 items-center">
-        <div data-reveal class="flex justify-center lg:justify-start">
-          <div style="width:100%; max-width:300px; aspect-ratio:9/16; border-radius:16px; overflow:hidden; border:1px solid rgba(0,200,255,0.25); background:#0B1324; box-shadow:0 8px 40px rgba(0,200,255,0.10);">
-            <video controls playsinline preload="metadata" poster="/videos/como-trabajo-poster.jpg" style="width:100%; height:100%; object-fit:cover; display:block;">
-              <source src="/videos/como-trabajo.mp4" type="video/mp4" />
-              Tu navegador no soporta el video.
-            </video>
-          </div>
-        </div>
-        <div data-reveal data-delay="1" class="text-center lg:text-left">
-          <p style="color:#B8BEC7; font-weight:300;" class="text-lg mb-6">Te muestro un sistema funcionando, en vivo, sin vueltas.</p>
-          <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block">Hablemos por WhatsApp →</a>
+      <!-- Video 2: presentación (Parte 2) -->
+      <div data-reveal data-delay="1" class="flex justify-center lg:justify-end">
+        <div class="video-wrap" data-video-wrap>
+          <video id="vid-presentacion" data-gate-video playsinline preload="metadata" poster="/videos/presentacion-poster.jpg" style="width:100%; height:100%; object-fit:cover; display:block;">
+            <source src="/videos/presentacion.mp4" type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
+          <button type="button" class="video-cover" data-video-cover aria-label="Reproducir video">
+            <span class="play-btn"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="cover-hint">Te cuento<br/>quién soy</span>
+          </button>
         </div>
       </div>
     </div>
   </section>
 
+  </div><!-- ╚═══ /GATE 1 ═══╝ -->
+
+  <!-- ╔═══ GATE 2 — se desbloquea cuando termina el Video 2 ═══╗ -->
+  <div id="gate2" class="gate-locked">
 
   <!-- ── 04 · TRABAJAR CONMIGO ─────────────────────────────── -->
   <section id="trabajar" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
@@ -260,12 +285,50 @@ const videos = [
     </div>
   </footer>
 
+  </div><!-- ╚═══ /GATE 2 ═══╝ -->
+
   <script>
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('[data-reveal]').forEach((el) => obs.observe(el));
 
+    // ── Portada-gancho: el overlay arranca el video y se oculta ──
+    document.querySelectorAll('[data-video-wrap]').forEach((wrap) => {
+      const v = wrap.querySelector('video');
+      const cover = wrap.querySelector('[data-video-cover]');
+      if (!v || !cover) return;
+      cover.addEventListener('click', () => { v.play(); });
+      v.addEventListener('play', () => wrap.classList.add('playing'));
+    });
+
+    // ── Gating VSL: cada video desbloquea la sección siguiente ──
+    function setupGate(videoId, gateId, ctaKey) {
+      const v = document.getElementById(videoId);
+      const gate = document.getElementById(gateId);
+      const cta = document.querySelector('[data-video-cta="' + ctaKey + '"]');
+      const hint = document.querySelector('[data-lock-hint="' + ctaKey + '"]');
+      if (!v) return;
+      let done = false;
+      const unlock = () => {
+        if (done) return; done = true;
+        gate && gate.classList.remove('gate-locked');
+        cta && cta.classList.add('show');
+        hint && hint.classList.add('hide');
+        // revelar animaciones de la sección recién mostrada
+        gate && gate.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-visible'));
+      };
+      v.addEventListener('ended', unlock);
+      v.addEventListener('timeupdate', () => { if (v.duration && v.currentTime / v.duration > 0.95) unlock(); });
+      // salvaguarda: si el video no carga, no dejar al usuario trabado
+      v.addEventListener('error', unlock);
+      const src = v.querySelector('source');
+      src && src.addEventListener('error', unlock);
+    }
+    setupGate('vid-paso1', 'gate1', 'paso1');
+    setupGate('vid-presentacion', 'gate2', 'presentacion');
+
+    // ── Form → WhatsApp ──
     const form = document.getElementById('auto-form');
     const ok = document.getElementById('auto-success');
     form?.addEventListener('submit', (ev) => {
@@ -289,7 +352,32 @@ const videos = [
   <style>
     @keyframes heroGlowPulse { 0%,100% { opacity:0.55; transform:scale(1); } 50% { opacity:1; transform:scale(1.08); } }
     .hero-glow { animation: heroGlowPulse 5s ease-in-out infinite; }
-    @media (prefers-reduced-motion: reduce) { .hero-glow { animation: none; } }
+    .hero-chip { transition: border-color .25s, transform .25s; }
+    .hero-chip:hover { border-color:#00C8FF; transform:translateY(-2px); }
+
+    /* Contenedor de video vertical 9:16 */
+    .video-wrap { position:relative; width:100%; max-width:300px; aspect-ratio:9/16; border-radius:16px; overflow:hidden; border:1px solid rgba(0,200,255,0.25); background:#0B1324; box-shadow:0 8px 40px rgba(0,200,255,0.10); }
+
+    /* Portada-gancho */
+    .video-cover { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; cursor:pointer; border:none; background:linear-gradient(180deg, rgba(7,8,13,0.25) 0%, rgba(7,8,13,0.55) 100%); transition:opacity .3s; }
+    .video-wrap.playing .video-cover { opacity:0; pointer-events:none; }
+    .play-btn { width:66px; height:66px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#0A0F1A; background:linear-gradient(135deg,#00C8FF,#007BFF); box-shadow:0 0 0 0 rgba(0,200,255,0.5); animation:playPulse 2.2s ease-in-out infinite; }
+    @keyframes playPulse { 0%{ box-shadow:0 0 0 0 rgba(0,200,255,0.45);} 70%{ box-shadow:0 0 0 18px rgba(0,200,255,0);} 100%{ box-shadow:0 0 0 0 rgba(0,200,255,0);} }
+    .cover-hint { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.05rem; line-height:1.25; color:#F2F4F7; text-align:center; text-shadow:0 2px 12px rgba(0,0,0,0.6); }
+
+    /* Hint de bloqueo + CTA de cierre (oculto hasta terminar el video) */
+    .lock-hint { transition:opacity .3s; }
+    .lock-hint.hide { display:none; }
+    .video-cta { opacity:0; transform:translateY(8px); pointer-events:none; height:0; padding-top:0; padding-bottom:0; overflow:hidden; transition:opacity .45s ease, transform .45s ease; }
+    .video-cta.show { opacity:1; transform:translateY(0); pointer-events:auto; height:auto; padding-top:0.875rem; padding-bottom:0.875rem; animation:ctaGlow 2s ease-in-out infinite; }
+    @keyframes ctaGlow { 0%,100%{ box-shadow:0 0 0 0 rgba(0,200,255,0); } 50%{ box-shadow:0 0 26px 2px rgba(0,200,255,0.45); } }
+
+    /* Gating: secciones bloqueadas hasta ver el video */
+    .gate-locked { display:none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-glow, .play-btn, .video-cta.show { animation:none; }
+    }
   </style>
 
 </body>
