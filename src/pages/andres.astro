@@ -26,9 +26,9 @@ const comoLoHago = [
   { n: '03', t: 'Mido y mejoro', d: 'No entrego y desaparezco: me quedo a que rinda.' },
 ];
 const trabajar = [
-  { n: '01', t: 'Me escribís tu caso', d: 'Por el formulario o WhatsApp. Te respondo yo.' },
-  { n: '02', t: 'Vemos qué automatizar', d: 'Te digo por dónde empezar — sin compromiso.' },
-  { n: '03', t: 'Lo construyo', d: 'Queda funcionando, integrado a lo que ya usás.' },
+  { n: '01', t: 'Me dejás tu caso', d: 'Completás el formulario corto. Así llego a la llamada conociendo tu situación.' },
+  { n: '02', t: 'Coordinamos la llamada', d: 'Agendamos un horario y hablamos sin vueltas. Ahí está el diagnóstico real.' },
+  { n: '03', t: 'Salís con un plan', d: 'Te digo qué automatizar primero y cómo sería. Si te cierra, lo construyo.' },
 ];
 // Soluciones en video (las mismas que viven en la web de GENIDEIA Company → YouTube).
 const videos = [
@@ -224,8 +224,8 @@ const videos = [
     <div class="max-w-3xl mx-auto px-6">
       <div class="text-center mb-12" data-reveal>
         <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">04 · Trabajar conmigo</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.4rem);" class="mb-4">Empezamos con un diagnóstico gratis.</h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">Sin compromiso. Te digo qué automatizar primero en tu negocio.</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.4rem);" class="mb-4">Agendemos una llamada.</h2>
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">Dejame tu caso en el formulario: es para llegar a la llamada con tu contexto y aprovecharla al máximo. El diagnóstico lo hacemos ahí, sin compromiso.</p>
       </div>
       <div class="grid sm:grid-cols-3 gap-6 mb-12">
         {trabajar.map((p, i) => (
@@ -240,15 +240,30 @@ const videos = [
       <form id="auto-form" class="space-y-5" data-reveal>
         <div>
           <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">¿Qué te gustaría automatizar?</label>
-          <select name="area" required class="form-input">
+          <select name="area" id="area-select" required class="form-input">
             <option value="">Elegí una opción</option>
-            <option>Atención al cliente / WhatsApp</option>
-            <option>Ventas y seguimiento de clientes</option>
-            <option>Procesos internos / tareas repetitivas</option>
-            <option>Reportes y datos del negocio</option>
-            <option>Integrar herramientas que ya uso</option>
-            <option>No sé / quiero asesorarme</option>
+            <optgroup label="Atención y ventas">
+              <option>Bot de WhatsApp: atiende y agenda 24/7</option>
+              <option>Seguimiento automático de clientes y leads</option>
+            </optgroup>
+            <optgroup label="Procesos internos">
+              <option>Tareas repetitivas / conectar apps (workflows)</option>
+              <option>Carga y sincronización de datos entre sistemas</option>
+              <option>Alta y onboarding de clientes nuevos</option>
+            </optgroup>
+            <optgroup label="Administración y cobros">
+              <option>Presupuestos y comprobantes automáticos</option>
+              <option>Recordatorios de cobro y vencimientos</option>
+              <option>Reportes que se actualizan solos</option>
+            </optgroup>
+            <optgroup label="Otra cosa">
+              <option>No sé / quiero asesorarme</option>
+              <option value="__otra__">Otra (te la describo)</option>
+            </optgroup>
           </select>
+          <div id="area-otra-wrap" class="hidden" style="margin-top:0.75rem;">
+            <input name="area_otra" id="area-otra" type="text" placeholder="Contame qué te gustaría automatizar" class="form-input" />
+          </div>
         </div>
         <div>
           <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">Describí tu situación actual</label>
@@ -258,8 +273,8 @@ const videos = [
           <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">Tu nombre / empresa <span style="color:rgba(160,160,160,0.4);">(opcional)</span></label>
           <input name="nombre" type="text" placeholder="Para personalizar la respuesta" class="form-input" />
         </div>
-        <button type="submit" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; width:100%;" class="py-3.5 rounded-lg hover:opacity-90 transition-opacity text-base">Enviar y hablar por WhatsApp →</button>
-        <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-xs text-center">Se abre WhatsApp con tu mensaje ya armado · Te respondo en menos de 24 horas</p>
+        <button type="submit" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; width:100%;" class="py-3.5 rounded-lg hover:opacity-90 transition-opacity text-base">Enviar y coordinar la llamada →</button>
+        <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-xs text-center">Se abre WhatsApp con tu mensaje ya armado para coordinar el horario · Te respondo en menos de 24 horas</p>
       </form>
 
       <div id="auto-success" class="hidden text-center py-8">
@@ -328,17 +343,29 @@ const videos = [
     setupGate('vid-paso1', 'gate1', 'paso1');
     setupGate('vid-presentacion', 'gate2', 'presentacion');
 
-    // ── Form → WhatsApp ──
+    // ── Campo "Otra": aparece al elegir esa opción ──
+    const areaSel = document.getElementById('area-select');
+    const otraWrap = document.getElementById('area-otra-wrap');
+    const otraInput = document.getElementById('area-otra');
+    areaSel?.addEventListener('change', () => {
+      const isOtra = areaSel.value === '__otra__';
+      otraWrap?.classList.toggle('hidden', !isOtra);
+      if (isOtra) { otraInput?.setAttribute('required', 'required'); }
+      else { otraInput?.removeAttribute('required'); }
+    });
+
+    // ── Form → WhatsApp (coordinar la llamada) ──
     const form = document.getElementById('auto-form');
     const ok = document.getElementById('auto-success');
     form?.addEventListener('submit', (ev) => {
       ev.preventDefault();
       const data = new FormData(form);
-      const area = (data.get('area') || '').toString();
+      let area = (data.get('area') || '').toString();
+      if (area === '__otra__') area = (data.get('area_otra') || '').toString();
       const prob = (data.get('problema') || '').toString();
       const nom = (data.get('nombre') || '').toString();
       const hola = nom ? `Hola Andrés, soy ${nom}.` : 'Hola Andrés,';
-      const msg = `${hola} me gustaría automatizar: ${area}.\n\n*Lo que pasa hoy:*\n${prob}`;
+      const msg = `${hola} quiero coordinar una llamada para automatizar: ${area}.\n\n*Mi situación hoy:*\n${prob}`;
       const waLink = `https://wa.me/59892302941?text=${encodeURIComponent(msg)}`;
       const fb = document.getElementById('wa-fallback');
       if (fb) fb.href = waLink;
