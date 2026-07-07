@@ -1,40 +1,18 @@
 ---
-// Landing personal de Andrés Albornoz — automatización de empresas.
-// Flujo VSL guiado por video: Hero → Video 1 (primer paso) → [gate] Qué hago + Video 2 (presentación) → [gate] Diagnóstico.
-// Cada video desbloquea lo que sigue al terminar (VSL soft-gate) y muestra un CTA de cierre.
+// Landing personal de Andrés Albornoz — soluciones operativas.
+// Estructura VSL: Promesa → Video grande → [gate] Agendá (Calendly) + Presentación breve.
+// El CTA (Calendly) se desbloquea cuando termina el video principal.
 import Loader from '../transitions/Loader.astro';
 import '../transitions/transitions.css';
 import '../styles/global.css';
 
 const WA = '59892302941';
-const waMsg = encodeURIComponent('Hola Andrés, me gustaría automatizar algo en mi empresa. Te cuento:');
+const waMsg = encodeURIComponent('Hola Andrés, vi tu presentación y quiero coordinar un diagnóstico para mi empresa.');
 const waUrl = `https://wa.me/${WA}?text=${waMsg}`;
 
-const queHago = [
-  'Un bot de WhatsApp que atiende y agenda solo, 24/7.',
-  'Workflows que conectan tus apps y hacen el trabajo repetitivo.',
-  'Seguimiento automático: ningún cliente queda sin respuesta.',
-  'Reportes que se actualizan solos, sin cargar nada a mano.',
-  'Carga y sincronización de datos entre tus sistemas, sin copiar y pegar.',
-  'Presupuestos y comprobantes que se generan y envían solos.',
-  'Recordatorios de cobro y avisos de vencimientos, en automático.',
-  'Alta de clientes nuevos: bienvenida y accesos, sin que toques nada.',
-];
-const comoLoHago = [
-  { n: '01', t: 'Diagnóstico', d: 'Entiendo el sistema operativo de tu empresa.' },
-  { n: '02', t: 'Detección', d: 'Detecto las necesidades de automatización.' },
-  { n: '03', t: 'Respuesta', d: 'Te paso una propuesta con el enfoque en que obtengas rápidamente el retorno de inversión.' },
-];
-const trabajar = [
-  { n: '01', t: 'Me dejás tu caso', d: 'Completás el formulario para conocer tu situación.' },
-  { n: '02', t: 'Coordinamos la llamada', d: 'Agendás un horario y hablamos.' },
-  { n: '03', t: 'Salís con un plan', d: 'Sabrás tu posición actual y el proceso para llegar al objetivo.' },
-];
-// Soluciones en video (las mismas que viven en la web de GENIDEIA Company → YouTube).
-const videos = [
-  { id: 'JLFq5mAblxc', t: 'Bot de WhatsApp para negocios', d: 'Atiende, agenda turnos y confirma reservas solo — 24/7.' },
-  { id: 'jPMODHsfLlA', t: 'Sistema de contenido para inmobiliarias', d: 'Genera y publica contenido de propiedades en automático.' },
-];
+// Calendly — llamada de diagnóstico (Google Meet / teléfono, 45 min).
+const CALENDLY = 'https://calendly.com/genideiaconsultoraia/llamada-de-diagnostico';
+const calendlyEmbed = `${CALENDLY}?hide_gdpr_banner=1&background_color=0b1324&text_color=f2f4f7&primary_color=00c8ff`;
 ---
 
 <!DOCTYPE html>
@@ -42,10 +20,10 @@ const videos = [
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Andrés Albornoz — Automatización de empresas con IA</title>
-  <meta name="description" content="Automatizo empresas con IA: bots de WhatsApp, workflows e integraciones para que tu negocio atienda, venda y opere solo. Andrés Albornoz." />
-  <meta property="og:title" content="Andrés Albornoz — Automatización de empresas" />
-  <meta property="og:description" content="Que tu empresa produzca más haciendo menos pero mejor. Automatización con IA a medida." />
+  <title>Andrés Albornoz — Soluciones operativas para tu empresa</title>
+  <meta name="description" content="Detecto punto por punto dónde tu empresa pierde eficiencia y te muestro cómo resolverlo, con un plan y su retorno. Andrés Albornoz — GENIDEIA." />
+  <meta property="og:title" content="Andrés Albornoz — Soluciones operativas" />
+  <meta property="og:description" content="El método que te garantiza saber si tu empresa está perdiendo dinero — con un diagnóstico, un plan y su retorno." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://genideiacompany.com/og-genideia.png" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -65,222 +43,71 @@ const videos = [
     <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
       <a href="/andres" class="flex items-baseline gap-2">
         <span style="font-family:'Montserrat',sans-serif; font-size:1.15rem; font-weight:600; color:#F2F4F7; letter-spacing:0.5px;">Andrés Albornoz</span>
-        <span style="color:#00C8FF; font-size:0.6rem; letter-spacing:2px;" class="uppercase hidden sm:inline">Automatización</span>
+        <span style="color:#00C8FF; font-size:0.6rem; letter-spacing:2px;" class="uppercase hidden sm:inline">Soluciones operativas</span>
       </a>
-      <div class="flex items-center gap-4">
-        <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; font-size:0.78rem;" class="px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Hablemos</a>
-      </div>
+      <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; font-size:0.78rem;" class="px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Hablemos</a>
     </nav>
   </header>
 
-  <!-- ── HERO ──────────────────────────────────────────────── -->
-  <section class="max-w-6xl mx-auto px-6 pt-20 pb-20">
-    <div class="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
-      <div>
-        <p class="text-xs font-medium mb-6 uppercase" style="color:#00C8FF; letter-spacing:3px;">Automatización de empresas con IA</p>
-        <h1 class="mb-6" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.0; letter-spacing:-1.5px; font-size:clamp(2.6rem, 6vw, 4.6rem);">
-          Que tu empresa produzca más<br /><span style="color:#B8BEC7; font-weight:300; font-style:italic;">haciendo menos pero mejor.</span>
-        </h1>
-        <p class="mb-9 leading-relaxed max-w-md text-lg" style="color:#B8BEC7; font-weight:300;">
-          Elimino el trabajo repetitivo de tu negocio con IA — para que atiendas, vendas y operes sin depender de la supervisión humana.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href="#trabajar" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">Quiero automatizar →</a>
-          <a href="#paso1" style="border:1px solid rgba(255,255,255,0.12); color:#B8BEC7;" class="px-8 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors text-center">Conocé cómo</a>
-        </div>
-      </div>
-      <!-- Foto de Andrés + chip Cofundador (baja a la presentación) -->
-      <div class="order-first lg:order-last" style="position:relative;">
-        <div class="hero-glow" style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,200,255,0.16) 0%, transparent 64%); z-index:0;" aria-hidden="true"></div>
-        <div style="position:relative; z-index:1; width:100%; max-width:380px; aspect-ratio:4/5; margin:0 auto; border-radius:16px; overflow:hidden; border:1px solid rgba(0,200,255,0.2);">
-          <img src="/img/andres.jpg" alt="Andrés Albornoz — automatización de empresas con IA" style="width:100%; height:100%; object-fit:cover; object-position:center 25%; display:block;" />
-          <!-- Chip identidad: nombre + rol; lleva a la primera sección (avanzar) -->
-          <a href="#paso1" class="hero-chip" style="position:absolute; left:14px; bottom:14px; z-index:2; display:flex; align-items:center; gap:10px; padding:9px 14px; border-radius:12px; background:rgba(7,8,13,0.55); border:1px solid rgba(0,200,255,0.35); backdrop-filter:blur(8px); text-decoration:none;">
-            <span style="width:8px; height:8px; border-radius:50%; background:#00C8FF; box-shadow:0 0 10px #00C8FF; flex-shrink:0;"></span>
-            <span style="line-height:1.15;">
-              <span style="display:block; font-family:'Montserrat',sans-serif; font-weight:600; font-size:0.92rem; color:#F2F4F7;">Andrés Albornoz</span>
-              <span style="display:block; font-size:0.66rem; letter-spacing:1.5px; color:#00C8FF; text-transform:uppercase;">Cofundador · empezá acá →</span>
-            </span>
-          </a>
-        </div>
-      </div>
-    </div>
+  <!-- ── HERO · promesa grande ─────────────────────────────── -->
+  <section class="max-w-4xl mx-auto px-6 pt-24 pb-14 text-center">
+    <p class="text-xs font-medium mb-6 uppercase" style="color:#00C8FF; letter-spacing:3px;" data-reveal>Soluciones operativas · GENIDEIA</p>
+    <h1 class="mb-7 mx-auto" style="font-family:'Montserrat',sans-serif; font-weight:800; line-height:1.04; letter-spacing:-1.5px; font-size:clamp(2.4rem, 6vw, 4.4rem); max-width:17ch;" data-reveal data-delay="1">
+      El método que te garantiza saber si estás <span style="color:#00C8FF;">perdiendo dinero.</span>
+    </h1>
+    <p class="mb-10 leading-relaxed max-w-xl mx-auto text-lg" style="color:#B8BEC7; font-weight:300;" data-reveal data-delay="2">
+      En dos minutos te muestro cómo — con datos reales de tu operación.
+    </p>
+    <a href="#video" style="color:#00C8FF; font-weight:500; letter-spacing:1px;" class="text-sm hover:opacity-70 transition-opacity" data-reveal data-delay="3">↓ Mirá el video</a>
   </section>
 
-  <!-- ── 01 · EL PRIMER PASO (video 1, gate inicial) ────────── -->
-  <section id="paso1" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-24">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="mb-12" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">01 · Empecemos</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-3">Sistemas reales, listos para ejecutar.</h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">No invento soluciones: instalo las que el mercado ya probó, para los problemas que tu empresa ya tiene. Su resultado depende de un solo factor: un diagnóstico correcto.</p>
-      </div>
-      <div class="grid sm:grid-cols-3 gap-8 mb-14">
-        {comoLoHago.map((p, i) => (
-          <div data-reveal data-delay={String(i + 1)}>
-            <p style="font-family:'Montserrat',sans-serif; font-weight:700; color:#00C8FF; line-height:1;" class="text-6xl mb-4">{p.n}</p>
-            <h3 style="color:#F2F4F7; font-weight:500;" class="text-lg mb-2">{p.t}</h3>
-            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{p.d}</p>
-          </div>
-        ))}
-      </div>
-      <div class="grid lg:grid-cols-2 gap-8 items-center">
-        <!-- Video 1: el primer paso (Parte 1) -->
-        <div data-reveal class="flex justify-center lg:justify-start">
-          <div class="video-wrap" data-video-wrap>
-            <video id="vid-paso1" data-gate-video playsinline preload="metadata" poster="/videos/como-trabajo-poster.jpg" style="width:100%; height:100%; object-fit:cover; display:block;">
-              <source src="/videos/como-trabajo.mp4" type="video/mp4" />
-              Tu navegador no soporta el video.
-            </video>
-            <!-- Portada-gancho -->
-            <button type="button" class="video-cover" data-video-cover aria-label="Reproducir video">
-              <span class="play-btn"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-              <span class="cover-hint">Mirá cómo sería<br/>tu primer paso</span>
-            </button>
-          </div>
-        </div>
-        <!-- Texto lateral + hint de bloqueo + CTA de cierre -->
-        <div data-reveal data-delay="1" class="text-center lg:text-left">
-          <p style="color:#B8BEC7; font-weight:300;" class="text-lg mb-6">Te muestro un sistema funcionando, en vivo, sin vueltas.</p>
-          <p class="lock-hint" data-lock-hint="paso1" style="color:rgba(0,200,255,0.7); font-size:0.8rem; letter-spacing:1px;"><span style="font-size:0.9rem;">🔒</span> Mirá el video para continuar</p>
-          <a href="#presentacion" data-video-cta="paso1" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="video-cta px-8 rounded-lg inline-block">Conocé quién está detrás →</a>
-        </div>
-      </div>
+  <!-- ── VIDEO grande (VSL principal) ──────────────────────── -->
+  <section id="video" class="max-w-4xl mx-auto px-6 pb-10">
+    <div class="video-main-wrap" data-video-wrap data-reveal>
+      <video id="vid-main" data-gate-video controls playsinline preload="metadata" style="width:100%; height:100%; object-fit:cover; display:block; background:#0B1324;">
+        <source src="/videos/landing-andres.mp4" type="video/mp4" />
+        Tu navegador no soporta el video.
+      </video>
+      <!-- Portada-gancho -->
+      <button type="button" class="video-cover" data-video-cover aria-label="Reproducir video">
+        <span class="play-btn"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="cover-hint">Mirá esto antes<br/>de agendar</span>
+      </button>
     </div>
+    <p class="lock-hint text-center mt-6" data-lock-hint="main" style="color:rgba(0,200,255,0.75); font-size:0.85rem; letter-spacing:1px;"><span style="font-size:0.95rem;">🔒</span> Mirá el video para agendar tu diagnóstico</p>
   </section>
 
-  <!-- ╔═══ GATE 1 — se desbloquea cuando termina el Video 1 ═══╗ -->
-  <div id="gate1" class="gate-locked">
+  <!-- ╔═══ GATE — se desbloquea cuando termina el video ═══╗ -->
+  <div id="gate-agenda" class="gate-locked">
 
-  <!-- ── 02 · QUÉ HAGO ─────────────────────────────────────── -->
-  <section id="que" class="py-24">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="mb-12" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">02 · Qué hago</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);">Automatizo lo que consume tu tiempo.</h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed mt-5 max-w-2xl">Automatizar no es “poner un bot”. Detrás de cada tarea repetitiva hay horas de tu tiempo, trabajo y carga mental. Construyo la solución a medida que se hace cargo de eso por vos —para que tu empresa funcione más rápido, con menos errores y sin depender de que estés en cada paso.</p>
-      </div>
-      <div class="grid sm:grid-cols-2 gap-4 mb-12">
-        {queHago.map((q, i) => (
-          <div class="card-hover rounded-xl p-6 flex items-start gap-4" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String((i % 2) + 1)}>
-            <span style="color:#00C8FF; flex-shrink:0; font-family:'Montserrat',sans-serif; font-size:1.4rem; line-height:1;">✓</span>
-            <p style="color:#cfcfcf; font-weight:300;" class="leading-relaxed">{q}</p>
-          </div>
-        ))}
-      </div>
-      <div class="mb-8" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-2">Soluciones funcionando</p>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">No son promesas. Soluciones en funcionamiento:</p>
-      </div>
-      <div class="grid sm:grid-cols-2 gap-6 mb-10">
-        {videos.map((v) => (
-          <div data-reveal>
-            <div style="aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2);">
-              <iframe src={`https://www.youtube.com/embed/${v.id}`} title={v.t} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%; height:100%; border:none; display:block;"></iframe>
-            </div>
-            <p style="color:#F2F4F7; font-weight:500;" class="mt-3">{v.t}</p>
-            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{v.d}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ── 03 · QUIÉN SOY / PRESENTACIÓN (video 2, gate 2) ────── -->
-  <section id="presentacion" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-24">
-    <div class="max-w-5xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
-      <div data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">03 · Quién soy</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-5">Soy Andrés Albornoz.</h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed mb-7">
-          Cofundador de GENIDEIA Company. Construyo procesos automáticos con IA que liberan a tu empresa del trabajo repetitivo.
-        </p>
-        <p class="lock-hint" data-lock-hint="presentacion" style="color:rgba(0,200,255,0.7); font-size:0.8rem; letter-spacing:1px;"><span style="font-size:0.9rem;">🔒</span> Mirá el video para pedir tu diagnóstico</p>
-        <a href="#trabajar" data-video-cta="presentacion" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="video-cta px-8 rounded-lg inline-block">Pedí tu diagnóstico gratis →</a>
-      </div>
-      <!-- Video 2: presentación (Parte 2) -->
-      <div data-reveal data-delay="1" class="flex justify-center lg:justify-end">
-        <div class="video-wrap" data-video-wrap>
-          <video id="vid-presentacion" data-gate-video playsinline preload="metadata" poster="/videos/presentacion-poster.jpg" style="width:100%; height:100%; object-fit:cover; display:block;">
-            <source src="/videos/presentacion.mp4" type="video/mp4" />
-            Tu navegador no soporta el video.
-          </video>
-          <button type="button" class="video-cover" data-video-cover aria-label="Reproducir video">
-            <span class="play-btn"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-            <span class="cover-hint">Te cuento<br/>quién soy</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  </div><!-- ╚═══ /GATE 1 ═══╝ -->
-
-  <!-- ╔═══ GATE 2 — se desbloquea cuando termina el Video 2 ═══╗ -->
-  <div id="gate2" class="gate-locked">
-
-  <!-- ── 04 · TRABAJAR CONMIGO ─────────────────────────────── -->
-  <section id="trabajar" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
+  <!-- ── AGENDÁ (Calendly) ─────────────────────────────────── -->
+  <section id="agenda" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-20">
     <div class="max-w-3xl mx-auto px-6">
-      <div class="text-center mb-12" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">04 · Trabajar conmigo</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.4rem);">Agendá tu diagnóstico.</h2>
+      <div class="text-center mb-10" data-reveal>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">El siguiente paso</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);" class="mb-4">Agendá tu diagnóstico.</h2>
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg">Gratis, sin compromiso. Salís con tu situación clara y el plan para resolverla.</p>
       </div>
-      <div class="grid sm:grid-cols-3 gap-6 mb-12">
-        {trabajar.map((p, i) => (
-          <div class="card-hover rounded-xl p-5 text-center" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String(i + 1)}>
-            <p style="font-family:'Montserrat',sans-serif; font-weight:700; color:#00C8FF;" class="text-3xl mb-2">{p.n}</p>
-            <h3 style="color:#F2F4F7; font-weight:500;" class="mb-1">{p.t}</h3>
-            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{p.d}</p>
-          </div>
-        ))}
+      <!-- Calendly inline -->
+      <div id="calendly-box" class="calendly-inline-widget" data-url={calendlyEmbed} style="min-width:320px; height:700px; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2);" data-reveal></div>
+      <p class="text-center mt-6 text-sm" style="color:#B8BEC7; font-weight:300;" data-reveal>
+        ¿Preferís escribir? <a href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; text-decoration:underline;">Hablemos por WhatsApp →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ── PRESENTACIÓN BREVE (opción a conocerme) ───────────── -->
+  <section id="presentacion" class="py-20">
+    <div class="max-w-4xl mx-auto px-6 grid sm:grid-cols-[auto_1fr] gap-8 items-center">
+      <div data-reveal style="width:130px; height:160px; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.25); margin:0 auto;">
+        <img src="/img/andres.jpg" alt="Andrés Albornoz" style="width:100%; height:100%; object-fit:cover; object-position:center 25%; display:block;" />
       </div>
-
-      <form id="auto-form" class="space-y-5" data-reveal>
-        <div>
-          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">¿Qué te gustaría automatizar?</label>
-          <select name="area" id="area-select" required class="form-input">
-            <option value="">Elegí una opción</option>
-            <optgroup label="Atención y ventas">
-              <option>Bot de WhatsApp: atiende y agenda 24/7</option>
-              <option>Seguimiento automático de clientes y leads</option>
-            </optgroup>
-            <optgroup label="Procesos internos">
-              <option>Tareas repetitivas / conectar apps (workflows)</option>
-              <option>Carga y sincronización de datos entre sistemas</option>
-              <option>Alta y onboarding de clientes nuevos</option>
-            </optgroup>
-            <optgroup label="Administración y cobros">
-              <option>Presupuestos y comprobantes automáticos</option>
-              <option>Recordatorios de cobro y vencimientos</option>
-              <option>Reportes que se actualizan solos</option>
-            </optgroup>
-            <optgroup label="Otra cosa">
-              <option>No sé / quiero asesorarme</option>
-              <option value="__otra__">Otra (te la describo)</option>
-            </optgroup>
-          </select>
-          <div id="area-otra-wrap" class="hidden" style="margin-top:0.75rem;">
-            <input name="area_otra" id="area-otra" type="text" placeholder="Contame qué te gustaría automatizar" class="form-input" />
-          </div>
-        </div>
-        <div>
-          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">Describí tu situación actual</label>
-          <textarea name="problema" rows="4" required placeholder="¿Qué tarea consume más tiempo? ¿Dónde estás perdiendo clientes?" class="form-input resize-none"></textarea>
-        </div>
-        <div>
-          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">Tu nombre / empresa <span style="color:rgba(160,160,160,0.4);">(opcional)</span></label>
-          <input name="nombre" type="text" placeholder="Para personalizar la respuesta" class="form-input" />
-        </div>
-        <button type="submit" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; width:100%;" class="py-3.5 rounded-lg hover:opacity-90 transition-opacity text-base">Enviar y coordinar la llamada →</button>
-        <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-xs text-center">Se abre WhatsApp con tu mensaje ya armado para coordinar el horario · Te respondo en menos de 24 horas</p>
-      </form>
-
-      <div id="auto-success" class="hidden text-center py-8">
-        <p style="color:#00C8FF; font-size:1.5rem; margin-bottom:1rem;">✓</p>
-        <p style="color:#F2F4F7; font-weight:500;" class="text-lg mb-2">¡Listo!</p>
-        <p style="color:#B8BEC7; font-weight:300;">Se abrió WhatsApp con tu mensaje. Te respondo con una propuesta concreta.</p>
-        <p class="text-sm mt-4" style="color:#B8BEC7; font-weight:300;">¿No se abrió? <a id="wa-fallback" href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; text-decoration:underline;">Abrí WhatsApp acá →</a></p>
+      <div data-reveal data-delay="1" class="text-center sm:text-left">
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-3">Quién soy</p>
+        <h3 style="font-family:'Montserrat',sans-serif; font-weight:700;" class="text-2xl mb-3">Andrés Albornoz</h3>
+        <p style="color:#B8BEC7; font-weight:300;" class="leading-relaxed">
+          Cofundador de GENIDEIA Company. Ayudo a empresas a que su operación diaria funcione mejor de lo que funciona hoy — con un diagnóstico punto a punto y las soluciones que su caso realmente necesita.
+        </p>
       </div>
     </div>
   </section>
@@ -290,7 +117,7 @@ const videos = [
     <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm" style="color:#B8BEC7;">
       <div>
         <p style="font-family:'Montserrat',sans-serif; font-size:1.05rem; color:#F2F4F7;">Andrés Albornoz</p>
-        <p style="font-weight:300; font-size:0.8rem;">Cofundador de <a href="/" style="color:#00C8FF;">GENIDEIA Company</a> · Automatización de empresas</p>
+        <p style="font-weight:300; font-size:0.8rem;">Cofundador de <a href="/" style="color:#00C8FF;">GENIDEIA Company</a> · Soluciones operativas</p>
       </div>
       <div class="flex flex-col sm:items-end gap-1">
         <a href={waUrl} target="_blank" rel="noopener noreferrer" style="font-weight:300;" class="hover:text-[#00C8FF] transition-colors">WhatsApp +598 92 302 941</a>
@@ -299,9 +126,12 @@ const videos = [
     </div>
   </footer>
 
-  </div><!-- ╚═══ /GATE 2 ═══╝ -->
+  </div><!-- ╚═══ /GATE ═══╝ -->
 
-  <script>
+  <!-- Calendly widget script -->
+  <script src="https://assets.calendly.com/assets/external/widget.js" async is:inline></script>
+
+  <script define:vars={{ calendlyEmbed }}>
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
@@ -316,94 +146,62 @@ const videos = [
       v.addEventListener('play', () => wrap.classList.add('playing'));
     });
 
-    // ── Gating VSL: cada video desbloquea la sección siguiente ──
+    // ── Gating VSL: el video principal desbloquea el CTA (Calendly) ──
+    let calendlyReady = false;
+    function initCalendly() {
+      if (calendlyReady) return;
+      const box = document.getElementById('calendly-box');
+      if (box && window.Calendly) {
+        box.innerHTML = '';
+        window.Calendly.initInlineWidget({ url: calendlyEmbed, parentElement: box });
+        calendlyReady = true;
+      }
+    }
     function setupGate(videoId, gateId, ctaKey) {
       const v = document.getElementById(videoId);
       const gate = document.getElementById(gateId);
-      const cta = document.querySelector('[data-video-cta="' + ctaKey + '"]');
       const hint = document.querySelector('[data-lock-hint="' + ctaKey + '"]');
       if (!v) return;
       let done = false;
       const unlock = () => {
         if (done) return; done = true;
         gate && gate.classList.remove('gate-locked');
-        cta && cta.classList.add('show');
         hint && hint.classList.add('hide');
-        // revelar animaciones de la sección recién mostrada
         gate && gate.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-visible'));
+        // el widget de Calendly no renderiza dentro de display:none → inicializar al revelar
+        setTimeout(initCalendly, 60);
       };
       v.addEventListener('ended', unlock);
       v.addEventListener('timeupdate', () => { if (v.duration && v.currentTime / v.duration > 0.95) unlock(); });
-      // salvaguarda: si el video no carga, no dejar al usuario trabado
       v.addEventListener('error', unlock);
       const src = v.querySelector('source');
       src && src.addEventListener('error', unlock);
     }
-    setupGate('vid-paso1', 'gate1', 'paso1');
-    setupGate('vid-presentacion', 'gate2', 'presentacion');
-
-    // ── Campo "Otra": aparece al elegir esa opción ──
-    const areaSel = document.getElementById('area-select');
-    const otraWrap = document.getElementById('area-otra-wrap');
-    const otraInput = document.getElementById('area-otra');
-    areaSel?.addEventListener('change', () => {
-      const isOtra = areaSel.value === '__otra__';
-      otraWrap?.classList.toggle('hidden', !isOtra);
-      if (isOtra) { otraInput?.setAttribute('required', 'required'); }
-      else { otraInput?.removeAttribute('required'); }
-    });
-
-    // ── Form → WhatsApp (coordinar la llamada) ──
-    const form = document.getElementById('auto-form');
-    const ok = document.getElementById('auto-success');
-    form?.addEventListener('submit', (ev) => {
-      ev.preventDefault();
-      const data = new FormData(form);
-      let area = (data.get('area') || '').toString();
-      if (area === '__otra__') area = (data.get('area_otra') || '').toString();
-      const prob = (data.get('problema') || '').toString();
-      const nom = (data.get('nombre') || '').toString();
-      const hola = nom ? `Hola Andrés, soy ${nom}.` : 'Hola Andrés,';
-      const msg = `${hola} quiero coordinar una llamada para automatizar: ${area}.\n\n*Mi situación hoy:*\n${prob}`;
-      const waLink = `https://wa.me/59892302941?text=${encodeURIComponent(msg)}`;
-      const fb = document.getElementById('wa-fallback');
-      if (fb) fb.href = waLink;
-      window.open(waLink, '_blank');
-      form.classList.add('hidden');
-      ok?.classList.remove('hidden');
-      ok?.classList.add('is-visible');
-    });
+    setupGate('vid-main', 'gate-agenda', 'main');
   </script>
 
   <style>
-    @keyframes heroGlowPulse { 0%,100% { opacity:0.55; transform:scale(1); } 50% { opacity:1; transform:scale(1.08); } }
     .hero-glow { animation: heroGlowPulse 5s ease-in-out infinite; }
-    .hero-chip { transition: border-color .25s, transform .25s; }
-    .hero-chip:hover { border-color:#00C8FF; transform:translateY(-2px); }
+    @keyframes heroGlowPulse { 0%,100% { opacity:0.55; transform:scale(1); } 50% { opacity:1; transform:scale(1.08); } }
 
-    /* Contenedor de video vertical 9:16 */
-    .video-wrap { position:relative; width:100%; max-width:300px; aspect-ratio:9/16; border-radius:16px; overflow:hidden; border:1px solid rgba(0,200,255,0.25); background:#0B1324; box-shadow:0 8px 40px rgba(0,200,255,0.10); }
+    /* Video principal 16:9 */
+    .video-main-wrap { position:relative; width:100%; aspect-ratio:16/9; border-radius:18px; overflow:hidden; border:1px solid rgba(0,200,255,0.25); background:#0B1324; box-shadow:0 12px 60px rgba(0,200,255,0.12); }
 
     /* Portada-gancho */
-    .video-cover { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; cursor:pointer; border:none; background:linear-gradient(180deg, rgba(7,8,13,0.25) 0%, rgba(7,8,13,0.55) 100%); transition:opacity .3s; }
-    .video-wrap.playing .video-cover { opacity:0; pointer-events:none; }
-    .play-btn { width:66px; height:66px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#0A0F1A; background:linear-gradient(135deg,#00C8FF,#007BFF); box-shadow:0 0 0 0 rgba(0,200,255,0.5); animation:playPulse 2.2s ease-in-out infinite; }
-    @keyframes playPulse { 0%{ box-shadow:0 0 0 0 rgba(0,200,255,0.45);} 70%{ box-shadow:0 0 0 18px rgba(0,200,255,0);} 100%{ box-shadow:0 0 0 0 rgba(0,200,255,0);} }
-    .cover-hint { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.05rem; line-height:1.25; color:#F2F4F7; text-align:center; text-shadow:0 2px 12px rgba(0,0,0,0.6); }
+    .video-cover { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; cursor:pointer; border:none; background:linear-gradient(180deg, rgba(7,8,13,0.30) 0%, rgba(7,8,13,0.60) 100%); transition:opacity .3s; }
+    .video-main-wrap.playing .video-cover { opacity:0; pointer-events:none; }
+    .play-btn { width:76px; height:76px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#0A0F1A; background:linear-gradient(135deg,#00C8FF,#007BFF); box-shadow:0 0 0 0 rgba(0,200,255,0.5); animation:playPulse 2.2s ease-in-out infinite; }
+    @keyframes playPulse { 0%{ box-shadow:0 0 0 0 rgba(0,200,255,0.45);} 70%{ box-shadow:0 0 0 22px rgba(0,200,255,0);} 100%{ box-shadow:0 0 0 0 rgba(0,200,255,0);} }
+    .cover-hint { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.15rem; line-height:1.25; color:#F2F4F7; text-align:center; text-shadow:0 2px 12px rgba(0,0,0,0.6); }
 
-    /* Hint de bloqueo + CTA de cierre (oculto hasta terminar el video) */
+    /* Hint de bloqueo (se oculta al desbloquear) */
     .lock-hint { transition:opacity .3s; }
     .lock-hint.hide { display:none; }
-    .video-cta { opacity:0; transform:translateY(8px); pointer-events:none; height:0; padding-top:0; padding-bottom:0; overflow:hidden; transition:opacity .45s ease, transform .45s ease; }
-    .video-cta.show { opacity:1; transform:translateY(0); pointer-events:auto; height:auto; padding-top:0.875rem; padding-bottom:0.875rem; animation:ctaGlow 2s ease-in-out infinite; }
-    @keyframes ctaGlow { 0%,100%{ box-shadow:0 0 0 0 rgba(0,200,255,0); } 50%{ box-shadow:0 0 26px 2px rgba(0,200,255,0.45); } }
 
-    /* Gating: secciones bloqueadas hasta ver el video */
+    /* Gating */
     .gate-locked { display:none; }
 
-    @media (prefers-reduced-motion: reduce) {
-      .hero-glow, .play-btn, .video-cta.show { animation:none; }
-    }
+    @media (prefers-reduced-motion: reduce) { .hero-glow, .play-btn { animation:none; } }
   </style>
 
 </body>
