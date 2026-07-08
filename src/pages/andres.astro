@@ -53,7 +53,7 @@ const calendlyEmbed = `${CALENDLY}?hide_gdpr_banner=1&background_color=0b1324&te
   <section class="max-w-4xl mx-auto px-6 pt-24 pb-14 text-center">
     <p class="text-xs font-medium mb-6 uppercase" style="color:#00C8FF; letter-spacing:3px;" data-reveal>Soluciones operativas · GENIDEIA</p>
     <h1 class="mb-7 mx-auto" style="font-family:'Montserrat',sans-serif; font-weight:800; line-height:1.04; letter-spacing:-1.5px; font-size:clamp(2.4rem, 6vw, 4.4rem); max-width:17ch;" data-reveal data-delay="1">
-      El método que te garantiza saber si estás <span style="color:#00C8FF;">perdiendo dinero.</span>
+      El método que te garantiza saber dónde estás <span style="color:#00C8FF;">perdiendo dinero.</span>
     </h1>
     <p class="mb-10 leading-relaxed max-w-xl mx-auto text-lg" style="color:#B8BEC7; font-weight:300;" data-reveal data-delay="2">
       En dos minutos te muestro cómo — con datos reales de tu operación.
@@ -167,18 +167,20 @@ const calendlyEmbed = `${CALENDLY}?hide_gdpr_banner=1&background_color=0b1324&te
       const hint = document.querySelector('[data-lock-hint="' + ctaKey + '"]');
       if (!v) return;
       const wrap = v.closest('[data-video-wrap]');
-      let done = false;
+      let unlocked = false;
+      // desbloquea el CTA/Calendly de abajo (invisible hasta scrollear; no tapa el video)
       const unlock = () => {
-        if (done) return; done = true;
-        wrap && wrap.classList.add('ended');
+        if (unlocked) return; unlocked = true;
         gate && gate.classList.remove('gate-locked');
         hint && hint.classList.add('hide');
         gate && gate.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-visible'));
         // el widget de Calendly no renderiza dentro de display:none → inicializar al revelar
         setTimeout(initCalendly, 60);
       };
-      v.addEventListener('ended', unlock);
-      v.addEventListener('timeupdate', () => { if (v.duration && v.currentTime / v.duration > 0.95) unlock(); });
+      // la pantalla final aparece SOLO cuando el video termina de verdad
+      v.addEventListener('ended', () => { wrap && wrap.classList.add('ended'); unlock(); });
+      // salvaguarda: desbloquea el calendario muy cerca del final, sin mostrar el end-screen
+      v.addEventListener('timeupdate', () => { if (v.duration && v.currentTime / v.duration > 0.99) unlock(); });
       v.addEventListener('error', unlock);
       const src = v.querySelector('source');
       src && src.addEventListener('error', unlock);
