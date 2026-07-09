@@ -1,0 +1,66 @@
+Quiero que construyas conmigo, paso a paso, mi propio "sistema operativo de negocio": una
+aplicación web privada que sea el centro de comando de todo mi negocio. Antes de escribir código,
+armá un CLAUDE.md con este contexto y mostrame un plan. Vamos de a un módulo por vez, y cada cambio
+lo revisás conmigo antes de seguir.
+
+## Sobre mi negocio (completá esto)
+- Negocio / marca: [NOMBRE DE TU NEGOCIO]
+- A qué se dedica: [EN UNA FRASE]
+- Colores de marca: [COLOR PRINCIPAL] y [COLOR SECUNDARIO] (si no tengo, proponé una paleta oscura premium)
+- Las grandes áreas de mi negocio (serán las "regiones" de la portada): [ej: Personal · Negocio · Clientes · Operación]
+- Lo que necesito ver/gestionar (serán los "módulos"): [ej: resumen del día, clientes, proyectos, finanzas, agenda, contenido, tareas]
+
+## Qué construir (estructura — esto NO cambia)
+1. Stack, liviano a propósito:
+   - Astro con renderizado en el servidor (SSR) + adaptador de Node.
+   - Base de datos local en un solo archivo con node:sqlite (el SQLite nativo de Node) — sin
+     servicio de base de datos externo ni credenciales que gestionar.
+   - Tailwind para estilos.
+   - Preparado para desplegar con Docker en Railway (deploy automático en cada push).
+
+2. Un único sistema de diseño centralizado: todos los colores, tipografías, radios y espaciados
+   viven en UN solo bloque de variables CSS (:root, en un archivo tipo estilos.css). Tema
+   oscuro, premium, con buen contraste. Cambiar un color ahí debe actualizar TODA la app. Todas las
+   pantallas heredan de ese archivo y de un layout compartido — nunca estilos sueltos por página.
+
+3. La portada = "el cerebro": no un menú, un mapa. En el centro, una galería flotante
+   (coverflow) de tarjetas, una por módulo, con una carta focal destacada y líneas tipo "sinapsis"
+   conectándolas. Arriba, un selector de "regiones" (las grandes áreas de mi negocio); al cambiar de
+   región cambian las tarjetas visibles. Se navega con rueda del mouse, flechas del teclado o
+   arrastrando. Fondo de estrellas/partículas sutil. Debe sentirse vivo.
+
+4. Módulos: cada módulo es una página propia que usa el MISMO layout compartido (barra superior
+   con logo + navegación, título del módulo con ícono, y KPIs arriba). Empezá creando estos y
+   después sumamos los que yo pida:
+   - Resumen — los números clave del negocio hoy (tarjetas de KPI) + un puntaje de "salud".
+   - Clientes (o el equivalente de mi negocio) — lista con fases/estados, ficha individual.
+   - Proyectos / Portafolio — historial de lo que hice, como prueba de trabajo.
+   - Finanzas — ingresos, gastos, cobranzas pendientes.
+   - Agenda / Tareas — lo que hay que hacer, por fecha.
+   - Contenido — calendario editorial (si aplica a mi negocio).
+   [ajustá esta lista a los módulos que puse arriba]
+
+5. Movimiento: transiciones suaves al cambiar de página, animaciones de aparición al hacer
+   scroll (scroll reveals), micro-interacciones al pasar el mouse, y una pantalla de carga inicial
+   con mi logo. Sin librerías pesadas — CSS + lo nativo del navegador. Empaquetalo de forma reusable.
+
+6. Acceso: login propio con usuario y contraseña (contraseñas hasheadas, sesiones guardadas en
+   la base). Todo el panel detrás del login, salvo la propia pantalla de login y los archivos
+   estáticos. Nunca guardar contraseñas ni claves en el código — usar variables de entorno.
+
+7. Datos y respaldo: además de la base local, dos scripts: uno que EXPORTA todas las tablas a
+   archivos JSON (sync:out) y otro que las IMPORTA (sync:in). Así puedo llevar los datos entre
+   computadoras y versionarlos, sin exponer la base binaria.
+
+## Cómo quiero trabajar (método — respetalo siempre)
+- Empezá SIEMPRE por el CLAUDE.md con este contexto, antes de tocar código.
+- Para cualquier cosa grande, usá modo plan: mostrame el plan ANTES de escribir.
+- Cambios chicos y verificables: hacé el cambio, verificá en el navegador que funciona, y recién ahí
+  seguimos con el próximo. Nunca cambies muchas cosas de golpe.
+- Nombres de variables y funciones en inglés; textos de la interfaz en español.
+- No instales dependencias nuevas sin avisarme primero y explicarme por qué.
+- No pongas datos de ejemplo reales sensibles — si necesitás datos para probar, generá ficticios.
+
+Arrancá confirmándome que entendiste, escribí el CLAUDE.md, y proponeme el plan para la BASE del
+proyecto (stack + sistema de diseño + portada "cerebro" con un módulo de Resumen de ejemplo). No
+escribas código todavía: primero el plan.
