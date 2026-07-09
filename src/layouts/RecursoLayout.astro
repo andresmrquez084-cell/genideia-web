@@ -23,14 +23,21 @@ const {
   tipo = 'Recurso',
   barLabel = 'Recurso · @andresalbornozia',
   palabraClave,
-  ctaTitulo = '¿Lo vemos en tu negocio?',
-  ctaTexto = 'Escribime por DM y lo vemos juntos en una llamada gratis de 30 minutos, sin compromiso.',
-  ctaBtn = 'Escribime y lo vemos →',
-  waMsg = 'Hola Andrés, leí el recurso y me gustaría verlo aplicado en mi negocio. Te cuento:',
+  // CTA genérico: el que llega por contenido orgánico es audiencia B2C (no el ICP).
+  // La puerta para dueños de empresa es el bloque "¿Tenés una empresa?" → landing.
+  ctaTitulo = '¿Querés una mano con algo de esto?',
+  ctaTexto = 'Escribime por DM y contame qué estás intentando resolver. Te respondo yo.',
+  ctaBtn = 'Escribime →',
+  waMsg,
 } = Astro.props;
 
 const WA = '59892302941';
-const waUrl = `https://wa.me/${WA}?text=${encodeURIComponent(waMsg)}`;
+const waFinal = waMsg ?? `Hola Andrés, vi "${titulo}" y quiero preguntarte algo. Te cuento:`;
+const waUrl = `https://wa.me/${WA}?text=${encodeURIComponent(waFinal)}`;
+
+// Puente al embudo de empresas: etiquetado por recurso para medir cuál convierte.
+const slug = Astro.url.pathname.split('/').filter(Boolean).pop() ?? 'recurso';
+const empresaUrl = `/andres?utm_source=recurso&utm_medium=lead-magnet&utm_content=${slug}`;
 ---
 
 <!doctype html>
@@ -100,6 +107,11 @@ const waUrl = `https://wa.me/${WA}?text=${encodeURIComponent(waMsg)}`;
     .cta p{margin:8px 0 16px}
     .cta a.btn{display:inline-block;background:var(--cy);color:#06121d;text-decoration:none;font-weight:700;font-size:14px;padding:12px 22px;border-radius:9px}
     .sign{color:var(--cy);font-style:italic;margin-top:16px}
+    /* Puente al embudo de empresas (el ICP que cae acá por excepción) */
+    .cta2{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;text-align:left}
+    .cta2 .q{font-family:Cinzel,serif;color:var(--ink);font-weight:600;font-size:15px}
+    .cta2 p{margin:4px 0 0;font-size:13px}
+    .cta2 a{color:var(--cy);text-decoration:none;font-weight:700;font-size:13.5px;white-space:nowrap}
     @media print{ body{background:#fff;padding:0} .bar{display:none} .cta a.btn{display:none} .doc{border:none;border-radius:0} }
     @media(max-width:560px){ .grid{grid-template-columns:1fr} .doc{padding:26px 22px} }
   </style>
@@ -121,6 +133,14 @@ const waUrl = `https://wa.me/${WA}?text=${encodeURIComponent(waMsg)}`;
       <a class="btn" href={waUrl} target="_blank" rel="noopener noreferrer">{ctaBtn}</a>
       <div class="sign">— Andrés</div>
     </div>
+
+    <aside class="cta2">
+      <div>
+        <div class="q">¿Tenés una empresa?</div>
+        <p>Si tu negocio factura pero la operación se hace a mano, tengo algo para mostrarte.</p>
+      </div>
+      <a href={empresaUrl}>Ver cómo trabajo →</a>
+    </aside>
   </article>
 
   <script>
