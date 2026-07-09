@@ -1,0 +1,39 @@
+---
+// ⚠️ PLANTILLA — copiá este archivo para crear un recurso nuevo.
+// El "_" del nombre hace que Astro NO genere una URL para este archivo.
+//
+// CÓMO CREAR UN RECURSO NUEVO (3 pasos):
+//   1. Duplicá este archivo y renombralo con el slug del recurso, SIN "_":
+//        src/pages/recursos/mi-recurso-nuevo.astro
+//   2. Cambiá los props (título, tipo, palabra clave del DM) y escribí el contenido en el medio.
+//   3. git push → Vercel deploya solo → tu URL queda:
+//        https://andres.genideiacompany.com/recursos/mi-recurso-nuevo
+//      Esa URL es la que pegás en el DM de ManyChat.
+//
+// CLASES DE CONTENIDO DISPONIBLES (ya estiladas en el layout):
+//   <div class="lead">    → frase destacada con borde cian
+//   <ul class="arrow">     → lista con flechas →   (agregá class="no" a un <li> para ✕)
+//   <ul class="check">     → checklist con casillas
+//   <ul class="score">     → bloque de resultado/puntaje
+//   <ol class="steps">     → pasos numerados
+//   <div class="note">     → nota/consejo en tarjeta
+//   <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>...</code></pre></div>
+//   <div class="grid"> con <div class="col si"> y <div class="col no"> → dos columnas Sí/No
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+---
+<RecursoLayout
+  titulo="Título del recurso"
+  descripcion="Descripción corta para el preview del link (una frase)."
+  tipo="Mini-guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="PALABRA"
+>
+  <p>Contenido del recurso acá.</p>
+  <div class="lead"><b>La idea principal, destacada.</b></div>
+
+  <h2>Un subtítulo</h2>
+  <ul class="arrow">
+    <li>Un punto.</li>
+    <li>Otro punto.</li>
+  </ul>
+</RecursoLayout>
