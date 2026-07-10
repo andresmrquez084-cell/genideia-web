@@ -10,6 +10,11 @@ const WA = '59892302941';
 const waMsg = encodeURIComponent('Hola Andrés, vi tu presentación y quiero coordinar un diagnóstico para mi empresa.');
 const waUrl = `https://wa.me/${WA}?text=${waMsg}`;
 
+// Meta Pixel — pegar acá el ID del píxel (~15 dígitos) cuando exista el Business Manager.
+// Vacío = no se inyecta nada y la landing funciona igual. Con ID se disparan tres eventos:
+//   PageView (al cargar) · ViewContent (cuando termina el video) · Lead (cuando agenda en Calendly).
+const FB_PIXEL_ID = '';
+
 // Calendly — llamada de diagnóstico (Google Meet / teléfono, 45 min).
 const CALENDLY = 'https://calendly.com/genideiaconsultoraia/llamada-de-diagnostico';
 const calendlyEmbed = `${CALENDLY}?hide_gdpr_banner=1&background_color=0b1324&text_color=f2f4f7&primary_color=00c8ff`;
@@ -34,6 +39,18 @@ const calendlyEmbed = `${CALENDLY}?hide_gdpr_banner=1&background_color=0b1324&te
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script>import '../transitions/reveal.js';</script>
+  {FB_PIXEL_ID && (
+    <script define:vars={{ FB_PIXEL_ID }} is:inline>
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+      document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', FB_PIXEL_ID);
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" alt="" src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`} /></noscript>
+  )}
 </head>
 <body style="background:#07080D radial-gradient(ellipse 90% 55% at 50% -8%, rgba(0,200,255,0.10), transparent 62%) no-repeat fixed; color:#F2F4F7; font-family:'Poppins',sans-serif; -webkit-font-smoothing:antialiased;">
   <Loader logoSrc="/img/logo-nav.png" />
@@ -136,6 +153,15 @@ const calendlyEmbed = `${CALENDLY}?hide_gdpr_banner=1&background_color=0b1324&te
   <script src="https://assets.calendly.com/assets/external/widget.js" async is:inline></script>
 
   <script define:vars={{ calendlyEmbed }}>
+    // ── Meta Pixel: eventos del embudo. No-op si el píxel no está instalado. ──
+    const track = (evento) => { if (window.fbq) window.fbq('track', evento); };
+
+    // Agendó la llamada: el widget inline de Calendly lo avisa por postMessage.
+    window.addEventListener('message', (e) => {
+      if (typeof e.origin !== 'string' || e.origin.indexOf('calendly.com') === -1) return;
+      if (e.data && e.data.event === 'calendly.event_scheduled') track('Lead');
+    });
+
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
@@ -178,7 +204,7 @@ const calendlyEmbed = `${CALENDLY}?hide_gdpr_banner=1&background_color=0b1324&te
         setTimeout(initCalendly, 60);
       };
       // la pantalla final aparece SOLO cuando el video termina de verdad
-      v.addEventListener('ended', () => { wrap && wrap.classList.add('ended'); unlock(); });
+      v.addEventListener('ended', () => { wrap && wrap.classList.add('ended'); unlock(); track('ViewContent'); });
       // salvaguarda: desbloquea el calendario muy cerca del final, sin mostrar el end-screen
       v.addEventListener('timeupdate', () => { if (v.duration && v.currentTime / v.duration > 0.99) unlock(); });
       v.addEventListener('error', unlock);
