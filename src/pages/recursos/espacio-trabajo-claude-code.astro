@@ -1,0 +1,37 @@
+---
+// Lead magnet · palabra clave ManyChat: CLAUDE
+// URL pública: /recursos/espacio-trabajo-claude-code
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+---
+<RecursoLayout
+  titulo="Mi espacio de trabajo de Claude Code"
+  descripcion="La carpeta exacta que uso yo: contexto de negocio, skills ya armadas y la memoria organizada. Bajala y arrancá con la misma base."
+  tipo="Plantilla"
+  barLabel="Plantilla · @andresalbornozia"
+>
+  <div class="lead"><b>Bajala, abrila en Claude Code, y ya tenés funcionando la misma base que viste en el video.</b></div>
+
+  <h2>Qué hay adentro</h2>
+  <ul class="arrow">
+    <li><b>CLAUDE.md</b> — le enseña a Claude quién sos y cómo querés que te hable.</li>
+    <li><b>contexto/</b> — quién es tu negocio y sus reglas fijas de comportamiento.</li>
+    <li><b>planes/</b> — iniciativas en curso, una por archivo.</li>
+    <li><b>referencia/</b> — dónde vive cada cosa (fotos, métricas, contactos).</li>
+    <li><b>.claude/skills/</b> — 5 capacidades ya armadas: landing-page-pro, automation-forge, whatsapp-baileys, mvp-blueprint y saas-starter-kit.</li>
+  </ul>
+  <div class="note"><b>Ojo:</b> el contenido de <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">contexto/</code>, <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">planes/</code> y <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">referencia/</code> es un ejemplo inventado (un negocio ficticio) — es la plantilla, no el contenido. Lo reemplazás por el tuyo.</div>
+
+  <h2>Cómo usarla (3 pasos)</h2>
+  <ol class="steps">
+    <li><b>Instalá Claude Code</b> — en la terminal: <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">curl -fsSL https://claude.ai/install.sh | bash</code> (necesitás una cuenta con plan pago).</li>
+    <li><b>Descomprimí la carpeta</b> y abrila como tu espacio de trabajo en Claude Code.</li>
+    <li><b>Editá <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">CLAUDE.md</code></b> con tu info real, y pedile directamente: "armame una landing para [tu producto]" o "ayudame a automatizar [tu proceso repetitivo]" — las skills se activan solas.</li>
+  </ol>
+
+  <div class="codewrap" style="text-align:center">
+    <a href="/downloads/espacio-trabajo-claude-code.zip" download style="display:inline-block;background:var(--cy);color:#06121d;text-decoration:none;font-weight:700;font-size:14px;padding:13px 26px;border-radius:9px">Descargar la carpeta (.zip) →</a>
+  </div>
+
+  <h2>Por qué funciona</h2>
+  <p>No es magia ni un truco de prompt: es el mismo método que uso yo todos los días. El contexto en carpetas, las skills que se activan solas según la tarea, y la memoria que queda escrita — así Claude no arranca de cero cada vez que le pedís algo.</p>
+</RecursoLayout>
