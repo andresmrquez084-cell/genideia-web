@@ -1,0 +1,98 @@
+---
+// Lead magnet · palabra clave ManyChat: PDF (reel: documentos largos sin quemar tokens, NotebookLM MCP)
+// URL pública: /recursos/conectar-notebooklm-claude
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const cmdInstalar = `Instalá este MCP: npx notebooklm-mcp@latest`;
+const cmdAuth = `Ejecutá setup_auth para conectar mi cuenta de Google a NotebookLM`;
+const cmdCuaderno = `Agregá este cuaderno de NotebookLM a mi biblioteca: [pegá acá el link de tu cuaderno]`;
+const cmdConsulta = `Consultá en NotebookLM: ¿qué dice el contrato sobre los plazos de entrega? Citame de dónde lo sacaste.`;
+---
+<RecursoLayout
+  titulo="Analizá documentos largos sin quemar tokens"
+  descripcion="Guía paso a paso para conectar NotebookLM con Claude Code y consultar PDFs de cientos de páginas sin cargarlos enteros, como en el video."
+  tipo="Mini-guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="PDF"
+  ctaTitulo="¿Y si tu información se consultara sola?"
+  ctaTexto="Esto es una pieza suelta. Cuando los contratos, precios y procedimientos de tu negocio viven ordenados y se consultan solos, cambia la operación entera. Escribime por DM y lo vemos en una llamada gratis de 30 minutos, sin compromiso."
+  waMsg="Hola Andrés, vi la guía de NotebookLM con Claude y quiero ver cómo aplicarlo en mi negocio. Te cuento:"
+>
+  <p>Cuando le pegás un PDF largo a Claude, <b>entra entero en la ventana de contexto</b>. Y cada pregunta que hacés después vuelve a arrastrar todo ese texto: gastás miles de tokens por consulta y te quedás sin espacio a la mitad de la conversación.</p>
+  <div class="lead"><b>Con este puente, NotebookLM se queda con los documentos, los analiza y le pasa a Claude solo el fragmento que importa — con la cita de dónde salió.</b></div>
+
+  <h2>Qué vas a poder hacer</h2>
+  <ul class="arrow">
+    <li><b>Consultar documentos enormes</b> sin cargarlos: PDFs de cientos de páginas, contratos, manuales, informes.</li>
+    <li><b>Recibir la respuesta con su referencia</b>, así verificás de dónde salió cada dato.</li>
+    <li><b>Preguntar en castellano</b> desde Claude Code, sin comandos raros ni configuración por cada consulta.</li>
+    <li><b>Dejar de malgastar tokens</b> procesando una y otra vez el mismo material.</li>
+  </ul>
+
+  <h2>Lo que necesitás antes de arrancar</h2>
+  <ul class="check">
+    <li><b>Claude Code</b> instalado (viene con tu plan de Claude).</li>
+    <li><b>Node.js 18 o superior</b> y <b>Google Chrome</b> en tu computadora.</li>
+    <li>Una <b>cuenta de Google</b> — es la que vas a usar en NotebookLM.</li>
+  </ul>
+
+  <h2>Paso 1 — El repositorio</h2>
+  <p>Es un MCP comunitario, gratis y de código abierto. Toda la documentación está acá:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>https://github.com/PleasePrompto/notebooklm-mcp</code></pre>
+  </div>
+  <p>Si entrás y bajás hasta el apartado <b>Install</b>, vas a ver el comando del paso siguiente.</p>
+
+  <h2>Paso 2 — Instalalo</h2>
+  <p>Abrí Claude Code y pedíselo en palabras. Copiá y pegá esto:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{cmdInstalar}</code></pre>
+  </div>
+  <div class="note">Claude verifica el paquete, lo instala y lo deja conectado solo. No tenés que tocar nada más.</div>
+
+  <h2>Paso 3 — Conectá tu cuenta de Google</h2>
+  <p>Una sola vez, y nunca más. Pedile a Claude:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{cmdAuth}</code></pre>
+  </div>
+  <p>Se abre una ventana del navegador, iniciás sesión con Google y listo. <b>Las credenciales quedan guardadas</b> para las próximas veces.</p>
+
+  <h2>Paso 4 — Cargá tus documentos</h2>
+  <ol class="steps">
+    <li>Entrá a <b>notebooklm.google.com</b> y creá un cuaderno nuevo.</li>
+    <li>Subí tus fuentes: <b>PDFs, documentos, páginas web</b> o hasta videos de YouTube.</li>
+    <li>Tocá <b>Compartir</b> y copiá el link del cuaderno.</li>
+    <li>Pasáselo a Claude con este mensaje:</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{cmdCuaderno}</code></pre>
+  </div>
+  <div class="note"><b>Ojo con este paso:</b> es el que casi todos se saltean. Claude necesita el link del cuaderno para saber dónde consultar. Sin eso, queda instalado pero sin nada que leer.</div>
+
+  <h2>Paso 5 — Consultá desde Claude Code</h2>
+  <p>Ya está. Preguntale en castellano y él consulta NotebookLM por atrás:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{cmdConsulta}</code></pre>
+  </div>
+  <p>Además de preguntar, podés pedirle que <b>agregue fuentes nuevas</b> al cuaderno, que <b>liste o busque</b> entre tus cuadernos, y hasta que <b>genere un resumen en audio</b> del material.</p>
+
+  <h2>El truco que hace la diferencia</h2>
+  <ul class="arrow">
+    <li><b>Encadená las preguntas en la misma conversación.</b> NotebookLM recuerda lo que ya preguntaste, así que las repreguntas salen más afinadas: <i>"de eso que me dijiste, profundizá en el punto 3"</i>.</li>
+    <li><b>Pedí siempre la referencia.</b> Es lo que te deja verificar el dato en el documento original en dos segundos.</li>
+    <li class="no"><b>No mezcles temas distintos</b> en un mismo cuaderno. Un cuaderno por asunto (contratos, manuales, clientes) responde mucho mejor.</li>
+  </ul>
+
+  <h2>Ideas para usarlo</h2>
+  <ul class="arrow">
+    <li><b>Contratos:</b> "¿qué plazos y penalidades tiene este acuerdo?".</li>
+    <li><b>Manuales y procedimientos:</b> que tu equipo pregunte en vez de buscar en 200 páginas.</li>
+    <li><b>Licitaciones y pliegos:</b> extraer requisitos y fechas sin leerlo entero.</li>
+    <li><b>Informes y estudios:</b> sacar los datos que te sirven, con la fuente de cada uno.</li>
+  </ul>
+</RecursoLayout>
