@@ -1,0 +1,74 @@
+---
+// Lead magnet · palabra clave ManyChat: KIMI (reel: "Kimi K3", coordina hasta 300 agentes, demo con base de clientes)
+// URL pública: /recursos/guia-kimi-k3
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const promptEjemplo = `Acá tenés mi base de [clientes/contactos] [pegá o adjuntá el archivo].
+Analizala, clasificalos por [el criterio que te sirva: interés, rubro, tamaño]
+y armame una estrategia de cómo contactar a cada grupo.`;
+---
+<RecursoLayout
+  titulo="Probá Kimi K3 gratis, la IA que coordina hasta 300 agentes"
+  descripcion="Guía paso a paso para acceder a Kimi K3, entender sus 3 modos y qué tareas probar primero en tu negocio, como en el video."
+  tipo="Mini-guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="KIMI"
+  ctaTitulo="¿Lo probamos en tu negocio?"
+  ctaTexto="Esto es una pieza suelta para que la pruebes vos. Si querés ver qué proceso de tu negocio se resuelve con este tipo de IA — sin quemarte armándolo solo — escribime y lo vemos en una llamada gratis de 30 minutos, sin compromiso."
+  waMsg="Hola Andrés, vi la guía de Kimi K3 y quiero ver cómo aplicarlo en mi negocio. Te cuento:"
+>
+  <p>China lanzó <b>Kimi K3</b> (Moonshot AI) hace apenas unos días. Promete coordinar <b>hasta 300 agentes trabajando en paralelo</b> sobre una misma tarea, con una ventana de <b>1 millón de tokens</b>: le podés tirar documentos larguísimos sin que se pierda nada.</p>
+  <div class="lead"><b>Lo probé con una tarea real de mi negocio: le di mi base de potenciales clientes y le pedí que la clasificara y armara una estrategia de contacto. No me tiró sugerencias — ejecutó código, procesó el archivo completo y en minutos tenía un plan accionable.</b></div>
+
+  <h2>Qué vas a poder hacer</h2>
+  <ul class="arrow">
+    <li><b>Analizar archivos grandes</b> (planillas, listas, PDFs) y que los clasifique solo.</li>
+    <li><b>Pedirle que ejecute código</b> para procesar datos, no solo que te lo explique.</li>
+    <li><b>Investigar y armar informes</b> sin que te tome el día entero.</li>
+    <li><b>Probarlo gratis</b>, sin tarjeta — con límites de uso, pero alcanza para testearlo a fondo.</li>
+  </ul>
+
+  <h2>Lo que necesitás antes de arrancar</h2>
+  <ul class="check">
+    <li>Un navegador — funciona en la web, sin instalar nada.</li>
+    <li>Un mail para crear la cuenta.</li>
+    <li>El archivo o proceso real que querés probar — cuanto más real, mejor conclusión sacás.</li>
+  </ul>
+
+  <h2>Paso 1 — Entrá y creá tu cuenta</h2>
+  <p>Andá a <b>kimi.com</b> y registrate con Google o con tu mail. Es gratis para empezar.</p>
+
+  <h2>Paso 2 — Elegí el modo según la tarea</h2>
+  <p>Kimi organiza todo en tres productos, los tres corriendo sobre el mismo modelo K3:</p>
+  <ul class="arrow">
+    <li><b>Kimi Work</b> — investigar, analizar documentos, armar informes y estrategias. Es el que usé en la prueba.</li>
+    <li><b>Kimi Code</b> — programar: genera, ejecuta y corrige código en el mismo flujo.</li>
+    <li><b>Kimi Claw</b> — tareas autónomas en la web, sin que estés mirando todo el proceso.</li>
+  </ul>
+  <div class="note">Si es tu primera vez, quedate en <b>Kimi Work</b>. Los otros dos sirven cuando ya sabés qué buscás.</div>
+
+  <h2>Paso 3 — Dale una tarea real, no una de prueba</h2>
+  <p>Nada de "hola, qué podés hacer". Traele un problema real de tu negocio: una lista de contactos para clasificar, un mazo de documentos para resumir, una planilla desordenada para ordenar. Este fue el prompt que usé:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptEjemplo}</code></pre>
+  </div>
+
+  <h2>Paso 4 — Dejalo trabajar</h2>
+  <p>Cuando la tarea lo requiere, Kimi no solo te contesta: <b>escribe y ejecuta código</b> para procesar el archivo. Ves el proceso, no es una caja negra — y en minutos tenés un resultado accionable, no una lista de sugerencias genéricas.</p>
+
+  <h2>Ideas para probarlo en tu negocio</h2>
+  <ul class="arrow">
+    <li><b>Clasificar y priorizar</b> una base de clientes o leads.</li>
+    <li><b>Resumir contratos o manuales largos</b> y sacar los puntos clave.</li>
+    <li><b>Cruzar varias planillas sueltas</b> en un solo resumen ordenado.</li>
+    <li><b>Armar un primer research</b> de competencia o de mercado.</li>
+  </ul>
+
+  <h2>Ojo con esto</h2>
+  <ul class="arrow">
+    <li class="no"><b>No lo tomes como palabra final.</b> Verificá los datos importantes con una segunda pasada.</li>
+    <li class="no"><b>Una estimación no es una garantía.</b> Si te da una proyección, es un cálculo, no un hecho.</li>
+    <li><b>Aun con esos cuidados</b>, en el plan gratuito ya acelera muchísimo lo que hoy hacés a mano.</li>
+  </ul>
+</RecursoLayout>
