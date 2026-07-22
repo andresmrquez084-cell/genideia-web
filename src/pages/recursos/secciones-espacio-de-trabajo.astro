@@ -1,0 +1,106 @@
+---
+// Lead magnet · palabra clave ManyChat: NEGOCIO (reel: "Claude Code no rinde sin contexto de tu negocio")
+// URL pública: /recursos/secciones-espacio-de-trabajo
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const bloqueContexto = `# CONTEXTO DE NEGOCIO
+
+## Qué hace la empresa
+[Una frase clara. Ej: "Estudio de estética que ofrece tratamientos
+faciales y corporales en Montevideo."]
+
+## Qué vende
+[Los productos/servicios concretos, con precios si aplica.
+Ej: "Limpieza facial (\$1.200), radiofrecuencia (\$1.800),
+packs de 4 sesiones con 15% off."]
+
+## A quién le vende
+[El cliente real, no "todo el mundo". Ej: "Mujeres de 30-55,
+zona Pocitos/Punta Carretas, que priorizan resultados visibles
+y buena atención sobre el precio."]
+
+## Cómo se comunica
+[El tono de la marca. Ej: "Cercano y profesional, tratamos de
+usted en el primer contacto, nunca prometemos milagros."]
+
+## Qué procesos usa hoy
+[Cómo trabaja el negocio realmente. Ej: "Turnos por WhatsApp,
+seña del 50% por Mercado Pago, recordatorio 24h antes,
+ficha del cliente en una planilla."]`;
+
+const ejemploTarea = `Prepará una propuesta para un cliente nuevo que
+pidió un pack de tratamientos. Usá el contexto de negocio:
+respetá los precios reales, el tono con el que hablamos y
+la forma en que cerramos los turnos.`;
+---
+<RecursoLayout
+  titulo="Las 5 secciones que tu espacio de trabajo necesita"
+  descripcion="El contexto de negocio que le falta a Claude Code para que cada tarea salga con tu información real, no una respuesta genérica. Las 5 secciones, qué va en cada una y el bloque listo para copiar."
+  tipo="Plantilla"
+  barLabel="Plantilla · @andresalbornozia"
+  palabraClave="NEGOCIO"
+  ctaTitulo="¿Y si tu negocio entero trabajara así?"
+  ctaTexto="Esto es el contexto para una herramienta. Cuando toda la operación de tu negocio vive ordenada y cada tarea sabe con precisión qué hacer, cambia el juego. Escribime por DM y lo vemos en una llamada gratis de 30 minutos, sin compromiso."
+  waMsg="Hola Andrés, armé mi contexto de negocio como en la guía y quiero ver cómo llevarlo más lejos. Te cuento:"
+>
+  <p>Claude Code no rinde si cada conversación arranca de cero. Le pedís una propuesta y te devuelve algo genérico, que sirve para cualquiera — porque no sabe nada de <b>tu</b> negocio.</p>
+  <div class="lead"><b>La solución no es un prompt más largo: es darle un contexto de trabajo fijo, escrito una vez, que use en cada tarea. Es lo más parecido a capacitar a una persona antes de darle responsabilidades.</b></div>
+
+  <h2>Las 5 secciones</h2>
+  <p>Un espacio de trabajo que rinde tiene estas cinco. Ni más para arrancar, ni menos.</p>
+
+  <h2>1 · Qué hace la empresa</h2>
+  <ul class="arrow">
+    <li>Una frase que cualquiera entienda. A qué se dedica el negocio, sin vueltas.</li>
+    <li><b>Por qué importa:</b> es el marco. Sin esto, Claude no sabe si sos una estética, una inmobiliaria o un taller.</li>
+  </ul>
+
+  <h2>2 · Qué vende</h2>
+  <ul class="arrow">
+    <li>Los productos y servicios concretos. Si tenés precios fijos, ponelos.</li>
+    <li><b>Por qué importa:</b> para que una cotización o una propuesta salga con <b>tus</b> números, no con inventos.</li>
+  </ul>
+
+  <h2>3 · A quién le vende</h2>
+  <ul class="arrow">
+    <li>El cliente real. Edad, zona, qué prioriza. Nunca "a todo el mundo".</li>
+    <li><b>Por qué importa:</b> el mismo mensaje no le habla igual a un empresario que a alguien que recién arranca. Esto define el tono de todo lo que Claude escriba.</li>
+  </ul>
+
+  <h2>4 · Cómo se comunica</h2>
+  <ul class="arrow">
+    <li>El tono de la marca. ¿Tratás de vos o de usted? ¿Cercano o formal? ¿Qué nunca dirías?</li>
+    <li><b>Por qué importa:</b> es lo que hace que un texto suene a tu negocio y no a un robot.</li>
+  </ul>
+
+  <h2>5 · Qué procesos usa hoy</h2>
+  <ul class="arrow">
+    <li>Cómo trabaja el negocio de verdad: cómo tomás turnos, cómo cobrás, cómo hacés el seguimiento.</li>
+    <li><b>Por qué importa:</b> para que Claude proponga cosas que encajan en tu operación, no en una ideal que no existe.</li>
+  </ul>
+
+  <h2>El bloque, listo para copiar</h2>
+  <p>Pegá esto en un archivo <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">contexto.md</code> dentro de tu espacio de trabajo (o en tu <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">CLAUDE.md</code>) y reemplazá los corchetes con lo tuyo:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{bloqueContexto}</code></pre>
+  </div>
+  <div class="note"><b>Hacelo una vez y queda.</b> No es un prompt que reescribís cada vez: es la base que Claude lee en cada tarea que le pedís desde ese espacio de trabajo.</div>
+
+  <h2>Cómo se nota la diferencia</h2>
+  <p>Con el contexto cargado, en vez de pedir "hacé una propuesta" a secas, pedís:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{ejemploTarea}</code></pre>
+  </div>
+  <div class="grid">
+    <div class="col no">
+      <b>Sin contexto</b>
+      <p>Una propuesta genérica, con precios inventados y un tono que no es el tuyo. La tenés que reescribir entera.</p>
+    </div>
+    <div class="col si">
+      <b>Con contexto</b>
+      <p>Una propuesta con tus servicios, tus precios y tu forma de hablar. La ajustás en dos minutos y la mandás.</p>
+    </div>
+  </div>
+</RecursoLayout>

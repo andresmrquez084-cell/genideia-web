@@ -1,0 +1,91 @@
+---
+// Lead magnet · palabra clave ManyChat: PLANTILLA (reel: "Estás usando Claude Code como si fuera ChatGPT")
+// URL pública: /recursos/prompt-tarea-completa
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const plantilla = `OBJETIVO
+[Qué querés lograr, en una frase. No "ayudame con los clientes"
+sino "clasificá esta lista de clientes por estado y detectá
+los datos que faltan".]
+
+RECURSOS
+[Lo que le entregás para trabajar: archivos, datos, links,
+el contexto de tu negocio. Ej: "te adjunto la planilla de
+clientes y el contexto de la empresa que ya tenés cargado".]
+
+PROCEDIMIENTO
+[Los pasos, en orden. Ej:
+ 1. Clasificá cada cliente en activo / inactivo / potencial.
+ 2. Marcá los que tienen datos faltantes (mail o teléfono).
+ 3. Proponé un sistema de seguimiento para los inactivos.]
+
+FORMATO DE SALIDA
+[Cómo querés el resultado. Ej: "una tabla que pueda pegar en
+Excel, y abajo un resumen de 3 líneas con lo más urgente".]`;
+
+const malo = `¿Cómo organizo a mis clientes?`;
+
+const bueno = `OBJETIVO
+Ordenar mi cartera de clientes y detectar oportunidades.
+
+RECURSOS
+Te adjunto la planilla (nombre, último contacto, monto).
+Usá el contexto de mi negocio que ya tenés cargado.
+
+PROCEDIMIENTO
+1. Clasificá cada uno en activo / inactivo / potencial.
+2. Marcá los que tienen datos faltantes.
+3. Diseñá un seguimiento para reactivar a los inactivos.
+
+FORMATO DE SALIDA
+Una tabla para Excel + un resumen de 3 líneas con lo urgente.`;
+---
+<RecursoLayout
+  titulo="El prompt que convierte a Claude Code en tu ayudante"
+  descripcion="Dejá de hacerle preguntas sueltas. La plantilla de 4 partes que uso para asignarle una tarea completa y que la ejecute por vos, en vez de que te diga cómo hacerla."
+  tipo="Plantilla"
+  barLabel="Plantilla · @andresalbornozia"
+  palabraClave="PLANTILLA"
+  ctaTitulo="¿Y si tu negocio funcionara así de ordenado?"
+  ctaTexto="Esto ordena una tarea. Cuando ordenás la operación entera — con las tareas repetitivas resolviéndose solas — cambia cómo trabajás. Escribime por DM y lo vemos en una llamada gratis de 30 minutos, sin compromiso."
+  waMsg="Hola Andrés, usé la plantilla de prompt y quiero ver cómo ordenar más cosas de mi negocio. Te cuento:"
+>
+  <p>Si usás Claude Code como si fuera ChatGPT, estás desperdiciando gran parte de lo que puede hacer. Un chat común te <b>dice cómo</b> hacer una tarea. Claude Code puede acceder a tus archivos, ver lo que ya hiciste y <b>ejecutar la tarea por vos</b>.</p>
+  <div class="lead"><b>La diferencia no está en la herramienta: está en cómo le pedís. Dejá de hacerle preguntas aisladas y empezá a entregarle objetivos, recursos y procedimientos.</b></div>
+
+  <h2>La plantilla — 4 partes</h2>
+  <p>Toda tarea que quieras que ejecute de verdad tiene estas cuatro partes. Copiala y completala:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{plantilla}</code></pre>
+  </div>
+
+  <h2>Qué hace cada parte</h2>
+  <ul class="arrow">
+    <li><b>Objetivo</b> — el resultado que querés, no la pregunta. "Clasificá esta lista", no "¿cómo clasifico?".</li>
+    <li><b>Recursos</b> — lo que le das para trabajar: archivos, datos, el contexto de tu negocio. Sin materia prima, inventa.</li>
+    <li><b>Procedimiento</b> — los pasos en orden. Es lo que lo hace ejecutar en vez de responder en general.</li>
+    <li><b>Formato de salida</b> — cómo querés el resultado. Una tabla, un texto, un archivo. Así no tenés que reformatear después.</li>
+  </ul>
+
+  <h2>El antes y el después</h2>
+  <p>La misma necesidad, pedida de las dos formas:</p>
+  <div class="grid">
+    <div class="col no">
+      <b>Como un chat</b>
+      <div class="codewrap" style="margin-top:10px">
+        <pre class="code"><code>{malo}</code></pre>
+      </div>
+      <p>Te devuelve una explicación genérica. La leés, y el trabajo lo seguís haciendo vos.</p>
+    </div>
+    <div class="col si">
+      <b>Como un ayudante</b>
+      <div class="codewrap" style="margin-top:10px">
+        <pre class="code"><code>{bueno}</code></pre>
+      </div>
+      <p>Toma tus datos, los procesa y te devuelve el resultado listo para usar.</p>
+    </div>
+  </div>
+
+  <div class="note"><b>El truco:</b> antes de darle una tarea grande, asegurate de que tenga cargado el contexto de tu negocio. Es lo que hace que trabaje con tu información real y no con una respuesta de manual.</div>
+</RecursoLayout>
