@@ -1,0 +1,54 @@
+---
+// Lead magnet · palabra clave ManyChat: SISTEMA
+// (antes CLAUDE; el reel del formato clon pide SISTEMA)
+// URL pública: /recursos/prompt-os-replicable
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+import promptText from '../../prompts/prompt-os-replicable.txt?raw';
+---
+<RecursoLayout
+  titulo="Tu propio sistema operativo de negocio"
+  descripcion="El prompt exacto para construir con Claude Code un centro de comando donde vive todo tu negocio — igual en estructura al que usamos en GENIDEIA."
+  tipo="Prompt"
+  barLabel="Prompt · @andresalbornozia"
+  palabraClave="SISTEMA"
+  ctaTitulo="¿Querés que te lo montemos a medida?"
+  ctaTexto="Si preferís que lo construyamos por vos, escribime por DM — una llamada gratis de 30 minutos, sin compromiso."
+  waMsg="Hola Andrés, vi el prompt del sistema operativo de negocio y quiero que hablemos. Te cuento:"
+>
+  <p>Este es el prompt exacto para que construyas, con <b>Claude Code</b>, un sistema operativo de negocio idéntico en estructura al que usamos nosotros (GENIDEIA OS): un centro de comando navegable donde vive todo tu negocio — clientes, proyectos, finanzas, contenido, agenda y operación — en un solo lugar.</p>
+  <div class="lead"><b>Lo único que cambia es tu información. La estructura, el diseño y la forma de construirlo son los mismos.</b></div>
+
+  <h2>Qué vas a tener al terminar</h2>
+  <ul class="arrow">
+    <li>Una <b>portada tipo "cerebro"</b>: tus áreas de negocio como regiones, y cada módulo como un nodo navegable — un mapa, no un menú.</li>
+    <li>Un <b>sistema de diseño premium</b> (oscuro, con tu marca, con movimiento) que se controla desde un solo archivo de tokens.</li>
+    <li><b>Módulos</b> para cada parte del negocio, todos con el mismo layout y estilo.</li>
+    <li><b>Login</b> propio y datos que viven en tu servidor, sin servicios externos ni costos escondidos.</li>
+    <li>Todo <b>corriendo en tu computadora</b>, sin costos mensuales. Si más adelante lo querés online, queda preparado para publicarlo — ese paso sí es pago.</li>
+  </ul>
+
+  <h2>Cómo usarlo (3 pasos)</h2>
+  <ol class="steps">
+    <li><b>Instalá Claude Code</b> — en la terminal: <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">curl -fsSL https://claude.ai/install.sh | bash</code> (necesitás una cuenta con plan pago).</li>
+    <li><b>Creá una carpeta nueva</b> para tu proyecto y entrá: <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">cd mi-os &amp;&amp; claude</code></li>
+    <li><b>Pegá el prompt de abajo</b>, reemplazando lo que está entre [corchetes] con los datos de tu negocio. Dejá que arme el plan, revisalo, y aprobá.</li>
+  </ol>
+
+  <div class="note"><b>Consejo:</b> no le pidas todo de una. Arrancá con el prompt completo para que entienda el objetivo y arme la base + un módulo. Después le vas pidiendo un módulo a la vez.</div>
+
+  <h2>El prompt</h2>
+  <p>Tocá "Copiar" y pegalo en Claude Code:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptText}</code></pre>
+  </div>
+
+  <h2>Cuando la base esté andando</h2>
+  <p>Le vas pidiendo un módulo por vez, siempre igual:</p>
+  <div class="note">"Sumá el módulo de <b>Finanzas</b>. Usá el mismo layout y estilo que el resto. Mostrame el plan primero."</div>
+  <p>Con que corra en tu computadora ya te sirve para trabajar todos los días — así lo usamos nosotros. Publicarlo online solo tiene sentido si necesitás entrar desde otro lado, y <b>tiene un costo mensual</b>. Si llegás ahí:</p>
+  <div class="note">"Preparalo para desplegar con Docker y guiame paso a paso. Antes de empezar, decime qué opciones hay y cuánto sale cada una."</div>
+
+  <h2>Por qué funciona</h2>
+  <p>No es magia ni un template cerrado: es el mismo método con el que construimos GENIDEIA OS — un contexto claro (CLAUDE.md), un sistema de diseño centralizado, y módulos que heredan todos del mismo molde. Por eso crece sin romperse y se ve consistente de punta a punta.</p>
+</RecursoLayout>

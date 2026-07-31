@@ -1,0 +1,68 @@
+---
+// Lead magnet · palabra clave ManyChat: EXTENSOR (reel: Claude + Chrome, búsqueda → Drive → doc)
+// URL pública: /recursos/conectar-claude-chrome
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const prompt = `Usá el navegador para buscar en Google las últimas actualizaciones sobre inteligencia artificial de esta semana. Después abrí mi Google Drive, creá una carpeta llamada "Actualizaciones de IA" y guardá ahí un documento con un resumen de lo que encontraste, incluyendo las fuentes.`;
+---
+<RecursoLayout
+  titulo="Conectá Claude a tu navegador"
+  descripcion="Guía paso a paso para instalar la extensión de Claude en Chrome y que ejecute tareas repetitivas por vos, como en el video."
+  tipo="Mini-guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="EXTENSOR"
+  ctaTitulo="¿Querés que esto pase solo en tu negocio?"
+  ctaTexto="Esto es solo el navegador. Conectado a tu WhatsApp, tu CRM y tus planillas, escribime por DM y lo vemos en una llamada gratis de 30 minutos, sin compromiso."
+  waMsg="Hola Andrés, vi la guía de Claude en Chrome y quiero ver cómo aplicarlo en mi negocio. Te cuento:"
+>
+  <p>La extensión de <b>Claude para Chrome</b> ejecuta tareas repetitivas en tu navegador sola — busca, abre páginas, crea carpetas, arma documentos — con una sola instrucción y sin que tengas que estar encima.</p>
+  <div class="lead"><b>Es la misma extensión que usé en el video para buscar las últimas novedades de IA, abrir mi Google Drive, crear una carpeta y volcar toda la información ahí.</b></div>
+
+  <h2>Qué vas a poder hacer</h2>
+  <ul class="arrow">
+    <li><b>Que actúe por vos:</b> buscar, hacer clic, escribir, abrir y cerrar pestañas, completar formularios.</li>
+    <li><b>Delegar tareas repetitivas:</b> research, ordenar tu Drive, armar documentos, cargar datos de un lado a otro.</li>
+    <li><b>Todo desde un panel al costado</b> de Chrome, sin cambiar de ventana ni salir de lo que estás haciendo.</li>
+  </ul>
+
+  <h2>Lo que necesitás antes de arrancar</h2>
+  <ul class="check">
+    <li><b>Google Chrome</b> en tu computadora (no funciona en el celular ni en otros navegadores).</li>
+    <li>Una <b>cuenta de Claude con plan pago</b> — desde Pro (~USD 20/mes) para arriba. Con la cuenta gratis todavía no está disponible.</li>
+  </ul>
+
+  <h2>Cómo conectarla</h2>
+  <ol class="steps">
+    <li><b>Abrí Google Chrome</b> en tu computadora.</li>
+    <li>Entrá a la <b>Chrome Web Store</b> y buscá la extensión oficial "Claude" (de Anthropic).</li>
+    <li>Tocá <b>"Agregar a Chrome"</b> y confirmá la instalación.</li>
+    <li><b>Iniciá sesión</b> con tu cuenta de Claude (la del plan pago).</li>
+    <li><b>Fijá la extensión:</b> clic en la piecita de rompecabezas arriba a la derecha, y clavá el chinche al lado de "Claude".</li>
+    <li><b>Aceptá los permisos</b> que pide — son los que le dejan leer la página, hacer clic, escribir y manejar pestañas por vos.</li>
+  </ol>
+  <div class="note">Listo: ya te queda el ícono de Claude en la barra de Chrome.</div>
+
+  <h2>Tu primera tarea</h2>
+  <p>Hacé clic en el ícono de Claude → se abre el panel al costado. Tocá "Copiar" y pegá esta instrucción (la misma del video):</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{prompt}</code></pre>
+  </div>
+  <p>Claude va a abrir las pestañas, buscar, entrar a tu Drive y armar el documento solo. Vos solo mirás.</p>
+  <div class="note"><b>Consejo:</b> sé específico. Cuanto más clara la instrucción — qué querés, dónde guardarlo, con qué formato — mejor sale el resultado.</div>
+
+  <h2>Usala con cabeza</h2>
+  <ul class="arrow">
+    <li>La extensión <b>actúa en tu navegador de verdad</b>: hace clic y escribe como si fueras vos. Mirá lo que hace las primeras veces.</li>
+    <li class="no"><b>No la dejes sola</b> en acciones sensibles: pagos, transferencias, mails que se envían, borrar archivos. Ahí confirmá vos.</li>
+    <li>Podés <b>frenarla</b> en cualquier momento desde el panel.</li>
+  </ul>
+
+  <h2>Ideas para automatizar</h2>
+  <ul class="arrow">
+    <li><b>Research diario:</b> "buscá las novedades de [tu rubro] y armame un resumen en un documento".</li>
+    <li><b>Ordenar tu Drive:</b> crear carpetas, mover archivos, renombrar.</li>
+    <li><b>Cargar datos:</b> pasar información de una página a una planilla.</li>
+    <li><b>Borradores:</b> redactar respuestas o mails a partir de lo que hay en pantalla, para revisarlos antes de enviar.</li>
+  </ul>
+</RecursoLayout>
