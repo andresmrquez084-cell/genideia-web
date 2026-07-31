@@ -1,5 +1,6 @@
 ---
 // Lead magnet · palabra clave ManyChat: SISTEMA
+// (antes CLAUDE; el reel del formato clon pide SISTEMA)
 // URL pública: /recursos/prompt-os-replicable
 import RecursoLayout from '../../layouts/RecursoLayout.astro';
 import promptText from '../../prompts/prompt-os-replicable.txt?raw';
@@ -10,6 +11,9 @@ import promptText from '../../prompts/prompt-os-replicable.txt?raw';
   tipo="Prompt"
   barLabel="Prompt · @andresalbornozia"
   palabraClave="SISTEMA"
+  ctaTitulo="¿Querés que te lo montemos a medida?"
+  ctaTexto="Si preferís que lo construyamos por vos, escribime por DM — una llamada gratis de 30 minutos, sin compromiso."
+  waMsg="Hola Andrés, vi el prompt del sistema operativo de negocio y quiero que hablemos. Te cuento:"
 >
   <p>Este es el prompt exacto para que construyas, con <b>Claude Code</b>, un sistema operativo de negocio idéntico en estructura al que usamos nosotros (GENIDEIA OS): un centro de comando navegable donde vive todo tu negocio — clientes, proyectos, finanzas, contenido, agenda y operación — en un solo lugar.</p>
   <div class="lead"><b>Lo único que cambia es tu información. La estructura, el diseño y la forma de construirlo son los mismos.</b></div>
@@ -20,7 +24,7 @@ import promptText from '../../prompts/prompt-os-replicable.txt?raw';
     <li>Un <b>sistema de diseño premium</b> (oscuro, con tu marca, con movimiento) que se controla desde un solo archivo de tokens.</li>
     <li><b>Módulos</b> para cada parte del negocio, todos con el mismo layout y estilo.</li>
     <li><b>Login</b> propio y datos que viven en tu servidor, sin servicios externos ni costos escondidos.</li>
-    <li>Todo <b>desplegado y online</b>, actualizándose solo con cada cambio.</li>
+    <li>Todo <b>corriendo en tu computadora</b>, sin costos mensuales. Si más adelante lo querés online, queda preparado para publicarlo — ese paso sí es pago.</li>
   </ul>
 
   <h2>Cómo usarlo (3 pasos)</h2>
@@ -38,6 +42,12 @@ import promptText from '../../prompts/prompt-os-replicable.txt?raw';
     <button class="copy">Copiar</button>
     <pre class="code"><code>{promptText}</code></pre>
   </div>
+
+  <h2>Cuando la base esté andando</h2>
+  <p>Le vas pidiendo un módulo por vez, siempre igual:</p>
+  <div class="note">"Sumá el módulo de <b>Finanzas</b>. Usá el mismo layout y estilo que el resto. Mostrame el plan primero."</div>
+  <p>Con que corra en tu computadora ya te sirve para trabajar todos los días — así lo usamos nosotros. Publicarlo online solo tiene sentido si necesitás entrar desde otro lado, y <b>tiene un costo mensual</b>. Si llegás ahí:</p>
+  <div class="note">"Preparalo para desplegar con Docker y guiame paso a paso. Antes de empezar, decime qué opciones hay y cuánto sale cada una."</div>
 
   <h2>Por qué funciona</h2>
   <p>No es magia ni un template cerrado: es el mismo método con el que construimos GENIDEIA OS — un contexto claro (CLAUDE.md), un sistema de diseño centralizado, y módulos que heredan todos del mismo molde. Por eso crece sin romperse y se ve consistente de punta a punta.</p>

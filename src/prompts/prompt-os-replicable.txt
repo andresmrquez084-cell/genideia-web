@@ -16,7 +16,8 @@ lo revisás conmigo antes de seguir.
    - Base de datos local en un solo archivo con node:sqlite (el SQLite nativo de Node) — sin
      servicio de base de datos externo ni credenciales que gestionar.
    - Tailwind para estilos.
-   - Preparado para desplegar con Docker en Railway (deploy automático en cada push).
+   - Pensado para correr en tu computadora (npm run dev). Nada de servicios pagos para
+     empezar. Dejalo preparado para empaquetar con Docker, pero NO lo despleguemos ahora.
 
 2. Un único sistema de diseño centralizado: todos los colores, tipografías, radios y espaciados
    viven en UN solo bloque de variables CSS (:root, en un archivo tipo estilos.css). Tema
@@ -33,8 +34,14 @@ lo revisás conmigo antes de seguir.
    con logo + navegación, título del módulo con ícono, y KPIs arriba). Empezá creando estos y
    después sumamos los que yo pida:
    - Resumen — los números clave del negocio hoy (tarjetas de KPI) + un puntaje de "salud".
-   - Clientes (o el equivalente de mi negocio) — lista con fases/estados, ficha individual.
-   - Proyectos / Portafolio — historial de lo que hice, como prueba de trabajo.
+   - Clientes y crecimiento (o el equivalente de mi negocio) — el recorrido de cada cliente
+     por fases. Tiene que responder tres cosas de un vistazo: en qué etapa está cada
+     conversación, cuál es la próxima acción y cuándo fue el último movimiento. Arriba, un
+     contador de cuántos hay en cada fase, para ver dónde se concentra la cartera. Al tocar un
+     cliente, su ficha al costado con el detalle y las acciones a mano.
+   - Proyectos — para cada uno: qué se propuso, qué tareas están pendientes y qué parte ya
+     está en marcha. No es un portafolio: es el estado real de lo que está corriendo.
+   - Procedimientos / operación — cómo se hace cada cosa que se repite, paso a paso.
    - Finanzas — ingresos, gastos, cobranzas pendientes.
    - Agenda / Tareas — lo que hay que hacer, por fecha.
    - Contenido — calendario editorial (si aplica a mi negocio).
