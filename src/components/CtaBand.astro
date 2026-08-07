@@ -1,0 +1,48 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  waMessage: string;
+  servicio?: string;
+  waNumber?: string;
+}
+
+const { title, subtitle, waMessage, servicio, waNumber = '59892302941' } = Astro.props;
+const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
+const formHref = servicio ? `/#diagnostico?servicio=${servicio}` : '/#diagnostico';
+---
+
+<section class="max-w-3xl mx-auto px-6 py-24 text-center" data-reveal>
+  <h2
+    style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.8rem, 4.5vw, 2.8rem);"
+    class="mb-5"
+  >
+    {title}
+  </h2>
+  {subtitle && (
+    <p style="color:#B8BEC7; font-weight:300;" class="text-lg mb-10 leading-relaxed">
+      {subtitle}
+    </p>
+  )}
+  <div class="flex flex-col sm:flex-row gap-4 justify-center">
+    <a
+      href={waHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;"
+      class="px-9 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block text-base"
+    >
+      Hablar por WhatsApp
+    </a>
+    <a
+      href={formHref}
+      style="border:1px solid rgba(255,255,255,0.12); color:#B8BEC7;"
+      class="px-9 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors inline-block text-base"
+    >
+      Completar formulario
+    </a>
+  </div>
+  <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-sm mt-6">
+    Respondemos en menos de 24 horas
+  </p>
+</section>

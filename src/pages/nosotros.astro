@@ -1,33 +1,67 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Los dos socios / cofundadores — antes vivían en la home, ahora acá (con la historia).
+const socios = [
+  {
+    nombre: 'Andrés Albornoz',
+    rol: 'Cofundador · Soluciones con automatización',
+    desc: 'Ayuda a empresas a optimizar sus operaciones diarias con herramientas de Inteligencia Artificial.',
+    ig: 'https://instagram.com/andresalbornozia',
+    handle: '@andresalbornozia',
+    linkedin: 'https://www.linkedin.com/in/andres-albornoz-b498823a4',
+    wsp: 'https://wa.me/59892302941',
+    foto: '/img/andres.jpg',
+  },
+  {
+    nombre: 'Tadeo Granada',
+    rol: 'Fundador · Ads / Publicidad',
+    desc: 'Lleva los anuncios: Meta, Instagram, Google, TikTok y LinkedIn. Estudia el mercado, contacta y produce el contenido de las campañas que traen clientes.',
+    ig: 'https://instagram.com/tadeogranadaa',
+    handle: '@tadeogranadaa',
+    linkedin: '',
+    wsp: 'https://wa.me/59892267601',
+    foto: '/img/tadeo.jpg',
+  },
+];
+
+const valores = [
+  {
+    num: '01',
+    titulo: 'Problema primero',
+    desc: 'Antes de proponer cualquier solución, entendemos qué está pasando realmente en el negocio. Las herramientas vienen después.',
+  },
+  {
+    num: '02',
+    titulo: 'Sin sobre-ingeniería',
+    desc: 'Si se resuelve con algo simple, usamos algo simple. La complejidad tiene que justificarse con resultados, no con tecnología por la tecnología.',
+  },
+  {
+    num: '03',
+    titulo: 'Presencia posterior',
+    desc: 'No entregamos y desaparecemos. Medimos, ajustamos y seguimos. El éxito del cliente es el único indicador que nos importa.',
+  },
+];
 ---
 
-<BaseLayout title="Nosotros — GENIDEIA IA">
+<BaseLayout
+  title="Nosotros — GENIDEIA Company"
+  description="Dos socios, un objetivo: hacer crecer negocios reales con contenido, ads, presencia digital y automatización aplicada."
+  path="/nosotros"
+>
 
   <!-- ── HERO NOSOTROS ─────────────────────────────────────── -->
   <section class="max-w-5xl mx-auto px-6 pt-28 pb-16 text-center" style="position:relative; overflow:hidden;">
-    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:min(600px,100%); height:360px; background:radial-gradient(ellipse at center, rgba(74,184,255,0.09) 0%, transparent 68%); pointer-events:none; z-index:0;" aria-hidden="true"></div>
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:min(600px,100%); height:360px; background:radial-gradient(ellipse at center, rgba(0,200,255,0.09) 0%, transparent 68%); pointer-events:none; z-index:0;" aria-hidden="true"></div>
     <div style="position:relative; z-index:1;">
-      <p
-        class="hero-animate text-xs font-medium mb-7 uppercase"
-        data-delay="1"
-        style="color:#4ab8ff; letter-spacing:3px;"
-      >
+      <p class="hero-animate text-xs font-medium mb-7 uppercase" data-delay="1" style="color:#00C8FF; letter-spacing:3px;">
         Quiénes somos
       </p>
-      <h1
-        class="hero-animate mb-7"
-        data-delay="2"
-        style="font-family:'Cormorant Garamond',serif; font-weight:700; line-height:1.05; letter-spacing:-1px; font-size:clamp(2.5rem, 6vw, 4.5rem);"
-      >
+      <h1 class="hero-animate mb-7" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.05; letter-spacing:-1px; font-size:clamp(2.5rem, 6vw, 4.5rem);">
         Una historia personal.<br />
-        <span style="color:#a0a0a0; font-weight:300; font-style:italic;">Una alianza estratégica.</span>
+        <span style="color:#B8BEC7; font-weight:300; font-style:italic;">Una alianza estratégica.</span>
       </h1>
-      <p
-        class="hero-animate mx-auto leading-relaxed max-w-xl text-lg"
-        data-delay="3"
-        style="color:#a0a0a0; font-weight:300;"
-      >
+      <p class="hero-animate mx-auto leading-relaxed max-w-xl text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
         GENIDEIA IA nació de la convicción de que la tecnología bien aplicada
         puede cambiar la forma en que los negocios en América Latina operan y crecen.
       </p>
@@ -39,17 +73,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="max-w-3xl mx-auto px-6">
 
       <div class="mb-16" data-reveal>
-        <span style="color:#4ab8ff; font-size:0.65rem; letter-spacing:2.5px; font-weight:500;" class="uppercase mb-6 block">
+        <span style="color:#00C8FF; font-size:0.65rem; letter-spacing:2.5px; font-weight:500;" class="uppercase mb-6 block">
           Andrés Albornoz
         </span>
-        <h2
-          style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.8rem, 4vw, 3rem);"
-          class="mb-8"
-        >
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.8rem, 4vw, 3rem);" class="mb-8">
           Del problema propio a la solución para otros
         </h2>
 
-        <div class="space-y-5" style="color:#a0a0a0; font-weight:300; line-height:1.85; font-size:1rem;">
+        <div class="space-y-5" style="color:#B8BEC7; font-weight:300; line-height:1.85; font-size:1rem;">
           <p data-reveal data-delay="1">
             Empecé a explorar la automatización e inteligencia artificial no como tendencia,
             sino como respuesta a una frustración real: procesos manuales, tiempo perdido,
@@ -68,22 +99,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <!-- Divisor -->
       <div style="border-top:1px solid rgba(255,255,255,0.07);" class="my-16"></div>
 
       <!-- GENIDEIA IA -->
       <div data-reveal>
-        <span style="color:#4ab8ff; font-size:0.65rem; letter-spacing:2.5px; font-weight:500;" class="uppercase mb-6 block">
+        <span style="color:#00C8FF; font-size:0.65rem; letter-spacing:2.5px; font-weight:500;" class="uppercase mb-6 block">
           GENIDEIA IA
         </span>
-        <h2
-          style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.8rem, 4vw, 3rem);"
-          class="mb-8"
-        >
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.8rem, 4vw, 3rem);" class="mb-8">
           La alianza que escala la visión
         </h2>
 
-        <div class="space-y-5" style="color:#a0a0a0; font-weight:300; line-height:1.85; font-size:1rem;">
+        <div class="space-y-5" style="color:#B8BEC7; font-weight:300; line-height:1.85; font-size:1rem;">
           <p data-reveal data-delay="1">
             GENIDEIA IA es la estructura que permite hacer esto a mayor escala.
             Una alianza entre dos socios con enfoque complementario: visión estratégica
@@ -103,53 +130,64 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
+  <!-- ── LOS SOCIOS ─────────────────────────────────────────── -->
+  <section style="border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12" data-reveal>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Quiénes están detrás</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
+          Los socios que responden por tu negocio.
+        </h2>
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-xl mx-auto">
+          Dos socios que entran por frentes distintos —automatización y ads— y convergen
+          en un solo objetivo: hacer crecer tu negocio.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-6" data-reveal data-delay="1">
+        {socios.map((s) => (
+          <div class="card-hover rounded-xl p-6 flex items-center gap-5" style="background:#111111; border:1px solid rgba(255,255,255,0.07);">
+            <div style="flex-shrink:0; width:88px; height:110px; border-radius:0.5rem; overflow:hidden; background:#0B1324; border:1px solid rgba(255,255,255,0.08);" class="flex items-center justify-center">
+              <img src={s.foto} alt={s.nombre} style="width:100%; height:100%; object-fit:cover;" />
+            </div>
+            <div class="min-w-0">
+              <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.4rem;" class="leading-tight">{s.nombre}</h3>
+              <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:1px; font-weight:500;" class="uppercase mt-1 mb-3">{s.rol}</p>
+              <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-3">{s.desc}</p>
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
+                <a href={s.ig} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">{s.handle}</a>
+                {s.linkedin && <a href={s.linkedin} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">LinkedIn</a>}
+                {s.wsp && <a href={s.wsp} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">WhatsApp</a>}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- ── VALORES / FORMA DE TRABAJAR ──────────────────────── -->
-  <section
-    style="background:#0d0d0d; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);"
-    class="py-24"
-  >
+  <section style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-24">
     <div class="max-w-5xl mx-auto px-6">
       <div class="text-center mb-16" data-reveal>
-        <h2
-          style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
-          class="mb-4"
-        >
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
           Cómo trabajamos
         </h2>
-        <p style="color:#a0a0a0; font-weight:300;" class="text-lg max-w-lg mx-auto">
+        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-lg mx-auto">
           Tres principios que guían cada proyecto.
         </p>
       </div>
 
       <div class="grid sm:grid-cols-3 gap-10">
-        {[
-          {
-            num: '01',
-            titulo: 'Problema primero',
-            desc: 'Antes de proponer cualquier solución, entendemos qué está pasando realmente en el negocio. Las herramientas vienen después.',
-          },
-          {
-            num: '02',
-            titulo: 'Sin sobre-ingeniería',
-            desc: 'Si se resuelve con algo simple, usamos algo simple. La complejidad tiene que justificarse con resultados, no con tecnología por la tecnología.',
-          },
-          {
-            num: '03',
-            titulo: 'Presencia posterior',
-            desc: 'No entregamos y desaparecemos. Medimos, ajustamos y seguimos. El éxito del cliente es el único indicador que nos importa.',
-          },
-        ].map((v, i) => (
+        {valores.map((v, i) => (
           <div data-reveal data-delay={String(i + 1)}>
-            <p
-              style="font-family:'Cormorant Garamond',serif; font-weight:700; color:#4ab8ff; line-height:1;"
-              class="text-7xl mb-5"
-            >
+            <p style="font-family:'Montserrat',sans-serif; font-weight:700; color:#00C8FF; line-height:1;" class="text-6xl mb-5">
               {v.num}
             </p>
-            <h3 style="color:#e8e8e8; font-weight:500;" class="text-lg mb-3">
+            <h3 style="color:#F2F4F7; font-weight:500;" class="text-lg mb-3">
               {v.titulo}
             </h3>
-            <p style="color:#a0a0a0; font-weight:300;" class="text-sm leading-relaxed">
+            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">
               {v.desc}
             </p>
           </div>
@@ -160,20 +198,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <!-- ── CTA ───────────────────────────────────────────────── -->
   <section class="max-w-3xl mx-auto px-6 py-28 text-center" data-reveal>
-    <h2
-      style="font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
-      class="mb-5"
-    >
+    <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-5">
       ¿Tiene sentido trabajar juntos?
     </h2>
-    <p style="color:#a0a0a0; font-weight:300;" class="text-lg mb-10 leading-relaxed">
+    <p style="color:#B8BEC7; font-weight:300;" class="text-lg mb-10 leading-relaxed">
       Contame dónde estás y vemos si somos la opción correcta para tu momento.
     </p>
     <a
       href="https://wa.me/59892302941"
       target="_blank"
       rel="noopener noreferrer"
-      style="background:#4ab8ff; color:#0a0a0a; font-weight:600;"
+      style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;"
       class="px-10 py-4 rounded-lg hover:opacity-90 transition-opacity inline-block text-base"
     >
       Hablar por WhatsApp

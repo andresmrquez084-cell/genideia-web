@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ClientCard from '../components/ClientCard.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { clientes, serviciosInfo, type ServicioSlug } from '../data/clientes';
+
+// Solo se listan las categorías que tienen casos reales cargados — nada de filtros vacíos.
+const categoriasConCasos = [...new Set(clientes.map((c) => c.servicio))] as ServicioSlug[];
+---
+
+<BaseLayout
+  title="Casos y clientes reales — GENIDEIA Company"
+  description="Negocios uruguayos con los que ya trabajamos: contenido y marketing, presencia digital y automatización. Proyectos reales, sin resultados inventados."
+  path="/casos"
+>
+
+  <section class="max-w-5xl mx-auto px-6 pt-24 pb-14 text-center">
+    <p class="hero-animate text-xs font-medium mb-6 uppercase" data-delay="1" style="color:#00C8FF; letter-spacing:3px;">
+      Casos y clientes
+    </p>
+    <h1 class="hero-animate mb-6" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-1px; font-size:clamp(2.2rem, 5.5vw, 3.8rem);">
+      Negocios reales que ya confían en nosotros.
+    </h1>
+    <p class="hero-animate mx-auto leading-relaxed max-w-xl text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
+      Marcas y emprendimientos uruguayos con los que ya trabajamos. Mostramos lo que es verificable —
+      sin inventar testimonios ni resultados que no podemos respaldar.
+    </p>
+  </section>
+
+  <!-- Filtro por categoría (solo las que tienen casos reales) -->
+  <section class="max-w-5xl mx-auto px-6 pb-6">
+    <div class="flex flex-wrap items-center justify-center gap-3" data-reveal>
+      <button data-filtro="todos" class="caso-filtro active" style="--pill-color:#00C8FF;">Todos</button>
+      {categoriasConCasos.map((slug) => (
+        <button data-filtro={slug} class="caso-filtro" style={`--pill-color:${serviciosInfo[slug].color};`}>
+          {serviciosInfo[slug].nombre}
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <section class="max-w-5xl mx-auto px-6 pb-24">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="casos-grid">
+      {clientes.map((c) => (
+        <div data-caso-servicio={c.servicio}>
+          <ClientCard cliente={c} />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CtaBand
+    title="¿Tu negocio podría ser el próximo caso?"
+    subtitle="Contanos dónde estás hoy y qué te gustaría lograr."
+    waMessage="Hola, vi los casos de GENIDEIA y quiero contarles sobre mi negocio."
+  />
+
+</BaseLayout>
+
+<style>
+  .caso-filtro {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 1.15rem;
+    border-radius: 9999px;
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #B8BEC7;
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+  .caso-filtro:hover { color: var(--pill-color, #00C8FF); border-color: var(--pill-color, #00C8FF); }
+  .caso-filtro.active {
+    background: var(--pill-color, #00C8FF);
+    color: #0A0F1A;
+    border-color: var(--pill-color, #00C8FF);
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.caso-filtro');
+  const cards = document.querySelectorAll<HTMLElement>('[data-caso-servicio]');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      buttons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filtro = btn.dataset.filtro;
+      cards.forEach((card) => {
+        const match = filtro === 'todos' || card.dataset.casoServicio === filtro;
+        card.style.display = match ? '' : 'none';
+      });
+    });
+  });
+</script>

@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import ClientCard from '../../components/ClientCard.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { clientes } from '../../data/clientes';
+
+const casos = clientes.filter((c) => c.servicio === 'presencia-digital');
+
+const tabs = [
+  {
+    id: 'web',
+    nombre: 'Web',
+    titulo: 'Página web profesional',
+    desc: 'Reunimos en un solo lugar todo lo que un cliente necesita saber de tu empresa.',
+    items: [
+      'Presentación de la empresa y sus servicios',
+      'Trabajos e información relevante',
+      'Formas de contacto y WhatsApp',
+      'Ubicación',
+      'Preguntas frecuentes',
+      'Solicitud de presupuesto',
+    ],
+  },
+  {
+    id: 'google',
+    nombre: 'Google',
+    titulo: 'Perfil de Google',
+    desc: 'La ficha que aparece cuando alguien te busca en Google o Maps.',
+    items: [
+      'Ayuda a que el negocio aparezca en búsquedas',
+      'Muestra ubicación, horarios, fotos y reseñas',
+      'Facilita llamadas, consultas y visitas',
+      'Centraliza información oficial de tu negocio',
+    ],
+  },
+  {
+    id: 'redes',
+    nombre: 'Redes',
+    titulo: 'Instagram y Facebook',
+    desc: 'Perfiles configurados de forma profesional, coherentes con el resto de tu marca.',
+    items: [
+      'Configuración profesional de cada perfil',
+      'Coherencia visual con tu marca',
+      'Información comercial correctamente organizada',
+      'Conexión con los demás canales',
+      'Preparados para contenido y campañas futuras',
+    ],
+  },
+  {
+    id: 'whatsapp',
+    nombre: 'WhatsApp',
+    titulo: 'WhatsApp Business',
+    desc: 'El canal donde tus clientes realmente te escriben.',
+    items: [
+      'Acceso directo desde la web y los perfiles',
+      'Canal principal de contacto con tu negocio',
+      'Mensajes iniciales organizados',
+      'Consultas y presupuestos ordenados, no perdidos en el chat',
+    ],
+  },
+];
+
+const faqs = [
+  {
+    pregunta: 'Ya tengo redes sociales, ¿igual me sirve este servicio?',
+    respuesta: 'Sí. La mayoría de los negocios que llegan a nosotros ya tienen algo armado, pero incompleto, desactualizado o desconectado entre sí. Profesionalizamos lo que ya existe en vez de empezar de cero.',
+  },
+  {
+    pregunta: '¿Cuánto tiempo lleva tener todo listo?',
+    respuesta: 'Depende de cuántos canales necesites armar o corregir. En el diagnóstico te damos un plazo concreto para tu caso.',
+  },
+  {
+    pregunta: '¿La web incluye dominio y hosting?',
+    respuesta: 'Te asesoramos y dejamos todo configurado; el costo del dominio y el hosting corre por separado, según el proveedor que uses.',
+  },
+];
+---
+
+<BaseLayout
+  title="Presencia digital — GENIDEIA Company"
+  description="Web, Google, Instagram, Facebook y WhatsApp conectados en una sola presencia profesional. Creamos la base digital de tu negocio."
+  path="/servicios/presencia-digital"
+>
+
+  <!-- ── PRESENTACIÓN ──────────────────────────────────────── -->
+  <section class="max-w-4xl mx-auto px-6 pt-24 pb-16 text-center">
+    <p class="hero-animate text-xs font-medium mb-6 uppercase" data-delay="1" style="color:#007BFF; letter-spacing:3px;">
+      Presencia digital
+    </p>
+    <h1 class="hero-animate mb-6" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.05; letter-spacing:-1px; font-size:clamp(2.4rem, 5.5vw, 3.8rem);">
+      Todo conectado. Una sola presencia digital.
+    </h1>
+    <p class="hero-animate mx-auto mb-9 leading-relaxed max-w-xl text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
+      Creamos la base digital de tu negocio para que tus clientes puedan encontrarte,
+      entender qué hacés y contactarte fácilmente.
+    </p>
+    <a href="https://wa.me/59892302941?text=Hola%2C%20quiero%20mejorar%20mi%20presencia%20digital" target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="hero-animate inline-block px-9 py-3.5 rounded-lg hover:opacity-90 transition-opacity" data-delay="4">
+      Quiero mejorar mi presencia digital
+    </a>
+  </section>
+
+  <!-- ── TABS: WEB / GOOGLE / REDES / WHATSAPP ─────────────── -->
+  <Section kicker="Qué incluye" title="Cuatro piezas, un solo ecosistema" maxWidth="max-w-4xl">
+    <div class="pd-tabs">
+      {tabs.map((t, i) => (
+        <>
+          <input type="radio" name="pd-tab" id={`tab-${t.id}`} class="pd-tab-input" checked={i === 0} />
+          <label for={`tab-${t.id}`} class="pd-tab-label">{t.nombre}</label>
+        </>
+      ))}
+
+      {tabs.map((t) => (
+        <div class="pd-tab-panel" id={`panel-${t.id}`}>
+          <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.3rem;" class="mb-2">{t.titulo}</h3>
+          <p style="color:#B8BEC7; font-weight:300;" class="text-sm mb-5">{t.desc}</p>
+          <ul class="space-y-3">
+            {t.items.map((item) => (
+              <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-3">
+                <span style="color:#00C8FF; flex-shrink:0; margin-top:2px;">→</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ── EJEMPLOS / CASOS REALES ────────────────────────────── -->
+  {casos.length > 0 && (
+    <Section bg="soft" border="both" kicker="Proyectos reales" title="Negocios donde ya lo aplicamos">
+      <div class="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+        {casos.map((c) => <ClientCard cliente={c} />)}
+      </div>
+      <p class="text-center mt-10" data-reveal>
+        <a href="/casos" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">Ver todos los casos →</a>
+      </p>
+    </Section>
+  )}
+
+  <!-- ── FAQ ────────────────────────────────────────────────── -->
+  <Section kicker="Preguntas frecuentes" title="Antes de escribirnos">
+    <FaqAccordion items={faqs} />
+  </Section>
+
+  <CtaBand
+    title="Quiero mejorar mi presencia digital"
+    subtitle="Contanos qué tenés armado hoy (aunque sea nada) y te decimos por dónde empezar."
+    waMessage="Hola, quiero mejorar la presencia digital de mi negocio."
+    servicio="presencia-digital"
+  />
+
+</BaseLayout>
+
+<style>
+  .pd-tabs { display: flex; flex-wrap: wrap; }
+  .pd-tab-input { position: absolute; opacity: 0; pointer-events: none; }
+  .pd-tab-label {
+    cursor: pointer;
+    padding: 0.6rem 1.3rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #B8BEC7;
+    border: 1px solid rgba(255,255,255,0.1);
+    margin: 0 0.5rem 1.5rem 0;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+  .pd-tab-input:checked + .pd-tab-label {
+    background: #00C8FF;
+    color: #0A0F1A;
+    border-color: #00C8FF;
+    font-weight: 600;
+  }
+  .pd-tab-panel {
+    display: none;
+    width: 100%;
+    background: #111111;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 0.9rem;
+    padding: 2rem;
+  }
+  #tab-web:checked ~ #panel-web,
+  #tab-google:checked ~ #panel-google,
+  #tab-redes:checked ~ #panel-redes,
+  #tab-whatsapp:checked ~ #panel-whatsapp {
+    display: block;
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+</script>

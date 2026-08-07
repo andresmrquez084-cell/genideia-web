@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+const plataformas = [
+  { nombre: 'Meta / Instagram', desc: 'Donde la gente ya pasa horas todos los días — ideal para mostrar productos y servicios de forma visual.' },
+  { nombre: 'Google Ads y búsqueda', desc: 'Aparecer justo cuando alguien busca activamente lo que vendés.' },
+  { nombre: 'TikTok y LinkedIn Ads', desc: 'Según tu público: contenido corto y viral, o negocios que le venden a otras empresas.' },
+];
+
+const incluye = [
+  'Definir a quién le hablamos y qué lo mueve a comprar',
+  'Diseñar la estrategia y elegir las plataformas correctas',
+  'Producir las creatividades (imágenes, videos, textos del anuncio)',
+  'Medir resultados y optimizar la inversión mes a mes',
+];
+
+const noIncluye = [
+  'No incluye la producción de tu página web o perfiles (eso es Presencia digital)',
+  'No incluye la producción de contenido orgánico diario (eso es Contenido y marketing)',
+  'No garantizamos un resultado exacto sin antes hacer el diagnóstico — cada negocio arranca en un punto distinto',
+];
+
+const faqs = [
+  {
+    pregunta: '¿Qué necesito tener listo antes de empezar con anuncios?',
+    respuesta: 'Idealmente una página web o perfil profesional donde la persona que ve el anuncio pueda llegar y confiar en tu negocio. Si todavía no lo tenés, te lo armamos primero (ver Presencia digital) — no tiene sentido pagar para traer gente a un lugar que no está listo para recibirla.',
+  },
+  {
+    pregunta: '¿Cómo sé si está funcionando?',
+    respuesta: 'Medimos cuánto cuesta cada contacto que llega por el anuncio, cuánto cuesta cada cliente que efectivamente compra, y cuánto estás ganando en relación a lo que invertís. Te lo explicamos en números simples, no en jerga de marketing.',
+  },
+  {
+    pregunta: '¿Con cuánto presupuesto se puede arrancar?',
+    respuesta: 'Depende del rubro y el objetivo. En el diagnóstico gratuito te decimos un número realista para tu caso, sin comprometerte a nada.',
+  },
+];
+---
+
+<BaseLayout
+  title="Anuncios — GENIDEIA Company"
+  description="Publicidad con método en Meta, Google, TikTok y LinkedIn. Explicado en palabras simples, sin jerga técnica."
+  path="/servicios/anuncios"
+>
+
+  <!-- ── PRESENTACIÓN ──────────────────────────────────────── -->
+  <section class="max-w-4xl mx-auto px-6 pt-24 pb-16 text-center">
+    <p class="hero-animate text-xs font-medium mb-6 uppercase" data-delay="1" style="color:#22D3EE; letter-spacing:3px;">
+      Anuncios
+    </p>
+    <h1 class="hero-animate mb-6" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.05; letter-spacing:-1px; font-size:clamp(2.4rem, 5.5vw, 3.8rem);">
+      Llegá a personas que ya podrían estar buscando lo que vendés.
+    </h1>
+    <p class="hero-animate mx-auto mb-9 leading-relaxed max-w-xl text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
+      Cualquiera puede "hacer anuncios". Lo que cambia tu negocio es la pauta hecha con método:
+      entender a quién le hablás, dónde está y qué lo mueve a comprar.
+    </p>
+    <a href="https://wa.me/59892302941?text=Hola%2C%20quiero%20evaluar%20anuncios%20para%20mi%20negocio" target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#22D3EE,#007BFF); color:#0A0F1A; font-weight:600;" class="hero-animate inline-block px-9 py-3.5 rounded-lg hover:opacity-90 transition-opacity" data-delay="4">
+      Quiero evaluar anuncios para mi negocio
+    </a>
+  </section>
+
+  <!-- ── PARA QUÉ SIRVEN ────────────────────────────────────── -->
+  <Section kicker="Para qué sirven" title="Un anuncio es mostrarle tu negocio a la persona correcta, en el momento correcto">
+    <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-2xl mx-auto text-center leading-relaxed" data-reveal>
+      En vez de esperar a que alguien te encuentre por casualidad, le mostrás tu negocio directamente
+      a personas con más probabilidad de necesitarlo — según su ubicación, sus intereses o lo que ya buscaron.
+      Es la forma más rápida de conseguir consultas y clientes nuevos cuando el crecimiento orgánico solo no alcanza.
+    </p>
+  </Section>
+
+  <!-- ── PLATAFORMAS ────────────────────────────────────────── -->
+  <Section bg="soft" border="both" kicker="Dónde se aplica" title="En qué plataformas trabajamos">
+    <div class="grid sm:grid-cols-3 gap-6">
+      {plataformas.map((p, i) => (
+        <div class="card-hover rounded-xl p-6" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String(i + 1)}>
+          <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.15rem;" class="mb-3">{p.nombre}</h3>
+          <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{p.desc}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ── QUÉ INCLUYE / NO INCLUYE ───────────────────────────── -->
+  <Section kicker="Qué incluye el servicio" title="Cómo trabajamos la pauta">
+    <div class="grid sm:grid-cols-2 gap-10 max-w-4xl mx-auto">
+      <div data-reveal>
+        <p style="color:#34D399; font-size:0.7rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">Incluye</p>
+        <ul class="space-y-3">
+          {incluye.map((item) => (
+            <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-3">
+              <span style="color:#34D399; flex-shrink:0;">✓</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div data-reveal data-delay="1">
+        <p style="color:rgba(160,160,160,0.6); font-size:0.7rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">No incluye</p>
+        <ul class="space-y-3">
+          {noIncluye.map((item) => (
+            <li style="color:rgba(184,190,199,0.7); font-weight:300;" class="text-sm flex items-start gap-3">
+              <span style="color:rgba(160,160,160,0.6); flex-shrink:0;">–</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ── FAQ ────────────────────────────────────────────────── -->
+  <Section bg="soft" border="both" kicker="Preguntas frecuentes" title="Antes de escribirnos">
+    <FaqAccordion items={faqs} />
+  </Section>
+
+  <CtaBand
+    title="Quiero evaluar anuncios para mi negocio"
+    subtitle="Te decimos, sin compromiso, si tu negocio está listo para anuncios y con qué presupuesto arrancar."
+    waMessage="Hola, quiero evaluar si mi negocio está listo para hacer anuncios."
+    servicio="anuncios"
+    waNumber="59892267601"
+  />
+
+</BaseLayout>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+</script>

@@ -1,9 +1,13 @@
 ---
+import { serviciosInfo } from '../data/clientes';
+
+const servicios = Object.values(serviciosInfo);
+
 const navLinks = [
-  { href: '/#quienes', label: 'Quiénes somos' },
-  { href: '/#servicios', label: 'Qué hacemos' },
-  { href: '/#confiaron', label: 'Clientes' },
-  { href: '/#diagnostico', label: 'Diagnóstico' },
+  { href: '/', label: 'Inicio' },
+  { href: '/casos', label: 'Casos' },
+  { href: '/nosotros', label: 'Nosotros' },
+  { href: '/#diagnostico', label: 'Contacto' },
 ];
 ---
 
@@ -11,7 +15,7 @@ const navLinks = [
   style="background:rgba(10,10,10,0.92); border-bottom:1px solid rgba(255,255,255,0.07);"
   class="sticky top-0 z-50 backdrop-blur"
 >
-  <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+  <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
 
     <!-- Logo oficial de la marca: isotipo GII (anillo + glow) -->
     <a href="/" class="flex items-center gap-2.5 flex-shrink-0">
@@ -23,13 +27,51 @@ const navLinks = [
     </a>
 
     <!-- Desktop: links principales -->
-    <ul class="hidden lg:flex items-center gap-5 text-sm flex-1 justify-center">
-      {navLinks.map(link => (
+    <ul class="hidden lg:flex items-center gap-6 text-sm flex-1 justify-center">
+      <li>
+        <a href="/" style="color:#B8BEC7; font-weight:300; font-size:0.82rem; letter-spacing:0.2px;" class="hover:text-[#00C8FF] transition-colors whitespace-nowrap">
+          Inicio
+        </a>
+      </li>
+
+      <!-- Servicios: dropdown -->
+      <li class="relative" id="nav-servicios-wrap">
+        <button
+          id="nav-servicios-btn"
+          style="color:#B8BEC7; font-weight:300; font-size:0.82rem; letter-spacing:0.2px;"
+          class="hover:text-[#00C8FF] transition-colors whitespace-nowrap flex items-center gap-1"
+          aria-expanded="false"
+          aria-haspopup="true"
+        >
+          Servicios
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div
+          id="nav-servicios-menu"
+          class="hidden absolute top-full left-1/2 -translate-x-1/2 pt-3"
+          style="min-width:240px;"
+        >
+          <div style="background:#111111; border:1px solid rgba(255,255,255,0.1); border-radius:0.75rem;" class="p-2 shadow-2xl">
+            {servicios.map((s) => (
+              <a
+                href={s.ruta}
+                style="color:#B8BEC7; font-size:0.85rem; font-weight:400;"
+                class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg hover:bg-white/5 transition-colors whitespace-nowrap"
+              >
+                <span style={`width:6px; height:6px; border-radius:9999px; background:${s.color}; flex-shrink:0;`}></span>
+                {s.nombre}
+              </a>
+            ))}
+          </div>
+        </div>
+      </li>
+
+      {navLinks.slice(1).map(link => (
         <li>
           <a
             href={link.href}
             style="color:#B8BEC7; font-weight:300; font-size:0.82rem; letter-spacing:0.2px;"
-            class="tr-underline hover:text-[#00C8FF] transition-colors whitespace-nowrap"
+            class="hover:text-[#00C8FF] transition-colors whitespace-nowrap"
           >
             {link.label}
           </a>
@@ -110,14 +152,47 @@ const navLinks = [
     style="border-top:1px solid rgba(255,255,255,0.07); background:rgba(10,10,10,0.98);"
     class="lg:hidden hidden"
   >
-    <div class="max-w-5xl mx-auto px-6 py-5">
-      <ul class="flex flex-col gap-4 mb-6">
-        {navLinks.map(link => (
+    <div class="max-w-6xl mx-auto px-6 py-5">
+      <ul class="flex flex-col gap-1 mb-6">
+        <li>
+          <a href="/" style="color:#B8BEC7; font-weight:300; font-size:1rem;" class="nav-mobile-link block py-2.5 hover:text-[#00C8FF] transition-colors">
+            Inicio
+          </a>
+        </li>
+
+        <!-- Servicios: acordeón mobile -->
+        <li>
+          <button
+            id="nav-servicios-btn-mobile"
+            style="color:#B8BEC7; font-weight:300; font-size:1rem;"
+            class="w-full flex items-center justify-between py-2.5 hover:text-[#00C8FF] transition-colors"
+            aria-expanded="false"
+          >
+            Servicios
+            <svg id="nav-servicios-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition:transform 0.2s ease;"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <ul id="nav-servicios-submenu" class="hidden pl-4 flex flex-col gap-1 pb-2">
+            {servicios.map((s) => (
+              <li>
+                <a
+                  href={s.ruta}
+                  style="color:#B8BEC7; font-weight:300; font-size:0.92rem;"
+                  class="nav-mobile-link flex items-center gap-2.5 py-2 hover:text-[#00C8FF] transition-colors"
+                >
+                  <span style={`width:6px; height:6px; border-radius:9999px; background:${s.color}; flex-shrink:0;`}></span>
+                  {s.nombre}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
+
+        {navLinks.slice(1).map(link => (
           <li>
             <a
               href={link.href}
               style="color:#B8BEC7; font-weight:300; font-size:1rem;"
-              class="nav-mobile-link block hover:text-[#00C8FF] transition-colors"
+              class="nav-mobile-link block py-2.5 hover:text-[#00C8FF] transition-colors"
             >
               {link.label}
             </a>
@@ -173,5 +248,30 @@ const navLinks = [
       toggle?.classList.remove('is-open');
       toggle?.setAttribute('aria-expanded', 'false');
     });
+  });
+
+  // Servicios dropdown — desktop (click, cierra al hacer click afuera)
+  const servBtn = document.getElementById('nav-servicios-btn');
+  const servMenu = document.getElementById('nav-servicios-menu');
+  servBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isHidden = servMenu?.classList.contains('hidden');
+    servMenu?.classList.toggle('hidden', !isHidden);
+    servBtn.setAttribute('aria-expanded', String(isHidden));
+  });
+  document.addEventListener('click', () => {
+    servMenu?.classList.add('hidden');
+    servBtn?.setAttribute('aria-expanded', 'false');
+  });
+
+  // Servicios acordeón — mobile
+  const servBtnM = document.getElementById('nav-servicios-btn-mobile');
+  const servSubmenu = document.getElementById('nav-servicios-submenu');
+  const servChevron = document.getElementById('nav-servicios-chevron');
+  servBtnM?.addEventListener('click', () => {
+    const isHidden = servSubmenu?.classList.contains('hidden');
+    servSubmenu?.classList.toggle('hidden', !isHidden);
+    servBtnM.setAttribute('aria-expanded', String(isHidden));
+    if (servChevron) servChevron.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
   });
 </script>

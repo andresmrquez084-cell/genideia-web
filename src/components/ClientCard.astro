@@ -1,0 +1,45 @@
+---
+import type { Cliente } from '../data/clientes';
+
+interface Props {
+  cliente: Cliente;
+}
+
+const { cliente } = Astro.props;
+
+const badge = {
+  real: { label: 'Proyecto real', color: '#34D399' },
+  prototipo: { label: 'Prototipo funcional', color: '#FBBF24' },
+  demostracion: { label: 'Demostración', color: '#B8BEC7' },
+}[cliente.tipo];
+---
+
+<a
+  href={cliente.url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="card-hover rounded-xl p-6 flex flex-col"
+  style="background:#111111; border:1px solid rgba(255,255,255,0.07);"
+  data-reveal
+>
+  <span
+    style={`color:${badge.color}; border:1px solid ${badge.color}44; background:${badge.color}14;`}
+    class="text-[0.6rem] uppercase tracking-wider font-medium px-2 py-1 rounded self-start mb-4"
+  >
+    {badge.label}
+  </span>
+  <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.2rem;" class="mb-1">
+    {cliente.nombre}
+  </h3>
+  <p style="color:#B8BEC7; font-size:0.75rem; letter-spacing:0.5px;" class="uppercase mb-3">
+    {cliente.rubro}
+  </p>
+  {cliente.situacion && (
+    <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-3">
+      {cliente.situacion}
+    </p>
+  )}
+  <span style="color:#00C8FF; font-weight:400;" class="text-xs mt-auto">
+    Ver sitio →
+  </span>
+</a>

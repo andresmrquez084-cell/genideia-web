@@ -1,0 +1,55 @@
+---
+interface Props {
+  id?: string;
+  kicker?: string;
+  title: string;
+  subtitle?: string;
+  bg?: 'default' | 'soft';
+  border?: 'top' | 'both' | 'none';
+  maxWidth?: string;
+}
+
+const {
+  id,
+  kicker,
+  title,
+  subtitle,
+  bg = 'default',
+  border = 'top',
+  maxWidth = 'max-w-5xl',
+} = Astro.props;
+
+const bgStyle = bg === 'soft' ? 'background:#0B1324;' : '';
+const borderStyle =
+  border === 'both'
+    ? 'border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);'
+    : border === 'top'
+      ? 'border-top:1px solid rgba(255,255,255,0.07);'
+      : '';
+---
+
+<section id={id} style={`${bgStyle} ${borderStyle}`} class="py-20 sm:py-24">
+  <div class={`${maxWidth} mx-auto px-6`}>
+    {(kicker || title || subtitle) && (
+      <div class="text-center mb-14" data-reveal>
+        {kicker && (
+          <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">
+            {kicker}
+          </p>
+        )}
+        <h2
+          style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);"
+          class="mb-4"
+        >
+          {title}
+        </h2>
+        {subtitle && (
+          <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-2xl mx-auto leading-relaxed">
+            {subtitle}
+          </p>
+        )}
+      </div>
+    )}
+    <slot />
+  </div>
+</section>

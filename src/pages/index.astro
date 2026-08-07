@@ -1,62 +1,43 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import StepList from '../components/StepList.astro';
+import { clientes, serviciosInfo } from '../data/clientes';
 
-// Qué hacemos: una base (la arma el equipo) + dos frentes (cada socio) que convergen en hacer crecer al cliente.
-const servicios = [
+// Selector de servicios — la puerta de entrada a cada solución (home ya no explica todo, solo orienta).
+const serviciosSelector = [
   {
-    tag: 'Punto de partida · Equipo GENIDEIA',
-    nombre: 'Creación, contenido & optimización',
-    desc: 'El punto de partida que arma todo el equipo: dejamos tu negocio existiendo de forma profesional, posicionándote con contenido y listo para recibir clientes. La base sobre la que después se escala.',
-    items: [
-      'Branding aplicado: logo, paleta, tipografías y sistema visual',
-      'Perfiles optimizados según tu nicho (Instagram, WhatsApp Business, Google Business)',
-      'Web o landing mobile-first, llave en mano',
-      'Medio de pago si vendés online (Mercado Pago)',
-      'Sistema de contenido y posicionamiento orgánico: pilares, cadencia y métricas',
-      'Embudo de captación: posicionar → captar → interactuar → convertir',
-    ],
-    para: 'Para empresas que necesitan una presencia profesional sólida antes de escalar con ads o automatización.',
+    slug: 'contenido-marketing',
+    nombre: serviciosInfo['contenido-marketing'].nombre,
+    desc: 'Construimos una marca que las personas reconozcan y entiendan: identidad, contenido y posicionamiento.',
+    beneficio: 'La categoría con más proyectos reales y evidencia comprobable hoy.',
+    cta: 'Ver contenido y marketing',
   },
   {
-    tag: 'Frente · Tadeo Granada',
-    nombre: 'Publicidad / Ads',
-    desc: 'Cualquiera puede “hacer anuncios”. Lo que cambia tu negocio es la pauta hecha con método: entender a quién le hablás, dónde está y qué lo mueve a comprar. Diseñamos la estrategia, segmentamos, producimos las creatividades y medimos todo —costo por contacto, costo por cliente, retorno de la inversión— para que las campañas dejen de ser un gasto y se vuelvan un canal que trae clientes todos los meses. No es suerte: es trabajo, prueba y optimización constante.',
-    items: [
-      'Campañas en Meta / Instagram',
-      'Google Ads y búsqueda',
-      'TikTok y LinkedIn Ads',
-      'Contenido y creatividades para anuncios',
-    ],
-    para: 'Para empresas que ya tienen su operación estable y están listas para instalar anuncios y escalar la demanda.',
+    slug: 'anuncios',
+    nombre: serviciosInfo.anuncios.nombre,
+    desc: 'Llegá a personas que ya pueden estar buscando una solución como la tuya.',
+    beneficio: 'Campañas con método, no solo "hacer anuncios".',
+    cta: 'Ver anuncios',
   },
   {
-    tag: 'Frente · Andrés Albornoz',
-    nombre: 'Automatización & soluciones',
-    desc: 'Detrás de cada tarea repetitiva hay horas de tu tiempo, trabajo y carga mental. Automatizar no es “un bot y listo”: es mapear cómo opera tu negocio, detectar dónde se pierde tiempo y construir la solución a medida —bots, workflows, integraciones— que se haga cargo de eso por vos. El impacto real: dejás de apagar incendios, bajás los errores y recuperás horas para enfocarte en hacer crecer la empresa, no en sostenerla.',
-    items: [
-      'Bot de WhatsApp a medida',
-      'Workflows y automatizaciones con n8n',
-      'Webs, e-commerce y sistemas internos con IA',
-      'Integración con las herramientas que ya usás',
-    ],
-    para: 'Para empresas que necesitan automatizar sus procesos internos y dejar de depender de hacer todo a mano.',
+    slug: 'presencia-digital',
+    nombre: serviciosInfo['presencia-digital'].nombre,
+    desc: 'Reuní tu página web, perfiles y canales de contacto en una presencia profesional.',
+    beneficio: 'Todo conectado. Una sola presencia digital.',
+    cta: 'Ver presencia digital',
   },
-];
+  {
+    slug: 'automatizaciones',
+    nombre: serviciosInfo.automatizaciones.nombre,
+    desc: 'Reducí tareas manuales y ordená procesos que hoy dependen de personas, mensajes o memoria.',
+    beneficio: 'Sistemas con IA ya funcionando, no promesas abstractas.',
+    cta: 'Ver automatizaciones',
+  },
+] as const;
 
-const herramientas = [
-  {
-    nombre: 'Bot de WhatsApp para negocios',
-    desc: 'Atiende consultas, agenda turnos y confirma reservas en automático — las 24 horas, sin intervención humana.',
-    videoId: 'JLFq5mAblxc',
-  },
-  {
-    nombre: 'Sistema de contenido para inmobiliarias',
-    desc: 'Genera y publica contenido de propiedades de forma automatizada. Presencia constante con mínimo esfuerzo manual.',
-    videoId: 'jPMODHsfLlA',
-  },
-];
-
-// Cómo trabajamos — el ciclo de 3 pasos (las 3 etapas de la metodología, doc 00).
+// Método unificado — antes existían dos bloques de "3 pasos" casi idénticos en esta misma página.
 const pasos = [
   {
     num: '01',
@@ -75,83 +56,15 @@ const pasos = [
   },
 ];
 
-// Barra de logos — clientes reales en producción
-const logos = [
-  { nombre: "Donher's", rubro: 'E-commerce', url: 'https://donhers.com' },
-  { nombre: 'Vanzza', rubro: 'Carteras y accesorios', url: 'https://vanzza-prototipo.vercel.app' },
-  { nombre: 'Hecho con el Alma', rubro: 'Curaduría de arte', url: 'https://hechoconelalma.shop' },
-  { nombre: 'TBO Express', rubro: 'Cadetería y delivery', url: 'https://cadete-web.vercel.app' },
-  { nombre: 'Sara', rubro: 'Centro estético', url: 'https://centroesteticosara.netlify.app' },
-  { nombre: 'Asesores de Imperium', rubro: 'Inmobiliaria', url: 'https://lorena-imperium-landing.genideiaconsultoraia.workers.dev' },
-  { nombre: 'DMJ Studio', rubro: 'Barbería y estética masculina', url: 'https://dmj-studio.com' },
-];
-
-// Los dos socios / cofundadores — la cara de la empresa.
-// Arrancan en frentes distintos pero CONVERGEN en hacer crecer el negocio del cliente.
-const socios = [
-  {
-    nombre: 'Andrés Albornoz',
-    rol: 'Cofundador · Soluciones con automatización',
-    desc: 'Ayuda a empresas a optimizar sus operaciones diarias con herramientas de Inteligencia Artificial.',
-    ig: 'https://instagram.com/andresalbornozia',
-    handle: '@andresalbornozia',
-    linkedin: 'https://www.linkedin.com/in/andres-albornoz-b498823a4',
-    wsp: 'https://wa.me/59892302941',
-    foto: '/img/andres.jpg',
-  },
-  {
-    nombre: 'Tadeo Granada',
-    rol: 'Fundador · Ads / Publicidad',
-    desc: 'Lleva los anuncios: Meta, Instagram, Google, TikTok y LinkedIn. Estudia el mercado, contacta y produce el contenido de las campañas que traen clientes.',
-    ig: 'https://instagram.com/tadeogranadaa',
-    handle: '@tadeogranadaa',
-    linkedin: '',
-    wsp: 'https://wa.me/59892267601',
-    foto: '/img/tadeo.jpg',
-  },
-];
-
-// Testimonios — Andrés pasa frases reales. NO inventar: placeholders maquetados.
-const testimonios = [
-  { cliente: '[Cliente — pendiente]', rubro: 'Rubro · Uruguay', frase: '[Testimonio de cliente — pendiente]' },
-  { cliente: '[Cliente — pendiente]', rubro: 'Rubro · Uruguay', frase: '[Testimonio de cliente — pendiente]' },
-  { cliente: '[Cliente — pendiente]', rubro: 'Rubro · Uruguay', frase: '[Testimonio de cliente — pendiente]' },
-];
-
-// Quiénes ya confiaron — clientes REALES (sin inventar logos: nombre estilizado).
-const confiaron = [
-  { nombre: 'Sara', rubro: 'Centro estético', url: 'https://centroesteticosara.netlify.app' },
-  { nombre: 'Hecho con el Alma', rubro: 'Galería de arte', url: 'https://hechoconelalma.shop' },
-  { nombre: "Donher's", rubro: 'Relojes y accesorios', url: 'https://donhers.com' },
-  { nombre: 'Lorena Da Silva', rubro: 'Marca personal', url: 'https://lorena-imperium-landing.genideiaconsultoraia.workers.dev' },
-  { nombre: 'Vanzza', rubro: 'Carteras y accesorios', url: 'https://vanzza-prototipo.vercel.app' },
-  { nombre: 'DMJ Studio', rubro: 'Barbería y estética masculina', url: 'https://dmj-studio.com' },
-];
-
-// Cómo trabajar con nosotros — los pasos concretos para arrancar.
-const arranque = [
-  {
-    num: '01',
-    nombre: 'Diagnóstico gratis',
-    desc: 'Nos contás dónde está tu negocio. Detectamos qué automatizar y dónde conviene invertir en ads. Salís con un norte claro, sin compromiso.',
-  },
-  {
-    num: '02',
-    nombre: 'Propuesta a medida',
-    desc: 'Te armamos un plan concreto: qué se construye, qué se publicita, en qué orden y con qué resultado esperado.',
-  },
-  {
-    num: '03',
-    nombre: 'Implementación',
-    desc: 'Lo ejecutamos nosotros. Construimos los sistemas, lanzamos las campañas y te acompañamos midiendo el resultado.',
-  },
-];
-
-// Micro-indicadores del hero (fila chica, no recuadros flotantes)
+// Micro-indicadores del hero
 const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA a medida', 'Resultados medibles'];
 ---
 
-<BaseLayout title="GENIDEIA Company — Automatización, soluciones con IA y ads para PyMEs">
+<BaseLayout
+  title="GENIDEIA Company — Automatización, marketing y ads para PyMEs"
+  description="Presentamos tu negocio, conseguimos oportunidades y automatizamos procesos con IA aplicada. Contenido y marketing, anuncios, presencia digital y automatizaciones para PyMEs de Uruguay."
+  path="/"
+>
 
   <!-- ── HERO ───────────────────────────────────────────────── -->
   <section class="max-w-6xl mx-auto px-6 pt-24 pb-16" style="position:relative; overflow:hidden;">
@@ -160,14 +73,14 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
       <!-- Izquierda: texto -->
       <div style="position:relative; z-index:2;">
         <p class="hero-animate text-xs font-medium mb-6 uppercase" data-delay="1" style="color:#00C8FF; letter-spacing:3px;">
-          Automatización & soluciones · Ads
+          Marketing · Ads · Automatización · IA
         </p>
         <h1 class="hero-animate mb-6" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.0; letter-spacing:-1.5px; font-size:clamp(2.6rem, 6vw, 4.6rem);">
           Tu negocio, un sistema que crece<br />
           <span style="color:#B8BEC7; font-weight:300; font-style:italic;">sin depender de vos.</span>
         </h1>
         <p class="hero-animate mb-9 leading-relaxed max-w-lg text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
-          Automatización, contenido y ads que trabajan juntos: te ordenan la operación por dentro y te traen clientes por fuera. A medida.
+          Ayudamos a tu empresa a presentarse profesionalmente, conseguir oportunidades y ordenar sus procesos con tecnología aplicada — no genérica.
         </p>
         <div class="hero-animate flex flex-col sm:flex-row gap-4 mb-8" data-delay="4">
           <a href="https://wa.me/59892302941" target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">
@@ -202,20 +115,23 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
     </div>
   </section>
 
-  <!-- ── LOGOS / CLIENTES REALES ───────────────────────────── -->
+  <!-- ── LOGOS / CLIENTES REALES (compacto, el detalle vive en /casos) ── -->
   <section style="border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-10">
     <div class="max-w-6xl mx-auto px-6">
       <p class="text-center mb-8" style="color:rgba(160,160,160,0.5); font-size:0.65rem; letter-spacing:3px; font-weight:500;" data-reveal>
         NEGOCIOS REALES · SISTEMAS REALES · RESULTADOS REALES
       </p>
       <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-6" data-reveal data-delay="1">
-        {logos.map((l) => (
-          <a href={l.url} target="_blank" rel="noopener noreferrer" class="text-center" style="opacity:0.65;">
-            <span style="font-family:'Montserrat',sans-serif; font-size:1.25rem; font-weight:600; color:#F2F4F7; letter-spacing:0.5px; display:block; line-height:1.1;">{l.nombre}</span>
-            <span style="color:#B8BEC7; font-size:0.58rem; letter-spacing:1.5px; font-weight:400;" class="uppercase">{l.rubro}</span>
+        {clientes.map((c) => (
+          <a href={c.url} target="_blank" rel="noopener noreferrer" class="text-center" style="opacity:0.65;">
+            <span style="font-family:'Montserrat',sans-serif; font-size:1.25rem; font-weight:600; color:#F2F4F7; letter-spacing:0.5px; display:block; line-height:1.1;">{c.nombre}</span>
+            <span style="color:#B8BEC7; font-size:0.58rem; letter-spacing:1.5px; font-weight:400;" class="uppercase">{c.rubro}</span>
           </a>
         ))}
       </div>
+      <p class="text-center mt-8" data-reveal>
+        <a href="/casos" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">Ver todos los casos →</a>
+      </p>
     </div>
   </section>
 
@@ -231,332 +147,49 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
     </div>
   </section>
 
-  <!-- ── QUIÉNES ESTÁN DETRÁS ──────────────────────────────── -->
-  <section id="quienes" style="border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-12" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Quiénes están detrás</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
-          Los socios que responden por tu negocio.
-        </h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-xl mx-auto">
-          Dos socios que entran por frentes distintos —automatización y ads— y convergen
-          en un solo objetivo: hacer crecer tu negocio.
-        </p>
-      </div>
-
-      <!-- Los dos socios -->
-      <div class="grid sm:grid-cols-2 gap-6" data-reveal data-delay="1">
-        {socios.map((s) => (
-          <div class="card-hover rounded-xl p-6 flex items-center gap-5" style="background:#111111; border:1px solid rgba(255,255,255,0.07);">
-            <div style="flex-shrink:0; width:88px; height:110px; border-radius:0.5rem; overflow:hidden; background:#0B1324; border:1px solid rgba(255,255,255,0.08);" class="flex items-center justify-center">
-              {s.foto
-                ? <img src={s.foto} alt={s.nombre} style="width:100%; height:100%; object-fit:cover;" />
-                : <span style="color:rgba(160,160,160,0.4); font-size:0.55rem; letter-spacing:1.5px;" class="uppercase">Foto</span>}
-            </div>
-            <div class="min-w-0">
-              <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.4rem;" class="leading-tight">{s.nombre}</h3>
-              <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:1px; font-weight:500;" class="uppercase mt-1 mb-3">{s.rol}</p>
-              <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-3">{s.desc}</p>
-              <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
-                <a href={s.ig} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">{s.handle}</a>
-                {s.linkedin && <a href={s.linkedin} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">LinkedIn</a>}
-                {s.wsp && <a href={s.wsp} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">WhatsApp</a>}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SERVICIOS ─────────────────────────────────────────── -->
-  <section
+  <!-- ── SELECTOR DE SERVICIOS ─────────────────────────────── -->
+  <Section
     id="servicios"
-    style="border-top:1px solid rgba(255,255,255,0.07);"
-    class="py-24"
+    kicker="Qué hacemos"
+    title="¿Qué necesitás mejorar?"
+    subtitle="Elegí el área que te interesa y profundizá solo en eso — sin tener que leer todo lo demás."
+    maxWidth="max-w-6xl"
   >
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-16" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Qué hacemos</p>
-        <h2
-          style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
-          class="mb-4"
-        >
-          Una base y dos frentes que convergen.
-        </h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-lg mx-auto">
-          Primero dejamos tu base profesional lista. Sobre eso, cada socio suma su frente
-          —anuncios y automatización— y convergen en hacer crecer tu negocio.
-        </p>
-      </div>
-
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {servicios.map((s, i) => (
-          <div
-            class="card-hover rounded-xl p-8 flex flex-col"
-            style="background:#111111; border:1px solid rgba(255,255,255,0.07);"
-            data-reveal
-            data-delay={String(i + 1)}
-          >
-            <span
-              style="color:#00C8FF; font-size:0.65rem; letter-spacing:2.5px; font-weight:500;"
-              class="uppercase mb-5 block"
-            >
-              {s.tag}
-            </span>
-            <h3
-              style="font-family:'Montserrat',sans-serif; font-weight:700; color:#F2F4F7; font-size:clamp(1.5rem, 3vw, 2rem);"
-              class="mb-3"
-            >
-              {s.nombre}
-            </h3>
-            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-7">
-              {s.desc}
-            </p>
-            <ul class="space-y-3 mb-7 flex-1">
-              {s.items.map(item => (
-                <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-3">
-                  <span style="color:#00C8FF; flex-shrink:0; margin-top:1px;">→</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p
-              style="color:rgba(160,160,160,0.45); border-top:1px solid rgba(255,255,255,0.07); font-weight:300;"
-              class="text-xs pt-5 mb-5 leading-relaxed"
-            >
-              {s.para}
-            </p>
-            <a
-              href="https://wa.me/59892302941"
-              target="_blank"
-              rel="noopener noreferrer"
-              style="color:#00C8FF; font-weight:400;"
-              class="text-sm hover:opacity-70 transition-opacity"
-            >
-              Consultar por este servicio →
-            </a>
-          </div>
-        ))}
-      </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {serviciosSelector.map((s, i) => (
+        <div data-delay={String(i + 1)}>
+          <ServiceCard
+            nombre={s.nombre}
+            desc={s.desc}
+            beneficio={s.beneficio}
+            href={serviciosInfo[s.slug].ruta}
+            color={serviciosInfo[s.slug].color}
+            cta={s.cta}
+          />
+        </div>
+      ))}
     </div>
-  </section>
+  </Section>
 
-  <!-- ── HERRAMIENTAS ──────────────────────────────────────── -->
-  <section
-    id="herramientas"
-    style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);"
-    class="py-24"
+  <!-- ── MÉTODO (único, sin duplicar) ──────────────────────── -->
+  <Section
+    id="metodo"
+    bg="soft"
+    border="both"
+    kicker="Cómo lo hacemos"
+    title="Diagnóstico, construcción y seguimiento."
+    subtitle="Sabemos en qué posición está hoy tu empresa, trazamos el camino hacia donde querés llegar y medimos en cada etapa para confirmar que vamos por el rumbo correcto."
   >
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-16" data-reveal>
-        <h2
-          style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
-          class="mb-4"
-        >
-          Sistemas con IA, ya funcionando.
-        </h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-lg mx-auto">
-          Productos con IA que podés contratar de forma independiente
-          — o como parte de un proceso mayor.
-        </p>
-      </div>
-
-      <div class="grid sm:grid-cols-2 gap-6">
-        {herramientas.map((h, i) => (
-          <div
-            class="card-hover rounded-xl p-8 flex flex-col"
-            style="background:#111111; border:1px solid rgba(255,255,255,0.07);"
-            data-reveal
-            data-delay={String(i + 1)}
-          >
-            <div class="flex items-center gap-3 mb-5">
-              <span
-                style="color:#00C8FF; background:rgba(0,200,255,0.08); border:1px solid rgba(0,200,255,0.2); font-size:0.65rem; letter-spacing:2px;"
-                class="uppercase px-2.5 py-1 rounded font-medium"
-              >
-                Producto independiente
-              </span>
-              <span
-                style="color:rgba(160,160,160,0.35); font-size:0.65rem; letter-spacing:1.5px;"
-                class="uppercase"
-              >
-                Demo disponible
-              </span>
-            </div>
-            <h3 style="color:#F2F4F7; font-weight:500;" class="text-lg mb-3 flex-1">
-              {h.nombre}
-            </h3>
-            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-7">
-              {h.desc}
-            </p>
-            {h.videoId && (
-              <div style="border-radius:0.5rem; overflow:hidden; margin-bottom:1.75rem;" class="aspect-video">
-                <iframe
-                  src={`https://www.youtube.com/embed/${h.videoId}`}
-                  title={`Demo — ${h.nombre}`}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                  style="width:100%; height:100%; border:none;"
-                ></iframe>
-              </div>
-            )}
-            <a
-              href="https://wa.me/59892302941"
-              target="_blank"
-              rel="noopener noreferrer"
-              style="color:#00C8FF; font-weight:400;"
-              class="text-sm hover:opacity-70 transition-opacity"
-            >
-              {h.videoId ? 'Implementar esta herramienta →' : 'Pedir demo →'}
-            </a>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ── CÓMO LO HACEMOS (proceso / método) ────────────────── -->
-  <section
-    id="como-lo-hacemos"
-    style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);"
-    class="py-24"
-  >
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-16" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Cómo lo hacemos</p>
-        <h2
-          style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
-          class="mb-4"
-        >
-          Diagnóstico, construcción y seguimiento.
-        </h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-2xl mx-auto leading-relaxed">
-          Nuestro método: sabemos en qué posición está hoy tu empresa, trazamos el camino hacia donde querés llegar y medimos las estadísticas en cada etapa para confirmar que vamos por el rumbo correcto.
-        </p>
-      </div>
-
-      <div class="grid sm:grid-cols-3 gap-6">
-        {pasos.map((p, i) => (
-          <div
-            class="card-hover rounded-xl p-7 flex flex-col"
-            style="background:#111111; border:1px solid rgba(255,255,255,0.07);"
-            data-reveal
-            data-delay={String(i + 1)}
-          >
-            <p
-              style="font-family:'Montserrat',sans-serif; font-weight:700; color:#00C8FF; line-height:1;"
-              class="text-5xl mb-4"
-            >
-              {p.num}
-            </p>
-            <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.5rem;" class="mb-3">
-              {p.nombre}
-            </h3>
-            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed flex-1">
-              {p.desc}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      <p class="text-center mt-12" data-reveal>
-        <a href="#diagnostico" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
-          Empecemos por el diagnóstico gratis →
-        </a>
-      </p>
-    </div>
-  </section>
-
-  <!-- ── CÓMO TRABAJAR CON NOSOTROS (pasos para arrancar) ──── -->
-  <section id="como-trabajar" class="py-24">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-16" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Cómo trabajar con nosotros</p>
-        <h2
-          style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
-          class="mb-4"
-        >
-          Arrancar es simple.
-        </h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-2xl mx-auto leading-relaxed">
-          Del primer mensaje a tener el sistema en funcionamiento — sin rodeos ni letra chica.
-        </p>
-      </div>
-
-      <div class="grid sm:grid-cols-3 gap-6">
-        {arranque.map((p, i) => (
-          <div
-            class="card-hover rounded-xl p-7 flex flex-col"
-            style="background:#111111; border:1px solid rgba(255,255,255,0.07);"
-            data-reveal
-            data-delay={String(i + 1)}
-          >
-            <p
-              style="font-family:'Montserrat',sans-serif; font-weight:700; color:#00C8FF; line-height:1;"
-              class="text-5xl mb-4"
-            >
-              {p.num}
-            </p>
-            <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.5rem;" class="mb-3">
-              {p.nombre}
-            </h3>
-            <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed flex-1">
-              {p.desc}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      <p class="text-center mt-12" data-reveal>
-        <a href="#diagnostico" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
-          Pedí tu diagnóstico gratis →
-        </a>
-      </p>
-    </div>
-  </section>
-
-
-  <!-- ── QUIÉNES YA CONFIARON (vitrina de clientes reales) ─── -->
-  <section id="confiaron" class="py-24">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-14" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Quiénes ya confiaron</p>
-        <h2
-          style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
-          class="mb-4"
-        >
-          Negocios reales que ya confían en nosotros.
-        </h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-lg mx-auto">
-          Marcas y emprendimientos uruguayos con los que ya trabajamos.
-        </p>
-      </div>
-
-      <div class="flex flex-wrap items-stretch justify-center gap-4" data-reveal data-delay="1">
-        {confiaron.map((c) => (
-          <a
-            href={c.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="card-hover rounded-xl px-7 py-6 text-center flex flex-col items-center justify-center"
-            style="background:#111111; border:1px solid rgba(255,255,255,0.07); min-width:170px;"
-          >
-            <span style="font-family:'Montserrat',sans-serif; font-size:1.4rem; font-weight:600; color:#F2F4F7; letter-spacing:0.5px; line-height:1.1;">{c.nombre}</span>
-            <span style="color:#B8BEC7; font-size:0.6rem; letter-spacing:1.5px; font-weight:400;" class="uppercase mt-2">{c.rubro}</span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+    <StepList pasos={pasos} />
+    <p class="text-center mt-12" data-reveal>
+      <a href="#diagnostico" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
+        Empecemos por el diagnóstico gratis →
+      </a>
+    </p>
+  </Section>
 
   <!-- ── DIAGNÓSTICO ──────────────────────────────────────── -->
-  <section
-    id="diagnostico"
-    style="border-top:1px solid rgba(255,255,255,0.07);"
-    class="py-24"
-  >
+  <section id="diagnostico" class="py-24">
     <div class="max-w-2xl mx-auto px-6">
       <div class="text-center mb-12" data-reveal>
         <h2
@@ -571,31 +204,19 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
         </p>
       </div>
 
-      <form
-        id="diagnostico-form"
-        name="diagnostico"
-        method="POST"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
-        class="space-y-5"
-        data-reveal
-      >
-        <input type="hidden" name="form-name" value="diagnostico" />
-        <p class="hidden"><input name="bot-field" /></p>
-
+      <form id="diagnostico-form" class="space-y-5" data-reveal>
         <!-- Área -->
         <div>
           <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
             Área del problema
           </label>
-          <select name="area" required class="form-input">
+          <select name="area" id="diagnostico-area" required class="form-input">
             <option value="">Seleccioná una categoría</option>
-            <option>Ventas y captación de clientes</option>
-            <option>Atención al cliente</option>
-            <option>Operaciones y procesos internos</option>
-            <option>Contenido y marketing digital</option>
-            <option>Administración y organización</option>
-            <option>Otro / No sé cómo clasificarlo</option>
+            <option value="Contenido y marketing digital">Contenido y marketing digital</option>
+            <option value="Anuncios / publicidad">Anuncios / publicidad</option>
+            <option value="Presencia digital (web, perfiles, WhatsApp)">Presencia digital (web, perfiles, WhatsApp)</option>
+            <option value="Automatización y procesos internos">Automatización y procesos internos</option>
+            <option value="Otro / No sé cómo clasificarlo">Otro / No sé cómo clasificarlo</option>
           </select>
         </div>
 
@@ -692,11 +313,25 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
   );
   document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
 
+  // ── Preselección de servicio vía ?servicio=slug (viene de una página de servicio) ──
+  const AREA_POR_SERVICIO: Record<string, string> = {
+    'contenido-marketing': 'Contenido y marketing digital',
+    anuncios: 'Anuncios / publicidad',
+    'presencia-digital': 'Presencia digital (web, perfiles, WhatsApp)',
+    automatizaciones: 'Automatización y procesos internos',
+  };
+  const params = new URLSearchParams(window.location.search);
+  const servicioParam = params.get('servicio');
+  const areaSelect = document.getElementById('diagnostico-area') as HTMLSelectElement | null;
+  if (servicioParam && areaSelect && AREA_POR_SERVICIO[servicioParam]) {
+    areaSelect.value = AREA_POR_SERVICIO[servicioParam];
+  }
+
   // ── Diagnóstico form ───────────────────────────────────────
   const form = document.getElementById('diagnostico-form') as HTMLFormElement | null;
   const successDiv = document.getElementById('diagnostico-success');
 
-  form?.addEventListener('submit', async (e) => {
+  form?.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const data = new FormData(form);
@@ -704,25 +339,12 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
     const problema = (data.get('problema') as string) || '';
     const nombre   = (data.get('nombre')   as string) || '';
 
-    // Construir mensaje de WhatsApp
     const nombreTexto = nombre ? `Hola, soy ${nombre}.` : 'Hola,';
     const areaTexto   = area   ? `\n\n*Área:* ${area}` : '';
     const msg = `${nombreTexto} me gustaría un diagnóstico para mi negocio.${areaTexto}\n\n*Problema:*\n${problema}`;
     const waUrl = `https://wa.me/59892302941?text=${encodeURIComponent(msg)}`;
     window.open(waUrl, '_blank');
 
-    // Enviar a Netlify Forms en segundo plano
-    try {
-      await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
-      });
-    } catch (_) {
-      // Si falla el envío a Netlify no interrumpimos el flujo
-    }
-
-    // Mostrar éxito
     form.classList.add('hidden');
     if (successDiv) {
       successDiv.classList.remove('hidden');
@@ -732,23 +354,13 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
 </script>
 
 <style>
-  /* El centro es la red animada en canvas. El glow respira y los chips derivan apenas. */
   @keyframes heroGlowPulse {
     0%, 100% { opacity: 0.55; transform: scale(1); }
     50%      { opacity: 1; transform: scale(1.08); }
   }
-  @keyframes heroChipFloat {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-6px); }
-  }
   .hero-glow { animation: heroGlowPulse 5s ease-in-out infinite; }
-  .hero-chip { animation: heroChipFloat 5s ease-in-out infinite; will-change: transform; }
-  .hero-chip:nth-child(1) { animation-delay: 0s; }
-  .hero-chip:nth-child(2) { animation-delay: 0.8s; }
-  .hero-chip:nth-child(3) { animation-delay: 1.6s; }
-  .hero-chip:nth-child(4) { animation-delay: 2.4s; }
   @media (prefers-reduced-motion: reduce) {
-    .hero-glow, .hero-chip { animation: none; }
+    .hero-glow { animation: none; }
   }
 </style>
 
