@@ -12,11 +12,11 @@ En `src/data/clientes.ts` cada cliente quedó etiquetado con un servicio (`conte
 | Hecho con el Alma | Contenido y marketing | Feed.astro: "sistema de contenido y estructura de conversión" |
 | Donher's | Presencia digital | Solo tengo nombre + URL, sin narrativa — confirmar |
 | TBO Express | Presencia digital | Solo tengo nombre + URL, sin narrativa — confirmar |
-| Asesores de Imperium | Automatizaciones | Asumí relación con "Sistema de contenido para inmobiliarias" — confirmar si es así |
+| Asesores de Imperium | Presencia digital | Reclasificado: no hay caso de automatización confirmado todavía (llega la semana que viene) |
 | Vanzza | Presencia digital | Su propia URL dice "prototipo" — lo etiqueté como Prototipo funcional, no proyecto real |
 | DMJ Studio | Presencia digital | Solo tengo nombre + URL, sin narrativa — confirmar |
 
-Ningún cliente quedó tageado en "Anuncios" — no había evidencia de ningún caso de publicidad paga. Por eso esa página no tiene sección de casos (se ocultó automáticamente).
+Ningún cliente quedó tageado en "Anuncios" ni en "Automatizaciones" — no había evidencia de casos reales todavía en ninguna de las dos. Por eso esas páginas no muestran sección de casos (se ocultó automáticamente). Cuando tengas el primer caso real de automatización confirmado, agregalo en `src/data/clientes.ts` con `servicio: 'automatizaciones'`.
 
 ## 2. Testimonios textuales reales
 
@@ -30,9 +30,9 @@ Hoy ningún cliente tiene un resultado numérico (ej. "+40% en reservas") docume
 
 Las tarjetas de `/casos` hoy solo muestran nombre + rubro + link (sin imagen). Si tenés capturas o fotos de cada proyecto (con autorización), las integro.
 
-## 5. Videos huérfanos ya integrados
+## 5. Videos huérfanos
 
-`como-trabajo.mp4` y `presentacion.mp4` (con sus posters) ya están en `/servicios/automatizaciones`, según lo que definiste. Si el contenido real de esos videos no encaja ahí, avisame y los reubico.
+`presentacion.mp4` quedó integrado en `/servicios/automatizaciones` (formato vertical, con CTA a `andres.genideiacompany.com`). `como-trabajo.mp4` se sacó de la página a pedido tuyo — el archivo sigue en `public/videos/` sin usarse, disponible para más adelante.
 
 ## 6. Archivos sin uso detectados en la auditoría (no tocados)
 

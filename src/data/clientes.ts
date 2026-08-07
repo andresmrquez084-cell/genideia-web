@@ -53,7 +53,8 @@ export const clientes: Cliente[] = [
     nombre: 'Asesores de Imperium',
     rubro: 'Inmobiliaria',
     url: 'https://lorena-imperium-landing.genideiaconsultoraia.workers.dev',
-    servicio: 'automatizaciones',
+    // Todavía no hay casos reales de automatización confirmados (llegan la semana que viene) — no tagear como 'automatizaciones'.
+    servicio: 'presencia-digital',
     tipo: 'real',
   },
   {
