@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import ClientCard from '../../components/ClientCard.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { clientes } from '../../data/clientes';
+
+const casos = clientes.filter((c) => c.servicio === 'automatizaciones');
+
+const problemas = [
+  'Consultas que se repiten una y otra vez, siempre las mismas preguntas.',
+  'Presupuestos que se mandan y nunca reciben seguimiento.',
+  'Información distribuida en distintas planillas, chats y herramientas.',
+  'Pedidos o turnos que dependen de que alguien se acuerde.',
+  'Clientes que esperan horas una respuesta que podría ser automática.',
+  'Datos que hay que copiar a mano de un sistema a otro.',
+];
+
+const herramientas = [
+  {
+    nombre: 'Bot de WhatsApp para negocios',
+    desc: 'Atiende consultas, agenda turnos y confirma reservas en automático — las 24 horas, sin intervención humana.',
+    videoId: 'JLFq5mAblxc',
+  },
+  {
+    nombre: 'Sistema de contenido para inmobiliarias',
+    desc: 'Genera y publica contenido de propiedades de forma automatizada. Presencia constante con mínimo esfuerzo manual.',
+    videoId: 'jPMODHsfLlA',
+  },
+];
+
+const humano = [
+  'Decisiones que requieren criterio o negociación',
+  'Casos particulares que se salen de lo previsto',
+  'El vínculo humano con el cliente en momentos clave',
+];
+
+const faqs = [
+  {
+    pregunta: '¿Cualquier proceso de mi negocio se puede automatizar?',
+    respuesta: 'No sin antes revisarlo. Cada negocio tiene procesos distintos — lo que prometemos es un diagnóstico honesto de qué conviene automatizar primero y qué no, no una promesa genérica de "automatizamos todo".',
+  },
+  {
+    pregunta: '¿Necesito saber de tecnología para usar esto?',
+    respuesta: 'No. Vos seguís operando tu negocio como siempre; el sistema trabaja atrás. Te dejamos todo configurado y te explicamos cómo revisarlo cuando lo necesites.',
+  },
+  {
+    pregunta: '¿Qué pasa si algo falla?',
+    respuesta: 'Medimos y hacemos seguimiento después de entregar — no te dejamos solo con un sistema que nadie revisa.',
+  },
+];
+---
+
+<BaseLayout
+  title="Automatizaciones e inteligencia artificial — GENIDEIA Company"
+  description="Reducimos tareas manuales y ordenamos procesos que hoy dependen de personas, mensajes o memoria. IA aplicada a problemas concretos, no tecnología abstracta."
+  path="/servicios/automatizaciones"
+>
+
+  <!-- ── PRESENTACIÓN ──────────────────────────────────────── -->
+  <section class="max-w-4xl mx-auto px-6 pt-24 pb-16 text-center">
+    <p class="hero-animate text-xs font-medium mb-6 uppercase" data-delay="1" style="color:#34D399; letter-spacing:3px;">
+      Automatizaciones e inteligencia artificial
+    </p>
+    <h1 class="hero-animate mb-6" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.05; letter-spacing:-1px; font-size:clamp(2.4rem, 5.5vw, 3.8rem);">
+      Reducí tareas manuales y ordená procesos que hoy dependen de vos.
+    </h1>
+    <p class="hero-animate mx-auto mb-9 leading-relaxed max-w-xl text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
+      Detrás de cada tarea repetitiva hay horas de tu tiempo, trabajo y carga mental.
+      Automatizar no es "un bot y listo": es mapear cómo opera tu negocio, detectar dónde se pierde tiempo
+      y construir la solución a medida que se haga cargo de eso por vos.
+    </p>
+    <a href="https://wa.me/59892302941?text=Hola%2C%20quiero%20analizar%20un%20proceso%20de%20mi%20empresa" target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#34D399,#00C8FF); color:#0A0F1A; font-weight:600;" class="hero-animate inline-block px-9 py-3.5 rounded-lg hover:opacity-90 transition-opacity" data-delay="4">
+      Quiero analizar un proceso de mi empresa
+    </a>
+  </section>
+
+  <!-- Video de presentación (formato vertical real, sin barras laterales) -->
+  <section class="px-6 pb-16 flex flex-col items-center" data-reveal>
+    <div style="border-radius:0.9rem; overflow:hidden; border:1px solid rgba(255,255,255,0.08); max-width:420px; width:100%;">
+      <video controls preload="metadata" poster="/videos/presentacion-poster.jpg" style="width:100%; height:auto; display:block; background:#0B1324;">
+        <source src="/videos/presentacion.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <a
+      href="https://andres.genideiacompany.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="background:linear-gradient(135deg,#34D399,#00C8FF); color:#0A0F1A; font-weight:600;"
+      class="inline-block px-8 py-3 rounded-lg hover:opacity-90 transition-opacity mt-6 text-sm"
+    >
+      Completá tu diagnóstico →
+    </a>
+  </section>
+
+  <!-- ── PROBLEMA ACTUAL ────────────────────────────────────── -->
+  <Section kicker="Problema actual" title="Lo que pasa hoy en la mayoría de los negocios">
+    <div class="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto">
+      {problemas.map((p, i) => (
+        <div class="rounded-xl p-5 flex items-start gap-3" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String(i + 1)}>
+          <span style="color:#34D399; flex-shrink:0;">→</span>
+          <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{p}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ── SOLUCIÓN / CÓMO FUNCIONARÍA ────────────────────────── -->
+  <Section bg="soft" border="both" kicker="Solución propuesta" title="Cómo funcionaría en tu negocio">
+    <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-2xl mx-auto text-center leading-relaxed" data-reveal>
+      Empezamos por entender el proceso real — no por instalar una herramienta.
+      Con eso claro, construimos un sistema a medida: bots, workflows o integraciones
+      entre las herramientas que ya usás, para que la tarea repetitiva se resuelva sola.
+    </p>
+  </Section>
+
+  <!-- ── QUÉ SIGUE SIENDO HUMANO ────────────────────────────── -->
+  <Section kicker="Qué seguís haciendo vos" title="Lo que no se automatiza">
+    <ul class="space-y-4 max-w-xl mx-auto">
+      {humano.map((item) => (
+        <li style="color:#B8BEC7; font-weight:300;" class="text-base flex items-start gap-3" data-reveal>
+          <span style="color:#34D399; flex-shrink:0; margin-top:2px;">→</span>
+          {item}
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <!-- ── HERRAMIENTAS / DEMOSTRACIÓN ────────────────────────── -->
+  <Section bg="soft" border="both" kicker="Sistemas ya funcionando" title="Productos con IA que podés contratar" subtitle="De forma independiente, o como parte de un proceso mayor.">
+    <div class="grid sm:grid-cols-2 gap-6">
+      {herramientas.map((h, i) => (
+        <div class="card-hover rounded-xl p-8 flex flex-col" style="background:#111111; border:1px solid rgba(255,255,255,0.07);" data-reveal data-delay={String(i + 1)}>
+          <div class="flex items-center gap-3 mb-5">
+            <span style="color:#00C8FF; background:rgba(0,200,255,0.08); border:1px solid rgba(0,200,255,0.2); font-size:0.65rem; letter-spacing:2px;" class="uppercase px-2.5 py-1 rounded font-medium">
+              Producto independiente
+            </span>
+            <span style="color:rgba(160,160,160,0.35); font-size:0.65rem; letter-spacing:1.5px;" class="uppercase">
+              Demo disponible
+            </span>
+          </div>
+          <h3 style="color:#F2F4F7; font-weight:500;" class="text-lg mb-3">{h.nombre}</h3>
+          <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-7">{h.desc}</p>
+          <div style="border-radius:0.5rem; overflow:hidden; margin-bottom:1.75rem;" class="aspect-video">
+            <iframe
+              src={`https://www.youtube.com/embed/${h.videoId}`}
+              title={`Demo — ${h.nombre}`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              style="width:100%; height:100%; border:none;"
+            ></iframe>
+          </div>
+          <a href="https://wa.me/59892302941" target="_blank" rel="noopener noreferrer" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity mt-auto">
+            Implementar esta herramienta →
+          </a>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ── EJEMPLOS / CASOS REALES ────────────────────────────── -->
+  {casos.length > 0 && (
+    <Section kicker="Proyectos reales" title="Negocios donde ya lo aplicamos">
+      <div class="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+        {casos.map((c) => <ClientCard cliente={c} />)}
+      </div>
+      <p class="text-center mt-10" data-reveal>
+        <a href="/casos" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">Ver todos los casos →</a>
+      </p>
+    </Section>
+  )}
+
+  <!-- ── FAQ ────────────────────────────────────────────────── -->
+  <Section bg="soft" border="both" kicker="Preguntas frecuentes" title="Antes de escribirnos">
+    <FaqAccordion items={faqs} />
+  </Section>
+
+  <CtaBand
+    title="Quiero analizar un proceso de mi empresa"
+    subtitle="Contanos qué tarea te consume más tiempo hoy y evaluamos si se puede automatizar."
+    waMessage="Hola, quiero analizar un proceso de mi empresa para ver si se puede automatizar."
+    servicio="automatizaciones"
+  />
+
+</BaseLayout>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+</script>

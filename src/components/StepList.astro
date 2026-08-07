@@ -1,0 +1,34 @@
+---
+interface Paso {
+  num: string;
+  nombre: string;
+  desc: string;
+}
+
+interface Props {
+  pasos: Paso[];
+}
+
+const { pasos } = Astro.props;
+---
+
+<div class="grid sm:grid-cols-3 gap-6">
+  {pasos.map((p, i) => (
+    <div
+      class="card-hover rounded-xl p-7 flex flex-col"
+      style="background:#111111; border:1px solid rgba(255,255,255,0.07);"
+      data-reveal
+      data-delay={String(i + 1)}
+    >
+      <p style="font-family:'Montserrat',sans-serif; font-weight:700; color:#00C8FF; line-height:1;" class="text-5xl mb-4">
+        {p.num}
+      </p>
+      <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.4rem;" class="mb-3">
+        {p.nombre}
+      </h3>
+      <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed flex-1">
+        {p.desc}
+      </p>
+    </div>
+  ))}
+</div>

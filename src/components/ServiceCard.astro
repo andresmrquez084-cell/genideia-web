@@ -1,0 +1,32 @@
+---
+interface Props {
+  nombre: string;
+  desc: string;
+  beneficio: string;
+  href: string;
+  color: string;
+  cta: string;
+}
+
+const { nombre, desc, beneficio, href, color, cta } = Astro.props;
+---
+
+<a
+  href={href}
+  class="card-hover rounded-xl p-8 flex flex-col"
+  style={`background:#111111; border:1px solid rgba(255,255,255,0.07); border-top:2px solid ${color};`}
+  data-reveal
+>
+  <h3 style="font-family:'Montserrat',sans-serif; font-weight:700; color:#F2F4F7; font-size:1.4rem;" class="mb-3">
+    {nombre}
+  </h3>
+  <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-4">
+    {desc}
+  </p>
+  <p style={`color:${color}; font-weight:400;`} class="text-xs mb-6">
+    {beneficio}
+  </p>
+  <span style={`color:${color}; font-weight:500;`} class="text-sm mt-auto hover:opacity-70 transition-opacity">
+    {cta} →
+  </span>
+</a>
