@@ -1,0 +1,39 @@
+---
+// Página standalone del video 02 (método/sistema) — sin cascada, con CTA propio.
+// Mandar este link cuando el prospecto necesita ver SOLO este video.
+import VSLStandalone from '../components/VSLStandalone.astro';
+
+const METODO = [
+  { paso: '01', titulo: 'Punto de partida', desc: 'Tengas web sin usar o no tengas web, es la misma situación: falta un sistema que convierta visitas en consultas.' },
+  { paso: '02', titulo: 'Base del sistema', desc: 'No se empieza de cero. Ya tenés oferta, experiencia y canales — falta empaquetarlo de forma clara y accesible.' },
+  { paso: '03', titulo: 'Claridad y posicionamiento', desc: 'Primero, que te reconozcan: quién sos, qué resolvés y cómo avanzar, en pocos segundos.' },
+  { paso: '04', titulo: 'Contenido con intención', desc: 'Problema → explicación → solución. Así el contenido también le llega a quien todavía no te conoce.' },
+  { paso: '05', titulo: 'Centralizar la atención', desc: 'El sistema interpreta la consulta y recién deriva a una persona cuando realmente agrega valor.' },
+  { paso: '06', titulo: 'Seguimiento y confianza', desc: 'A quien no tiene urgencia hoy no se lo pierde: se le hace seguimiento hasta que esté listo.' },
+  { paso: '07', titulo: 'Crecimiento medible', desc: 'Recién cuando el mensaje ya funciona se acelera con anuncios. Nunca antes.' },
+];
+---
+
+<VSLStandalone
+  num="02"
+  eyebrow="Cómo trabajo"
+  titulo="¿Cuál es el método?"
+  bajada="No se empieza por sumar herramientas. Primero se ordena cómo tu empresa se presenta, atrae y atiende — recién al final se acelera con anuncios."
+  video="/videos/andres-02-metodo.mp4"
+  coverHint="El sistema completo, paso a paso"
+  endTitle="¿Y qué podrías tener funcionando vos?"
+  pageTitle="¿Cuál es el método? — Andrés Albornoz"
+  pageDescription="El sistema de 7 etapas para ordenar cómo tu empresa se presenta, atrae y atiende — antes de acelerar con anuncios."
+>
+  <div class="grid sm:grid-cols-2 gap-4">
+    {METODO.map((m, i) => (
+      <div class="metodo-card" data-reveal data-delay={i % 2}>
+        <span class="metodo-num">{m.paso}</span>
+        <div>
+          <h3 class="metodo-titulo">{m.titulo}</h3>
+          <p class="metodo-desc">{m.desc}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</VSLStandalone>

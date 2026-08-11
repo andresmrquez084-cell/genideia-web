@@ -1,0 +1,88 @@
+---
+// Página standalone del video 03 (ejemplos) — clasificado por rubro.
+// El visitante elige su rubro y ve SOLO el video + las soluciones de ese rubro.
+// Rubros nuevos se agregan a RUBROS a medida que se van teniendo diagnósticos reales.
+import VSLStandalone from '../components/VSLStandalone.astro';
+import { RUBROS_EJEMPLOS as RUBROS } from '../data/ejemplos-rubros';
+---
+
+<VSLStandalone
+  num="03"
+  eyebrow="Qué se puede hacer"
+  titulo="¿Cuáles son los ejemplos que empresas como vos ya están aplicando?"
+  bajada="Ninguno de estos es un producto de catálogo: son soluciones que salieron de un diagnóstico concreto. Elegí tu rubro para ver los ejemplos que aplican."
+  video=""
+  noVideoSlot={true}
+  coverHint=""
+  endTitle=""
+  pageTitle="Ejemplos de soluciones por rubro — Andrés Albornoz"
+  pageDescription="Soluciones concretas que salieron de diagnósticos reales, clasificadas por rubro: transporte, automotriz y los que se van sumando."
+>
+  <!-- Selector de rubro -->
+  <div class="rubro-picker" data-reveal>
+    <p class="rubro-pregunta">¿De qué rubro sos?</p>
+    <div class="rubro-btns">
+      {RUBROS.map((r, i) => (
+        <button type="button" class="rubro-btn" data-rubro-btn={r.id} data-default={i === 0 ? 'true' : undefined}>{r.label}</button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Paneles por rubro -->
+  {RUBROS.map((r) => (
+    <div class="rubro-panel" data-rubro-panel={r.id}>
+      {r.video ? (
+        <div class="video-main-wrap" data-video-wrap>
+          <video controls playsinline preload="metadata" style="width:100%; height:100%; object-fit:contain; display:block; background:#0B1324;">
+            <source src={r.video} type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
+          <button type="button" class="video-cover" data-video-cover aria-label="Reproducir video">
+            <span class="play-btn"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="cover-hint">Ejemplos para {r.label.toLowerCase()}</span>
+          </button>
+        </div>
+      ) : (
+        <div class="video-pendiente">Todavía no tenemos ejemplos armados para este rubro — escribinos y lo vemos juntos en el diagnóstico.</div>
+      )}
+
+      {r.items.length > 0 && (
+        <div class="grid sm:grid-cols-2 gap-4 mt-8">
+          {r.items.map((e) => (
+            <div class="ejemplo-card">
+              <h3 class="ejemplo-titulo">{e.titulo}</h3>
+              <p class="ejemplo-desc">{e.desc}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  ))}
+
+  <p class="text-center mt-8 text-sm" style="color:#B8BEC7; font-weight:300;" data-reveal>
+    Cuál de todos te sirve — y en qué orden — sale del diagnóstico. No al revés.
+  </p>
+
+  <style>
+    .rubro-picker { text-align:center; margin-bottom: 2.2rem; }
+    .rubro-pregunta { font-family:'Montserrat',sans-serif; font-weight:700; font-size:clamp(1.1rem,2.4vw,1.4rem); margin-bottom:1rem; color:#F2F4F7; }
+    .rubro-btns { display:flex; flex-wrap:wrap; gap:0.7rem; justify-content:center; }
+    .rubro-btn { border:1px solid rgba(0,200,255,0.3); background:rgba(255,255,255,0.03); color:#B8BEC7; font-weight:600; font-size:0.9rem; padding:0.65rem 1.5rem; border-radius:999px; cursor:pointer; transition:all .2s; }
+    .rubro-btn:hover { border-color:#00C8FF; color:#F2F4F7; }
+    .rubro-btn.active { background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; border-color:transparent; }
+    .rubro-panel { display:none; }
+    .rubro-panel.active { display:block; }
+  </style>
+
+  <script>
+    const btns = document.querySelectorAll('[data-rubro-btn]');
+    const panels = document.querySelectorAll('[data-rubro-panel]');
+    function activar(id) {
+      btns.forEach((b) => b.classList.toggle('active', b.getAttribute('data-rubro-btn') === id));
+      panels.forEach((p) => p.classList.toggle('active', p.getAttribute('data-rubro-panel') === id));
+    }
+    btns.forEach((b) => b.addEventListener('click', () => activar(b.getAttribute('data-rubro-btn'))));
+    const def = document.querySelector('[data-rubro-btn][data-default="true"]');
+    if (def) activar(def.getAttribute('data-rubro-btn'));
+  </script>
+</VSLStandalone>
