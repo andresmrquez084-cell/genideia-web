@@ -161,7 +161,10 @@ const calendlyEmbed = `${CALENDLY}?hide_gdpr_banner=1&background_color=0b1324&te
     window.addEventListener('load', () => setTimeout(initCalendly, 300));
   </script>
 
-  <style>
+  <style is:global>
+    /* is:global a propósito: las tarjetas de contenido (.ejemplo-card, .metodo-card,
+       .creencia-card, etc.) las escribe cada página vía <slot />, y el CSS scoped de
+       Astro no cruza esa frontera — sin esto quedan sin estilo. */
     .hero-glow { animation: heroGlowPulse 5s ease-in-out infinite; }
     @keyframes heroGlowPulse { 0%,100% { opacity:0.55; transform:scale(1); } 50% { opacity:1; transform:scale(1.08); } }
 
