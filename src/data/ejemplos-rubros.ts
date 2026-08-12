@@ -21,7 +21,13 @@ export const RUBROS_EJEMPLOS: Rubro[] = [
   {
     id: 'automotriz',
     label: 'Automotriz',
-    video: '',
-    items: [],
+    video: '/videos/ejemplos-automotriz.mp4',
+    items: [
+      { titulo: 'Solicitudes centralizadas', desc: 'Las consultas que hoy llegan por distintos medios y quedan repartidas sin criterio se centralizan, se interpretan y se derivan parejo entre vendedores.' },
+      { titulo: 'Consulta de stock automática', desc: 'El asistente consulta stock, responde al cliente y precarga el pedido — el vendedor solo confirma y factura.' },
+      { titulo: 'Seguimiento automático de pedidos', desc: 'Cada estado del pedido se actualiza solo con las acciones que ya se ejecutan (facturar, preparar, despachar), sin trabajo extra.' },
+      { titulo: 'Devoluciones con seguimiento', desc: 'El cliente carga su devolución (panel o foto por WhatsApp) y sigue el estado hasta recibir la nota de crédito.' },
+      { titulo: 'Cámaras con inteligencia artificial', desc: 'Detectan zonas de mayor movimiento y alertan cuándo reponer, además de servir como seguridad y medición de procesos.' },
+    ],
   },
 ];
