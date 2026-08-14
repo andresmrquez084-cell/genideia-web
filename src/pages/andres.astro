@@ -133,21 +133,27 @@ const METODO = [
 <body style="background:#07080D radial-gradient(ellipse 90% 55% at 50% -8%, rgba(0,200,255,0.10), transparent 62%) no-repeat fixed; color:#F2F4F7; font-family:'Poppins',sans-serif; -webkit-font-smoothing:antialiased;">
   <Loader logoSrc="/img/logo-nav.png" />
 
-  <!-- ── HEADER ──────────────────────────────────────────────── -->
-  <header style="background:rgba(10,10,10,0.92); border-bottom:1px solid rgba(255,255,255,0.07);" class="sticky top-0 z-50 backdrop-blur">
-    <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
-      <a href="/andres" class="flex items-baseline gap-2">
-        <span style="font-family:'Montserrat',sans-serif; font-size:1.15rem; font-weight:600; color:#F2F4F7; letter-spacing:0.5px;">Andrés Albornoz</span>
-        <span style="color:#00C8FF; font-size:0.6rem; letter-spacing:2px;" class="uppercase hidden sm:inline">Soluciones operativas</span>
-      </a>
-      <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; font-size:0.78rem;" class="px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Hablemos</a>
+  <!-- ── HEADER (pill flotante) ─────────────────────────────── -->
+  <header class="site-header">
+    <a href="/andres" class="brand">
+      <span class="brand-mark">A</span>
+      <span class="brand-copy">
+        <strong>Andrés Albornoz</strong>
+        <small>Soluciones operativas · GENIDEIA</small>
+      </span>
+    </a>
+    <nav class="header-nav" aria-label="Navegación de la página">
+      <a href="#porque">Por qué</a>
+      <a href="#metodo">Método</a>
+      <a href="#ejemplos">Ejemplos</a>
     </nav>
+    <a href={waUrl} target="_blank" rel="noopener noreferrer" class="header-cta">Hablemos</a>
   </header>
 
   <!-- ── HERO · promesa grande ─────────────────────────────── -->
-  <section class="max-w-4xl mx-auto px-6 pt-24 pb-14 text-center">
+  <section class="max-w-4xl mx-auto px-6 pt-36 pb-14 text-center">
     <p class="text-xs font-medium mb-6 uppercase" style="color:#00C8FF; letter-spacing:3px;" data-reveal>Soluciones operativas · GENIDEIA</p>
-    <h1 class="mb-7 mx-auto" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.12; letter-spacing:-0.8px; font-size:clamp(1.5rem, 4.6vw, 3.2rem); max-width:24ch;" data-reveal data-delay="1">
+    <h1 class="mb-7 mx-auto" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:0.98; letter-spacing:-0.04em; font-size:clamp(2.1rem, 6vw, 4.2rem); max-width:22ch;" data-reveal data-delay="1">
       Tu negocio podría estar <span style="color:#00C8FF;">perdiendo dinero</span> en los procedimientos diarios.
     </h1>
     <p class="mb-10 leading-relaxed max-w-xl mx-auto text-lg" style="color:#B8BEC7; font-weight:300;" data-reveal data-delay="2">
@@ -380,6 +386,11 @@ const METODO = [
 
   </div><!-- ╚═══ /GATE ═══╝ -->
 
+  <!-- Barra fija mobile: siempre visible, manda directo a WhatsApp -->
+  <a href={waUrl} target="_blank" rel="noopener noreferrer" class="mobile-cta">
+    Hablemos por WhatsApp <span>↗</span>
+  </a>
+
   <!-- Calendly widget script -->
   <script src="https://assets.calendly.com/assets/external/widget.js" async is:inline></script>
 
@@ -472,6 +483,44 @@ const METODO = [
   </script>
 
   <style>
+    /* ── Header flotante (pill) ─────────────────────────────── */
+    .site-header {
+      position: fixed; z-index: 50; inset: 16px 16px auto;
+      max-width: 900px; margin-inline: auto;
+      min-height: 64px; padding: 8px 10px 8px 14px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
+      background: rgba(7,8,13,0.82); backdrop-filter: blur(16px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.28);
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; min-width: 0; flex: 1 1 auto; overflow: hidden; }
+    .brand-mark {
+      width: 36px; height: 36px; flex: 0 0 36px; display: grid; place-items: center;
+      border: 1px solid rgba(0,200,255,0.35); border-radius: 50%;
+      font-family: Georgia, serif; font-size: 19px; font-style: italic; color: #00C8FF;
+    }
+    .brand-copy { display: grid; gap: 1px; min-width: 0; overflow: hidden; }
+    .brand-copy strong { display:block; font-family:'Montserrat',sans-serif; font-size: 0.9rem; color: #F2F4F7; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .brand-copy small { display:block; color: #00C8FF; font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .header-nav { display: flex; align-items: center; gap: 22px; color: #B8BEC7; font-size: 0.8rem; font-weight: 300; flex-shrink: 0; }
+    .header-nav a:hover { color: #00C8FF; }
+    .header-cta { flex-shrink: 0; background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; font-size:0.78rem; padding: 0.6rem 1.1rem; border-radius: 10px; transition: opacity .2s; white-space: nowrap; }
+    .header-cta:hover { opacity: 0.9; }
+    @media (max-width: 720px) { .header-nav { display: none; } }
+    @media (max-width: 400px) { .brand-copy small { display: none; } }
+
+    /* ── Barra fija mobile ───────────────────────────────────── */
+    .mobile-cta { display: none; }
+    @media (max-width: 800px) {
+      .mobile-cta {
+        display: flex; position: fixed; z-index: 45; right: 12px; bottom: 12px; left: 12px;
+        min-height: 54px; padding: 0 18px; align-items: center; justify-content: space-between;
+        border: 1px solid rgba(255,255,255,0.14); border-radius: 13px;
+        background: linear-gradient(135deg,#00C8FF,#007BFF); color: #0A0F1A;
+        font-weight: 700; font-size: 0.9rem; box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+      }
+    }
+
     .hero-glow { animation: heroGlowPulse 5s ease-in-out infinite; }
     @keyframes heroGlowPulse { 0%,100% { opacity:0.55; transform:scale(1); } 50% { opacity:1; transform:scale(1.08); } }
 
@@ -497,9 +546,9 @@ const METODO = [
     @keyframes ctaGlow { 0%,100%{ box-shadow:0 0 0 0 rgba(0,200,255,0); } 50%{ box-shadow:0 0 30px 3px rgba(0,200,255,0.5); } }
 
     /* Encabezado de cada bloque de la secuencia */
-    .paso-eyebrow { color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500; text-transform:uppercase; margin-bottom:0.9rem; }
-    .paso-titulo { font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.6px; line-height:1.15; font-size:clamp(1.7rem, 4.4vw, 2.9rem); margin-bottom:0.9rem; }
-    .paso-bajada { color:#B8BEC7; font-weight:300; line-height:1.65; max-width:56ch; margin:0 auto; }
+    .paso-eyebrow { display:flex; align-items:center; justify-content:center; gap:8px; color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:600; text-transform:uppercase; margin-bottom:1.1rem; }
+    .paso-titulo { font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.045em; line-height:1.05; font-size:clamp(1.9rem, 5vw, 3.4rem); margin-bottom:1rem; }
+    .paso-bajada { color:#B8BEC7; font-weight:300; line-height:1.65; max-width:56ch; margin:0 auto; font-size:1.02rem; }
 
     /* Aviso cuando el video del bloque todavía no está subido */
     .video-pendiente { border:1px dashed rgba(0,200,255,0.3); border-radius:18px; padding:2.6rem 1.5rem; text-align:center; color:rgba(184,190,199,0.7); font-size:0.85rem; font-weight:300; letter-spacing:0.5px; }
@@ -512,21 +561,23 @@ const METODO = [
     .parrafo-giro { color:#D7DBE1; }
 
     /* 01 · Las dos formas de perder dinero */
-    .creencia-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-left:2px solid rgba(0,200,255,0.55); border-radius:14px; padding:1.5rem 1.6rem; }
-    .pot-tipo { font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.72rem; letter-spacing:2px; text-transform:uppercase; color:#00C8FF; margin-bottom:0.85rem; }
-    .pot-hoy { color:#F2F4F7; font-weight:500; font-size:0.95rem; line-height:1.55; margin-bottom:0.7rem; }
-    .pot-real { color:#B8BEC7; font-weight:300; font-size:0.92rem; line-height:1.65; padding-top:0.7rem; border-top:1px solid rgba(255,255,255,0.07); }
+    .creencia-card { position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:1.7rem 1.7rem 1.6rem; transition:transform .25s ease, border-color .25s ease; }
+    .creencia-card:hover { transform:translateY(-4px); border-color:rgba(0,200,255,0.3); }
+    .pot-tipo { font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; color:#00C8FF; margin-bottom:1rem; }
+    .pot-hoy { color:#F2F4F7; font-weight:500; font-size:0.95rem; line-height:1.55; margin-bottom:0.9rem; padding-bottom:0.9rem; border-bottom:1px solid rgba(255,255,255,0.07); }
+    .pot-real { color:#B8BEC7; font-weight:300; font-size:0.92rem; line-height:1.65; }
 
     /* 02 · Pasos del método */
-    .metodo-card { display:flex; gap:1rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:1.4rem 1.5rem; }
-    .metodo-num { font-family:'Montserrat',sans-serif; font-weight:700; font-size:1.5rem; line-height:1; color:rgba(0,200,255,0.55); flex-shrink:0; }
-    .metodo-titulo { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1rem; color:#F2F4F7; margin-bottom:0.4rem; }
+    .metodo-card { position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:1.6rem 1.6rem 1.5rem; transition:transform .25s ease, border-color .25s ease; }
+    .metodo-card:hover { transform:translateY(-4px); border-color:rgba(0,200,255,0.3); }
+    .metodo-num { display:block; font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.7rem; letter-spacing:2px; color:rgba(0,200,255,0.65); margin-bottom:1rem; }
+    .metodo-titulo { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.05rem; letter-spacing:-0.02em; color:#F2F4F7; margin-bottom:0.5rem; }
     .metodo-desc { color:#B8BEC7; font-weight:300; font-size:0.92rem; line-height:1.6; }
 
     /* 03 · Ejemplos de herramientas */
-    .ejemplo-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:1.3rem 1.4rem; transition:border-color .25s, transform .25s; }
-    .ejemplo-card:hover { border-color:rgba(0,200,255,0.4); transform:translateY(-3px); }
-    .ejemplo-titulo { font-family:'Montserrat',sans-serif; font-weight:600; font-size:0.95rem; color:#F2F4F7; margin-bottom:0.45rem; line-height:1.3; }
+    .ejemplo-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:1.4rem 1.5rem; transition:border-color .25s, transform .25s; }
+    .ejemplo-card:hover { border-color:rgba(0,200,255,0.4); transform:translateY(-4px); }
+    .ejemplo-titulo { font-family:'Montserrat',sans-serif; font-weight:600; font-size:0.98rem; letter-spacing:-0.01em; color:#F2F4F7; margin-bottom:0.5rem; line-height:1.3; }
     .ejemplo-desc { color:#B8BEC7; font-weight:300; font-size:0.86rem; line-height:1.55; }
 
     /* 03 · Selector de rubro */
