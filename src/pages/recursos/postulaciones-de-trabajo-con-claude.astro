@@ -1,0 +1,108 @@
+---
+// Lead magnet · palabra clave ManyChat: TRABAJO
+// (lo pide el reel del formato clon `clon-v2-trabajo-v1`)
+// URL pública: /recursos/postulaciones-de-trabajo-con-claude
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const prompt1 = `Te voy a pasar mi currículum. Quiero que:
+
+1. Analices mis habilidades técnicas y blandas, y mi experiencia (años, seniority, industrias).
+2. Identifiques los 3-5 tipos de puesto para los que estoy mejor preparado, con el nombre exacto con el que suelen publicarse esas ofertas (ej: "Account Executive SaaS", no solo "ventas").
+3. Me digas honestamente en qué tipo de puestos NO tengo compatibilidad real todavía, para no perder tiempo postulando ahí.
+4. Armes un resumen corto (150 palabras) de mi perfil, en primera persona, que pueda reutilizar como respuesta a preguntas tipo "contame sobre vos" en formularios de postulación.
+
+Currículum:
+[PEGÁ TU CV ACÁ O ADJUNTALO]`;
+
+const prompt2 = `Tenés control de este navegador. Estoy en [NOMBRE DEL PORTAL, ej: RemoteOK / LinkedIn / Computrabajo] buscando trabajo. Mi perfil es este:
+
+[PEGÁ ACÁ EL ANÁLISIS DEL PROMPT 1]
+
+Quiero que:
+1. Busques ofertas publicadas en los últimos 15 días para los puestos que identificaste como compatibles.
+2. Para cada oferta, leas los requisitos y los compares con mi currículum.
+3. Me armes una lista priorizada (de mayor a menor compatibilidad) con: título del puesto, empresa, link, y en una frase por qué encaja o no encaja del todo.
+4. NO postules todavía a ninguna — solo traeme la lista para que yo la revise.`;
+
+const prompt3 = `Quiero que postules a estas ofertas de la lista: [PEGÁ LOS LINKS O NÚMEROS DE LA LISTA].
+
+Para cada una:
+1. Abrí la postulación.
+2. Completá el formulario con mis datos reales (te los paso abajo).
+3. Si pide currículum adjunto, usá este archivo: [NOMBRE DEL ARCHIVO / RUTA].
+4. Si hay preguntas abiertas (ej: "¿por qué te interesa este puesto?"), respondelas usando mi resumen de perfil y adaptándolo a la oferta específica — nunca copiés y pegues genérico.
+5. Antes de tocar "Enviar", mostrame un resumen de lo que vas a mandar y esperá mi confirmación.
+6. Una vez enviada, anotá en una lista: empresa, puesto, fecha, y link — para que pueda hacer seguimiento después.
+
+Mis datos:
+- Nombre completo: [TU NOMBRE]
+- Email: [TU EMAIL]
+- Teléfono: [TU TELÉFONO]
+- LinkedIn / portfolio: [LINK]
+- Resumen de perfil: [PEGÁ EL RESUMEN DEL PROMPT 1]`;
+---
+<RecursoLayout
+  titulo="Que Claude busque y postule a trabajos por vos"
+  descripcion="Los prompts exactos, la configuración de Chrome y la guía paso a paso para que Claude analice tu perfil, busque ofertas compatibles y postule por vos — como en el video."
+  tipo="Prompt"
+  barLabel="Prompt · @andresalbornozia"
+  palabraClave="TRABAJO"
+  ctaTitulo="¿Querés ayuda armando esto?"
+  ctaTexto="Si preferís que lo dejemos andando juntos, escribime por DM — una llamada gratis de 30 minutos, sin compromiso."
+  waMsg="Hola Andrés, vi la guía de postulaciones automáticas con Claude y quiero que hablemos. Te cuento:"
+>
+  <p>Esto es lo que viste en el video, explicado entero y para que lo puedas armar vos: Claude analiza tu currículum, busca ofertas compatibles, completa los formularios y postula — con vos supervisando cada paso.</p>
+  <div class="lead"><b>Vos revisás y aprobás. Claude hace el trabajo pesado: leer ofertas, comparar con tu currículum, completar formularios y llevar el registro de dónde te postulaste.</b></div>
+
+  <h2>Qué vas a tener al terminar</h2>
+  <ul class="arrow">
+    <li>Un <b>perfil analizado</b>: Claude sabe tus habilidades, tu experiencia y a qué puestos realmente aplicás bien — no a cualquier cosa.</li>
+    <li><b>Búsqueda automática</b> de ofertas en el portal de empleo que elijas, priorizadas por compatibilidad con tu currículum.</li>
+    <li><b>Postulación automática</b>: abre la oferta, completa el formulario, carga tu currículum, responde las preguntas y envía — vos supervisás las primeras veces.</li>
+    <li>Un <b>registro de seguimiento</b>: dónde te postulaste y cuándo, para no perder el hilo.</li>
+  </ul>
+
+  <h2>Antes de arrancar: instalá Claude para Chrome</h2>
+  <ul class="check">
+    <li><b>Google Chrome</b> en tu computadora (no funciona en el celular).</li>
+    <li>Una <b>cuenta de Claude con plan pago</b> — es la extensión oficial de Anthropic, no un plugin de terceros.</li>
+    <li>Buscá <b>"Claude"</b> en la Chrome Web Store, instalala y conectá tu cuenta.</li>
+  </ul>
+  <div class="note">¿Nunca la instalaste? Tengo una <a href="/recursos/conectar-claude-chrome" style="color:var(--cy)">guía paso a paso completa</a> para dejarla lista en cinco minutos.</div>
+  <p>Cuando Claude vaya a actuar sobre una pestaña (hacer clic, escribir, enviar formularios), Chrome va a mostrar un aviso tipo <i>"Claude comenzó a operar este navegador"</i>. Es normal, es el permiso que le diste.</p>
+  <ul class="arrow">
+    <li class="no"><b>Iniciá sesión vos mismo</b> en el portal de empleo (LinkedIn, RemoteOK, Computrabajo, etc.) antes de pedirle a Claude que busque. Nunca le pases tu usuario y contraseña por texto — dejá la sesión ya iniciada en esa pestaña.</li>
+  </ul>
+  <div class="note"><b>Consejo:</b> las primeras veces, pedile que te muestre cada postulación antes de enviarla. Cuando confirmes que el criterio es bueno, recién ahí le das más autonomía.</div>
+
+  <h2>Prompt 1 · Análisis de tu perfil</h2>
+  <p>Usalo una sola vez al principio, en un chat normal de Claude (no hace falta la extensión todavía). Pegale tu currículum como archivo o como texto.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{prompt1}</code></pre>
+  </div>
+  <div class="note">Guardá la respuesta — la vas a reutilizar en el Prompt 2 y el Prompt 3.</div>
+
+  <h2>Prompt 2 · Buscar ofertas compatibles</h2>
+  <p>Este sí lo usás con <b>Claude para Chrome</b>, con el portal de empleo abierto en una pestaña (y con tu sesión ya iniciada).</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{prompt2}</code></pre>
+  </div>
+
+  <h2>Prompt 3 · Completar y enviar la postulación</h2>
+  <p>Una vez que revisaste la lista del Prompt 2 y elegiste a cuáles postular:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{prompt3}</code></pre>
+  </div>
+  <div class="note">Nota de seguridad: Claude va a pedirte confirmación antes de enviar cada formulario si se lo pediste explícitamente (paso 5 del prompt). No se lo saques hasta que hayas revisado varias postulaciones y confíes en el criterio.</div>
+
+  <h2>Cómo hacer seguimiento después</h2>
+  <p>Pedile esto cada tantos días, en el mismo chat:</p>
+  <div class="note">"Mostrame la lista de todas las postulaciones que hicimos hasta ahora, ordenadas por fecha."</div>
+  <p>Si querés, más adelante le podés pedir que arme esa lista directamente en una hoja de cálculo o en Notion — pero para arrancar, con que lo lleve en el chat alcanza.</p>
+
+  <h2>Por qué funciona</h2>
+  <p>No es un bot armado a medida: es el mismo Claude que usás para chatear, con permiso para operar el navegador y un proceso claro en tres pasos — analizar tu perfil, buscar con criterio, y postular con supervisión. La clave no es la automatización sola, es que cada paso queda revisado por vos antes del siguiente.</p>
+</RecursoLayout>
