@@ -72,30 +72,6 @@ const BLOQUES = [
   },
 ].map((b) => ({ ...b, disponible: b.video ? existeArchivo(b.video) : true }));
 
-// Bloque 01 — de "está todo perfecto" al ángulo del potencial
-const DOS_POTENCIALES = [
-  {
-    tipo: 'Potencial de venta',
-    hoy: 'Vendés lo mismo que el año pasado y el negocio no se cae. Todo bien.',
-    real: 'Pero si no ajustás lo que hace falta para vender más, quedás estancado. Contra lo que podrías estar facturando, eso es plata que no entra.',
-  },
-  {
-    tipo: 'Potencial de ahorro',
-    hoy: 'Tus costos son los que son y el número cierra a fin de mes. Todo bien.',
-    real: 'Pero si esos costos podrían ser más bajos y no los tocaste, la diferencia la estás pagando igual. Es plata que sale sin necesidad.',
-  },
-];
-
-// Bloque 02 — el método: sistema de 7 etapas (mismo contenido del video)
-const METODO = [
-  { paso: '01', titulo: 'Punto de partida', desc: 'Tengas web sin usar o no tengas web, es la misma situación: falta un sistema que convierta visitas en consultas.' },
-  { paso: '02', titulo: 'Base del sistema', desc: 'No se empieza de cero. Ya tenés oferta, experiencia y canales — falta empaquetarlo de forma clara y accesible.' },
-  { paso: '03', titulo: 'Claridad y posicionamiento', desc: 'Primero, que te reconozcan: quién sos, qué resolvés y cómo avanzar, en pocos segundos.' },
-  { paso: '04', titulo: 'Contenido con intención', desc: 'Problema → explicación → solución. Así el contenido también le llega a quien todavía no te conoce.' },
-  { paso: '05', titulo: 'Centralizar la atención', desc: 'El sistema interpreta la consulta y recién deriva a una persona cuando realmente agrega valor.' },
-  { paso: '06', titulo: 'Seguimiento y confianza', desc: 'A quien no tiene urgencia hoy no se lo pierde: se le hace seguimiento hasta que esté listo.' },
-  { paso: '07', titulo: 'Crecimiento medible', desc: 'Recién cuando el mensaje ya funciona se acelera con anuncios. Nunca antes.' },
-];
 ---
 
 <!DOCTYPE html>
@@ -168,7 +144,6 @@ const METODO = [
     <div class="text-center mb-9" data-reveal>
       <p class="paso-eyebrow">{BLOQUES[0].num} · {BLOQUES[0].eyebrow}</p>
       <h2 class="paso-titulo">{BLOQUES[0].titulo}</h2>
-      <p class="paso-bajada">{BLOQUES[0].bajada}</p>
     </div>
 
     <div class="video-main-wrap" data-video-wrap data-reveal>
@@ -186,44 +161,6 @@ const METODO = [
       </div>
     </div>
 
-    <!-- La anécdota: la respuesta que da el 99% -->
-    <div class="anecdota" data-reveal>
-      <p class="anecdota-cita">“Para mí está todo perfecto.”</p>
-      <p class="anecdota-pie">
-        Es la respuesta que me dio el dueño de un negocio esta semana cuando le pregunté cómo le iba.
-        Y es la que voy a escuchar en 99 de cada 100 empresas — <strong style="color:#F2F4F7; font-weight:600;">con razón</strong>.
-      </p>
-    </div>
-
-    <p class="parrafo-arg" data-reveal>
-      Si nadie ve un problema, es porque no lo hay: comprás a un precio, vendés a otro y queda ganancia.
-      Mirado así, la empresa funciona. Y no vine a discutirte eso.
-    </p>
-
-    <p class="parrafo-arg parrafo-giro" data-reveal>
-      Lo que cambia todo es contra qué te comparás. No contra una empresa estancada, que no quiere crecer —
-      <span style="color:#00C8FF;">contra lo que tu propia empresa podría estar haciendo hoy</span>.
-      Eso es potencial. Y desde ese ángulo, siempre hay diferencia: siempre hay algo para mejorar en la venta y algo para mejorar en el ahorro.
-    </p>
-
-    <!-- Las dos formas de perder dinero sin darte cuenta -->
-    <div class="grid sm:grid-cols-2 gap-4 mt-9">
-      {DOS_POTENCIALES.map((p, i) => (
-        <div class="creencia-card" data-reveal data-delay={i % 2}>
-          <p class="pot-tipo">{p.tipo}</p>
-          <p class="pot-hoy">{p.hoy}</p>
-          <p class="pot-real">{p.real}</p>
-        </div>
-      ))}
-    </div>
-
-    <p class="text-center mt-9 mx-auto" style="font-family:'Montserrat',sans-serif; font-weight:600; font-size:clamp(1.05rem,2.4vw,1.45rem); line-height:1.35; max-width:32ch; color:#F2F4F7;" data-reveal>
-      Por eso puedo decirte con seguridad que puedo ayudarte: <span style="color:#00C8FF;">no hay empresa sin potencial sin usar</span>.
-    </p>
-    <p class="text-center mt-4 mx-auto text-sm" style="color:#B8BEC7; font-weight:300; max-width:52ch;" data-reveal>
-      La única pregunta que queda es cuánto vale esa diferencia en tu caso. Eso es exactamente lo que medimos en el diagnóstico.
-    </p>
-
     <p class="lock-hint text-center mt-8" data-lock-hint="porque" style="color:rgba(0,200,255,0.75); font-size:0.85rem; letter-spacing:1px;"><span style="font-size:0.95rem;">🔒</span> {BLOQUES[0].hint}</p>
   </section>
 
@@ -234,7 +171,6 @@ const METODO = [
       <div class="text-center mb-9" data-reveal>
         <p class="paso-eyebrow">{BLOQUES[1].num} · {BLOQUES[1].eyebrow}</p>
         <h2 class="paso-titulo">{BLOQUES[1].titulo}</h2>
-        <p class="paso-bajada">{BLOQUES[1].bajada}</p>
       </div>
 
       {BLOQUES[1].disponible ? (
@@ -256,19 +192,6 @@ const METODO = [
         <div class="video-pendiente" data-reveal>Video en producción · el bloque queda publicado y no bloquea el resto</div>
       )}
 
-      <!-- Los 4 pasos -->
-      <div class="grid sm:grid-cols-2 gap-4 mt-10">
-        {METODO.map((m, i) => (
-          <div class="metodo-card" data-reveal data-delay={i % 2}>
-            <span class="metodo-num">{m.paso}</span>
-            <div>
-              <h3 class="metodo-titulo">{m.titulo}</h3>
-              <p class="metodo-desc">{m.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
       <p class="lock-hint text-center mt-8" data-lock-hint="metodo" style="color:rgba(0,200,255,0.75); font-size:0.85rem; letter-spacing:1px;"><span style="font-size:0.95rem;">🔒</span> {BLOQUES[1].hint}</p>
     </div>
   </section>
@@ -280,7 +203,6 @@ const METODO = [
     <div class="text-center mb-9" data-reveal>
       <p class="paso-eyebrow">{BLOQUES[2].num} · {BLOQUES[2].eyebrow}</p>
       <h2 class="paso-titulo">{BLOQUES[2].titulo}</h2>
-      <p class="paso-bajada">{BLOQUES[2].bajada}</p>
     </div>
 
     <!-- Selector de rubro -->
@@ -314,23 +236,8 @@ const METODO = [
         ) : (
           <div class="video-pendiente">Todavía no tenemos ejemplos armados para este rubro — escribinos y lo vemos juntos en el diagnóstico.</div>
         )}
-
-        {r.items.length > 0 && (
-          <div class="grid sm:grid-cols-2 gap-4 mt-8">
-            {r.items.map((e) => (
-              <div class="ejemplo-card">
-                <h3 class="ejemplo-titulo">{e.titulo}</h3>
-                <p class="ejemplo-desc">{e.desc}</p>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
     ))}
-
-    <p class="text-center mt-8 text-sm" style="color:#B8BEC7; font-weight:300;" data-reveal>
-      Cuál de todos te sirve — y en qué orden — sale del diagnóstico. No al revés.
-    </p>
 
     <p class="lock-hint text-center mt-8" data-lock-hint="ejemplos" style="color:rgba(0,200,255,0.75); font-size:0.85rem; letter-spacing:1px;"><span style="font-size:0.95rem;">🔒</span> {BLOQUES[2].hint}</p>
   </section>
