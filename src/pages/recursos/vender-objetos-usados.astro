@@ -1,0 +1,75 @@
+---
+// Lead magnet · palabra clave ManyChat: VENDER
+// (lo pide el reel del formato clon `clon-v2-venta-objetos-v1`)
+// URL pública: /recursos/vender-objetos-usados
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+---
+<RecursoLayout
+  titulo="Vendé tus cosas usadas con ChatGPT"
+  descripcion="Los 3 prompts exactos para que ChatGPT identifique tus objetos, les ponga precio, redacte la publicación y te arme las respuestas para Marketplace."
+  tipo="Mini-guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="VENDER"
+  ctaTitulo="¿Tenés cosas dando vueltas hace meses?"
+  ctaTexto="Probá esto hoy con lo primero que tengas a mano. Si te trabaste en algún paso, escribime por DM."
+  waMsg="Hola Andrés, vi la guía para vender cosas usadas con ChatGPT y me trabé en un paso. Te cuento:"
+>
+  <p>Lo que viste en el reel no fue magia: son 3 prompts, en orden, sobre el mismo chat. Le mandás las fotos una vez y ChatGPT hace el resto — precio, publicación y hasta las respuestas para cuando te escriban.</p>
+  <div class="lead"><b>No hace falta que sepas de precios ni de redactar avisos. Copiás, pegás, ajustás lo que te marque como "completar" y publicás.</b></div>
+
+  <h2>Los 3 prompts, en orden</h2>
+
+  <h3 style="font-family:Cinzel,serif;font-weight:600;font-size:15px;color:var(--cy);margin:20px 0 4px;letter-spacing:.3px">Paso 1 — Identificar y poner precio</h3>
+  <p>Sacale una foto a cada cosa que quieras vender (podés mandar varias juntas) y pegá esto:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>Analizá estas fotografías una por una.
+Para cada objeto:
+• identificá qué producto es;
+• describí las características que realmente puedas observar;
+• estimá su estado basándote únicamente en las fotos;
+• indicá un rango razonable de precio usado;
+• recomendá un precio concreto para venderlo;
+• explicá brevemente por qué elegiste ese precio.
+No inventes marcas, modelos ni características que no puedas verificar visualmente.
+Al final hacé una tabla con: Producto | Estado | Precio recomendado.
+Y calculá cuánto podría obtener vendiendo todo.</code></pre>
+  </div>
+  <div class="note">Cuantas más fotos por objeto (varios ángulos), más preciso el estado y el precio.</div>
+
+  <h3 style="font-family:Cinzel,serif;font-weight:600;font-size:15px;color:var(--cy);margin:24px 0 4px;letter-spacing:.3px">Paso 2 — Redactar la publicación</h3>
+  <p>Sin salir del mismo chat, seguís con esto:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>Ahora preparame un anuncio para Facebook Marketplace para cada producto.
+Para cada uno quiero:
+Título
+Descripción
+Estado
+Qué incluye
+Precio recomendado
+Escribilos de forma natural y directa, sin parecer una empresa ni usar lenguaje comercial exagerado.
+No inventes ninguna característica que no esté confirmada.</code></pre>
+  </div>
+  <div class="note">Solo sacás buenas fotos, revisás lo que te tira y tenés la publicación lista para Marketplace, Mercado Libre o donde prefieras.</div>
+
+  <h3 style="font-family:Cinzel,serif;font-weight:600;font-size:15px;color:var(--cy);margin:24px 0 4px;letter-spacing:.3px">Paso 3 — Respuestas ya armadas</h3>
+  <p>Para cuando te empiecen a escribir siempre lo mismo:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>Para cada producto preparame también respuestas cortas para las preguntas más comunes que podría recibir un vendedor en Marketplace:
+"¿Sigue disponible?"
+"¿Cuál es el último precio?"
+"¿Dónde se retira?"
+"¿Funciona correctamente?"
+"¿Hacés envíos?"
+No respondas datos que yo todavía no te haya dado. En esos casos, marcame qué información tengo que completar.</code></pre>
+  </div>
+  <div class="note">Te va a marcar con <b>[COMPLETAR]</b> los datos que solo vos sabés (zona, envíos, si negociás precio) — los llenás una vez y quedan listas para copiar y pegar.</div>
+
+  <h2>Lo que NO tenés que hacer</h2>
+  <ul class="arrow">
+    <li>No le pidas que "publique por vos" — no tiene acceso a tu Facebook. Vos abrís Marketplace ya logueado y pegás lo que te dejó preparado.</li>
+    <li>No te olvides de revisar los <b>[COMPLETAR]</b>: el precio no cierra trato solo, y un dato inventado te puede jugar en contra en la venta.</li>
+  </ul>
+</RecursoLayout>
