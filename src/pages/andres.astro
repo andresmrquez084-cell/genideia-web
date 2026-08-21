@@ -115,22 +115,8 @@ const tieneFoto = existeArchivo(FOTO_ANDRES);
   <!-- ══ 01 · PRESENTACIÓN ═════════════════════════════════════ -->
   <section id="presentacion" class="max-w-5xl mx-auto px-6 pt-36 pb-16">
     <div class="intro-grid">
-      <div class="intro-copy">
-        <p class="intro-eyebrow" data-reveal>Andrés Albornoz · Soluciones operativas con IA</p>
-        <h1 class="intro-titulo" data-reveal data-delay="1">Hola, soy Andrés.</h1>
-        <p class="intro-lead" data-reveal data-delay="2">
-          Ayudo a empresas a ahorrar tiempo y ordenar sus procesos construyendo soluciones con IA.
-        </p>
-        <p class="intro-sub" data-reveal data-delay="2">
-          Trabajo sobre consultas, seguimientos, ventas, información y otras tareas que hoy
-          dependen demasiado del trabajo manual.
-        </p>
-        <div class="intro-cta-wrap" data-reveal data-delay="3">
-          <p class="intro-cta-pregunta">¿Querés ver por qué estoy seguro de que puedo ayudarte?</p>
-          <a href="#porque" class="intro-cta-btn">Ver video <span aria-hidden="true">↓</span></a>
-          <p class="intro-cta-hint">Mirá esto antes de agendar · 5 min</p>
-        </div>
-      </div>
+      <!-- En mobile se ve primero título + foto (5s de lectura); el resto viene después. -->
+      <h1 class="intro-titulo" data-reveal>Hola, soy Andrés.</h1>
       <div class="intro-foto-wrap" data-reveal data-delay="1">
         {tieneFoto ? (
           <img src={FOTO_ANDRES} alt="Andrés Albornoz" class="intro-foto" />
@@ -139,6 +125,20 @@ const tieneFoto = existeArchivo(FOTO_ANDRES);
             <span>Foto de Andrés<br />(reemplazar)</span>
           </div>
         )}
+      </div>
+      <p class="intro-eyebrow" data-reveal data-delay="1">Andrés Albornoz · Soluciones operativas con IA</p>
+      <p class="intro-lead" data-reveal data-delay="2">
+        Ayudo a empresas a ahorrar tiempo, disminuir el margen de error y ordenar sus procesos
+        construyendo soluciones con IA.
+      </p>
+      <p class="intro-sub" data-reveal data-delay="2">
+        Trabajo sobre consultas, seguimientos, ventas, información y otras tareas que hoy
+        dependen demasiado del trabajo manual.
+      </p>
+      <div class="intro-cta-wrap" data-reveal data-delay="3">
+        <p class="intro-cta-pregunta">¿Querés ver por qué estoy seguro de que puedo ayudarte?</p>
+        <a href="#porque" class="intro-cta-btn">Ver video <span aria-hidden="true">↓</span></a>
+        <p class="intro-cta-hint">Mirá esto antes de agendar · 5 min</p>
       </div>
     </div>
   </section>
@@ -173,7 +173,6 @@ const tieneFoto = existeArchivo(FOTO_ANDRES);
         y si existe una oportunidad concreta de mejorarlo.
       </p>
       <a href="#agenda" class="conversion-btn">Agendar diagnóstico</a>
-      <p class="conversion-microcopy">Sin compromiso · Analizamos primero si realmente tiene sentido ayudarte</p>
     </div>
   </section>
 
@@ -249,6 +248,7 @@ const tieneFoto = existeArchivo(FOTO_ANDRES);
         {RUBROS_EJEMPLOS.map((r, i) => (
           <button type="button" class="rubro-btn" data-rubro-btn={r.id} data-default={i === 0 ? 'true' : undefined}>{r.label}</button>
         ))}
+        <button type="button" class="rubro-btn" data-rubro-btn="otro">Otro</button>
       </div>
     </div>
 
@@ -275,6 +275,26 @@ const tieneFoto = existeArchivo(FOTO_ANDRES);
         )}
       </div>
     ))}
+
+    <!-- Panel "Otro" — rubro no listado -->
+    <div class="rubro-panel" data-rubro-panel="otro">
+      <form class="otro-form" data-otro-form>
+        <div class="otro-field">
+          <label for="otro-rubro">¿De qué rubro sos?</label>
+          <input type="text" id="otro-rubro" name="rubro" required placeholder="Ej: gastronomía, salud, inmobiliaria..." />
+        </div>
+        <div class="otro-field">
+          <label for="otro-detalle">¿Qué tarea o proceso te consume más tiempo hoy?</label>
+          <textarea id="otro-detalle" name="detalle" rows="3" required placeholder="Contanos brevemente qué te gustaría mejorar"></textarea>
+        </div>
+        <button type="submit" class="conversion-btn">Enviar</button>
+      </form>
+      <div class="otro-gracias" data-otro-gracias hidden>
+        <p class="otro-gracias-titulo">¡Gracias! Ya tengo una idea de tu situación.</p>
+        <p class="otro-gracias-texto">Agendemos un diagnóstico para verlo a detalle y ver si tiene sentido ayudarte.</p>
+        <a href="#agenda" class="conversion-btn">Agendar diagnóstico</a>
+      </div>
+    </div>
 
     <div class="text-center mt-8" data-reveal>
       <a href="#agenda" class="cta-secondary">Agendar diagnóstico</a>
@@ -370,6 +390,18 @@ const tieneFoto = existeArchivo(FOTO_ANDRES);
     rubroBtns.forEach((b) => b.addEventListener('click', () => activarRubro(b.getAttribute('data-rubro-btn'))));
     const rubroDef = document.querySelector('[data-rubro-btn][data-default="true"]');
     if (rubroDef) activarRubro(rubroDef.getAttribute('data-rubro-btn'));
+
+    // ── "Otro" rubro: mini-formulario, invita a agendar apenas responde ──
+    const otroForm = document.querySelector('[data-otro-form]');
+    if (otroForm) {
+      otroForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        otroForm.hidden = true;
+        const gracias = document.querySelector('[data-otro-gracias]');
+        if (gracias) gracias.hidden = false;
+        track('Lead');
+      });
+    }
   </script>
 
   <style>
@@ -411,25 +443,37 @@ const tieneFoto = existeArchivo(FOTO_ANDRES);
       }
     }
 
-    /* ── 01 · Presentación ───────────────────────────────────── */
-    .intro-grid { display:grid; gap:2.6rem; align-items:center; }
-    @media (min-width: 1024px) { .intro-grid { grid-template-columns: 1fr 380px; gap: 3.5rem; } }
-    .intro-copy { text-align:center; }
-    @media (min-width: 1024px) { .intro-copy { text-align:left; } }
-    .intro-eyebrow { color:#00C8FF; font-size:0.72rem; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:1.1rem; }
-    .intro-titulo { font-family:'Montserrat',sans-serif; font-weight:700; line-height:0.98; letter-spacing:-0.03em; font-size:clamp(2.4rem, 6vw, 4rem); margin-bottom:1.3rem; }
+    /* ── 01 · Presentación ─────────────────────────────────────
+       Mobile: orden plano en el DOM (título, foto, eyebrow, lead, sub, cta) —
+       arriba se ve solo "Hola, soy Andrés" + la foto; el resto viene después.
+       Desktop (≥1024px): grid de 2 columnas, texto a la izquierda y foto a la
+       derecha, con ubicación explícita por grid-column para no depender del
+       orden del DOM. ────────────────────────────────────────── */
+    .intro-grid { display:grid; gap:0; text-align:center; }
+    .intro-eyebrow { color:#00C8FF; font-size:0.72rem; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; margin:0 0 1.6rem; }
+    .intro-titulo { font-family:'Montserrat',sans-serif; font-weight:700; line-height:0.98; letter-spacing:-0.03em; font-size:clamp(2.4rem, 6vw, 4rem); margin:0 0 1.6rem; }
     .intro-lead { color:#F2F4F7; font-weight:400; font-size:clamp(1.05rem, 2vw, 1.25rem); line-height:1.5; max-width:42ch; margin:0 auto 0.9rem; }
-    @media (min-width: 1024px) { .intro-lead { margin-left:0; margin-right:0; } }
-    .intro-sub { color:#B8BEC7; font-weight:300; font-size:0.98rem; line-height:1.65; max-width:44ch; margin:0 auto; }
-    @media (min-width: 1024px) { .intro-sub { margin-left:0; margin-right:0; } }
-    .intro-cta-wrap { margin-top:2.2rem; }
+    .intro-sub { color:#B8BEC7; font-weight:300; font-size:0.98rem; line-height:1.65; max-width:44ch; margin:0 auto 1.8rem; }
+    .intro-cta-wrap { margin:0; }
     .intro-cta-pregunta { color:#D7DBE1; font-weight:500; font-size:0.98rem; margin-bottom:0.9rem; }
     .intro-cta-btn { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:700; font-size:1rem; padding:0.9rem 1.9rem; border-radius:12px; transition:opacity .2s, transform .2s; }
     .intro-cta-btn:hover { opacity:0.9; transform:translateY(-1px); }
     .intro-cta-hint { color:rgba(184,190,199,0.7); font-size:0.8rem; letter-spacing:0.5px; margin-top:0.8rem; }
 
-    .intro-foto-wrap { display:flex; justify-content:center; }
-    @media (min-width: 1024px) { .intro-foto-wrap { justify-content:flex-end; } }
+    .intro-foto-wrap { display:flex; justify-content:center; margin:0 0 2.2rem; }
+
+    @media (min-width: 1024px) {
+      .intro-grid {
+        grid-template-columns: 1fr 380px; column-gap: 3.5rem; row-gap: 0;
+        text-align:left; align-items:center;
+      }
+      .intro-eyebrow { grid-column:1; grid-row:1; margin-bottom:1.1rem; }
+      .intro-titulo { grid-column:1; grid-row:2; margin-bottom:1.3rem; }
+      .intro-lead { grid-column:1; grid-row:3; margin:0 0 0.9rem; }
+      .intro-sub { grid-column:1; grid-row:4; margin:0 0 0; }
+      .intro-cta-wrap { grid-column:1; grid-row:5; margin-top:2.2rem; }
+      .intro-foto-wrap { grid-column:2; grid-row:1 / 6; justify-content:flex-end; margin:0; align-self:center; }
+    }
     .intro-foto {
       width:min(320px, 78vw); aspect-ratio:2/3; object-fit:cover; object-position:center 18%;
       border-radius:22px; border:1px solid rgba(0,200,255,0.25);
@@ -472,7 +516,6 @@ const tieneFoto = existeArchivo(FOTO_ANDRES);
     .conversion-texto { color:#B8BEC7; font-weight:300; line-height:1.65; font-size:0.98rem; margin-bottom:1.6rem; }
     .conversion-btn { display:inline-block; background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:700; font-size:1.02rem; padding:1rem 2.4rem; border-radius:12px; transition:opacity .2s, transform .2s; }
     .conversion-btn:hover { opacity:0.9; transform:translateY(-1px); }
-    .conversion-microcopy { color:rgba(184,190,199,0.65); font-size:0.8rem; letter-spacing:0.3px; margin-top:1rem; }
 
     /* CTA secundario (contenido opcional) */
     .cta-secondary { display:inline-block; border:1px solid rgba(0,200,255,0.35); color:#00C8FF; font-weight:600; font-size:0.85rem; padding:0.6rem 1.5rem; border-radius:999px; background:transparent; transition:all .2s; }
@@ -497,6 +540,23 @@ const tieneFoto = existeArchivo(FOTO_ANDRES);
     .rubro-btn.active { background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; border-color:transparent; }
     .rubro-panel { display:none; }
     .rubro-panel.active { display:block; }
+
+    /* Panel "Otro" — mini-formulario */
+    .otro-form { max-width:36rem; margin:0 auto; display:grid; gap:1.4rem; }
+    .otro-field { display:grid; gap:0.55rem; text-align:left; }
+    .otro-field label { color:#D7DBE1; font-weight:500; font-size:0.92rem; }
+    .otro-field input, .otro-field textarea {
+      width:100%; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.12); border-radius:12px;
+      padding:0.85rem 1rem; color:#F2F4F7; font-family:'Poppins',sans-serif; font-size:0.95rem; font-weight:300;
+      resize:vertical; transition:border-color .2s;
+    }
+    .otro-field input:focus, .otro-field textarea:focus { outline:none; border-color:rgba(0,200,255,0.5); }
+    .otro-field input::placeholder, .otro-field textarea::placeholder { color:rgba(184,190,199,0.5); }
+    .otro-form .conversion-btn { justify-self:center; border:none; cursor:pointer; }
+    .otro-gracias { max-width:44ch; margin:0 auto; text-align:center; }
+    .otro-gracias[hidden] { display:none; }
+    .otro-gracias-titulo { font-family:'Montserrat',sans-serif; font-weight:700; font-size:clamp(1.2rem, 2.8vw, 1.6rem); color:#F2F4F7; margin-bottom:0.8rem; }
+    .otro-gracias-texto { color:#B8BEC7; font-weight:300; line-height:1.6; margin-bottom:1.6rem; }
 
     html { scroll-behavior: smooth; }
 
