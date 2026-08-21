@@ -1,10 +1,8 @@
 ---
 // Landing personal de Andrés Albornoz — soluciones operativas.
-// Estructura VSL en cascada: Promesa → 3 videos secuenciales → [gate] Agendá (Calendly) + Presentación.
-//   01 · Por qué estoy seguro de que puedo ayudarte  (rompe "en mi empresa todo funciona bien")
-//   02 · Cuál es el método                            (cómo se trabaja, paso a paso)
-//   03 · Ejemplos de lo que podrías desarrollar       (herramientas concretas)
-// Cada bloque aparece cuando termina el video del anterior. El Calendly se desbloquea con el 03.
+// Flujo de conversión corto: Presentación → Video principal → Agendar (ya, sin gating).
+// El resto de los videos (método, ejemplos) quedan como contenido OPCIONAL más abajo,
+// para quien quiera profundizar antes de agendar. Nada bloquea el CTA de agenda.
 import fs from 'node:fs';
 import Loader from '../transitions/Loader.astro';
 import '../transitions/transitions.css';
@@ -17,7 +15,7 @@ const waUrl = `https://wa.me/${WA}?text=${waMsg}`;
 
 // Meta Pixel — pegar acá el ID del píxel (~15 dígitos) cuando exista el Business Manager.
 // Vacío = no se inyecta nada y la landing funciona igual. Con ID se disparan tres eventos:
-//   PageView (al cargar) · ViewContent (cuando termina el video) · Lead (cuando agenda en Calendly).
+//   PageView (al cargar) · ViewContent (cuando termina un video) · Lead (cuando agenda en Calendly).
 const FB_PIXEL_ID = '';
 
 // Calendly — llamada de diagnóstico (Google Meet / teléfono, 45 min).
@@ -25,9 +23,8 @@ const CALENDLY = 'https://calendly.com/genideiaconsultoraia/llamada-de-diagnosti
 const calendlyEmbed = `${CALENDLY}?hide_gdpr_banner=1&background_color=0b1324&text_color=f2f4f7&primary_color=00c8ff`;
 
 // ───────────────────────────────────────────────────────────────
-// VIDEOS DE LA SECUENCIA — subí los archivos a public/videos/
-// Mientras un video no exista, ese bloque muestra un aviso y no bloquea
-// al visitante: la cascada sigue igual y el Calendly queda accesible.
+// VIDEOS — subí los archivos a public/videos/
+// Mientras un video no exista, ese bloque muestra un aviso y no rompe nada.
 // ───────────────────────────────────────────────────────────────
 const publicDir = new URL('../../public', import.meta.url);
 const existeArchivo = (ruta: string) => fs.existsSync(new URL(`.${ruta}`, `${publicDir}/`));
@@ -41,37 +38,26 @@ const src01 = existeArchivo(VIDEO_01) ? VIDEO_01 : '/videos/landing-andres.mp4';
 const BLOQUES = [
   {
     id: 'porque',
-    num: '01',
-    eyebrow: 'Antes que nada',
+    eyebrow: 'Antes de agendar',
     titulo: '¿Por qué estoy seguro de que puedo ayudarte?',
-    bajada:
-      'Porque no comparo tu empresa contra una empresa estancada, que no quiere crecer. La comparo contra lo que tu propia empresa podría estar haciendo hoy. Y ahí siempre hay diferencia.',
     video: src01,
-    poster: '',
-    hint: 'Mirá el video para seguir',
   },
   {
     id: 'metodo',
-    num: '02',
-    eyebrow: 'Cómo trabajo',
+    eyebrow: 'Método',
     titulo: '¿Cuál es el método?',
-    bajada:
-      'No se empieza por sumar herramientas. Primero se ordena cómo tu empresa se presenta, atrae y atiende — recién al final se acelera con anuncios.',
     video: VIDEO_02,
-    poster: '',
-    hint: 'Mirá el video para seguir',
   },
   {
     id: 'ejemplos',
-    num: '03',
-    eyebrow: 'Qué se puede hacer',
+    eyebrow: 'Ejemplos',
     titulo: '¿Cuáles son los ejemplos que empresas como vos ya están aplicando?',
-    bajada:
-      'Ninguno de estos es un producto de catálogo: son soluciones que salieron de un diagnóstico concreto. Elegí tu rubro para ver los ejemplos que aplican.',
-    hint: 'Mirá un ejemplo para agendar tu diagnóstico',
   },
 ].map((b) => ({ ...b, disponible: b.video ? existeArchivo(b.video) : true }));
 
+// Foto de Andrés — retrato real. Si algún día no está, cae a un placeholder identificable.
+const FOTO_ANDRES = '/img/andres.jpg';
+const tieneFoto = existeArchivo(FOTO_ANDRES);
 ---
 
 <!DOCTYPE html>
@@ -123,13 +109,44 @@ const BLOQUES = [
       <a href="#metodo">Método</a>
       <a href="#ejemplos">Ejemplos</a>
     </nav>
-    <a href={waUrl} target="_blank" rel="noopener noreferrer" class="header-cta">Hablemos</a>
+    <a href="#agenda" class="header-cta">Hablemos</a>
   </header>
 
-  <!-- ══ 01 · POR QUÉ PUEDO AYUDARTE ══════════════════════════ -->
-  <section id="porque" class="max-w-4xl mx-auto px-6 pt-36 pb-16">
+  <!-- ══ 01 · PRESENTACIÓN ═════════════════════════════════════ -->
+  <section id="presentacion" class="max-w-5xl mx-auto px-6 pt-36 pb-16">
+    <div class="intro-grid">
+      <div class="intro-copy">
+        <p class="intro-eyebrow" data-reveal>Andrés Albornoz · Soluciones operativas con IA</p>
+        <h1 class="intro-titulo" data-reveal data-delay="1">Hola, soy Andrés.</h1>
+        <p class="intro-lead" data-reveal data-delay="2">
+          Ayudo a empresas a ahorrar tiempo y ordenar sus procesos construyendo soluciones con IA.
+        </p>
+        <p class="intro-sub" data-reveal data-delay="2">
+          Trabajo sobre consultas, seguimientos, ventas, información y otras tareas que hoy
+          dependen demasiado del trabajo manual.
+        </p>
+        <div class="intro-cta-wrap" data-reveal data-delay="3">
+          <p class="intro-cta-pregunta">¿Querés ver por qué estoy seguro de que puedo ayudarte?</p>
+          <a href="#porque" class="intro-cta-btn">Ver video <span aria-hidden="true">↓</span></a>
+          <p class="intro-cta-hint">Mirá esto antes de agendar · 5 min</p>
+        </div>
+      </div>
+      <div class="intro-foto-wrap" data-reveal data-delay="1">
+        {tieneFoto ? (
+          <img src={FOTO_ANDRES} alt="Andrés Albornoz" class="intro-foto" />
+        ) : (
+          <div class="intro-foto intro-foto-placeholder" role="img" aria-label="Foto de Andrés Albornoz pendiente">
+            <span>Foto de Andrés<br />(reemplazar)</span>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 02 · VIDEO PRINCIPAL — no bloquea nada, ya se puede agendar ══ -->
+  <section id="porque" class="max-w-4xl mx-auto px-6 pt-8 pb-16">
     <div class="text-center mb-9" data-reveal>
-      <p class="paso-eyebrow">{BLOQUES[0].num} · {BLOQUES[0].eyebrow}</p>
+      <p class="paso-eyebrow">02 · {BLOQUES[0].eyebrow}</p>
       <h2 class="paso-titulo">{BLOQUES[0].titulo}</h2>
     </div>
 
@@ -143,20 +160,53 @@ const BLOQUES = [
         <span class="cover-hint">Mirá esto antes<br/>de agendar</span>
       </button>
       <div class="video-end" data-video-end>
-        <p class="video-end-title">Ahora sí: así es como se trabaja.</p>
-        <a href="#metodo" class="video-end-btn">Ver el método →</a>
+        <p class="video-end-title">Ahora sí, ¿charlamos de tu empresa?</p>
+        <a href="#agenda" class="video-end-btn">Agendar diagnóstico →</a>
       </div>
     </div>
 
-    <p class="lock-hint text-center mt-8" data-lock-hint="porque" style="color:rgba(0,200,255,0.75); font-size:0.85rem; letter-spacing:1px;"><span style="font-size:0.95rem;">🔒</span> {BLOQUES[0].hint}</p>
+    <!-- Bloque de conversión inmediato — disponible se haya visto el video o no -->
+    <div class="conversion-block" data-reveal>
+      <h3 class="conversion-titulo">¿Creés que algo de esto puede aplicarse a tu empresa?</h3>
+      <p class="conversion-texto">
+        Podemos analizar cómo funciona hoy tu proceso, dónde se está perdiendo tiempo
+        y si existe una oportunidad concreta de mejorarlo.
+      </p>
+      <a href="#agenda" class="conversion-btn">Agendar diagnóstico</a>
+      <p class="conversion-microcopy">Sin compromiso · Analizamos primero si realmente tiene sentido ayudarte</p>
+    </div>
   </section>
 
-  <!-- ╔═══ GATE 02 — se abre al terminar el video 01 ═══╗ -->
-  <div id="gate-metodo" class="gate-locked">
+  <!-- ── AGENDÁ (Calendly) — a un paso del video principal ──── -->
+  <section id="agenda" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-20">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="text-center mb-10" data-reveal>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">El siguiente paso</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);">Agendá tu diagnóstico inicial.</h2>
+      </div>
+      <!-- Calendly inline -->
+      <div id="calendly-box" class="calendly-inline-widget" data-url={calendlyEmbed} style="min-width:320px; height:700px; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2);" data-reveal></div>
+      <p class="text-center mt-6 text-sm" style="color:#B8BEC7; font-weight:300;" data-reveal>
+        ¿Preferís escribir? <a href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; text-decoration:underline;">Hablemos por WhatsApp →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ CONTENIDO OPCIONAL — para quien quiera profundizar antes de agendar ══ -->
+  <section class="max-w-3xl mx-auto px-6 pt-16 pb-4 text-center" data-reveal>
+    <p class="opcional-eyebrow">Para ir más a fondo</p>
+    <h2 class="opcional-titulo">¿Querés conocer un poco más antes de agendar?</h2>
+    <p class="opcional-texto">
+      Si todavía querés entender mejor cómo trabajo o qué tipo de soluciones construyo,
+      podés seguir viendo estos contenidos. Son opcionales — ya podés agendar cuando quieras.
+    </p>
+  </section>
+
+  <!-- ── MÉTODO (opcional) ───────────────────────────────────── -->
   <section id="metodo" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-16">
     <div class="max-w-4xl mx-auto px-6">
       <div class="text-center mb-9" data-reveal>
-        <p class="paso-eyebrow">{BLOQUES[1].num} · {BLOQUES[1].eyebrow}</p>
+        <p class="paso-eyebrow">{BLOQUES[1].eyebrow}</p>
         <h2 class="paso-titulo">{BLOQUES[1].titulo}</h2>
       </div>
 
@@ -179,16 +229,16 @@ const BLOQUES = [
         <div class="video-pendiente" data-reveal>Video en producción · el bloque queda publicado y no bloquea el resto</div>
       )}
 
-      <p class="lock-hint text-center mt-8" data-lock-hint="metodo" style="color:rgba(0,200,255,0.75); font-size:0.85rem; letter-spacing:1px;"><span style="font-size:0.95rem;">🔒</span> {BLOQUES[1].hint}</p>
+      <div class="text-center mt-8" data-reveal>
+        <a href="#agenda" class="cta-secondary">Agendar diagnóstico</a>
+      </div>
     </div>
   </section>
-  </div><!-- ╚═══ /GATE 02 ═══╝ -->
 
-  <!-- ╔═══ GATE 03 — se abre al terminar el video 02 ═══╗ -->
-  <div id="gate-ejemplos" class="gate-locked">
+  <!-- ── EJEMPLOS por rubro (opcional) ───────────────────────── -->
   <section id="ejemplos" class="max-w-4xl mx-auto px-6 py-16">
     <div class="text-center mb-9" data-reveal>
-      <p class="paso-eyebrow">{BLOQUES[2].num} · {BLOQUES[2].eyebrow}</p>
+      <p class="paso-eyebrow">{BLOQUES[2].eyebrow}</p>
       <h2 class="paso-titulo">{BLOQUES[2].titulo}</h2>
     </div>
 
@@ -226,40 +276,19 @@ const BLOQUES = [
       </div>
     ))}
 
-    <p class="lock-hint text-center mt-8" data-lock-hint="ejemplos" style="color:rgba(0,200,255,0.75); font-size:0.85rem; letter-spacing:1px;"><span style="font-size:0.95rem;">🔒</span> {BLOQUES[2].hint}</p>
-  </section>
-  </div><!-- ╚═══ /GATE 03 ═══╝ -->
-
-  <!-- ╔═══ GATE — se desbloquea cuando termina el video 03 ═══╗ -->
-  <div id="gate-agenda" class="gate-locked">
-
-  <!-- ── AGENDÁ (Calendly) ─────────────────────────────────── -->
-  <section id="agenda" style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-20">
-    <div class="max-w-3xl mx-auto px-6">
-      <div class="text-center mb-10" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">El siguiente paso</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.2rem);">Agendá tu diagnóstico inicial.</h2>
-      </div>
-      <!-- Calendly inline -->
-      <div id="calendly-box" class="calendly-inline-widget" data-url={calendlyEmbed} style="min-width:320px; height:700px; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2);" data-reveal></div>
-      <p class="text-center mt-6 text-sm" style="color:#B8BEC7; font-weight:300;" data-reveal>
-        ¿Preferís escribir? <a href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; text-decoration:underline;">Hablemos por WhatsApp →</a>
-      </p>
+    <div class="text-center mt-8" data-reveal>
+      <a href="#agenda" class="cta-secondary">Agendar diagnóstico</a>
     </div>
   </section>
 
-  <!-- ── PRESENTACIÓN BREVE (opción a conocerme) ───────────── -->
-  <section id="presentacion" class="py-20">
-    <div class="max-w-4xl mx-auto px-6 grid sm:grid-cols-[auto_1fr] gap-8 items-center">
-      <div data-reveal style="width:130px; height:160px; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.25); margin:0 auto;">
-        <img src="/img/andres.jpg" alt="Andrés Albornoz" style="width:100%; height:100%; object-fit:cover; object-position:center 25%; display:block;" />
-      </div>
-      <div data-reveal data-delay="1" class="text-center sm:text-left">
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-3">Quién soy</p>
-        <h3 style="font-family:'Montserrat',sans-serif; font-weight:700;" class="text-2xl mb-3">Andrés Albornoz</h3>
-        <p style="color:#B8BEC7; font-weight:300;" class="leading-relaxed">
-          Ayudo a empresas a optimizar sus operaciones diarias con herramientas de Inteligencia Artificial.
-        </p>
+  <!-- ── CTA FINAL ────────────────────────────────────────────── -->
+  <section class="max-w-3xl mx-auto px-6 py-20 text-center">
+    <div data-reveal>
+      <h2 class="final-titulo">¿Listo para ordenar tus procesos con IA?</h2>
+      <p class="final-texto">Agendá un diagnóstico de 45 minutos y vemos juntos por dónde empezar.</p>
+      <div class="final-cta-row">
+        <a href="#agenda" class="conversion-btn">Agendar diagnóstico</a>
+        <a href={waUrl} target="_blank" rel="noopener noreferrer" class="cta-secondary">Hablar por WhatsApp</a>
       </div>
     </div>
   </section>
@@ -277,8 +306,6 @@ const BLOQUES = [
       </div>
     </div>
   </footer>
-
-  </div><!-- ╚═══ /GATE ═══╝ -->
 
   <!-- Barra fija mobile: siempre visible, manda directo a WhatsApp -->
   <a href={waUrl} target="_blank" rel="noopener noreferrer" class="mobile-cta">
@@ -310,9 +337,11 @@ const BLOQUES = [
       if (!v || !cover) return;
       cover.addEventListener('click', () => { v.play(); });
       v.addEventListener('play', () => wrap.classList.add('playing'));
+      // la pantalla final aparece cuando el video termina de verdad — no bloquea nada más
+      v.addEventListener('ended', () => { wrap.classList.add('ended'); track('ViewContent'); });
     });
 
-    // ── Gating VSL: el video principal desbloquea el CTA (Calendly) ──
+    // ── Calendly: nada está oculto, así que se inicializa apenas el widget se acerca ──
     let calendlyReady = false;
     function initCalendly() {
       if (calendlyReady) return;
@@ -323,48 +352,15 @@ const BLOQUES = [
         calendlyReady = true;
       }
     }
-    // ── Cascada: cada video abre el bloque siguiente; el último abre el Calendly ──
-    // Si un bloque todavía no tiene video subido, no traba a nadie: al llegarle el turno
-    // abre el siguiente en el acto (por eso la cadena se activa paso a paso y no toda junta).
-    const PASOS = [
-      { videos: ['vid-porque'],  gate: 'gate-metodo',   hint: 'porque' },
-      { videos: ['vid-metodo'],  gate: 'gate-ejemplos', hint: 'metodo' },
-      // el 03 tiene un video por rubro (el visitante solo mira el suyo) — cualquiera de
-      // los que existan en el DOM puede disparar el desbloqueo.
-      { videos: Array.from(document.querySelectorAll('[data-rubro-video] video')).map((v) => v.id), gate: 'gate-agenda', hint: 'ejemplos', calendly: true },
-    ];
-
-    function activarPaso(i) {
-      const paso = PASOS[i];
-      if (!paso) return;
-      const gate = document.getElementById(paso.gate);
-      const hint = document.querySelector('[data-lock-hint="' + paso.hint + '"]');
-      let unlocked = false;
-      const unlock = () => {
-        if (unlocked) return; unlocked = true;
-        gate && gate.classList.remove('gate-locked');
-        hint && hint.classList.add('hide');
-        gate && gate.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-visible'));
-        // el widget de Calendly no renderiza dentro de display:none → inicializar al revelar
-        if (paso.calendly) setTimeout(initCalendly, 60);
-        activarPaso(i + 1);
-      };
-      const vs = paso.videos.map((id) => document.getElementById(id)).filter(Boolean);
-      if (!vs.length) { unlock(); return; }
-      vs.forEach((v) => {
-        const wrap = v.closest('[data-video-wrap]');
-        // la pantalla final aparece SOLO cuando el video termina de verdad
-        v.addEventListener('ended', () => { wrap && wrap.classList.add('ended'); unlock(); track('ViewContent'); });
-        // salvaguarda: desbloquea muy cerca del final, sin mostrar el end-screen
-        v.addEventListener('timeupdate', () => { if (v.duration && v.currentTime / v.duration > 0.99) unlock(); });
-        v.addEventListener('error', unlock);
-        const src = v.querySelector('source');
-        src && src.addEventListener('error', unlock);
-      });
+    const calendlyBox = document.getElementById('calendly-box');
+    if (calendlyBox) {
+      const calendlyObs = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) { initCalendly(); calendlyObs.disconnect(); }
+      }, { rootMargin: '500px 0px' });
+      calendlyObs.observe(calendlyBox);
     }
-    activarPaso(0);
 
-    // ── Selector de rubro (bloque 03) ──
+    // ── Selector de rubro (bloque de ejemplos) ──
     const rubroBtns = document.querySelectorAll('[data-rubro-btn]');
     const rubroPanels = document.querySelectorAll('[data-rubro-panel]');
     function activarRubro(id) {
@@ -415,8 +411,36 @@ const BLOQUES = [
       }
     }
 
-    .hero-glow { animation: heroGlowPulse 5s ease-in-out infinite; }
-    @keyframes heroGlowPulse { 0%,100% { opacity:0.55; transform:scale(1); } 50% { opacity:1; transform:scale(1.08); } }
+    /* ── 01 · Presentación ───────────────────────────────────── */
+    .intro-grid { display:grid; gap:2.6rem; align-items:center; }
+    @media (min-width: 1024px) { .intro-grid { grid-template-columns: 1fr 380px; gap: 3.5rem; } }
+    .intro-copy { text-align:center; }
+    @media (min-width: 1024px) { .intro-copy { text-align:left; } }
+    .intro-eyebrow { color:#00C8FF; font-size:0.72rem; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:1.1rem; }
+    .intro-titulo { font-family:'Montserrat',sans-serif; font-weight:700; line-height:0.98; letter-spacing:-0.03em; font-size:clamp(2.4rem, 6vw, 4rem); margin-bottom:1.3rem; }
+    .intro-lead { color:#F2F4F7; font-weight:400; font-size:clamp(1.05rem, 2vw, 1.25rem); line-height:1.5; max-width:42ch; margin:0 auto 0.9rem; }
+    @media (min-width: 1024px) { .intro-lead { margin-left:0; margin-right:0; } }
+    .intro-sub { color:#B8BEC7; font-weight:300; font-size:0.98rem; line-height:1.65; max-width:44ch; margin:0 auto; }
+    @media (min-width: 1024px) { .intro-sub { margin-left:0; margin-right:0; } }
+    .intro-cta-wrap { margin-top:2.2rem; }
+    .intro-cta-pregunta { color:#D7DBE1; font-weight:500; font-size:0.98rem; margin-bottom:0.9rem; }
+    .intro-cta-btn { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:700; font-size:1rem; padding:0.9rem 1.9rem; border-radius:12px; transition:opacity .2s, transform .2s; }
+    .intro-cta-btn:hover { opacity:0.9; transform:translateY(-1px); }
+    .intro-cta-hint { color:rgba(184,190,199,0.7); font-size:0.8rem; letter-spacing:0.5px; margin-top:0.8rem; }
+
+    .intro-foto-wrap { display:flex; justify-content:center; }
+    @media (min-width: 1024px) { .intro-foto-wrap { justify-content:flex-end; } }
+    .intro-foto {
+      width:min(320px, 78vw); aspect-ratio:2/3; object-fit:cover; object-position:center 18%;
+      border-radius:22px; border:1px solid rgba(0,200,255,0.25);
+      box-shadow:0 20px 70px rgba(0,200,255,0.14), 0 8px 30px rgba(0,0,0,0.4);
+      display:block;
+    }
+    .intro-foto-placeholder {
+      display:flex; align-items:center; justify-content:center; text-align:center;
+      background:repeating-linear-gradient(135deg, rgba(0,200,255,0.06) 0 14px, rgba(255,255,255,0.02) 14px 28px);
+      color:rgba(184,190,199,0.7); font-size:0.85rem; font-weight:500; letter-spacing:0.5px; line-height:1.5;
+    }
 
     /* Video principal 16:9 */
     .video-main-wrap { position:relative; width:100%; aspect-ratio:16/9; border-radius:18px; overflow:hidden; border:1px solid rgba(0,200,255,0.25); background:#0B1324; box-shadow:0 12px 60px rgba(0,200,255,0.12); }
@@ -428,10 +452,6 @@ const BLOQUES = [
     @keyframes playPulse { 0%{ box-shadow:0 0 0 0 rgba(0,200,255,0.45);} 70%{ box-shadow:0 0 0 22px rgba(0,200,255,0);} 100%{ box-shadow:0 0 0 0 rgba(0,200,255,0);} }
     .cover-hint { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.15rem; line-height:1.25; color:#F2F4F7; text-align:center; text-shadow:0 2px 12px rgba(0,0,0,0.6); }
 
-    /* Hint de bloqueo (se oculta al desbloquear) */
-    .lock-hint { transition:opacity .3s; }
-    .lock-hint.hide { display:none; }
-
     /* Pantalla final del video (aparece al terminar) */
     .video-end { position:absolute; inset:0; z-index:5; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px; padding:24px; text-align:center; background:linear-gradient(180deg, rgba(7,8,13,0.94), rgba(11,19,36,0.97)); opacity:0; pointer-events:none; transition:opacity .5s ease; }
     .video-main-wrap.ended .video-end { opacity:1; pointer-events:auto; }
@@ -442,37 +462,31 @@ const BLOQUES = [
     /* Encabezado de cada bloque de la secuencia */
     .paso-eyebrow { display:flex; align-items:center; justify-content:center; gap:8px; color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:600; text-transform:uppercase; margin-bottom:1.1rem; }
     .paso-titulo { font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.045em; line-height:1.05; font-size:clamp(1.9rem, 5vw, 3.4rem); margin-bottom:1rem; }
-    .paso-bajada { color:#B8BEC7; font-weight:300; line-height:1.65; max-width:56ch; margin:0 auto; font-size:1.02rem; }
 
     /* Aviso cuando el video del bloque todavía no está subido */
     .video-pendiente { border:1px dashed rgba(0,200,255,0.3); border-radius:18px; padding:2.6rem 1.5rem; text-align:center; color:rgba(184,190,199,0.7); font-size:0.85rem; font-weight:300; letter-spacing:0.5px; }
 
-    /* 01 · Anécdota y argumento */
-    .anecdota { max-width:44ch; margin:2.5rem auto 0; text-align:center; }
-    .anecdota-cita { font-family:'Montserrat',sans-serif; font-weight:700; font-size:clamp(1.35rem,3.4vw,2.1rem); line-height:1.25; color:#F2F4F7; margin-bottom:1rem; }
-    .anecdota-pie { color:#B8BEC7; font-weight:300; font-size:0.95rem; line-height:1.65; }
-    .parrafo-arg { max-width:56ch; margin:1.8rem auto 0; text-align:center; color:#B8BEC7; font-weight:300; line-height:1.7; }
-    .parrafo-giro { color:#D7DBE1; }
+    /* Bloque de conversión inmediato (después del video principal) */
+    .conversion-block { max-width:52ch; margin:3.2rem auto 0; text-align:center; }
+    .conversion-titulo { font-family:'Montserrat',sans-serif; font-weight:700; font-size:clamp(1.3rem, 3vw, 1.8rem); line-height:1.25; color:#F2F4F7; margin-bottom:0.9rem; }
+    .conversion-texto { color:#B8BEC7; font-weight:300; line-height:1.65; font-size:0.98rem; margin-bottom:1.6rem; }
+    .conversion-btn { display:inline-block; background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:700; font-size:1.02rem; padding:1rem 2.4rem; border-radius:12px; transition:opacity .2s, transform .2s; }
+    .conversion-btn:hover { opacity:0.9; transform:translateY(-1px); }
+    .conversion-microcopy { color:rgba(184,190,199,0.65); font-size:0.8rem; letter-spacing:0.3px; margin-top:1rem; }
 
-    /* 01 · Las dos formas de perder dinero */
-    .creencia-card { position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:1.7rem 1.7rem 1.6rem; transition:transform .25s ease, border-color .25s ease; }
-    .creencia-card:hover { transform:translateY(-4px); border-color:rgba(0,200,255,0.3); }
-    .pot-tipo { font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; color:#00C8FF; margin-bottom:1rem; }
-    .pot-hoy { color:#F2F4F7; font-weight:500; font-size:0.95rem; line-height:1.55; margin-bottom:0.9rem; padding-bottom:0.9rem; border-bottom:1px solid rgba(255,255,255,0.07); }
-    .pot-real { color:#B8BEC7; font-weight:300; font-size:0.92rem; line-height:1.65; }
+    /* CTA secundario (contenido opcional) */
+    .cta-secondary { display:inline-block; border:1px solid rgba(0,200,255,0.35); color:#00C8FF; font-weight:600; font-size:0.85rem; padding:0.6rem 1.5rem; border-radius:999px; background:transparent; transition:all .2s; }
+    .cta-secondary:hover { border-color:#00C8FF; background:rgba(0,200,255,0.08); }
 
-    /* 02 · Pasos del método */
-    .metodo-card { position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:1.6rem 1.6rem 1.5rem; transition:transform .25s ease, border-color .25s ease; }
-    .metodo-card:hover { transform:translateY(-4px); border-color:rgba(0,200,255,0.3); }
-    .metodo-num { display:block; font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.7rem; letter-spacing:2px; color:rgba(0,200,255,0.65); margin-bottom:1rem; }
-    .metodo-titulo { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.05rem; letter-spacing:-0.02em; color:#F2F4F7; margin-bottom:0.5rem; }
-    .metodo-desc { color:#B8BEC7; font-weight:300; font-size:0.92rem; line-height:1.6; }
+    /* Transición hacia el contenido opcional */
+    .opcional-eyebrow { color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:600; text-transform:uppercase; margin-bottom:0.9rem; }
+    .opcional-titulo { font-family:'Montserrat',sans-serif; font-weight:700; font-size:clamp(1.4rem, 3.2vw, 2rem); letter-spacing:-0.02em; margin-bottom:0.9rem; }
+    .opcional-texto { color:#B8BEC7; font-weight:300; line-height:1.65; font-size:0.95rem; max-width:48ch; margin:0 auto; }
 
-    /* 03 · Ejemplos de herramientas */
-    .ejemplo-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:1.4rem 1.5rem; transition:border-color .25s, transform .25s; }
-    .ejemplo-card:hover { border-color:rgba(0,200,255,0.4); transform:translateY(-4px); }
-    .ejemplo-titulo { font-family:'Montserrat',sans-serif; font-weight:600; font-size:0.98rem; letter-spacing:-0.01em; color:#F2F4F7; margin-bottom:0.5rem; line-height:1.3; }
-    .ejemplo-desc { color:#B8BEC7; font-weight:300; font-size:0.86rem; line-height:1.55; }
+    /* CTA final */
+    .final-titulo { font-family:'Montserrat',sans-serif; font-weight:700; font-size:clamp(1.7rem, 4vw, 2.6rem); letter-spacing:-0.03em; margin-bottom:0.8rem; }
+    .final-texto { color:#B8BEC7; font-weight:300; font-size:1rem; line-height:1.6; margin-bottom:2rem; }
+    .final-cta-row { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; align-items:center; }
 
     /* 03 · Selector de rubro */
     .rubro-picker { text-align:center; margin-bottom: 2.2rem; }
@@ -484,11 +498,9 @@ const BLOQUES = [
     .rubro-panel { display:none; }
     .rubro-panel.active { display:block; }
 
-    /* Gating */
-    .gate-locked { display:none; }
     html { scroll-behavior: smooth; }
 
-    @media (prefers-reduced-motion: reduce) { .hero-glow, .play-btn, .video-end-btn { animation:none; } }
+    @media (prefers-reduced-motion: reduce) { .play-btn, .video-end-btn { animation:none; } }
   </style>
 
 </body>
