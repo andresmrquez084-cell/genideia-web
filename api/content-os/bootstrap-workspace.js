@@ -1,3 +1,5 @@
+const DEFAULT_SUPABASE_URL = 'https://dbwuubabafzsinaokawe.supabase.co';
+
 function required(name) {
   const value = process.env[name];
   if (!value) throw new Error(`Missing environment variable: ${name}`);
@@ -20,7 +22,7 @@ function headers() {
 }
 
 async function sb(path, options = {}) {
-  const base = required('CONTENT_OS_SUPABASE_URL');
+  const base = process.env.CONTENT_OS_SUPABASE_URL || DEFAULT_SUPABASE_URL;
   const response = await fetch(`${base}/rest/v1/${path}`, {
     ...options,
     headers: { ...headers(), ...(options.headers || {}) },
