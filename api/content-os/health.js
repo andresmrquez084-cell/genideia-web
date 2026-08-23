@@ -1,9 +1,12 @@
+const DEFAULT_SUPABASE_URL = 'https://dbwuubabafzsinaokawe.supabase.co';
+const DEFAULT_WORKSPACE_ID = 'f2a0c61f-160c-4300-aac6-dcb8c89d98d7';
+
 function supabaseKey() {
   return process.env.CONTENT_OS_SUPABASE_SECRET_KEY || process.env.CONTENT_OS_SUPABASE_SERVICE_ROLE_KEY || null;
 }
 
 async function checkSupabase() {
-  const base = process.env.CONTENT_OS_SUPABASE_URL;
+  const base = process.env.CONTENT_OS_SUPABASE_URL || DEFAULT_SUPABASE_URL;
   const key = supabaseKey();
   if (!base || !key) return null;
 
@@ -22,9 +25,9 @@ async function checkSupabase() {
 
 export default async function handler(req, res) {
   const configured = {
-    supabaseUrl: Boolean(process.env.CONTENT_OS_SUPABASE_URL),
+    supabaseUrl: true,
     supabaseSecret: Boolean(supabaseKey()),
-    workspace: Boolean(process.env.CONTENT_OS_WORKSPACE_ID),
+    workspace: true,
     syncSecret: Boolean(process.env.CONTENT_OS_SYNC_SECRET),
     instagramToken: Boolean(process.env.INSTAGRAM_ACCESS_TOKEN),
     instagramUserId: Boolean(process.env.INSTAGRAM_USER_ID),
@@ -48,12 +51,14 @@ export default async function handler(req, res) {
     }
   }
 
-  const readyForBootstrap = configured.supabaseUrl && configured.supabaseSecret && configured.syncSecret && supabase?.ok;
-  const readyForInstagramSync = readyForBootstrap && configured.workspace && configured.instagramToken && configured.instagramUserId;
+  const readyForBootstrap = configured.supabaseSecret && configured.syncSecret && supabase?.ok;
+  const readyForInstagramSync = readyForBootstrap && configured.instagramToken && configured.instagramUserId;
 
   res.status(200).json({
     service: 'GENIDEIA Content OS',
     ok: true,
+    projectRef: 'dbwuubabafzsinaokawe',
+    workspaceId: DEFAULT_WORKSPACE_ID,
     configured,
     supabase,
     instagram,
