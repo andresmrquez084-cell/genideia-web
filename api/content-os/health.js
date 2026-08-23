@@ -23,6 +23,46 @@ async function checkSupabase() {
   }
 }
 
+async function checkInstagram() {
+  const token = process.env.INSTAGRAM_ACCESS_TOKEN;
+  if (!token) return null;
+
+  try {
+    const version = process.env.INSTAGRAM_API_VERSION || 'v25.0';
+    const url = new URL(`https://graph.facebook.com/${version}/me/accounts`);
+    url.searchParams.set('fields', 'id,name,instagram_business_account{id,username,account_type,media_count,followers_count}');
+    url.searchParams.set('limit', '100');
+    url.searchParams.set('access_token', token);
+    const r = await fetch(url);
+    const text = await r.text();
+    if (!r.ok) return { ok: false, status: r.status, error: text };
+
+    const payload = text ? JSON.parse(text) : {};
+    const requestedPageId = process.env.INSTAGRAM_PAGE_ID || null;
+    const requestedIgId = process.env.INSTAGRAM_USER_ID || null;
+    const pages = payload.data || [];
+    const page = pages.find((p) => {
+      if (!p.instagram_business_account) return false;
+      if (requestedPageId && p.id !== requestedPageId) return false;
+      if (requestedIgId && p.instagram_business_account.id !== requestedIgId) return false;
+      return true;
+    }) || (!requestedPageId && !requestedIgId ? pages.find((p) => p.instagram_business_account) : null);
+
+    if (!page) {
+      return { ok: false, status: 200, error: 'Token is valid, but no linked Instagram professional account was found.' };
+    }
+
+    return {
+      ok: true,
+      status: 200,
+      page: { id: page.id, name: page.name },
+      profile: page.instagram_business_account,
+    };
+  } catch (error) {
+    return { ok: false, error: error.message };
+  }
+}
+
 export default async function handler(req, res) {
   const configured = {
     supabaseUrl: true,
@@ -31,28 +71,15 @@ export default async function handler(req, res) {
     syncSecret: Boolean(process.env.CONTENT_OS_SYNC_SECRET),
     instagramToken: Boolean(process.env.INSTAGRAM_ACCESS_TOKEN),
     instagramUserId: Boolean(process.env.INSTAGRAM_USER_ID),
+    instagramPageId: Boolean(process.env.INSTAGRAM_PAGE_ID),
     instagramApp: Boolean(process.env.INSTAGRAM_APP_ID && process.env.INSTAGRAM_APP_SECRET),
+    instagramLoginMode: 'facebook',
   };
 
-  const supabase = await checkSupabase();
-
-  let instagram = null;
-  if (configured.instagramToken && configured.instagramUserId) {
-    try {
-      const version = process.env.INSTAGRAM_API_VERSION || 'v26.0';
-      const url = new URL(`https://graph.instagram.com/${version}/${process.env.INSTAGRAM_USER_ID}`);
-      url.searchParams.set('fields', 'id,username,account_type,media_count');
-      const r = await fetch(url, { headers: { Authorization: `Bearer ${process.env.INSTAGRAM_ACCESS_TOKEN}` } });
-      instagram = r.ok
-        ? { ok: true, status: r.status, profile: await r.json() }
-        : { ok: false, status: r.status, error: await r.text() };
-    } catch (error) {
-      instagram = { ok: false, error: error.message };
-    }
-  }
+  const [supabase, instagram] = await Promise.all([checkSupabase(), checkInstagram()]);
 
   const readyForBootstrap = configured.supabaseSecret && configured.syncSecret && supabase?.ok;
-  const readyForInstagramSync = readyForBootstrap && configured.instagramToken && configured.instagramUserId;
+  const readyForInstagramSync = readyForBootstrap && configured.instagramToken && instagram?.ok;
 
   res.status(200).json({
     service: 'GENIDEIA Content OS',
