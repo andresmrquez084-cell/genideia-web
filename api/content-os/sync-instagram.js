@@ -6,14 +6,21 @@ function required(name) {
   return value;
 }
 
+function supabaseKey() {
+  return process.env.CONTENT_OS_SUPABASE_SECRET_KEY || process.env.CONTENT_OS_SUPABASE_SERVICE_ROLE_KEY || null;
+}
+
 function supabaseHeaders() {
-  const key = required('CONTENT_OS_SUPABASE_SERVICE_ROLE_KEY');
-  return {
+  const key = supabaseKey();
+  if (!key) throw new Error('Missing CONTENT_OS_SUPABASE_SECRET_KEY');
+  const headers = {
     apikey: key,
-    Authorization: `Bearer ${key}`,
     'Content-Type': 'application/json',
     Prefer: 'return=representation,resolution=merge-duplicates',
   };
+  // Legacy service_role keys are JWTs; new sb_secret_* keys must not be sent as Bearer JWTs.
+  if (!key.startsWith('sb_secret_')) headers.Authorization = `Bearer ${key}`;
+  return headers;
 }
 
 async function sb(path, options = {}) {
@@ -72,7 +79,6 @@ async function getMediaInsights(media) {
   try {
     return await ig(`${media.id}/insights`, { metric: desired.join(',') });
   } catch (_) {
-    // Meta varies metric availability by media type and age. Preserve every metric that succeeds.
     const data = [];
     for (const metric of desired) {
       try {
