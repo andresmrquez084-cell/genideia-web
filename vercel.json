@@ -12,5 +12,11 @@
       "destination": "/tadeo",
       "permanent": false
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/content-os"
+    }
   ]
 }
