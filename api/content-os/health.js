@@ -1,12 +1,16 @@
+function supabaseKey() {
+  return process.env.CONTENT_OS_SUPABASE_SECRET_KEY || process.env.CONTENT_OS_SUPABASE_SERVICE_ROLE_KEY || null;
+}
+
 async function checkSupabase() {
   const base = process.env.CONTENT_OS_SUPABASE_URL;
-  const key = process.env.CONTENT_OS_SUPABASE_SERVICE_ROLE_KEY;
+  const key = supabaseKey();
   if (!base || !key) return null;
 
   try {
-    const r = await fetch(`${base}/rest/v1/content_os_workspaces?select=id,name,timezone&limit=1`, {
-      headers: { apikey: key, Authorization: `Bearer ${key}` },
-    });
+    const headers = { apikey: key };
+    if (!key.startsWith('sb_secret_')) headers.Authorization = `Bearer ${key}`;
+    const r = await fetch(`${base}/rest/v1/content_os_workspaces?select=id,name,timezone&limit=1`, { headers });
     const text = await r.text();
     return r.ok
       ? { ok: true, status: r.status, workspace: text ? JSON.parse(text)?.[0] || null : null }
@@ -19,7 +23,7 @@ async function checkSupabase() {
 export default async function handler(req, res) {
   const configured = {
     supabaseUrl: Boolean(process.env.CONTENT_OS_SUPABASE_URL),
-    supabaseServiceRole: Boolean(process.env.CONTENT_OS_SUPABASE_SERVICE_ROLE_KEY),
+    supabaseSecret: Boolean(supabaseKey()),
     workspace: Boolean(process.env.CONTENT_OS_WORKSPACE_ID),
     syncSecret: Boolean(process.env.CONTENT_OS_SYNC_SECRET),
     instagramToken: Boolean(process.env.INSTAGRAM_ACCESS_TOKEN),
@@ -44,7 +48,7 @@ export default async function handler(req, res) {
     }
   }
 
-  const readyForBootstrap = configured.supabaseUrl && configured.supabaseServiceRole && configured.syncSecret && supabase?.ok;
+  const readyForBootstrap = configured.supabaseUrl && configured.supabaseSecret && configured.syncSecret && supabase?.ok;
   const readyForInstagramSync = readyForBootstrap && configured.workspace && configured.instagramToken && configured.instagramUserId;
 
   res.status(200).json({
