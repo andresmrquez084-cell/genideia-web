@@ -1,4 +1,6 @@
 const IG_BASE = 'https://graph.instagram.com';
+const DEFAULT_SUPABASE_URL = 'https://dbwuubabafzsinaokawe.supabase.co';
+const DEFAULT_WORKSPACE_ID = 'f2a0c61f-160c-4300-aac6-dcb8c89d98d7';
 
 function required(name) {
   const value = process.env[name];
@@ -18,13 +20,12 @@ function supabaseHeaders() {
     'Content-Type': 'application/json',
     Prefer: 'return=representation,resolution=merge-duplicates',
   };
-  // Legacy service_role keys are JWTs; new sb_secret_* keys must not be sent as Bearer JWTs.
   if (!key.startsWith('sb_secret_')) headers.Authorization = `Bearer ${key}`;
   return headers;
 }
 
 async function sb(path, options = {}) {
-  const base = required('CONTENT_OS_SUPABASE_URL');
+  const base = process.env.CONTENT_OS_SUPABASE_URL || DEFAULT_SUPABASE_URL;
   const response = await fetch(`${base}/rest/v1/${path}`, {
     ...options,
     headers: { ...supabaseHeaders(), ...(options.headers || {}) },
@@ -140,7 +141,7 @@ export default async function handler(req, res) {
   const syncSecret = required('CONTENT_OS_SYNC_SECRET');
   if (req.headers['x-content-os-secret'] !== syncSecret) return res.status(401).json({ error: 'Unauthorized' });
 
-  const workspaceId = required('CONTENT_OS_WORKSPACE_ID');
+  const workspaceId = process.env.CONTENT_OS_WORKSPACE_ID || DEFAULT_WORKSPACE_ID;
   const userId = required('INSTAGRAM_USER_ID');
   const capturedAt = new Date().toISOString();
   let runId = null;
