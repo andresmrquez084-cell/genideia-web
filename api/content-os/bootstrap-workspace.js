@@ -4,13 +4,19 @@ function required(name) {
   return value;
 }
 
+function supabaseKey() {
+  return process.env.CONTENT_OS_SUPABASE_SECRET_KEY || process.env.CONTENT_OS_SUPABASE_SERVICE_ROLE_KEY || null;
+}
+
 function headers() {
-  const key = required('CONTENT_OS_SUPABASE_SERVICE_ROLE_KEY');
-  return {
+  const key = supabaseKey();
+  if (!key) throw new Error('Missing CONTENT_OS_SUPABASE_SECRET_KEY');
+  const h = {
     apikey: key,
-    Authorization: `Bearer ${key}`,
     'Content-Type': 'application/json',
   };
+  if (!key.startsWith('sb_secret_')) h.Authorization = `Bearer ${key}`;
+  return h;
 }
 
 async function sb(path, options = {}) {
