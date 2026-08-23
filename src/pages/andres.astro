@@ -236,7 +236,10 @@ const EJEMPLOS_TABS = RUBROS_EJEMPLOS.map((r) => ({
             <h3 id="af-example-heading">{EJEMPLOS_TABS[0].heading}</h3>
             <div class="af-usecases" id="af-usecases">
               {EJEMPLOS_TABS[0].items.map(([titulo, desc]) => (
-                <div class="af-usecase"><b>{titulo}</b><span>{desc}</span></div>
+                <details class="af-usecase">
+                  <summary><b>{titulo}</b><span class="af-usecase-chevron">↓</span></summary>
+                  <p>{desc}</p>
+                </details>
               ))}
             </div>
           </div>
@@ -312,7 +315,7 @@ const EJEMPLOS_TABS = RUBROS_EJEMPLOS.map((r) => ({
       document.getElementById('af-example-heading').textContent = d.heading;
       document.getElementById('af-video-title').textContent = d.videoTitle;
       document.getElementById('af-cover-example-title').textContent = d.videoTitle;
-      ucEl.innerHTML = d.items.map(([t, s]) => `<div class="af-usecase"><b>${t}</b><span>${s}</span></div>`).join('');
+      ucEl.innerHTML = d.items.map(([t, s]) => `<details class="af-usecase"><summary><b>${t}</b><span class="af-usecase-chevron">↓</span></summary><p>${s}</p></details>`).join('');
       if (srcEl.getAttribute('src') !== d.video) {
         vidEl.pause();
         srcEl.setAttribute('src', d.video);
@@ -472,9 +475,16 @@ const EJEMPLOS_TABS = RUBROS_EJEMPLOS.map((r) => ({
     .af-example-side{border:1px solid var(--af-line);border-radius:22px;padding:24px;background:#09111e;color:var(--af-text)}
     .af-example-side h3{font-size:1.35rem;margin:8px 0 18px}
     .af-usecases{display:grid;gap:9px}
-    .af-usecase{border:1px solid var(--af-line);border-radius:13px;padding:13px;background:rgba(255,255,255,.02)}
-    .af-usecase b{font-size:.74rem;display:block;margin-bottom:3px}
-    .af-usecase span{font-size:.65rem;color:var(--af-muted);line-height:1.45}
+    .af-usecase{border:1px solid var(--af-line);border-radius:13px;background:rgba(255,255,255,.02);overflow:hidden}
+    .af-usecase summary{
+      list-style:none;padding:13px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+      cursor:pointer;color:var(--af-text)
+    }
+    .af-usecase summary::-webkit-details-marker{display:none}
+    .af-usecase b{font-size:.74rem;font-weight:600}
+    .af-usecase-chevron{font-size:.65rem;color:var(--af-cyan);flex:0 0 auto;transition:transform .2s ease}
+    .af-usecase[open] .af-usecase-chevron{transform:rotate(180deg)}
+    .af-usecase p{margin:0;padding:0 13px 13px;font-size:.65rem;color:var(--af-muted);line-height:1.5}
 
     .af-clarity{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     .af-clarity-card{border:1px solid var(--af-line);border-radius:19px;padding:22px;background:rgba(255,255,255,.025);color:var(--af-text)}
