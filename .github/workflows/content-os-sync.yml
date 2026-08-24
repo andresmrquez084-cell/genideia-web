@@ -1,0 +1,31 @@
+name: Content OS Sync
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Trigger secure Content OS sync
+        shell: bash
+        run: |
+          set -euo pipefail
+          TOKEN_RESPONSE="$(curl --fail --silent --show-error \
+            -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=genideia-content-os-sync")"
+          OIDC_TOKEN="$(printf '%s' "$TOKEN_RESPONSE" | jq -r '.value')"
+          test -n "$OIDC_TOKEN"
+          echo "::add-mask::$OIDC_TOKEN"
+          curl --fail --silent --show-error \
+            -X POST \
+            -H "Authorization: Bearer ${OIDC_TOKEN}" \
+            -H "Content-Type: application/json" \
+            https://content-os-navy-seven.vercel.app/api/content-os/github-sync
