@@ -1,3 +1,5 @@
+import { hasStoredMetaConnection, loadMetaAccessToken } from './_meta-credentials.js';
+
 const DEFAULT_SUPABASE_URL = 'https://dbwuubabafzsinaokawe.supabase.co';
 const DEFAULT_WORKSPACE_ID = 'f2a0c61f-160c-4300-aac6-dcb8c89d98d7';
 
@@ -23,24 +25,35 @@ async function checkSupabase() {
   }
 }
 
-async function checkInstagram() {
-  const token = process.env.INSTAGRAM_ACCESS_TOKEN;
+async function checkInstagram(token) {
   if (!token) return null;
 
   try {
-    const version = process.env.INSTAGRAM_API_VERSION || 'v25.0';
+    const version = process.env.INSTAGRAM_API_VERSION || 'v26.0';
+    let pages = [];
+
     const url = new URL(`https://graph.facebook.com/${version}/me/accounts`);
     url.searchParams.set('fields', 'id,name,instagram_business_account{id,username,account_type,media_count,followers_count}');
     url.searchParams.set('limit', '100');
     url.searchParams.set('access_token', token);
     const r = await fetch(url);
-    const text = await r.text();
-    if (!r.ok) return { ok: false, status: r.status, error: text };
+    if (r.ok) {
+      const payload = await r.json();
+      pages = payload?.data || [];
+    }
 
-    const payload = text ? JSON.parse(text) : {};
+    if (!pages.length) {
+      const fallback = new URL(`https://graph.facebook.com/${version}/me`);
+      fallback.searchParams.set('fields', 'accounts.limit(100){id,name,instagram_business_account{id,username,account_type,media_count,followers_count}}');
+      fallback.searchParams.set('access_token', token);
+      const fr = await fetch(fallback);
+      const fp = await fr.json().catch(() => ({}));
+      if (!fr.ok) return { ok: false, status: fr.status, error: fp?.error?.message || 'Meta Graph request failed' };
+      pages = fp?.accounts?.data || [];
+    }
+
     const requestedPageId = process.env.INSTAGRAM_PAGE_ID || null;
     const requestedIgId = process.env.INSTAGRAM_USER_ID || null;
-    const pages = payload.data || [];
     const page = pages.find((p) => {
       if (!p.instagram_business_account) return false;
       if (requestedPageId && p.id !== requestedPageId) return false;
@@ -49,7 +62,7 @@ async function checkInstagram() {
     }) || (!requestedPageId && !requestedIgId ? pages.find((p) => p.instagram_business_account) : null);
 
     if (!page) {
-      return { ok: false, status: 200, error: 'Token is valid, but no linked Instagram professional account was found.' };
+      return { ok: false, status: 200, error: 'Meta connection is valid, but no linked Instagram professional account was found.' };
     }
 
     return {
@@ -64,19 +77,26 @@ async function checkInstagram() {
 }
 
 export default async function handler(req, res) {
+  const workspaceId = process.env.CONTENT_OS_WORKSPACE_ID || DEFAULT_WORKSPACE_ID;
+  const [supabase, storedConnection, token] = await Promise.all([
+    checkSupabase(),
+    hasStoredMetaConnection(workspaceId),
+    loadMetaAccessToken(workspaceId),
+  ]);
+  const instagram = await checkInstagram(token);
+
   const configured = {
     supabaseUrl: true,
     supabaseSecret: Boolean(supabaseKey()),
     workspace: true,
     syncSecret: Boolean(process.env.CONTENT_OS_SYNC_SECRET),
-    instagramToken: Boolean(process.env.INSTAGRAM_ACCESS_TOKEN),
+    instagramToken: Boolean(token),
+    storedMetaConnection: Boolean(storedConnection),
     instagramUserId: Boolean(process.env.INSTAGRAM_USER_ID),
     instagramPageId: Boolean(process.env.INSTAGRAM_PAGE_ID),
     instagramApp: Boolean(process.env.INSTAGRAM_APP_ID && process.env.INSTAGRAM_APP_SECRET),
-    instagramLoginMode: 'facebook',
+    instagramLoginMode: 'facebook-business',
   };
-
-  const [supabase, instagram] = await Promise.all([checkSupabase(), checkInstagram()]);
 
   const readyForBootstrap = configured.supabaseSecret && configured.syncSecret && supabase?.ok;
   const readyForInstagramSync = readyForBootstrap && configured.instagramToken && instagram?.ok;
@@ -85,7 +105,7 @@ export default async function handler(req, res) {
     service: 'GENIDEIA Content OS',
     ok: true,
     projectRef: 'dbwuubabafzsinaokawe',
-    workspaceId: DEFAULT_WORKSPACE_ID,
+    workspaceId,
     configured,
     supabase,
     instagram,
