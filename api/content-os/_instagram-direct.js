@@ -4,9 +4,9 @@ const DEFAULT_SUPABASE_URL='https://dbwuubabafzsinaokawe.supabase.co';
 const DEFAULT_WORKSPACE_ID='f2a0c61f-160c-4300-aac6-dcb8c89d98d7';
 const GRAPH='https://graph.instagram.com';
 
-function key(){return process.env.CONTENT_OS_SUPABASE_SECRET_KEY||process.env.CONTENT_OS_SUPABASE_SERVICE_ROLE_KEY||null}
+function key(){return String(process.env.CONTENT_OS_SUPABASE_SECRET_KEY||process.env.CONTENT_OS_SUPABASE_SERVICE_ROLE_KEY||'').trim()||null}
 function sbHeaders(extra={}){const k=key();if(!k)throw new Error('Missing CONTENT_OS_SUPABASE_SECRET_KEY');const h={apikey:k,'Content-Type':'application/json',...extra};if(!k.startsWith('sb_secret_'))h.Authorization=`Bearer ${k}`;return h}
-export async function sb(path,options={}){const base=process.env.CONTENT_OS_SUPABASE_URL||DEFAULT_SUPABASE_URL;const r=await fetch(`${base}/rest/v1/${path}`,{...options,headers:{...sbHeaders(),...(options.headers||{})}});const t=await r.text();if(!r.ok)throw new Error(`Supabase ${r.status}: ${t}`);return t?JSON.parse(t):null}
+export async function sb(path,options={}){const base=String(process.env.CONTENT_OS_SUPABASE_URL||DEFAULT_SUPABASE_URL).trim().replace(/\/$/,'');const r=await fetch(`${base}/rest/v1/${path}`,{...options,headers:{...sbHeaders(),...(options.headers||{})}});const t=await r.text();if(!r.ok)throw new Error(`Supabase ${r.status}: ${t}`);return t?JSON.parse(t):null}
 
 function directKey(){const secret=process.env.CONTENT_OS_SYNC_SECRET;if(!secret)throw new Error('Missing CONTENT_OS_SYNC_SECRET');return crypto.createHash('sha256').update(`genideia-content-os/instagram-direct/v1:${secret}`).digest()}
 function encrypt(token){const iv=crypto.randomBytes(12);const cipher=crypto.createCipheriv('aes-256-gcm',directKey(),iv);const ciphertext=Buffer.concat([cipher.update(String(token),'utf8'),cipher.final()]);return{token_ciphertext:ciphertext.toString('base64'),token_iv:iv.toString('base64'),token_tag:cipher.getAuthTag().toString('base64')}}
