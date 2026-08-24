@@ -18,11 +18,5 @@
       "source": "/",
       "destination": "/content-os"
     }
-  ],
-  "crons": [
-    {
-      "path": "/api/content-os/cron-sync",
-      "schedule": "0 * * * *"
-    }
   ]
 }
