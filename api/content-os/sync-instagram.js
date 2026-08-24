@@ -1,3 +1,5 @@
+import { loadMetaAccessToken } from './_meta-credentials.js';
+
 const GRAPH_BASE = 'https://graph.facebook.com';
 const DEFAULT_SUPABASE_URL = 'https://dbwuubabafzsinaokawe.supabase.co';
 const DEFAULT_WORKSPACE_ID = 'f2a0c61f-160c-4300-aac6-dcb8c89d98d7';
@@ -36,16 +38,16 @@ async function sb(path, options = {}) {
 }
 
 function apiVersion() {
-  return process.env.INSTAGRAM_API_VERSION || 'v25.0';
+  return process.env.INSTAGRAM_API_VERSION || 'v26.0';
 }
 
 async function graph(path, params = {}, token = null) {
-  const accessToken = token || required('INSTAGRAM_ACCESS_TOKEN');
+  if (!token) throw new Error('Missing Meta access token');
   const url = new URL(`${GRAPH_BASE}/${apiVersion()}/${path}`);
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== null && value !== '') url.searchParams.set(key, String(value));
   });
-  url.searchParams.set('access_token', accessToken);
+  url.searchParams.set('access_token', token);
   const response = await fetch(url);
   const text = await response.text();
   if (!response.ok) throw new Error(`Meta Graph ${response.status}: ${text}`);
@@ -61,14 +63,26 @@ async function graphAbsolute(urlString, token) {
   return text ? JSON.parse(text) : {};
 }
 
-async function resolveInstagramAccount() {
-  const userToken = required('INSTAGRAM_ACCESS_TOKEN');
-  const payload = await graph('me/accounts', {
-    fields: 'id,name,access_token,tasks,instagram_business_account{id,username,profile_picture_url,followers_count,media_count}',
-    limit: 100,
-  }, userToken);
+async function resolveInstagramAccount(workspaceId) {
+  const userToken = await loadMetaAccessToken(workspaceId);
+  if (!userToken) throw new Error('No stored Meta connection found. Reconnect Instagram from Content OS.');
 
-  const pages = payload.data || [];
+  let pages = [];
+  try {
+    const payload = await graph('me/accounts', {
+      fields: 'id,name,access_token,tasks,instagram_business_account{id,username,profile_picture_url,followers_count,media_count}',
+      limit: 100,
+    }, userToken);
+    pages = payload.data || [];
+  } catch (_) {}
+
+  if (!pages.length) {
+    const payload = await graph('me', {
+      fields: 'accounts.limit(100){id,name,access_token,tasks,instagram_business_account{id,username,profile_picture_url,followers_count,media_count}}',
+    }, userToken);
+    pages = payload?.accounts?.data || [];
+  }
+
   const requestedPageId = process.env.INSTAGRAM_PAGE_ID || null;
   const requestedIgId = process.env.INSTAGRAM_USER_ID || null;
 
@@ -84,7 +98,7 @@ async function resolveInstagramAccount() {
   }
 
   if (!page) {
-    throw new Error('No Facebook Page with a linked Instagram professional account was found for this token. Verify the Page↔Instagram connection and permissions.');
+    throw new Error('No Facebook Page with a linked Instagram professional account was found for this Meta connection.');
   }
 
   const igUserId = page.instagram_business_account.id;
@@ -189,7 +203,7 @@ export default async function handler(req, res) {
   let errors = 0;
 
   try {
-    const { page, profile, igUserId, pageToken } = await resolveInstagramAccount();
+    const { page, profile, igUserId, pageToken } = await resolveInstagramAccount(workspaceId);
 
     const accountRows = await sb('content_os_accounts?on_conflict=workspace_id,platform,external_account_id', {
       method: 'POST',
@@ -199,6 +213,7 @@ export default async function handler(req, res) {
         external_account_id: profile.id,
         username: profile.username,
         account_type: profile.account_type,
+        avatar_url: profile.profile_picture_url || null,
         status: 'connected',
         permissions: ['instagram_basic','instagram_manage_insights','pages_read_engagement','pages_show_list'],
         last_synced_at: capturedAt,
