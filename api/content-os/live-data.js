@@ -64,18 +64,36 @@ export default async function handler(req, res) {
       if (!latestAccountSnapshotByAccount[snapshot.account_id]) latestAccountSnapshotByAccount[snapshot.account_id] = snapshot;
     }
 
+    const counts = {
+      accounts: accounts.length,
+      content: contents.length,
+      latestMetrics: latestMetrics.length,
+      snapshots: metricSnapshots.length,
+      classifications: classifications.length,
+    };
+    const maxSnapshotsPerContent = Math.max(0, ...Object.values(snapshotsByContent).map((items) => items.length));
+
+    if (req.query?.health === '1') {
+      return res.status(200).json({
+        ok: true,
+        source: 'supabase',
+        workspaceId,
+        account: accounts[0]?.username || null,
+        counts,
+        maxSnapshotsPerContent,
+        velocityReady: maxSnapshotsPerContent >= 2,
+        latestSync: syncRuns[0] || null,
+        generatedAt: new Date().toISOString(),
+      });
+    }
+
     return res.status(200).json({
       ok: true,
       source: 'supabase',
       workspaceId,
       accounts: accounts.map((a) => ({ ...a, snapshot: latestAccountSnapshotByAccount[a.id] || null })),
       content: hydratedContent,
-      counts: {
-        accounts: accounts.length,
-        content: contents.length,
-        latestMetrics: latestMetrics.length,
-        snapshots: metricSnapshots.length,
-      },
+      counts,
       latestSync: syncRuns[0] || null,
       generatedAt: new Date().toISOString(),
     });
