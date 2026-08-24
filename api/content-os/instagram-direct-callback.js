@@ -11,12 +11,14 @@ function decodeBase64Url(value){return Buffer.from(String(value||'').replace(/-/
 function verifyMetaSignedRequest(signedRequest,secret){if(!signedRequest||!secret)return null;const [sigPart,payloadPart]=String(signedRequest).split('.');if(!sigPart||!payloadPart)return null;const expected=crypto.createHmac('sha256',secret).update(payloadPart).digest();const actual=decodeBase64Url(sigPart);if(actual.length!==expected.length||!crypto.timingSafeEqual(actual,expected))return null;try{return JSON.parse(decodeBase64Url(payloadPart).toString('utf8'))}catch{return null}}
 function h(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')}
 function confirmation(userId,secret){return crypto.createHmac('sha256',secret).update(`content-os-delete:${userId}`).digest('hex').slice(0,24)}
+function instagramSecret(){return process.env.INSTAGRAM_LOGIN_APP_SECRET||null}
 async function fetchJson(url,options={}){const r=await fetch(url,options);const t=await r.text();let p={};try{p=t?JSON.parse(t):{}}catch{}if(!r.ok)throw new Error(p?.error_message||p?.error?.message||`HTTP ${r.status}: ${t}`);return p}
 async function profile(token){for(const fields of ['id,user_id,username,account_type,media_count,followers_count,profile_picture_url','id,username,account_type,media_count,followers_count,profile_picture_url','id,username,account_type']){try{return await fetchJson(`https://graph.instagram.com/me?fields=${encodeURIComponent(fields)}&access_token=${encodeURIComponent(token)}`)}catch{}}throw new Error('No se pudo leer el perfil autorizado de Instagram')}
 
 async function handleDeauthorize(req,res){
   if(req.method!=='POST')return res.status(405).json({ok:false,error:'Method not allowed'});
-  const appSecret=process.env.INSTAGRAM_LOGIN_APP_SECRET||process.env.INSTAGRAM_APP_SECRET;
+  const appSecret=instagramSecret();
+  if(!appSecret)return res.status(503).json({ok:false,error:'Missing INSTAGRAM_LOGIN_APP_SECRET'});
   const payload=verifyMetaSignedRequest(req.body?.signed_request||req.body?.signedRequest,appSecret);
   if(!payload)return res.status(400).json({ok:false,error:'Invalid signed_request'});
   const userId=String(payload.user_id||payload.userId||'');
@@ -30,7 +32,8 @@ async function handleDeauthorize(req,res){
 }
 
 async function handleDataDeletion(req,res){
-  const appSecret=process.env.INSTAGRAM_LOGIN_APP_SECRET||process.env.INSTAGRAM_APP_SECRET;
+  const appSecret=instagramSecret();
+  if(!appSecret)return res.status(503).json({ok:false,error:'Missing INSTAGRAM_LOGIN_APP_SECRET'});
   if(req.method==='GET'){
     const code=String(req.query?.confirmation_code||'');
     if(!code)return res.status(400).json({ok:false,error:'Missing confirmation_code'});
@@ -65,12 +68,17 @@ export default async function handler(req,res){
   const code=req.query?.code;if(!code)return res.status(400).json({error:'Missing code'});
   const state=verifyState(req.query?.state,process.env.CONTENT_OS_SYNC_SECRET);if(!state)return res.status(400).json({error:'Invalid or expired state'});
   const appId=process.env.INSTAGRAM_LOGIN_APP_ID||DEFAULT_APP_ID;
-  const appSecret=process.env.INSTAGRAM_LOGIN_APP_SECRET||process.env.INSTAGRAM_APP_SECRET;
+  const appSecret=instagramSecret();
   const redirectUri=process.env.INSTAGRAM_LOGIN_REDIRECT_URI||DEFAULT_REDIRECT;
-  if(!appSecret){res.status(503).setHeader('Content-Type','text/html; charset=utf-8');return res.end('<!doctype html><html><body style="font-family:system-ui;padding:32px;background:#07101f;color:white"><h1>Falta una configuración</h1><p>Instagram autorizó la cuenta, pero falta configurar el App Secret del producto Instagram Login en Vercel.</p></body></html>')}
+  if(!appSecret){res.status(503).setHeader('Content-Type','text/html; charset=utf-8');return res.end('<!doctype html><html><body style="font-family:system-ui;padding:32px;background:#07101f;color:white"><h1>Falta una configuración</h1><p>Falta configurar <strong>INSTAGRAM_LOGIN_APP_SECRET</strong> en Vercel con el Instagram App Secret del producto “API setup with Instagram login”. No uses el App Secret general de Meta.</p></body></html>')}
   try{
-    const form=new URLSearchParams({client_id:appId,client_secret:appSecret,grant_type:'authorization_code',redirect_uri:redirectUri,code:String(code)});
-    const short=await fetchJson('https://api.instagram.com/oauth/access_token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:form.toString()});
+    const form=new FormData();
+    form.append('client_id',appId);
+    form.append('client_secret',appSecret);
+    form.append('grant_type','authorization_code');
+    form.append('redirect_uri',redirectUri);
+    form.append('code',String(code));
+    const short=await fetchJson('https://api.instagram.com/oauth/access_token',{method:'POST',body:form});
     let accessToken=short.access_token;let expiresIn=Number(short.expires_in||0);
     if(!accessToken)throw new Error('Instagram no devolvió un access token');
     try{const u=new URL('https://graph.instagram.com/access_token');u.searchParams.set('grant_type','ig_exchange_token');u.searchParams.set('client_secret',appSecret);u.searchParams.set('access_token',accessToken);const long=await fetchJson(u);if(long.access_token){accessToken=long.access_token;expiresIn=Number(long.expires_in||expiresIn)}}catch(e){console.warn('long lived token exchange unavailable',e.message)}
@@ -79,5 +87,5 @@ export default async function handler(req,res){
     await sb('content_os_accounts?on_conflict=workspace_id,platform,external_account_id',{method:'POST',headers:{Prefer:'return=minimal,resolution=merge-duplicates'},body:JSON.stringify([{workspace_id:state.workspaceId,platform:'instagram',external_account_id:externalId,username:p.username||null,account_type:p.account_type||null,avatar_url:p.profile_picture_url||null,status:'connected',permissions:SCOPES,last_synced_at:new Date().toISOString(),raw_profile:p}])});
     let syncResult=null;try{syncResult=await syncInstagramDirect({workspaceId:state.workspaceId,limit:50,jobType:'instagram_connection_sync'})}catch(e){console.warn('post connect sync failed',e.message)}
     res.status(200).setHeader('Content-Type','text/html; charset=utf-8');return res.end(`<!doctype html><html><head><meta http-equiv="refresh" content="2;url=/content-os?instagram=connected"></head><body style="font-family:system-ui;padding:32px;background:#07101f;color:white"><h1>Instagram conectado</h1><p><strong>@${h(p.username||externalId)}</strong> quedó autorizado para sincronización automática.</p><p>${syncResult?`${syncResult.snapshots} snapshots guardados en esta sincronización.`:'La conexión quedó guardada; el sincronizador automático continuará desde aquí.'}</p><p>Volviendo a Content OS…</p></body></html>`)
-  }catch(e){console.error('instagram direct callback',e);res.status(500).setHeader('Content-Type','text/html; charset=utf-8');return res.end(`<!doctype html><html><body style="font-family:system-ui;padding:32px;background:#07101f;color:white"><h1>No se pudo completar la conexión</h1><p>${h(e.message)}</p></body></html>`)}
+  }catch(e){console.error('instagram direct callback',{message:e.message,appId,redirectUri,hasInstagramLoginSecret:Boolean(appSecret)});res.status(500).setHeader('Content-Type','text/html; charset=utf-8');return res.end(`<!doctype html><html><body style="font-family:system-ui;padding:32px;background:#07101f;color:white"><h1>No se pudo completar la conexión</h1><p>${h(e.message)}</p></body></html>`)}
 }
