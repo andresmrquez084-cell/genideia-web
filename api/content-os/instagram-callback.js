@@ -71,9 +71,7 @@ export default async function handler(req, res) {
       .filter((page) => page.instagram_business_account?.id)
       .map((page) => ({ pageId: page.id, pageName: page.name, ...page.instagram_business_account }));
 
-    // The access token is used only in memory during this first validation and is never
-    // returned to the browser or written to logs. Persistent encrypted credential storage
-    // is handled separately for multi-client synchronization.
+    // Temporary validation only: the token is used in memory and never returned to the browser.
     res.status(200).setHeader('Content-Type', 'text/html; charset=utf-8');
     return res.end(`<!doctype html><html><body style="font-family:system-ui;padding:32px;background:#0b0f17;color:#fff"><h1>Meta conectado correctamente</h1><p>Workspace: ${String(state.workspaceId)}</p><p>Cuentas profesionales detectadas: ${instagramAccounts.length}</p>${instagramAccounts.map((a) => `<p><strong>@${String(a.username || a.id)}</strong> · ${String(a.account_type || 'Instagram')}</p>`).join('')}<p>El token no se muestra ni se guarda en el navegador. Esta primera conexión valida el flujo completo antes de activar el almacenamiento cifrado.</p><p>Podés cerrar esta ventana y volver a Content OS.</p></body></html>`);
   } catch (err) {
