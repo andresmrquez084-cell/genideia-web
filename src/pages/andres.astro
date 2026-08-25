@@ -1,29 +1,36 @@
 ---
 // Landing personal de Andrés Albornoz — soluciones operativas.
-// Portado 1:1 desde el prototipo andres_landing_prototipo_v15.html (fuente de verdad visual).
+// V2 "Arcadia": funnel corto y directo a WhatsApp (sin Calendly).
+//   Hero → video principal → CTA WhatsApp → ejemplos por rubro (con opción "otro").
+import fs from 'node:fs';
 import Loader from '../transitions/Loader.astro';
 import '../transitions/transitions.css';
 import '../styles/global.css';
 import { RUBROS_EJEMPLOS } from '../data/ejemplos-rubros';
 
 const WA = '59892302941';
-const waProblema = `https://wa.me/${WA}?text=${encodeURIComponent('Hola Andrés, vi uno de los problemas en tu landing y quiero contarte mi caso.')}`;
-const waFinal = `https://wa.me/${WA}?text=${encodeURIComponent('Hola Andrés, vi tu landing y quiero contarte un proceso de mi empresa.')}`;
+const waUrl = (msg: string) => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+const waDefault = waUrl('Hola Andrés, vi tu video y quiero analizar mi empresa.');
 
 // Meta Pixel — pegar acá el ID del píxel (~15 dígitos) cuando exista el Business Manager.
+// Vacío = no se inyecta nada y la landing funciona igual. Con ID se disparan tres eventos:
+//   PageView (al cargar) · ViewContent (cuando termina el video principal) · Lead (click a WhatsApp).
 const FB_PIXEL_ID = '';
 
-// Calendly — llamada de diagnóstico (Google Meet / teléfono, 45 min).
-const CALENDLY = 'https://calendly.com/genideiaconsultoraia/llamada-de-diagnostico';
+// ───────────────────────────────────────────────────────────────
+// VIDEO PRINCIPAL — subí el archivo a public/videos/
+// Mientras no exista, cae al VSL actual para no dejar la sección vacía.
+// ───────────────────────────────────────────────────────────────
+const publicDir = new URL('../../public', import.meta.url);
+const existeArchivo = (ruta: string) => fs.existsSync(new URL(`.${ruta}`, `${publicDir}/`));
 
-// Tabs de "Ejemplos": mismos rubros y videos que usa el resto del sitio (fuente única de datos).
-const EJEMPLOS_TABS = RUBROS_EJEMPLOS.map((r) => ({
-  id: r.id,
-  label: r.label,
-  video: r.video,
-  heading: `Problemas que puedo ordenar en una operación de ${r.label.toLowerCase()}`,
-  videoTitle: `Ejemplos aplicados a ${r.label.toLowerCase()}`,
-  items: r.items.map((it) => [it.titulo, it.desc]),
+const VIDEO_01 = '/videos/andres-01-porque.mp4';
+const videoPrincipal = existeArchivo(VIDEO_01) ? VIDEO_01 : '/videos/landing-andres.mp4';
+
+const rubrosConMsg = RUBROS_EJEMPLOS.map((r) => ({
+  ...r,
+  disponible: existeArchivo(r.video),
+  msg: `Hola Andrés, vi el ejemplo de ${r.label} y quiero analizar mi empresa.`,
 }));
 ---
 
@@ -33,9 +40,9 @@ const EJEMPLOS_TABS = RUBROS_EJEMPLOS.map((r) => ({
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Andrés Albornoz — Soluciones operativas para tu empresa</title>
-  <meta name="description" content="Ayudo a empresas a optimizar sus operaciones diarias con herramientas de Inteligencia Artificial. Andrés Albornoz — GENIDEIA." />
+  <meta name="description" content="Voy a ayudarte a ahorrar tiempo y dinero en tu empresa automatizando tareas manuales con IA. Andrés Albornoz — GENIDEIA." />
   <meta property="og:title" content="Andrés Albornoz — Soluciones operativas" />
-  <meta property="og:description" content="Tu negocio podría estar perdiendo dinero en los procedimientos diarios. Te enseño los indicadores que lo comprueban y cómo recuperás ese dinero." />
+  <meta property="og:description" content="Voy a ayudarte a ahorrar tiempo y dinero en tu empresa automatizando tareas manuales con IA." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://genideiacompany.com/og-genideia.png" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -44,7 +51,7 @@ const EJEMPLOS_TABS = RUBROS_EJEMPLOS.map((r) => ({
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
   <script>import '../transitions/reveal.js';</script>
   {FB_PIXEL_ID && (
     <script define:vars={{ FB_PIXEL_ID }} is:inline>
@@ -59,490 +66,342 @@ const EJEMPLOS_TABS = RUBROS_EJEMPLOS.map((r) => ({
     <noscript><img height="1" width="1" style="display:none" alt="" src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`} /></noscript>
   )}
 </head>
-<body style="margin:0;background:radial-gradient(850px 500px at 50% -10%,rgba(0,200,255,.13),transparent 65%),var(--af-bg);color:var(--af-text);font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased;">
+<body>
   <Loader logoSrc="/img/logo-nav.png" />
-  <div class="af-progress" id="af-progress"></div>
+  <div class="progress" id="progress"></div>
 
-  <header class="af-header">
-    <a href="#inicio" class="af-brand">
-      <span class="af-brandmark">A</span>
-      <span><strong>Andrés Albornoz</strong><small>Soluciones operativas · GENIDEIA</small></span>
+  <!-- ── HEADER (pill flotante) ─────────────────────────────── -->
+  <header class="site-header">
+    <a href="#inicio" class="brand">
+      <span class="brand-mark"><img src="/img/symbol-gii.png" alt="GENIDEIA" /></span>
+      <span class="brand-copy">
+        <strong>GENIDEIA</strong>
+        <small>Andrés Albornoz</small>
+      </span>
     </a>
-    <nav class="af-nav">
-      <a href="#te-puedo-ayudar">¿Te puedo ayudar?</a>
-      <a href="#que-hago">Qué hago</a>
-      <a href="#como-trabajo">Cómo trabajo</a>
-      <a href="#ejemplos">Ejemplos</a>
-    </nav>
-    <a href="#contacto" class="af-btn af-primary">Hablemos →</a>
+    <a href={waDefault} target="_blank" rel="noopener noreferrer" class="btn-primary" data-track-lead>Hablemos →</a>
   </header>
 
-  <main>
-    <section class="af-hero" id="inicio">
-      <div class="af-wrap af-hero-grid">
-        <div class="af-hero-copy" data-reveal="fade-up">
-          <div class="af-hero-identity">
-            <span class="af-hero-name">Andrés Albornoz</span>
-            <span class="af-hero-role">CO-FOUNDER · GENIDEIA COMPANY</span>
-          </div>
-          <h1 class="af-hero-title">
-            <span>Encuentro dónde</span>
-            <span>tu empresa puede</span>
-            <span>funcionar mejor.</span>
-          </h1>
-          <p class="af-lead">Si hay tiempo, margen o control que se está perdiendo, mi trabajo es detectarlo y convertir esa oportunidad en una solución concreta.</p>
-          <div class="af-actions">
-            <a href="#te-puedo-ayudar" class="af-btn af-primary">Ver si te puedo ayudar ↓</a>
-            <a href="#que-hago" class="af-btn af-secondary">Cómo trabajo</a>
-          </div>
+  <!-- ── HERO ──────────────────────────────────────────────── -->
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <h1 class="hero-title" data-reveal>
+        <span>Voy a ayudarte a ahorrar tiempo y dinero en tu empresa</span>
+        <span>automatizando tareas manuales con IA.</span>
+      </h1>
+    </div>
+  </section>
+
+  <!-- ── VIDEO PRINCIPAL ──────────────────────────────────────── -->
+  <section class="vsl-section">
+    <div class="wrap">
+      <div class="video-shell" data-reveal>
+        <div class="video-frame">
+          <video id="vid-principal" controls playsinline preload="metadata">
+            <source src={videoPrincipal} type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
         </div>
-        <div class="af-photo" data-reveal="fade-up" data-delay="1">
-          <img src="/img/andres.jpg" alt="Andrés Albornoz" />
+        <div class="video-cta">
+          <a href={waDefault} target="_blank" rel="noopener noreferrer" class="btn-primary" data-track-lead>Quiero analizar mi empresa →</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="af-section af-divider" id="te-puedo-ayudar">
-      <div class="af-wrap">
-        <div class="af-center-head" data-reveal="fade-up">
-          <div class="af-eyebrow">Empecemos por tu empresa</div>
-          <h2>¿Te pasa algo de esto?</h2>
-          <p>No te voy a pedir que entiendas de IA. Elegí el problema que más se parece a lo que pasa hoy.</p>
-        </div>
-        <div class="af-problem-grid" data-reveal="fade-up">
-          <button class="af-problem active" data-problem="consultas">
-            <div class="af-icon">01</div><b>Muchas consultas repetidas</b><span>El equipo pierde tiempo respondiendo, buscando datos o derivando mensajes.</span>
-          </button>
-          <button class="af-problem" data-problem="seguimiento">
-            <div class="af-icon">02</div><b>Se pierden seguimientos</b><span>Leads, presupuestos, pedidos o clientes quedan sin próximo paso claro.</span>
-          </button>
-          <button class="af-problem" data-problem="informacion">
-            <div class="af-icon">03</div><b>La información está dispersa</b><span>WhatsApp, planillas, correos y notas distintas para entender una sola situación.</span>
-          </button>
-          <button class="af-problem" data-problem="manual">
-            <div class="af-icon">04</div><b>Hay tareas que se hacen de forma manual</b><span>Cargar, copiar, avisar, controlar o actualizar lo mismo una y otra vez.</span>
-          </button>
-        </div>
+  <!-- ── EJEMPLOS POR RUBRO ───────────────────────────────────── -->
+  <section class="examples" id="ejemplos">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>Rubros en los que ya profundizamos</h2>
+      </div>
 
-        <div class="af-diagnosis" data-reveal="fade-up">
-          <div>
-            <div class="af-eyebrow" id="af-diag-label">Si esto te pasa</div>
-            <h3 id="af-diag-title">Hay algo en ese proceso que vale la pena mirar más de cerca.</h3>
-            <p id="af-diag-copy">Cuando esto se repite todos los días, suele terminar costando más tiempo, seguimiento o control del que parece.</p>
-          </div>
-          <div class="af-diagnosis-right">
-            <a href="#que-hago" class="af-btn af-secondary">Ver cómo lo analizaría ↓</a>
-            <a href={waProblema} target="_blank" rel="noopener" class="af-btn af-primary">Quiero analizar mi caso →</a>
-          </div>
+      <div class="example-tabs" data-reveal>
+        {rubrosConMsg.map((r, i) => (
+          <button type="button" class="example-tab" data-example={r.id} data-default={i === 0 ? 'true' : undefined}>{r.label}</button>
+        ))}
+        <button type="button" class="example-tab" data-example="otro">Quiero analizar mi rubro →</button>
+      </div>
+
+      <div class="examples-video-shell" data-reveal id="examples-video-shell">
+        <div class="video-frame">
+          <video id="examples-video" controls playsinline preload="metadata">
+            <source id="examples-source" src={rubrosConMsg[0].disponible ? rubrosConMsg[0].video : ''} type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
+        </div>
+        <div class="video-cta">
+          <a id="examples-cta" href={waUrl(rubrosConMsg[0].msg)} target="_blank" rel="noopener noreferrer" class="btn-primary" data-track-lead>Quiero analizar mi empresa →</a>
         </div>
       </div>
-    </section>
 
-    <section class="af-section af-media-section" id="que-hago">
-      <div class="af-wrap af-block-grid">
-        <div class="af-block-copy" data-reveal="fade-up">
-          <div class="af-eyebrow">01 · Qué hago</div>
-          <h2>Primero detecto dónde se está perdiendo valor. Después construyo.</h2>
-          <div class="af-triad">
-            <div class="af-triad-row"><i>1</i><div><b>ROI First</b><span>Detecto dónde el negocio puede estar perdiendo tiempo, control o dinero.</span></div></div>
-            <div class="af-triad-row"><i>2</i><div><b>Diseño</b><span>Defino cómo debería funcionar el proceso para corregir ese costo.</span></div></div>
-            <div class="af-triad-row"><i>3</i><div><b>Implementación</b><span>Construyo la solución y la conecto con la operación real.</span></div></div>
-          </div>
-        </div>
-        <div class="af-video-card" data-reveal="fade-up">
-          <div class="af-video-frame">
-            <video controls playsinline preload="metadata">
-              <source src="/videos/landing-andres.mp4" type="video/mp4" />
-            </video>
-            <button type="button" class="af-video-cover" data-video-cover aria-label="Reproducir video">
-              <span class="af-cover-eyebrow">Video de entrada</span>
-              <span class="af-cover-title">¿Estás perdiendo dinero y no lo sabés?</span>
-              <span class="af-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-            </button>
-          </div>
-          <div class="af-video-meta"><b>¿Estás perdiendo dinero y no lo sabés?</b><span>Video de entrada</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="af-section af-divider" id="como-trabajo">
-      <div class="af-wrap">
-        <div class="af-center-head" data-reveal="fade-up">
-          <div class="af-eyebrow">02 · Cómo trabajo</div>
-          <h2>Un proceso simple para llegar a una solución concreta.</h2>
-        </div>
-        <div class="af-process" data-reveal="fade-up">
-          <div class="af-step active"><div class="af-num">01</div><b>Entender</b><span>Qué pasa hoy, quién interviene y dónde se pierde tiempo.</span></div>
-          <div class="af-step"><div class="af-num">02</div><b>Priorizar</b><span>Qué vale la pena cambiar y qué debe seguir siendo humano.</span></div>
-          <div class="af-step"><div class="af-num">03</div><b>Construir</b><span>Panel, asistente, integración o automatización necesaria.</span></div>
-          <div class="af-step"><div class="af-num">04</div><b>Ajustar</b><span>Ver qué funciona en la operación real y mejorarlo.</span></div>
-        </div>
-
-        <div style="max-width:880px;margin:28px auto 0" class="af-video-card" data-reveal="fade-up">
-          <div class="af-video-frame">
-            <video controls playsinline preload="metadata">
-              <source src="/videos/andres-01-porque.mp4" type="video/mp4" />
-            </video>
-            <button type="button" class="af-video-cover" data-video-cover aria-label="Reproducir video">
-              <span class="af-cover-eyebrow">Video de criterio</span>
-              <span class="af-cover-title">Potenciabilidad de ahorro y mejora</span>
-              <span class="af-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-            </button>
-          </div>
-          <div class="af-video-meta"><b>Potenciabilidad de ahorro y mejora</b><span>Video de criterio</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="af-section af-media-section" id="ejemplos">
-      <div class="af-wrap">
-        <div class="af-center-head" data-reveal="fade-up">
-          <div class="af-eyebrow">03 · Ejemplos</div>
-          <h2>Ahora sí: mirá cómo se aplica.</h2>
-        </div>
-        <div class="af-examples-tabs" data-reveal="fade-up">
-          {EJEMPLOS_TABS.map((t, i) => (
-            <button class={`af-tab${i === 0 ? ' active' : ''}`} data-example={t.id}>{t.label}</button>
-          ))}
-        </div>
-
-        <div class="af-sector-prompt" data-reveal="fade-up">
-          <div>
-            <strong>Estos son los rubros en los que más soluciones hemos desarrollado.</strong>
-            <p>Si tu empresa es de otro rubro, contanos cuál es. La idea no es que tu negocio sea idéntico, sino entender si el tipo de problema que resolvemos también aparece en tu operación.</p>
-          </div>
-          <form class="af-sector-form" id="af-sector-form">
-            <input id="af-sector-input" type="text" placeholder="Mi rubro es..." />
-            <button class="af-btn af-primary" type="submit">Contarte mi rubro →</button>
+      <div class="other-sector-shell is-hidden" data-reveal id="other-sector-shell">
+        <div class="other-sector-inner">
+          <h3>Quiero analizar mi rubro</h3>
+          <form id="other-sector-form" class="other-sector-form">
+            <input id="other-sector-input" type="text" placeholder="Escribí tu rubro..." required />
+            <button type="submit" class="btn-primary">Quiero analizarlo →</button>
           </form>
         </div>
-
-        <div class="af-example-grid">
-          <div class="af-video-card" data-reveal="fade-up">
-            <div class="af-video-frame">
-              <video id="af-example-video" controls playsinline preload="metadata">
-                <source id="af-example-source" src={EJEMPLOS_TABS[0].video} type="video/mp4" />
-              </video>
-              <button type="button" class="af-video-cover" data-video-cover aria-label="Reproducir video">
-                <span class="af-cover-eyebrow">Casos posibles</span>
-                <span class="af-cover-title" id="af-cover-example-title">{EJEMPLOS_TABS[0].videoTitle}</span>
-                <span class="af-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-              </button>
-            </div>
-            <div class="af-video-meta"><b id="af-video-title">{EJEMPLOS_TABS[0].videoTitle}</b><span>Casos posibles</span></div>
-          </div>
-          <div class="af-example-side" data-reveal="fade-up">
-            <div class="af-eyebrow" id="af-example-label">{EJEMPLOS_TABS[0].label}</div>
-            <h3 id="af-example-heading">{EJEMPLOS_TABS[0].heading}</h3>
-            <div class="af-usecases" id="af-usecases">
-              {EJEMPLOS_TABS[0].items.map(([titulo, desc]) => (
-                <details class="af-usecase">
-                  <summary><b>{titulo}</b><span class="af-usecase-chevron">↓</span></summary>
-                  <p>{desc}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="af-section af-divider">
-      <div class="af-wrap">
-        <div class="af-center-head" data-reveal="fade-up">
-          <div class="af-eyebrow">Qué significa trabajar conmigo</div>
-          <h2>Vos explicás el problema. Yo ordeno la solución.</h2>
-        </div>
-        <div class="af-clarity" data-reveal="fade-up">
-          <article class="af-clarity-card"><div class="af-label">Vos</div><h3>Me mostrás cómo funciona hoy.</h3><p>Qué hacen, quién participa, qué se repite y dónde se tranca.</p></article>
-          <article class="af-clarity-card"><div class="af-label">Yo</div><h3>Diseño una forma mejor de hacerlo.</h3><p>Defino qué conviene ordenar, qué se puede conectar y qué tecnología tiene sentido.</p></article>
-          <article class="af-clarity-card"><div class="af-label">Resultado</div><h3>Un sistema que el equipo pueda usar.</h3><p>No una idea abstracta de IA: una solución aplicada al proceso real.</p></article>
-        </div>
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div>
+        <p class="footer-nombre">Andrés Albornoz</p>
+        <p class="footer-sub">Cofundador de <a href="/">GENIDEIA Company</a> · Soluciones operativas</p>
       </div>
-    </section>
-
-    <section class="af-final" id="contacto">
-      <div class="af-wrap">
-        <div class="af-cta" data-reveal="fade-up">
-          <div class="af-eyebrow">Si te viste reflejado en algo de arriba</div>
-          <h2>Contame qué proceso querés ordenar.</h2>
-          <p>No hace falta que vengas con una solución. Si me explicás qué está pasando, puedo decirte si veo una oportunidad concreta para ayudarte.</p>
-          <div class="af-actions">
-            <a class="af-btn af-primary" target="_blank" rel="noopener" href={waFinal}>Contarte mi caso por WhatsApp →</a>
-            <a class="af-btn af-secondary" target="_blank" rel="noopener" href={CALENDLY}>Agendar diagnóstico</a>
-          </div>
-        </div>
+      <div class="footer-contact">
+        <a href={waDefault} target="_blank" rel="noopener noreferrer" data-track-lead>WhatsApp +598 92 302 941</a>
+        <a href="mailto:andres@genideiacompany.com">andres@genideiacompany.com</a>
       </div>
-    </section>
-  </main>
+    </div>
+  </footer>
 
-  <footer class="af-footer"><div class="af-wrap"><span>ANDRÉS ALBORNOZ · GENIDEIA</span><span>Montevideo, Uruguay</span><span>WhatsApp +598 92 302 941</span></div></footer>
+  <!-- Barra fija mobile: siempre visible, manda directo a WhatsApp -->
+  <a href={waDefault} target="_blank" rel="noopener noreferrer" class="mobile-cta" data-track-lead>
+    Hablemos por WhatsApp <span>↗</span>
+  </a>
 
-  <script define:vars={{ WA, ejemplosData: EJEMPLOS_TABS }}>
-    const problems = {
-      consultas: {
-        title: 'Si tu equipo responde una y otra vez lo mismo, hay algo en ese proceso que vale la pena revisar.',
-        copy: 'Cuando las consultas crecen, también crece el tiempo que se pierde respondiendo, buscando información y derivando mensajes. La pregunta es cuánto de eso realmente necesita seguir pasando así.',
-      },
-      seguimiento: {
-        title: 'Si un seguimiento se puede olvidar, probablemente ya se estén escapando oportunidades sin que sea tan visible.',
-        copy: 'El costo no siempre aparece como un error evidente. Muchas veces aparece como presupuestos que se enfrían, clientes que no reciben respuesta o conversaciones que simplemente quedan atrás.',
-      },
-      informacion: {
-        title: 'Si para entender una situación hay que buscar en varios lugares, la operación ya está pagando ese desorden.',
-        copy: 'Cada búsqueda, mensaje y dato que no aparece a tiempo suma fricción. Y cuanto más crece la empresa, más difícil se vuelve sostenerlo solo con memoria y hábitos del equipo.',
-      },
-      manual: {
-        title: 'Si una tarea se hace de forma manual todos los días, vale la pena preguntarse cuánto tiempo y margen de error está acumulando.',
-        copy: 'No significa que todo deba automatizarse. Significa que puede haber una parte del proceso consumiendo horas, atención y control que hoy no estás midiendo.',
-      },
-    };
-    document.querySelectorAll('.af-problem').forEach((btn) => btn.addEventListener('click', () => {
-      document.querySelectorAll('.af-problem').forEach((x) => x.classList.remove('active'));
-      btn.classList.add('active');
-      const d = problems[btn.dataset.problem];
-      document.getElementById('af-diag-title').textContent = d.title;
-      document.getElementById('af-diag-copy').textContent = d.copy;
-    }));
+  <script define:vars={{ rubros: rubrosConMsg.map((r) => ({ id: r.id, video: r.disponible ? r.video : '', msg: r.msg })) }}>
+    // ── Meta Pixel: eventos del embudo. No-op si el píxel no está instalado. ──
+    const track = (evento) => { if (window.fbq) window.fbq('track', evento); };
+    document.querySelectorAll('[data-track-lead]').forEach((a) => a.addEventListener('click', () => track('Lead')));
 
-    const exByKey = Object.fromEntries(ejemplosData.map((t) => [t.id, t]));
-    const ucEl = document.getElementById('af-usecases');
-    const vidEl = document.getElementById('af-example-video');
-    const srcEl = document.getElementById('af-example-source');
-    function renderEx(key) {
-      const d = exByKey[key];
-      document.getElementById('af-example-label').textContent = d.label;
-      document.getElementById('af-example-heading').textContent = d.heading;
-      document.getElementById('af-video-title').textContent = d.videoTitle;
-      document.getElementById('af-cover-example-title').textContent = d.videoTitle;
-      ucEl.innerHTML = d.items.map(([t, s]) => `<details class="af-usecase"><summary><b>${t}</b><span class="af-usecase-chevron">↓</span></summary><p>${s}</p></details>`).join('');
-      if (srcEl.getAttribute('src') !== d.video) {
-        vidEl.pause();
-        srcEl.setAttribute('src', d.video);
-        vidEl.load();
-        vidEl.closest('.af-video-frame').classList.remove('playing');
-      }
-    }
-    document.querySelectorAll('.af-tab').forEach((b) => b.addEventListener('click', () => {
-      document.querySelectorAll('.af-tab').forEach((x) => x.classList.remove('active'));
-      b.classList.add('active');
-      renderEx(b.dataset.example);
-    }));
-
-    document.getElementById('af-sector-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const rubro = document.getElementById('af-sector-input').value.trim();
-      const text = rubro
-        ? `Hola Andrés, vi la sección de ejemplos de tu landing. Mi rubro es ${rubro} y quiero contarte cómo funciona mi empresa para ver si me podés ayudar.`
-        : 'Hola Andrés, vi la sección de ejemplos de tu landing y quiero contarte el rubro de mi empresa para ver si me podés ayudar.';
-      window.open(`https://wa.me/${WA}?text=${encodeURIComponent(text)}`, '_blank');
-    });
-
-    document.querySelectorAll('[data-video-cover]').forEach((cover) => {
-      const frame = cover.closest('.af-video-frame');
-      const video = frame.querySelector('video');
-      cover.addEventListener('click', () => video.play());
-      video.addEventListener('play', () => frame.classList.add('playing'));
-    });
-
+    // ── Barra de progreso de scroll ──
+    const progress = document.getElementById('progress');
     window.addEventListener('scroll', () => {
       const d = document.documentElement;
-      document.getElementById('af-progress').style.width = (d.scrollTop / (d.scrollHeight - d.clientHeight)) * 100 + '%';
+      const pct = (d.scrollTop / (d.scrollHeight - d.clientHeight || 1)) * 100;
+      if (progress) progress.style.width = pct + '%';
     }, { passive: true });
+
+    // ── Video principal: trackear cuando lo terminan de ver ──
+    const vidPrincipal = document.getElementById('vid-principal');
+    if (vidPrincipal) vidPrincipal.addEventListener('ended', () => track('ViewContent'));
+
+    // ── Pestañas de ejemplos por rubro ──
+    const RUBROS = Object.fromEntries(rubros.map((r) => [r.id, r]));
+    const exVideo = document.getElementById('examples-video');
+    const exSource = document.getElementById('examples-source');
+    const exCta = document.getElementById('examples-cta');
+    const exShell = document.getElementById('examples-video-shell');
+    const otroShell = document.getElementById('other-sector-shell');
+
+    document.querySelectorAll('[data-example]').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('[data-example]').forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+        const id = tab.getAttribute('data-example');
+
+        if (id === 'otro') {
+          exVideo.pause();
+          exShell.classList.add('is-hidden');
+          otroShell.classList.remove('is-hidden');
+          return;
+        }
+
+        const data = RUBROS[id];
+        otroShell.classList.add('is-hidden');
+        exShell.classList.remove('is-hidden');
+        exVideo.pause();
+        exSource.src = data.video;
+        exVideo.load();
+        exCta.href = `https://wa.me/59892302941?text=${encodeURIComponent(data.msg)}`;
+      });
+    });
+    const defaultTab = document.querySelector('[data-example][data-default="true"]');
+    if (defaultTab) defaultTab.classList.add('active');
+
+    // ── "Otro" rubro: WhatsApp con el rubro escrito ──
+    const otroForm = document.getElementById('other-sector-form');
+    if (otroForm) {
+      otroForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = document.getElementById('other-sector-input');
+        const rubro = input.value.trim();
+        const msg = rubro
+          ? `Hola Andrés, vi tu landing. Mi rubro es ${rubro} y quiero analizar si hay oportunidades en mi empresa.`
+          : 'Hola Andrés, vi tu landing y quiero analizar si hay oportunidades en mi empresa.';
+        track('Lead');
+        window.open(`https://wa.me/59892302941?text=${encodeURIComponent(msg)}`, '_blank');
+      });
+    }
   </script>
 
-  <style is:global>
+  <style>
     :root {
-      --af-bg:#07080d; --af-panel:#0b1324; --af-text:#f3f5f7; --af-muted:#aeb8c6;
-      --af-cyan:#00c8ff; --af-cyan2:#7ce4ff; --af-green:#40e1ad; --af-line:rgba(255,255,255,.09);
+      --bg:#030405; --text:#f5f7fb; --muted:#9aa3af; --line:rgba(255,255,255,.10);
+      --cyan:#18cfff; --blue:#1677ff;
     }
-    .af-wrap{width:min(1140px,calc(100% - 34px));margin:auto}
-    .af-section{padding:92px 0}
-    .af-eyebrow{font-size:.67rem;text-transform:uppercase;letter-spacing:.2em;color:var(--af-cyan);font-weight:600}
-    h1.af-hero-title,h2,h3{font-family:'Montserrat',sans-serif;margin-top:0}
-    .af-section h2{font-size:clamp(2rem,4vw,3.7rem);letter-spacing:-.045em;line-height:1.02;margin-bottom:16px}
-    .af-section h3{letter-spacing:-.025em}
-    .af-section p{margin-top:0}
-    .af-muted{color:var(--af-muted)}
-    .af-btn{border-radius:999px;padding:13px 18px;display:inline-flex;align-items:center;gap:8px;border:1px solid transparent;font-weight:600;font-size:.76rem}
-    .af-primary{background:var(--af-cyan);color:#06121b}
-    .af-secondary{border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.03);color:#eef3f7}
-    .af-secondary:hover{border-color:rgba(0,200,255,.35);color:var(--af-cyan2)}
+    body {
+      margin:0; color:var(--text); font-family:'Poppins',sans-serif; -webkit-font-smoothing:antialiased;
+      background:
+        linear-gradient(rgba(2,5,12,.80),rgba(2,5,12,.92)),
+        url('/img/bg-circuit.jpg') center top / cover fixed no-repeat,
+        #02050c;
+    }
+    @media (max-width: 620px) { body { background-attachment: scroll; } }
+    .wrap { width:min(1180px, calc(100% - 28px)); margin:auto; }
 
-    .af-header{
-      position:fixed;z-index:50;top:16px;left:50%;transform:translateX(-50%);width:min(1100px,calc(100% - 26px));
-      height:68px;border-radius:999px;background:rgba(11,19,36,.82);backdrop-filter:blur(16px);
-      border:1px solid rgba(255,255,255,.10);display:flex;align-items:center;justify-content:space-between;padding:8px 10px 8px 13px
-    }
-    .af-brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}
-    .af-brandmark{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(0,200,255,.25);
-      background:linear-gradient(145deg,#0e2132,#0b1422);font-family:'Montserrat';font-weight:800;color:var(--af-cyan)}
-    .af-brand strong{display:block;font-size:.83rem}.af-brand small{display:block;color:var(--af-muted);font-size:.59rem}
-    .af-nav{display:flex;gap:22px;font-size:.7rem;color:#c6ced9}
-    .af-nav a{color:inherit;text-decoration:none}
-    .af-nav a:hover{color:var(--af-cyan)}
-    .af-progress{position:fixed;top:0;left:0;z-index:80;height:2px;background:var(--af-cyan);width:0}
+    .progress { position:fixed; top:0; left:0; z-index:80; height:2px; width:0; background:linear-gradient(90deg,#15d6ff,#1677ff); box-shadow:0 0 14px rgba(24,207,255,.45); }
 
-    .af-hero{min-height:100vh;padding:142px 0 72px;display:flex;align-items:center;color:var(--af-text)}
-    .af-hero-grid{display:grid;grid-template-columns:1.18fr .82fr;gap:54px;align-items:center}
-    .af-hero p.af-lead{font-size:clamp(1rem,1.35vw,1.18rem);line-height:1.72;color:#bcc5d0;max-width:650px;margin-bottom:29px}
-    .af-actions{display:flex;gap:10px;flex-wrap:wrap}
-    .af-hero-copy{max-width:720px;min-width:0}
-    .af-hero-identity{display:flex;flex-direction:column;gap:6px;margin-bottom:22px}
-    .af-hero-name{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.98rem;letter-spacing:-.015em;color:var(--af-text)}
-    .af-hero-role{font-size:.64rem;letter-spacing:.18em;font-weight:600;color:var(--af-cyan)}
-    .af-hero-title{max-width:100%;overflow-wrap:normal;font-size:clamp(2.9rem,4.6vw,4.85rem);letter-spacing:-.052em;line-height:.97;margin-bottom:24px}
-    .af-hero-title span{display:block;white-space:normal}
-    .af-photo{position:relative;border-radius:30px;overflow:hidden;aspect-ratio:.82;border:1px solid rgba(0,200,255,.20);background:#0b1324;box-shadow:0 28px 85px rgba(0,0,0,.4)}
-    .af-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
-    .af-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(7,8,13,.75),transparent 45%)}
+    /* ── Header flotante (pill) ─────────────────────────────── */
+    .site-header {
+      position:fixed; top:16px; left:50%; transform:translateX(-50%); z-index:50;
+      width:min(1180px, calc(100% - 26px)); min-height:64px;
+      display:flex; align-items:center; justify-content:space-between; gap:20px;
+      padding:8px 10px 8px 14px; border-radius:999px;
+      background:rgba(3,8,18,.76); backdrop-filter:blur(16px);
+      border:1px solid rgba(24,207,255,.16);
+      box-shadow:0 14px 60px rgba(0,0,0,.28), 0 0 35px rgba(24,207,255,.035);
+    }
+    .brand { display:inline-flex; align-items:center; gap:10px; min-width:0; flex:1 1 auto; overflow:hidden; }
+    .brand-mark {
+      width:38px; height:38px; flex:0 0 38px; border-radius:50%; overflow:hidden;
+      border:1px solid rgba(24,207,255,.30); box-shadow:0 0 22px rgba(24,207,255,.10);
+    }
+    .brand-mark img { width:100%; height:100%; object-fit:cover; display:block; }
+    .brand-copy { display:grid; gap:1px; min-width:0; overflow:hidden; }
+    .brand-copy strong { display:block; font-family:'Montserrat',sans-serif; font-size:0.85rem; color:#F2F4F7; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .brand-copy small { display:block; color:var(--cyan); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    @media (max-width: 400px) { .brand-copy small { display:none; } }
 
-    .af-divider{border-top:1px solid var(--af-line)}
-    .af-center-head{text-align:center;max-width:800px;margin:0 auto 42px;color:var(--af-text)}
-    .af-center-head p{color:var(--af-muted);line-height:1.65;max-width:650px;margin:0 auto}
-    .af-problem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .af-problem{
-      min-height:170px;border:1px solid var(--af-line);border-radius:19px;background:rgba(255,255,255,.025);padding:20px;
-      text-align:left;color:var(--af-text);transition:.22s;font-family:inherit
+    .btn-primary {
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      border-radius:999px; padding:14px 22px; font-size:0.82rem; font-weight:700;
+      background:linear-gradient(135deg,#15d6ff,#1787ff); color:#0A0F1A;
+      box-shadow:0 12px 34px rgba(22,143,255,.22), 0 0 20px rgba(24,207,255,.12);
+      transition:.2s; white-space:nowrap; border:none;
     }
-    .af-problem:hover,.af-problem.active{transform:translateY(-4px);border-color:rgba(0,200,255,.34);background:rgba(0,200,255,.055)}
-    .af-problem .af-icon{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;background:rgba(0,200,255,.09);color:var(--af-cyan);margin-bottom:20px}
-    .af-problem b{display:block;font-family:'Montserrat';font-size:.94rem;margin-bottom:6px}
-    .af-problem span{font-size:.71rem;line-height:1.55;color:var(--af-muted)}
-    .af-diagnosis{
-      margin-top:16px;border:1px solid rgba(0,200,255,.24);border-radius:22px;background:linear-gradient(145deg,#0a1422,#0b1728);
-      padding:25px;display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;min-height:185px
-    }
-    .af-diagnosis h3{font-size:1.35rem;margin:7px 0 8px;color:var(--af-text)}
-    .af-diagnosis p{font-size:.78rem;color:var(--af-muted);line-height:1.65;margin:0}
-    .af-diagnosis-right{display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap;align-items:center}
+    .btn-primary:hover { transform:translateY(-1px); filter:brightness(1.08); }
+    .site-header .btn-primary { padding:12px 18px; font-size:0.76rem; }
 
-    .af-media-section{background:linear-gradient(180deg,rgba(11,19,36,.65),rgba(11,19,36,.25));border-top:1px solid var(--af-line);border-bottom:1px solid var(--af-line)}
-    .af-block-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:46px;align-items:center;color:var(--af-text)}
-    .af-block-copy p{color:var(--af-muted);line-height:1.72;font-size:.88rem;max-width:500px}
-    .af-triad{display:grid;gap:10px;margin:26px 0}
-    .af-triad-row{border:1px solid var(--af-line);border-radius:14px;padding:13px 14px;display:grid;grid-template-columns:34px 1fr;gap:10px;background:rgba(255,255,255,.02)}
-    .af-triad-row i{width:28px;height:28px;border-radius:9px;background:rgba(0,200,255,.09);display:grid;place-items:center;color:var(--af-cyan);font-style:normal;font-size:.68rem}
-    .af-triad-row b{display:block;font-size:.76rem;margin-bottom:2px;color:var(--af-text)}
-    .af-triad-row span{display:block;font-size:.67rem;color:var(--af-muted)}
-    .af-video-card{border:1px solid var(--af-line);border-radius:24px;overflow:hidden;background:#05080d;box-shadow:0 25px 80px rgba(0,0,0,.25)}
-    .af-video-frame{position:relative}
-    .af-video-card video{display:block;width:100%;aspect-ratio:16/9;background:#020407}
-    .af-video-cover{
-      position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
-      padding:24px;text-align:center;border:none;cursor:pointer;
-      background:radial-gradient(600px 340px at 50% 30%,rgba(0,200,255,.13),transparent 65%),#05080d;
-      transition:opacity .3s ease;
+    /* ── Hero ─────────────────────────────────────────────────── */
+    .hero { position:relative; padding:150px 0 50px; text-align:center; }
+    .hero:before {
+      content:""; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(700px 260px at 50% 42%, rgba(24,207,255,.08), transparent 70%);
     }
-    .af-video-frame.playing .af-video-cover{opacity:0;pointer-events:none}
-    .af-cover-eyebrow{font-size:.63rem;text-transform:uppercase;letter-spacing:.2em;color:var(--af-cyan);font-weight:600}
-    .af-cover-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:clamp(1.05rem,2.4vw,1.5rem);line-height:1.25;color:var(--af-text);max-width:26ch;text-shadow:0 2px 14px rgba(0,0,0,.5)}
-    .af-play-btn{
-      width:56px;height:56px;border-radius:50%;display:grid;place-items:center;margin-top:4px;
-      background:var(--af-cyan);color:#06121b;box-shadow:0 0 0 0 rgba(0,200,255,.5);
-      animation:af-play-pulse 2.2s ease-in-out infinite;
+    .hero .wrap { position:relative; z-index:1; }
+    .hero-title {
+      margin:0 auto; width:min(1180px,100%);
+      font-family:'Montserrat',sans-serif; font-weight:800; line-height:.97; letter-spacing:-.055em;
+      font-size:clamp(2rem, 3.25vw, 3.35rem);
+      text-shadow:0 0 42px rgba(24,207,255,.055);
     }
-    @keyframes af-play-pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,200,255,.45)}50%{box-shadow:0 0 0 16px rgba(0,200,255,0)}}
-    @media (prefers-reduced-motion: reduce){.af-play-btn{animation:none}}
-    .af-video-meta{padding:15px 17px;border-top:1px solid var(--af-line);display:flex;align-items:center;justify-content:space-between;gap:15px}
-    .af-video-meta b{font-family:'Montserrat';font-size:.78rem;color:var(--af-text)}
-    .af-video-meta span{font-size:.63rem;color:var(--af-muted)}
+    .hero-title span { display:block; white-space:nowrap; }
+    @media (max-width:1180px) and (min-width:621px) { .hero-title { font-size:clamp(1.85rem, 3vw, 2.8rem); } }
+    @media (max-width:620px) {
+      .hero { padding:115px 0 38px; }
+      .hero-title { width:100%; font-size:clamp(1.85rem, 8.8vw, 2.7rem); line-height:1.05; letter-spacing:-.04em; }
+      .hero-title span { display:inline; white-space:normal; }
+      .hero-title span:first-child::after { content:" "; }
+    }
 
-    .af-process{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:30px}
-    .af-process .af-step{border:1px solid var(--af-line);border-radius:17px;padding:20px;background:rgba(255,255,255,.022)}
-    .af-process .af-num{font-family:'Montserrat';color:var(--af-cyan);font-size:1rem;margin-bottom:30px}
-    .af-process b{font-family:'Montserrat';font-size:.87rem;display:block;margin-bottom:7px;color:var(--af-text)}
-    .af-process span{font-size:.68rem;color:var(--af-muted);line-height:1.55}
-    .af-process .af-step.active{border-color:rgba(0,200,255,.3);background:rgba(0,200,255,.045)}
+    /* ── Video shell ──────────────────────────────────────────── */
+    .vsl-section { padding:0 0 74px; }
+    .video-shell, .examples-video-shell {
+      max-width:980px; margin:0 auto; border-radius:26px; overflow:hidden;
+      border:1px solid rgba(24,207,255,.22);
+      background:linear-gradient(180deg, rgba(6,15,29,.94), rgba(5,9,17,.96));
+      box-shadow:0 35px 120px rgba(0,0,0,.48), 0 0 48px rgba(24,207,255,.07);
+    }
+    .video-frame { padding:18px; background:linear-gradient(180deg, rgba(24,207,255,.035), rgba(255,255,255,.01)); }
+    .video-frame video { display:block; width:100%; aspect-ratio:16/9; background:#000; border-radius:16px; border:1px solid rgba(24,207,255,.08); }
+    .video-cta { padding:18px; border-top:1px solid rgba(255,255,255,.08); display:flex; justify-content:center; }
+    @media (max-width:620px) { .video-frame { padding:10px; } }
 
-    .af-examples-tabs{display:flex;justify-content:center;gap:8px;margin-bottom:18px}
-    .af-tab{border:1px solid var(--af-line);background:rgba(255,255,255,.02);color:var(--af-muted);padding:11px 16px;border-radius:999px;font-family:inherit}
-    .af-tab.active{border-color:rgba(0,200,255,.33);background:rgba(0,200,255,.08);color:var(--af-cyan2)}
-    .af-sector-prompt{
-      max-width:880px;margin:0 auto 28px;border:1px solid rgba(0,200,255,.18);border-radius:18px;
-      padding:18px 20px;background:linear-gradient(145deg,#0a1322,#0b1728);display:grid;
-      grid-template-columns:1.15fr .85fr;gap:18px;align-items:center
+    /* ── Ejemplos por rubro ───────────────────────────────────── */
+    .examples { position:relative; padding:34px 0 104px; border-top:1px solid rgba(24,207,255,.08); }
+    .examples:before {
+      content:""; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(700px 360px at 15% 50%, rgba(24,207,255,.045), transparent 70%),
+        radial-gradient(650px 350px at 90% 40%, rgba(22,119,255,.045), transparent 70%);
     }
-    .af-sector-prompt p{margin:0;color:var(--af-muted);font-size:.78rem;line-height:1.6}
-    .af-sector-prompt strong{display:block;color:var(--af-text);font-family:'Montserrat',sans-serif;font-size:.98rem;margin-bottom:6px}
-    .af-sector-form{display:grid;grid-template-columns:1fr auto;gap:10px}
-    .af-sector-form input{
-      width:100%;background:rgba(255,255,255,.03);border:1px solid var(--af-line);color:var(--af-text);
-      border-radius:999px;padding:13px 16px;outline:none;font-size:.74rem;font-family:inherit
+    .examples .wrap { position:relative; z-index:1; }
+    .section-head { text-align:center; margin:0 auto 22px; max-width:760px; }
+    .section-head h2 {
+      margin:0; font-family:'Montserrat',sans-serif; font-size:clamp(1.8rem, 3vw, 2.7rem);
+      line-height:1; letter-spacing:-.05em; text-shadow:0 0 30px rgba(24,207,255,.05);
     }
-    .af-sector-form input:focus{border-color:rgba(0,200,255,.38)}
-    .af-example-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:18px;align-items:stretch}
-    .af-example-side{border:1px solid var(--af-line);border-radius:22px;padding:24px;background:#09111e;color:var(--af-text)}
-    .af-example-side h3{font-size:1.35rem;margin:8px 0 18px}
-    .af-usecases{display:grid;gap:9px}
-    .af-usecase{border:1px solid rgba(255,255,255,.14);border-radius:13px;background:rgba(255,255,255,.035);overflow:hidden}
-    .af-usecase summary{
-      list-style:none;padding:13px;display:flex;align-items:center;justify-content:space-between;gap:10px;
-      cursor:pointer;color:var(--af-text);-webkit-tap-highlight-color:transparent
+    .example-tabs { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin:0 auto 18px; }
+    .example-tab {
+      border:1px solid rgba(24,207,255,.14); background:rgba(4,11,23,.82); color:#aeb7c3;
+      padding:12px 20px; border-radius:999px; font-size:0.76rem; font-weight:600;
+      font-family:'Poppins',sans-serif; cursor:pointer; transition:.2s;
     }
-    .af-usecase summary::marker{content:""}
-    .af-usecase summary::-webkit-details-marker{display:none}
-    .af-usecase b{font-size:.74rem;font-weight:600}
-    .af-usecase-chevron{font-size:.65rem;color:var(--af-cyan);flex:0 0 auto;transition:transform .2s ease}
-    .af-usecase[open] .af-usecase-chevron{transform:rotate(180deg)}
-    .af-usecase p{margin:0;padding:0 13px 13px;font-size:.65rem;color:var(--af-muted);line-height:1.5}
+    .example-tab:hover { border-color:rgba(24,207,255,.4); color:#F2F4F7; }
+    .example-tab.active {
+      color:#fff; background:linear-gradient(135deg,#15d6ff,#1787ff); border-color:transparent;
+      box-shadow:0 8px 28px rgba(22,143,255,.18);
+    }
+    @media (max-width:620px) { .example-tabs { width:100%; } .example-tab { flex:1; padding:11px 10px; } }
 
-    .af-clarity{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .af-clarity-card{border:1px solid var(--af-line);border-radius:19px;padding:22px;background:rgba(255,255,255,.025);color:var(--af-text)}
-    .af-clarity-card .af-label{font-size:.61rem;color:var(--af-cyan);text-transform:uppercase;letter-spacing:.14em;margin-bottom:25px}
-    .af-clarity-card h3{font-size:1rem;margin-bottom:12px}
-    .af-clarity-card p{font-size:.72rem;color:var(--af-muted);line-height:1.65;margin:0}
+    .is-hidden { display:none !important; }
 
-    .af-final{padding:90px 0 110px}
-    .af-cta{border:1px solid rgba(0,200,255,.24);border-radius:28px;padding:42px;background:
-      radial-gradient(420px 260px at 0% 100%,rgba(0,200,255,.09),transparent 65%),#0b1324;text-align:center;color:var(--af-text)}
-    .af-cta p{color:var(--af-muted);max-width:630px;margin:0 auto 24px;line-height:1.7}
-    .af-cta .af-actions{justify-content:center}
-    .af-footer{border-top:1px solid var(--af-line);padding:26px 0 38px;color:#7e8999;font-size:.66rem}
-    .af-footer .af-wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    /* ── "Otro" rubro ─────────────────────────────────────────── */
+    .other-sector-shell {
+      max-width:980px; margin:0 auto; border-radius:26px;
+      border:1px solid rgba(24,207,255,.22);
+      background:linear-gradient(180deg, rgba(6,15,29,.94), rgba(5,9,17,.96));
+      box-shadow:0 35px 120px rgba(0,0,0,.48), 0 0 48px rgba(24,207,255,.07);
+    }
+    .other-sector-inner { min-height:300px; padding:42px 28px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .other-sector-inner h3 { margin:0 0 18px; font-family:'Montserrat',sans-serif; font-size:clamp(1.4rem, 2.8vw, 2rem); letter-spacing:-.04em; text-align:center; }
+    .other-sector-form { width:min(640px,100%); display:grid; grid-template-columns:1fr auto; gap:10px; }
+    .other-sector-form input {
+      width:100%; height:54px; padding:0 18px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.03);
+      color:var(--text); outline:none; font:inherit;
+    }
+    .other-sector-form input::placeholder { color:#95a0af; }
+    .other-sector-form input:focus { border-color:rgba(24,207,255,.32); box-shadow:0 0 0 4px rgba(24,207,255,.08); }
+    @media (max-width:620px) {
+      .other-sector-inner { min-height:240px; padding:28px 18px; }
+      .other-sector-form { grid-template-columns:1fr; }
+      .other-sector-form .btn-primary { width:100%; }
+    }
 
-    @media(max-width:1180px) and (min-width:941px){
-      .af-hero-grid{grid-template-columns:1.18fr .82fr;gap:34px}
-      .af-hero-title{font-size:clamp(2.65rem,4vw,3.7rem);max-width:100%}
-      .af-hero p.af-lead{font-size:.94rem;max-width:590px}
-      .af-photo{aspect-ratio:.82}
+    /* ── Footer ───────────────────────────────────────────────── */
+    .site-footer {
+      position:relative; overflow:hidden; background:#020610;
+      border-top:1px solid rgba(24,207,255,.10);
     }
-    @media(max-width:940px){
-      .af-nav{display:none}
-      .af-hero-grid,.af-block-grid,.af-example-grid{grid-template-columns:1fr}
-      .af-hero-copy{max-width:none}
-      .af-hero-title{max-width:820px}
-      .af-hero-title span{display:inline;white-space:normal}
-      .af-hero-title span:not(:last-child)::after{content:" "}
-      .af-problem-grid,.af-process{grid-template-columns:repeat(2,1fr)}
-      .af-diagnosis{grid-template-columns:1fr}
-      .af-diagnosis-right{justify-content:flex-start}
-      .af-clarity{grid-template-columns:1fr}
-      .af-photo{max-width:580px;margin:auto}
-      .af-sector-prompt{grid-template-columns:1fr}
+    .site-footer:before {
+      content:""; position:absolute; inset:0;
+      background:
+        linear-gradient(rgba(2,6,16,.90), rgba(2,6,16,.94)),
+        url('/img/banner-genideia.jpg') center / cover no-repeat;
+      opacity:.34;
     }
-    @media(max-width:620px){
-      .af-wrap{width:min(100% - 22px,1140px)}
-      .af-header{top:9px;height:60px}
-      .af-brandmark{width:35px;height:35px}
-      .af-brand small{display:none}
-      .af-header .af-btn{padding:10px 13px;font-size:.66rem}
-      .af-hero{min-height:auto;padding:110px 0 62px}
-      .af-hero-grid{gap:34px}
-      .af-hero-title{font-size:clamp(2rem,9.5vw,3rem);line-height:1.02;letter-spacing:-.045em}
-      .af-hero-identity{margin-bottom:17px}
-      .af-hero-name{font-size:.9rem}
-      .af-hero-role{font-size:.58rem;letter-spacing:.14em}
-      .af-hero-title{max-width:100%}
-      .af-hero-title span{display:inline;white-space:normal}
-      .af-section{padding:72px 0}
-      .af-problem-grid,.af-process{grid-template-columns:1fr}
-      .af-cta{padding:28px 18px}
-      .af-sector-form{grid-template-columns:1fr}
+    .footer-inner {
+      position:relative; z-index:1; padding:28px 0 34px;
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;
     }
-    @media (prefers-reduced-motion: reduce) {
-      .af-problem, .af-photo { transition: none; }
+    .footer-nombre { font-family:'Montserrat',sans-serif; font-size:1.05rem; color:#F2F4F7; margin:0; }
+    .footer-sub { font-weight:300; font-size:0.8rem; color:var(--muted); margin:2px 0 0; }
+    .footer-sub a { color:var(--cyan); }
+    .footer-contact { display:flex; flex-direction:column; align-items:flex-end; gap:4px; font-size:0.85rem; color:var(--muted); }
+    .footer-contact a:hover { color:var(--cyan); }
+
+    /* ── Barra fija mobile ───────────────────────────────────── */
+    .mobile-cta { display:none; }
+    @media (max-width:800px) {
+      .mobile-cta {
+        display:flex; position:fixed; z-index:45; right:12px; bottom:12px; left:12px;
+        min-height:54px; padding:0 18px; align-items:center; justify-content:space-between;
+        border:1px solid rgba(255,255,255,.14); border-radius:13px;
+        background:linear-gradient(135deg,#15d6ff,#1787ff); color:#0A0F1A;
+        font-weight:700; font-size:0.9rem; box-shadow:0 14px 40px rgba(0,0,0,.35);
+      }
     }
+
+    html { scroll-behavior:smooth; }
   </style>
 </body>
 </html>
