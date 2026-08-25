@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+    <defs>
+      <radialGradient id="g" cx="0.75" cy="0.18" r="0.8"><stop offset="0" stop-color="#0c87d8" stop-opacity=".34"/><stop offset=".65" stop-color="#06162b" stop-opacity=".15"/><stop offset="1" stop-color="#020817"/></radialGradient>
+      <linearGradient id="line" x1="0" x2="1"><stop stop-color="#16d9ff"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    </defs>
+    <rect width="1200" height="675" fill="#020817"/><rect width="1200" height="675" fill="url(#g)"/>
+    <g opacity=".35" stroke="#1479bd" fill="none">
+      <path d="M760 70h180l70 70h140"/><path d="M820 120h130l55 55h150"/><path d="M0 560h170l60-60h170"/>
+      <circle cx="940" cy="70" r="5" fill="#16d9ff"/><circle cx="1010" cy="140" r="5" fill="#16d9ff"/>
+    </g>
+    <circle cx="92" cy="92" r="32" fill="none" stroke="#16d9ff" stroke-width="2"/><text x="72" y="100" fill="#16d9ff" font-size="20" font-weight="700" font-family="Arial">GII</text>
+    <text x="90" y="185" fill="#16d9ff" font-size="18" font-weight="700" letter-spacing="4" font-family="Arial">WEB · CAPTACIÓN</text>
+    <text x="90" y="250" fill="#f7fbff" font-size="46" font-weight="700" font-family="Arial">Landing comercial para servicios</text>
+    <rect x="90" y="300" rx="17" width="840" height="92" fill="#06172d" stroke="#164a72"/>
+    <rect x="118" y="325" rx="9" width="250" height="16" fill="url(#line)"/><rect x="118" y="354" rx="7" width="590" height="10" fill="#28445f"/>
+    <rect x="90" y="430" rx="14" width="390" height="44" fill="#071b35" stroke="#164a72"/><text x="110" y="458" fill="#b8d9ef" font-size="18" font-family="Arial">Oferta clara</text><rect x="530" y="430" rx="14" width="390" height="44" fill="#071b35" stroke="#164a72"/><text x="550" y="458" fill="#b8d9ef" font-size="18" font-family="Arial">CTA</text><rect x="90" y="494" rx="14" width="390" height="44" fill="#071b35" stroke="#164a72"/><text x="110" y="522" fill="#b8d9ef" font-size="18" font-family="Arial">Responsive</text><rect x="530" y="494" rx="14" width="390" height="44" fill="#071b35" stroke="#164a72"/><text x="550" y="522" fill="#b8d9ef" font-size="18" font-family="Arial">Conversión</text>
+    <text x="90" y="628" fill="#5f7893" font-size="16" font-family="Arial">GENIDEIA · evidencia visual / ficha de proyecto</text>
+    </svg>
