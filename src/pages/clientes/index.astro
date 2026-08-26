@@ -1,0 +1,56 @@
+---
+import '../../styles/client-hub.css';
+---
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GENIDEIA Client Hub</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="icon" href="/favicon.png" />
+</head>
+<body>
+  <main class="login">
+    <div class="loginbox">
+      <section class="loginart"><img src="/og-genideia.png" alt="GENIDEIA Company" /></section>
+      <section class="loginform">
+        <div class="eyebrow">Acceso privado</div>
+        <h1>Ingresá a tu espacio</h1>
+        <p>Tu usuario determina qué empresa, proyectos y documentos podés ver. La información interna de GENIDEIA no forma parte del portal del cliente.</p>
+        <label>Usuario<input id="username" autocomplete="username" placeholder="Tu usuario" /></label>
+        <label style="margin-top:12px">Contraseña<input id="password" type="password" autocomplete="current-password" placeholder="Tu contraseña" /></label>
+        <button id="loginBtn" class="btn" style="margin-top:15px;padding:12px">Ingresar</button>
+        <div id="error" class="error">No pudimos iniciar sesión. Revisá el usuario y la contraseña.</div>
+      </section>
+    </div>
+  </main>
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+  const SUPABASE_URL='https://dbwuubabafzsinaokawe.supabase.co';
+  const SUPABASE_KEY='sb_publishable_5uIKiEXiz-7FW4guG1Tg_Q_gVVotzih';
+  const supabase=createClient(SUPABASE_URL,SUPABASE_KEY);
+  const $=id=>document.getElementById(id);
+  const normalize=s=>s.trim().toLowerCase().replace(/[^a-z0-9._-]+/g,'');
+  async function routeSession(session){
+    if(!session?.user)return;
+    const {data:profile,error}=await supabase.from('gen_hub_profiles').select('role,activo').eq('auth_user_id',session.user.id).maybeSingle();
+    if(error||!profile||!profile.activo){await supabase.auth.signOut();return;}
+    location.href=profile.role==='admin'?'/clientes/admin':'/clientes/portal';
+  }
+  const {data:{session}}=await supabase.auth.getSession();
+  if(session) await routeSession(session);
+  $('loginBtn').addEventListener('click',async()=>{
+    $('error').style.display='none';
+    const username=normalize($('username').value); const password=$('password').value;
+    if(!username||!password){$('error').style.display='block';return;}
+    $('loginBtn').disabled=true;$('loginBtn').textContent='Ingresando…';
+    const email=`${username}@hub.genideia.local`;
+    const {data,error}=await supabase.auth.signInWithPassword({email,password});
+    $('loginBtn').disabled=false;$('loginBtn').textContent='Ingresar';
+    if(error||!data.session){$('error').style.display='block';return;}
+    await routeSession(data.session);
+  });
+  document.addEventListener('keydown',e=>{if(e.key==='Enter')$('loginBtn').click()});
+</script>
+</body>
+</html>
