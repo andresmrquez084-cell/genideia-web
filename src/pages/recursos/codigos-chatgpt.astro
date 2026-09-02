@@ -1,0 +1,124 @@
+---
+// Lead magnet · palabra clave ManyChat: CÓDIGO (reel: "5 códigos de ChatGPT que casi nadie usa")
+// URL pública: /recursos/codigos-chatgpt
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const human = `Reescribí tu respuesta en un tono natural y conversacional,
+como si me lo estuvieras explicando hablando. Nada de estructura
+rígida, listas innecesarias ni lenguaje corporativo. Frases cortas
+y directas. Que suene a persona, no a manual.`;
+
+const l10 = `Explicame el tema como si tuviera 10 años: sin jerga, con
+analogías simples y ejemplos de la vida cotidiana. Si tenés que usar
+un término técnico, definilo en una sola frase antes de seguir.`;
+
+const x10 = `Antes de responder, pensá el problema en profundidad.
+Considerá al menos 3 enfoques distintos, con sus riesgos y sus
+trade-offs. Recién después dame tu recomendación, fundamentada y
+sin rodeos.`;
+
+const killCritic = `Respondé como un crítico honesto, no como un asistente
+que busca quedar bien. Señalá los puntos débiles, los supuestos que
+no están validados y lo que puede salir mal. No me des la razón por
+defecto: si algo no cierra, decímelo.`;
+
+const alt3 = `Dame 3 respuestas claramente distintas entre sí a mi pedido,
+numeradas del 1 al 3, cada una con un enfoque diferente. No elijas
+por mí ni marques una como la mejor: yo decido cuál me sirve.`;
+
+const ask = `Antes de responder, hacéme todas las preguntas que necesites
+para darme una buena respuesta. No adivines ni asumas contexto: si te
+falta algo importante, preguntá primero y respondé después.`;
+
+const tldr = `Resumime esto en 3 bullets como máximo, solo lo esencial.
+Sin introducción ni cierre. Si hay una acción concreta para tomar,
+ponela primera.`;
+
+const steps = `Dame el paso a paso accionable para hacer esto, numerado.
+Nada de teoría ni contexto: solo qué hago primero, qué hago después.
+Si un paso depende de una decisión, decime qué mirar para decidir.`;
+
+const examples = `En vez de explicarme el concepto en abstracto, dame 3
+ejemplos concretos y distintos entre sí, con el caso real y el
+resultado. Después, si hace falta, una frase de cierre.`;
+
+const fix = `Corregí la ortografía, la gramática y la claridad de este
+texto, sin cambiar mi tono ni mi intención. Devolvémelo listo para
+usar y, aparte, una línea con los cambios más importantes que hiciste.`;
+---
+<RecursoLayout
+  titulo="Los 10 códigos de ChatGPT"
+  descripcion="10 atajos que le pegás adelante de tu pregunta para cambiar cómo te responde ChatGPT: más humano, más simple, más profundo, más honesto, con varias opciones, y 5 más para el día a día."
+  tipo="Plantilla"
+  barLabel="Plantilla · @andresalbornozia"
+  palabraClave="CÓDIGO"
+  ctaTitulo="¿Y si tu negocio funcionara así de ordenado?"
+  ctaTexto="Estos códigos ordenan cómo le hablás a ChatGPT. Cuando ordenás la operación entera de tu negocio — con las tareas repetitivas resolviéndose solas — cambia todo. Escribime por DM y lo vemos en una llamada gratis de 30 minutos."
+  waMsg="Hola Andrés, usé los 10 códigos de ChatGPT y quiero ver cómo ordenar más cosas de mi negocio. Te cuento:"
+>
+  <div class="lead"><b>No cambian lo que ChatGPT sabe: cambian cómo te lo dice. Los pegás justo antes de tu pregunta y listo.</b></div>
+
+  <h2>Cómo se usan</h2>
+  <p>Cada código es un texto corto que va <b>al principio del mensaje</b>, seguido de tu pregunta normal. Ejemplo: <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/L10 explicame qué es una API</code>. Abajo tenés el código y el texto completo que representa — podés pegar el texto entero, o guardarlo como prompt rápido en ChatGPT (menú <b>/</b> → guardar prompt) para invocarlo con el atajo. Los primeros 5 son los del video; después hay 5 más para el día a día.</p>
+
+  <h2 style="color:var(--cy)">Los 5 del video</h2>
+
+  <h2>1 · <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/human</code> — que suene a persona</h2>
+  <p>Para cuando la respuesta te viene acartonada, con viñetas y tono de folleto. Ideal para redactar mensajes a clientes, mails o textos que va a leer alguien.</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{human}</code></pre></div>
+  <div class="note"><b>Ejemplo:</b> <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/human</code> escribime un mensaje para pedirle a un cliente una respuesta sobre una propuesta sin sonar insistente.</div>
+
+  <h2>2 · <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/L10</code> — explicá como si tuviera 10 años</h2>
+  <p>Para temas llenos de jerga o referencias técnicas. Te lo baja a tierra sin que tengas que volver a preguntar "¿y eso qué es?".</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{l10}</code></pre></div>
+  <div class="note"><b>Ejemplo:</b> <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/L10</code> explicame qué es una API.</div>
+
+  <h2>3 · <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/X10 think</code> — que piense antes de responder</h2>
+  <p>Para decisiones. Le pedís que analice el problema desde varios ángulos antes de tirarte una respuesta. Las respuestas cambian por completo: más profundas y a detalle.</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{x10}</code></pre></div>
+  <div class="note"><b>Ejemplo:</b> <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/X10 think</code> tengo USD 1000 para invertir en mejorar un negocio pequeño, ¿en qué lo priorizarías y por qué?</div>
+
+  <h2>4 · <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/kill critic</code> — que deje de darte la razón</h2>
+  <p>El que más uso. ChatGPT tiende a decirte que sí a todo. Con este te responde de forma objetiva, aunque no sea lo que querías escuchar.</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{killCritic}</code></pre></div>
+  <div class="note"><b>Ejemplo:</b> <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/kill critic</code> estoy pensando en lanzar un curso sin haber validado antes si mi audiencia lo quiere.</div>
+
+  <h2>5 · <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/alt 3</code> — 3 respuestas para elegir</h2>
+  <p>En vez de una sola respuesta, te da 3 distintas sobre la misma pregunta para que elijas la que más te sirve.</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{alt3}</code></pre></div>
+  <div class="note"><b>Ejemplo:</b> <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/alt 3</code> dame un título para un video sobre cómo usar mejor ChatGPT.</div>
+
+  <h2 style="color:var(--cy)">5 más para el día a día</h2>
+
+  <h2>6 · <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/ask</code> — que pregunte antes de responder</h2>
+  <p>El que evita la respuesta genérica. En vez de adivinar tu contexto, primero te hace las preguntas que necesita.</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{ask}</code></pre></div>
+  <div class="note"><b>Ejemplo:</b> <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/ask</code> ayudame a armar la estrategia de contenido para mi negocio.</div>
+
+  <h2>7 · <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/tldr</code> — el resumen en 3 bullets</h2>
+  <p>Para textos largos, mails, documentos o respuestas que se fueron de mano. Te deja lo esencial.</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{tldr}</code></pre></div>
+  <div class="note"><b>Ejemplo:</b> <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/tldr</code> [pegás el texto largo].</div>
+
+  <h2>8 · <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/steps</code> — el paso a paso accionable</h2>
+  <p>Cuando querés hacer algo, no entenderlo. Corta la teoría y te da la lista de qué hacer, en orden.</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{steps}</code></pre></div>
+  <div class="note"><b>Ejemplo:</b> <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/steps</code> quiero conectar mi formulario de la web con una planilla.</div>
+
+  <h2>9 · <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/examples</code> — 3 ejemplos concretos</h2>
+  <p>Cuando la explicación abstracta no te alcanza. Te baja el concepto a 3 casos reales.</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{examples}</code></pre></div>
+  <div class="note"><b>Ejemplo:</b> <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/examples</code> qué es una buena propuesta de valor.</div>
+
+  <h2>10 · <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/fix</code> — corregí mi texto sin cambiar el tono</h2>
+  <p>Para mensajes, publicaciones o mails antes de mandarlos. Arregla ortografía y claridad, dejándote tu voz.</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{fix}</code></pre></div>
+  <div class="note"><b>Ejemplo:</b> <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/fix</code> [pegás el texto a corregir].</div>
+
+  <h2>Cómo dejarlos guardados</h2>
+  <ol class="steps">
+    <li>En ChatGPT, escribí <b>/</b> en el campo de mensaje y elegí <b>guardar un prompt</b>.</li>
+    <li>Pegá el texto completo del código y ponele de nombre el atajo (ej. <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">human</code>).</li>
+    <li>La próxima vez escribís <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/human</code>, se expande solo, y agregás tu pregunta.</li>
+  </ol>
+</RecursoLayout>
