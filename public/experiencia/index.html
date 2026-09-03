@@ -6,8 +6,7 @@
 (async()=>{
   const response=await fetch('/experiencia/base.html',{cache:'no-cache'});
   if(!response.ok)throw new Error('No se pudo cargar el portfolio');
-  let html=await response.text();
-  html=html.replace('</body>','<script src="/experiencia/video-overrides.js"><\/script></body>');
+  const html=await response.text();
   document.open();document.write(html);document.close();
 })().catch(error=>{document.body.innerHTML='<div style="padding:32px">No se pudo cargar el portfolio.</div>';console.error(error)});
 </script>
