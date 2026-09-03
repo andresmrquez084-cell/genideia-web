@@ -23,7 +23,7 @@ import '../../styles/client-hub.css';
 <body>
   <main class="video-shell">
     <div class="video-top">
-      <div><small>Panel interno · almacenamiento en Supabase</small><h1>Biblioteca de videos</h1><p>Subí o reemplazá los videos del portfolio y el video general de onboarding. Los archivos se guardan en rutas fijas para que el sitio siempre sepa dónde encontrarlos.</p></div>
+      <div><small>Panel interno · almacenamiento en Supabase</small><h1>Biblioteca de videos</h1><p>Subí o reemplazá el recorrido técnico del portfolio y el video de bienvenida del onboarding. Los archivos se guardan en rutas fijas para que el sitio siempre sepa dónde encontrarlos.</p></div>
       <div class="actions"><a class="btn secondary" href="/clientes/admin">← Gestión</a><a class="btn" href="/experiencia/" target="_blank">Ver portfolio ↗</a></div>
     </div>
     <div id="videoGrid" class="video-grid"></div>
@@ -44,10 +44,8 @@ const $=id=>document.getElementById(id);
 let session=null;
 
 const SLOTS=[
-  {slot:'portfolio.tms',path:'portfolio/tms.mp4',title:'Portfolio · GENIDEIA TMS',detail:'Recorrido técnico del sistema TMS.'},
-  {slot:'portfolio.os',path:'portfolio/os.mp4',title:'Portfolio · GENIDEIA OS',detail:'Recorrido técnico del sistema operativo interno.'},
-  {slot:'portfolio.bot',path:'portfolio/bot.mp4',title:'Portfolio · WhatsApp + IA',detail:'Demostración del asistente, agenda y seguimiento.'},
-  {slot:'onboarding.default',path:'onboarding/default.mp4',title:'Onboarding · bienvenida Client Hub',detail:'Video general que recibe un cliente al entrar a su espacio por primera vez.',onboarding:true}
+  {slot:'portfolio.tms',path:'portfolio/tms.mp4',title:'Portfolio · GENIDEIA TMS',detail:'Recorrido técnico del sistema TMS. Es el único recorrido del portfolio que se muestra en video.'},
+  {slot:'onboarding.default',path:'onboarding/default.mp4',title:'Onboarding · video de bienvenida',detail:'Video de bienvenida que recibe un cliente al entrar a su espacio por primera vez.',onboarding:true}
 ];
 
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200)}
