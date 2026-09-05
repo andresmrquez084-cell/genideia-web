@@ -1,0 +1,416 @@
+---
+// Landing personal de Andrés Albornoz — soluciones operativas.
+// V2 "Arcadia": funnel corto y directo a WhatsApp (sin Calendly).
+//   Hero → video principal → CTA WhatsApp → ejemplos por rubro (con opción "otro").
+import fs from 'node:fs';
+import Loader from '../transitions/Loader.astro';
+import '../transitions/transitions.css';
+import '../styles/global.css';
+import { RUBROS_EJEMPLOS } from '../data/ejemplos-rubros';
+
+const WA = '59892302941';
+const waUrl = (msg: string) => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+const waDefault = waUrl('Hola Andrés, vi tu video y quiero analizar mi empresa.');
+
+// Meta Pixel — pegar acá el ID del píxel (~15 dígitos) cuando exista el Business Manager.
+// Vacío = no se inyecta nada y la landing funciona igual. Con ID se disparan tres eventos:
+//   PageView (al cargar) · ViewContent (cuando termina el video principal) · Lead (click a WhatsApp).
+const FB_PIXEL_ID = '';
+
+// ───────────────────────────────────────────────────────────────
+// VIDEO PRINCIPAL — subí el archivo a public/videos/
+// Mientras no exista, cae al VSL actual para no dejar la sección vacía.
+// ───────────────────────────────────────────────────────────────
+const publicDir = new URL('../../public', import.meta.url);
+const existeArchivo = (ruta: string) => fs.existsSync(new URL(`.${ruta}`, `${publicDir}/`));
+
+const VIDEO_01 = '/videos/andres-01-porque.mp4';
+const videoPrincipal = existeArchivo(VIDEO_01) ? VIDEO_01 : '/videos/landing-andres.mp4';
+
+const rubrosConMsg = RUBROS_EJEMPLOS.map((r) => ({
+  ...r,
+  disponible: existeArchivo(r.video),
+  msg: `Hola Andrés, vi el ejemplo de ${r.label} y quiero analizar mi empresa.`,
+}));
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Andrés Albornoz — Soluciones operativas para tu empresa</title>
+  <meta name="description" content="Voy a ayudarte a ahorrar tiempo y dinero en tu empresa automatizando tareas manuales con IA. Andrés Albornoz — GENIDEIA." />
+  <meta property="og:title" content="Andrés Albornoz — Soluciones operativas" />
+  <meta property="og:description" content="Voy a ayudarte a ahorrar tiempo y dinero en tu empresa automatizando tareas manuales con IA." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://genideiacompany.com/og-genideia.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://genideiacompany.com/og-genideia.png" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script>import '../transitions/reveal.js';</script>
+  {FB_PIXEL_ID && (
+    <script define:vars={{ FB_PIXEL_ID }} is:inline>
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+      document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', FB_PIXEL_ID);
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" alt="" src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`} /></noscript>
+  )}
+</head>
+<body>
+  <Loader logoSrc="/img/logo-nav.png" />
+  <div class="progress" id="progress"></div>
+
+  <!-- ── HEADER (pill flotante) ─────────────────────────────── -->
+  <header class="site-header">
+    <a href="#inicio" class="brand">
+      <span class="brand-mark"><img src="/img/symbol-gii.png" alt="GENIDEIA" /></span>
+      <span class="brand-copy">
+        <strong>GENIDEIA</strong>
+        <small>Andrés Albornoz</small>
+      </span>
+    </a>
+    <a href={waDefault} target="_blank" rel="noopener noreferrer" class="btn-primary" data-track-lead>Hablemos →</a>
+  </header>
+
+  <!-- ── HERO ──────────────────────────────────────────────── -->
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <h1 class="hero-title" data-reveal>
+        <span>Voy a ayudarte a ahorrar tiempo y dinero en tu empresa</span>
+        <span>automatizando tareas manuales con IA.</span>
+      </h1>
+    </div>
+  </section>
+
+  <!-- ── VIDEO PRINCIPAL ──────────────────────────────────────── -->
+  <section class="vsl-section">
+    <div class="wrap">
+      <div class="video-shell" data-reveal>
+        <div class="video-frame">
+          <video id="vid-principal" controls playsinline preload="metadata">
+            <source src={videoPrincipal} type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
+        </div>
+        <div class="video-cta">
+          <a href={waDefault} target="_blank" rel="noopener noreferrer" class="btn-primary" data-track-lead>Quiero analizar mi empresa →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EJEMPLOS POR RUBRO ───────────────────────────────────── -->
+  <section class="examples" id="ejemplos">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>Rubros en los que ya profundizamos</h2>
+      </div>
+
+      <div class="example-tabs" data-reveal>
+        {rubrosConMsg.map((r, i) => (
+          <button type="button" class="example-tab" data-example={r.id} data-default={i === 0 ? 'true' : undefined}>{r.label}</button>
+        ))}
+        <button type="button" class="example-tab" data-example="otro">Quiero analizar mi rubro →</button>
+      </div>
+
+      <div class="examples-video-shell" data-reveal id="examples-video-shell">
+        <div class="video-frame">
+          <video id="examples-video" controls playsinline preload="metadata">
+            <source id="examples-source" src={rubrosConMsg[0].disponible ? rubrosConMsg[0].video : ''} type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
+        </div>
+        <div class="video-cta">
+          <a id="examples-cta" href={waUrl(rubrosConMsg[0].msg)} target="_blank" rel="noopener noreferrer" class="btn-primary" data-track-lead>Quiero analizar mi empresa →</a>
+        </div>
+      </div>
+
+      <div class="other-sector-shell is-hidden" data-reveal id="other-sector-shell">
+        <div class="other-sector-inner">
+          <h3>Quiero analizar mi rubro</h3>
+          <form id="other-sector-form" class="other-sector-form">
+            <input id="other-sector-input" type="text" placeholder="Escribí tu rubro..." required />
+            <button type="submit" class="btn-primary">Quiero analizarlo →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div>
+        <p class="footer-nombre">Andrés Albornoz</p>
+        <p class="footer-sub">Cofundador de <a href="/">GENIDEIA Company</a> · Soluciones operativas</p>
+      </div>
+      <div class="footer-contact">
+        <a href={waDefault} target="_blank" rel="noopener noreferrer" data-track-lead>WhatsApp +598 92 302 941</a>
+        <a href="mailto:andres@genideiacompany.com">andres@genideiacompany.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Barra fija mobile: siempre visible, manda directo a WhatsApp -->
+  <a href={waDefault} target="_blank" rel="noopener noreferrer" class="mobile-cta" data-track-lead>
+    Hablemos por WhatsApp <span>↗</span>
+  </a>
+
+  <script define:vars={{ rubros: rubrosConMsg.map((r) => ({ id: r.id, video: r.disponible ? r.video : '', msg: r.msg })) }}>
+    // ── Meta Pixel: eventos del embudo. No-op si el píxel no está instalado. ──
+    const track = (evento) => { if (window.fbq) window.fbq('track', evento); };
+    document.querySelectorAll('[data-track-lead]').forEach((a) => a.addEventListener('click', () => track('Lead')));
+
+    // ── Barra de progreso de scroll ──
+    const progress = document.getElementById('progress');
+    window.addEventListener('scroll', () => {
+      const d = document.documentElement;
+      const pct = (d.scrollTop / (d.scrollHeight - d.clientHeight || 1)) * 100;
+      if (progress) progress.style.width = pct + '%';
+    }, { passive: true });
+
+    // ── Video principal: trackear cuando lo terminan de ver ──
+    const vidPrincipal = document.getElementById('vid-principal');
+    if (vidPrincipal) vidPrincipal.addEventListener('ended', () => track('ViewContent'));
+
+    // ── Pestañas de ejemplos por rubro ──
+    const RUBROS = Object.fromEntries(rubros.map((r) => [r.id, r]));
+    const exVideo = document.getElementById('examples-video');
+    const exSource = document.getElementById('examples-source');
+    const exCta = document.getElementById('examples-cta');
+    const exShell = document.getElementById('examples-video-shell');
+    const otroShell = document.getElementById('other-sector-shell');
+
+    document.querySelectorAll('[data-example]').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('[data-example]').forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+        const id = tab.getAttribute('data-example');
+
+        if (id === 'otro') {
+          exVideo.pause();
+          exShell.classList.add('is-hidden');
+          otroShell.classList.remove('is-hidden');
+          return;
+        }
+
+        const data = RUBROS[id];
+        otroShell.classList.add('is-hidden');
+        exShell.classList.remove('is-hidden');
+        exVideo.pause();
+        exSource.src = data.video;
+        exVideo.load();
+        exCta.href = `https://wa.me/59892302941?text=${encodeURIComponent(data.msg)}`;
+      });
+    });
+    const defaultTab = document.querySelector('[data-example][data-default="true"]');
+    if (defaultTab) defaultTab.classList.add('active');
+
+    // ── "Otro" rubro: WhatsApp con el rubro escrito ──
+    const otroForm = document.getElementById('other-sector-form');
+    if (otroForm) {
+      otroForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = document.getElementById('other-sector-input');
+        const rubro = input.value.trim();
+        const msg = rubro
+          ? `Hola Andrés, vi tu landing. Mi rubro es ${rubro} y quiero analizar si hay oportunidades en mi empresa.`
+          : 'Hola Andrés, vi tu landing y quiero analizar si hay oportunidades en mi empresa.';
+        track('Lead');
+        window.open(`https://wa.me/59892302941?text=${encodeURIComponent(msg)}`, '_blank');
+      });
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg:#030405; --text:#f5f7fb; --muted:#9aa3af; --line:rgba(255,255,255,.10);
+      --cyan:#18cfff; --blue:#1677ff;
+    }
+    body {
+      margin:0; color:var(--text); font-family:'Poppins',sans-serif; -webkit-font-smoothing:antialiased;
+      background:
+        linear-gradient(rgba(2,5,12,.80),rgba(2,5,12,.92)),
+        url('/img/bg-circuit.jpg') center top / cover fixed no-repeat,
+        #02050c;
+    }
+    @media (max-width: 620px) { body { background-attachment: scroll; } }
+    .wrap { width:min(1180px, calc(100% - 28px)); margin:auto; }
+
+    .progress { position:fixed; top:0; left:0; z-index:80; height:2px; width:0; background:linear-gradient(90deg,#15d6ff,#1677ff); box-shadow:0 0 14px rgba(24,207,255,.45); }
+
+    /* ── Header flotante (pill) ─────────────────────────────── */
+    .site-header {
+      position:fixed; top:16px; left:50%; transform:translateX(-50%); z-index:50;
+      width:min(1180px, calc(100% - 26px)); min-height:64px;
+      display:flex; align-items:center; justify-content:space-between; gap:20px;
+      padding:8px 10px 8px 14px; border-radius:999px;
+      background:rgba(3,8,18,.76); backdrop-filter:blur(16px);
+      border:1px solid rgba(24,207,255,.16);
+      box-shadow:0 14px 60px rgba(0,0,0,.28), 0 0 35px rgba(24,207,255,.035);
+    }
+    .brand { display:inline-flex; align-items:center; gap:10px; min-width:0; flex:1 1 auto; overflow:hidden; }
+    .brand-mark {
+      width:38px; height:38px; flex:0 0 38px; border-radius:50%; overflow:hidden;
+      border:1px solid rgba(24,207,255,.30); box-shadow:0 0 22px rgba(24,207,255,.10);
+    }
+    .brand-mark img { width:100%; height:100%; object-fit:cover; display:block; }
+    .brand-copy { display:grid; gap:1px; min-width:0; overflow:hidden; }
+    .brand-copy strong { display:block; font-family:'Montserrat',sans-serif; font-size:0.85rem; color:#F2F4F7; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .brand-copy small { display:block; color:var(--cyan); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    @media (max-width: 400px) { .brand-copy small { display:none; } }
+
+    .btn-primary {
+      position:relative; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      border-radius:999px; padding:16px 28px; font-size:0.9rem; font-weight:700; letter-spacing:0.01em;
+      color:#fff; white-space:nowrap; border:1.5px solid transparent;
+      background:
+        linear-gradient(#0a1420,#0a1420) padding-box,
+        linear-gradient(135deg,#18cfff,#7c5cff 55%,#18cfff) border-box;
+      box-shadow:0 16px 44px rgba(0,0,0,.4);
+      transition:transform .25s, box-shadow .25s;
+      animation:ctaPulse 2.6s ease-in-out infinite;
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 20px 54px rgba(0,0,0,.5), 0 0 34px rgba(24,207,255,.4); }
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow:0 16px 44px rgba(0,0,0,.4), 0 0 0 rgba(24,207,255,0); }
+      50% { box-shadow:0 16px 44px rgba(0,0,0,.4), 0 0 26px rgba(24,207,255,.38); }
+    }
+    .site-header .btn-primary { padding:12px 20px; font-size:0.78rem; animation:none; }
+    @media (prefers-reduced-motion: reduce) { .btn-primary { animation:none; } }
+
+    /* ── Hero ─────────────────────────────────────────────────── */
+    .hero { position:relative; padding:150px 0 50px; text-align:center; }
+    .hero:before {
+      content:""; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(700px 260px at 50% 42%, rgba(24,207,255,.08), transparent 70%);
+    }
+    .hero .wrap { position:relative; z-index:1; }
+    .hero-title {
+      margin:0 auto; width:min(1180px,100%);
+      font-family:'Montserrat',sans-serif; font-weight:800; line-height:.97; letter-spacing:-.055em;
+      font-size:clamp(2rem, 3.25vw, 3.35rem);
+      text-shadow:0 0 42px rgba(24,207,255,.055);
+    }
+    .hero-title span { display:block; white-space:nowrap; }
+    @media (max-width:1180px) and (min-width:621px) { .hero-title { font-size:clamp(1.85rem, 3vw, 2.8rem); } }
+    @media (max-width:620px) {
+      .hero { padding:100px 0 30px; }
+      .hero-title { width:100%; font-size:clamp(1.55rem, 7vw, 2.15rem); line-height:1.22; letter-spacing:-.02em; }
+      .hero-title span { display:inline; white-space:normal; }
+      .hero-title span:first-child::after { content:" "; }
+    }
+
+    /* ── Video shell ──────────────────────────────────────────── */
+    .vsl-section { padding:0 0 74px; }
+    .video-shell, .examples-video-shell {
+      max-width:980px; margin:0 auto; border-radius:26px; overflow:hidden;
+      border:1px solid rgba(24,207,255,.22);
+      background:linear-gradient(180deg, rgba(6,15,29,.94), rgba(5,9,17,.96));
+      box-shadow:0 35px 120px rgba(0,0,0,.48), 0 0 48px rgba(24,207,255,.07);
+    }
+    .video-frame { padding:18px; background:linear-gradient(180deg, rgba(24,207,255,.035), rgba(255,255,255,.01)); }
+    .video-frame video { display:block; width:100%; aspect-ratio:16/9; background:#000; border-radius:16px; border:1px solid rgba(24,207,255,.08); }
+    .video-cta { padding:18px; border-top:1px solid rgba(255,255,255,.08); display:flex; justify-content:center; }
+    @media (max-width:620px) { .video-frame { padding:10px; } }
+
+    /* ── Ejemplos por rubro ───────────────────────────────────── */
+    .examples { position:relative; padding:34px 0 104px; border-top:1px solid rgba(24,207,255,.08); }
+    .examples:before {
+      content:""; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(700px 360px at 15% 50%, rgba(24,207,255,.045), transparent 70%),
+        radial-gradient(650px 350px at 90% 40%, rgba(22,119,255,.045), transparent 70%);
+    }
+    .examples .wrap { position:relative; z-index:1; }
+    .section-head { text-align:center; margin:0 auto 22px; max-width:760px; }
+    .section-head h2 {
+      margin:0; font-family:'Montserrat',sans-serif; font-size:clamp(1.8rem, 3vw, 2.7rem);
+      line-height:1; letter-spacing:-.05em; text-shadow:0 0 30px rgba(24,207,255,.05);
+    }
+    .example-tabs { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin:0 auto 18px; }
+    .example-tab {
+      border:1px solid rgba(24,207,255,.14); background:rgba(4,11,23,.82); color:#aeb7c3;
+      padding:12px 20px; border-radius:999px; font-size:0.76rem; font-weight:600;
+      font-family:'Poppins',sans-serif; cursor:pointer; transition:.2s;
+    }
+    .example-tab:hover { border-color:rgba(24,207,255,.4); color:#F2F4F7; }
+    .example-tab.active {
+      color:#fff; background:linear-gradient(135deg,#15d6ff,#1787ff); border-color:transparent;
+      box-shadow:0 8px 28px rgba(22,143,255,.18);
+    }
+    @media (max-width:620px) { .example-tabs { width:100%; } .example-tab { flex:1; padding:11px 10px; } }
+
+    .is-hidden { display:none !important; }
+
+    /* ── "Otro" rubro ─────────────────────────────────────────── */
+    .other-sector-shell {
+      max-width:980px; margin:0 auto; border-radius:26px;
+      border:1px solid rgba(24,207,255,.22);
+      background:linear-gradient(180deg, rgba(6,15,29,.94), rgba(5,9,17,.96));
+      box-shadow:0 35px 120px rgba(0,0,0,.48), 0 0 48px rgba(24,207,255,.07);
+    }
+    .other-sector-inner { min-height:300px; padding:42px 28px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .other-sector-inner h3 { margin:0 0 18px; font-family:'Montserrat',sans-serif; font-size:clamp(1.4rem, 2.8vw, 2rem); letter-spacing:-.04em; text-align:center; }
+    .other-sector-form { width:min(640px,100%); display:grid; grid-template-columns:1fr auto; gap:10px; }
+    .other-sector-form input {
+      width:100%; height:54px; padding:0 18px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.03);
+      color:var(--text); outline:none; font:inherit;
+    }
+    .other-sector-form input::placeholder { color:#95a0af; }
+    .other-sector-form input:focus { border-color:rgba(24,207,255,.32); box-shadow:0 0 0 4px rgba(24,207,255,.08); }
+    @media (max-width:620px) {
+      .other-sector-inner { min-height:240px; padding:28px 18px; }
+      .other-sector-form { grid-template-columns:1fr; }
+      .other-sector-form .btn-primary { width:100%; }
+    }
+
+    /* ── Footer ───────────────────────────────────────────────── */
+    .site-footer {
+      position:relative; overflow:hidden; background:#020610;
+      border-top:1px solid rgba(24,207,255,.10);
+    }
+    .site-footer:before {
+      content:""; position:absolute; inset:0;
+      background:
+        linear-gradient(rgba(2,6,16,.90), rgba(2,6,16,.94)),
+        url('/img/banner-genideia.jpg') center / cover no-repeat;
+      opacity:.34;
+    }
+    .footer-inner {
+      position:relative; z-index:1; padding:28px 0 34px;
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;
+    }
+    .footer-nombre { font-family:'Montserrat',sans-serif; font-size:1.05rem; color:#F2F4F7; margin:0; }
+    .footer-sub { font-weight:300; font-size:0.8rem; color:var(--muted); margin:2px 0 0; }
+    .footer-sub a { color:var(--cyan); }
+    .footer-contact { display:flex; flex-direction:column; align-items:flex-end; gap:4px; font-size:0.85rem; color:var(--muted); }
+    .footer-contact a:hover { color:var(--cyan); }
+
+    /* ── Barra fija mobile ───────────────────────────────────── */
+    .mobile-cta { display:none; }
+    @media (max-width:800px) {
+      .mobile-cta {
+        display:flex; position:fixed; z-index:45; right:12px; bottom:12px; left:12px;
+        min-height:54px; padding:0 18px; align-items:center; justify-content:space-between;
+        border:1px solid rgba(255,255,255,.14); border-radius:13px;
+        background:linear-gradient(135deg,#15d6ff,#1787ff); color:#0A0F1A;
+        font-weight:700; font-size:0.9rem; box-shadow:0 14px 40px rgba(0,0,0,.35);
+      }
+    }
+
+    html { scroll-behavior:smooth; }
+  </style>
+</body>
+</html>
