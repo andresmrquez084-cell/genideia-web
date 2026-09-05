@@ -1,0 +1,80 @@
+---
+// Lead magnet · palabra clave ManyChat: CONECTOR (reel: "4 conectores que deberías usar si pagás Claude")
+// URL pública: /recursos/conectores-mcp
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const prompt = `Quiero que configures 4 servidores MCP en Claude Code.
+Hacelos de a uno y avisame si alguno falla.
+
+1) Context7 — documentación actualizada de librerías y frameworks.
+   No necesita API key:
+   claude mcp add --scope user context7 -- npx -y @upstash/context7-mcp@latest
+
+2) Playwright — controlar un navegador real (abrir páginas, hacer
+   clic, llenar formularios). No necesita API key:
+   claude mcp add --scope user playwright -- npx -y @playwright/mcp@latest
+
+3) Firecrawl — extraer el contenido de páginas web para trabajarlo.
+   Necesita una API key gratuita de firecrawl.dev.
+   Pedime la FIRECRAWL_API_KEY antes de correr esto. Cuando te la dé:
+   claude mcp add --scope user firecrawl -e FIRECRAWL_API_KEY=<MI_KEY> -- npx -y firecrawl-mcp
+
+4) Composio — conectar Claude a +500 apps (Gmail, Slack, Notion,
+   Calendar...) y ejecutar acciones en ellas. Necesita cuenta en
+   composio.dev.
+   Pedime la URL del MCP de Composio y la X-API-Key (las saco de mi
+   panel). Cuando te las dé:
+   claude mcp add --scope user --transport http composio "<MI_URL>" --header "X-API-Key: <MI_KEY>"
+   (si el flag --header da error, probá --headers)
+
+Cuando termines:
+- Corré \`claude mcp list\` y mostrame el estado de los 4.
+- Recordame que tengo que cerrar y volver a abrir Claude Code para
+  que carguen.
+- Si alguno queda desconectado, decime el error y cómo lo arreglo.
+
+No hagas nada más: dejá los 4 MCP configurados y verificados.`;
+---
+<RecursoLayout
+  titulo="El prompt para conectar los 4 MCP de Claude Code"
+  descripcion="Context7, Firecrawl, Playwright y Composio en un solo mensaje. Lo pegás en Claude Code y él te los deja configurados y verificados, pidiéndote las API keys donde hagan falta."
+  tipo="Plantilla"
+  barLabel="Plantilla · @andresalbornozia"
+  palabraClave="CONECTOR"
+  ctaTitulo="¿Y si tu negocio funcionara así de ordenado?"
+  ctaTexto="Estos conectores le dan manos a Claude. Cuando ordenás la operación entera de tu negocio — con las tareas repetitivas resolviéndose solas — cambia todo. Escribime por DM y lo vemos en una llamada gratis de 30 minutos."
+  waMsg="Hola Andrés, configuré los 4 MCP de Claude Code y quiero ver cómo ordenar más cosas de mi negocio. Te cuento:"
+>
+  <div class="lead"><b>Un MCP es un "conector": le da a Claude Code una capacidad nueva (leer docs, navegar la web, controlar el navegador, mover apps). Este prompt configura los 4 de una.</b></div>
+
+  <h2>Cómo se usa</h2>
+  <ol class="steps">
+    <li><b>Abrí Claude Code</b> en tu terminal, en cualquier carpeta.</li>
+    <li><b>Pegá el prompt de abajo</b> y mandalo.</li>
+    <li>Claude va a instalar Context7 y Playwright solos. Para Firecrawl y Composio te va a <b>pedir las API keys</b> — abajo te digo de dónde sacarlas.</li>
+    <li>Al terminar, <b>cerrá y volvé a abrir Claude Code</b> para que carguen.</li>
+  </ol>
+
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{prompt}</code></pre>
+  </div>
+
+  <h2>Qué hace cada uno</h2>
+  <ul class="arrow">
+    <li><b>Context7</b> — le da a Claude la documentación actualizada de librerías y frameworks, para que no trabaje con información vieja cuando programa. <b>Gratis, sin API key.</b></li>
+    <li><b>Playwright</b> — Claude maneja un navegador real: abre páginas, hace clic, llena formularios, navega. <b>Gratis, sin API key.</b></li>
+    <li><b>Firecrawl</b> — extrae el contenido de cualquier página web (texto, datos, artículos) para que Claude lo procese. <b>Necesita API key gratuita</b> de <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">firecrawl.dev</code> (plan free).</li>
+    <li><b>Composio</b> — conecta Claude a más de 500 apps (Gmail, Slack, Notion, Calendar, etc.) y le deja ejecutar acciones en ellas, sin copiar y pegar entre plataformas. <b>Necesita cuenta</b> en <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">composio.dev</code>: de ahí sacás la URL del MCP y la API key.</li>
+  </ul>
+
+  <div class="note"><b>Ojo:</b> el prompt no "hace" el trabajo — deja los conectores instalados. Después vos le pedís la tarea concreta ("buscá en la web…", "abrí esta página y…", "mandame este resumen por Gmail…") y Claude usa el conector que corresponda.</div>
+
+  <h2>Requisitos</h2>
+  <ul class="check">
+    <li>Claude Code instalado (cuenta con plan pago).</li>
+    <li>Node.js 20 o superior.</li>
+    <li>Cuenta gratuita en firecrawl.dev (para Firecrawl).</li>
+    <li>Cuenta en composio.dev (para Composio).</li>
+  </ul>
+</RecursoLayout>
