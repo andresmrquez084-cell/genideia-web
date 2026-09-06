@@ -18,6 +18,7 @@ interface Props {
   waMsg?: string;
   masterclass?: boolean;   // true → reemplaza el CTA genérico por el bloque destacado de la masterclass
   mclassBullets?: string[];
+  mclassUrl?: string;      // link del botón de la masterclass (ej: grupo de WhatsApp). Si no, usa el WhatsApp de Andrés.
 }
 const {
   titulo,
@@ -39,11 +40,13 @@ const {
     'Dejarla funcionando, con su sistema de mantenimiento',
     'Cómo vender esta solución',
   ],
+  mclassUrl,
 } = Astro.props;
 
 const WA = '59892302941';
 const waFinal = waMsg ?? `Hola Andrés, vi "${titulo}" y quiero preguntarte algo. Te cuento:`;
 const waUrl = `https://wa.me/${WA}?text=${encodeURIComponent(waFinal)}`;
+const mclassHref = mclassUrl ?? waUrl;
 
 // Puente al embudo de empresas: etiquetado por recurso para medir cuál convierte.
 const slug = Astro.url.pathname.split('/').filter(Boolean).pop() ?? 'recurso';
@@ -156,8 +159,8 @@ const empresaUrl = `/andres?utm_source=recurso&utm_medium=lead-magnet&utm_conten
         <ul class="learn">
           {mclassBullets.map((b) => <li>{b}</li>)}
         </ul>
-        <a class="btn" href={waUrl} target="_blank" rel="noopener noreferrer">Quiero mi lugar →</a>
-        <p class="fineprint">Sin fecha todavía: te sumo al grupo y te aviso cuándo arranca.</p>
+        <a class="btn" href={mclassHref} target="_blank" rel="noopener noreferrer">Quiero mi lugar →</a>
+        <p class="fineprint">Sin fecha todavía: entrás al grupo y ahí aviso cuándo arranca.</p>
       </section>
     ) : (
       <Fragment>
