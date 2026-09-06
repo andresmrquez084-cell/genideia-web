@@ -1,11 +1,10 @@
 ---
 import '../../styles/global.css';
-
 const WA = '59892302941';
-const payoneerMsg = encodeURIComponent('Hola Andrés, ya completé y firmé el acuerdo de Genideia Academy. Quiero pagar los USD 399 con tarjeta mediante Payoneer.');
-const waPayoneer = `https://wa.me/${WA}?text=${payoneerMsg}`;
+const SIGNATURE = 'https://genideiacompany.com/hub/andres-albornoz-signature.svg';
+const waTransfer = `https://wa.me/${WA}?text=${encodeURIComponent('Hola Andrés, ya firmé el acuerdo de Genideia Academy y realicé la transferencia internacional de USD 399. Te envío el comprobante para confirmar mi inscripción.')}`;
+const waPayoneer = `https://wa.me/${WA}?text=${encodeURIComponent('Hola Andrés, ya completé y firmé el acuerdo de Genideia Academy. Quiero pagar los USD 399 con tarjeta mediante Payoneer.')}`;
 ---
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,151 +18,122 @@ const waPayoneer = `https://wa.me/${WA}?text=${payoneerMsg}`;
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <main class="page-shell">
-    <header class="topbar">
-      <a class="brand" href="/andres"><span class="brand-main">GENIDEIA</span><span class="brand-sub">ACADEMY</span></a>
-      <div class="step-pill">INSCRIPCIÓN · PROGRAMA GRUPAL</div>
-    </header>
+<main class="page-shell">
+  <header class="topbar">
+    <a class="brand" href="/andres"><span>GENIDEIA</span><small>ACADEMY</small></a>
+    <div class="pill">INSCRIPCIÓN · PROGRAMA GRUPAL</div>
+  </header>
 
-    <section class="hero section-card">
-      <div>
-        <p class="eyebrow">GENIDEIA ACADEMY</p>
-        <h1>Programa grupal de <span>IA aplicada</span></h1>
-        <p class="lead">Un recorrido práctico de 4 semanas para aprender a utilizar IA con criterio y llevarla a situaciones reales de trabajo, proyectos y nuevas oportunidades.</p>
+  <section class="hero card">
+    <div><p class="eyebrow">GENIDEIA ACADEMY</p><h1>Programa grupal de <span>IA aplicada</span></h1><p>Un recorrido práctico de 4 semanas para aprender a utilizar IA con criterio y llevarla a situaciones reales de trabajo, proyectos y nuevas oportunidades.</p></div>
+    <aside><small>INVERSIÓN TOTAL</small><strong>USD 399</strong><span>Pago único</span></aside>
+  </section>
+
+  <section class="stats">
+    <div><strong>4 semanas</strong><span>Duración</span></div><div><strong>8 clases</strong><span>2 por semana</span></div><div><strong>90 min</strong><span>Por sesión</span></div><div><strong>10–50</strong><span>Por cohorte</span></div>
+  </section>
+
+  <section class="card">
+    <header class="section-title"><b>01</b><div><p class="eyebrow">QUÉ RECIBÍS</p><h2>Todo lo incluido en tu inscripción</h2></div></header>
+    <div class="features">
+      <div><strong>8 clases en vivo</strong><p>Dos encuentros semanales durante un mes.</p></div>
+      <div><strong>Preguntas en vivo</strong><p>Espacio para dudas sobre la clase, tus proyectos y la herramienta.</p></div>
+      <div><strong>Grabaciones</strong><p>Acceso permanente mientras el sistema de alojamiento continúe disponible.</p></div>
+      <div><strong>Biblioteca de recursos</strong><p>Prompts, ejemplos, links y materiales listos para adaptar.</p></div>
+      <div><strong>Aplicación práctica</strong><p>Ejemplos de soluciones con potencial de uso profesional y comercial.</p></div>
+      <div><strong>Grupo privado</strong><p>Avisos, calendario, enlaces, recursos y grabaciones.</p></div>
+    </div>
+    <div class="notice"><strong>¿Cuándo empieza?</strong><p>La cohorte se confirma al alcanzar un mínimo de 10 participantes y tendrá un máximo de 50. Una vez iniciadas las clases, las inscripciones se cierran hasta la próxima apertura. El plazo máximo de inicio es de 30 días desde tu inscripción.</p></div>
+  </section>
+
+  <section class="card" id="datos">
+    <header class="section-title"><b>02</b><div><p class="eyebrow">TUS DATOS</p><h2>Completá la información del participante</h2></div></header>
+    <form id="academy-form">
+      <div class="form-grid">
+        <label>Nombre completo<input required name="nombre" type="text" /></label>
+        <label>Documento / identificación<input required name="documento" type="text" /></label>
+        <label>País<input required name="pais" type="text" /></label>
+        <label>Ciudad<input required name="ciudad" type="text" /></label>
+        <label>Dirección<input required name="direccion" type="text" /></label>
+        <label>Email<input required name="email" type="email" /></label>
+        <label class="full">WhatsApp<input required name="whatsapp" type="tel" /></label>
       </div>
-      <aside class="price-card"><span>INVERSIÓN TOTAL</span><strong>USD 399</strong><small>Pago único</small></aside>
-    </section>
+      <label class="check"><input required type="checkbox" /> Confirmo que la información proporcionada es correcta.</label>
+    </form>
+  </section>
 
-    <section class="stats">
-      <article><strong>4 semanas</strong><span>Duración</span></article>
-      <article><strong>8 clases</strong><span>2 por semana</span></article>
-      <article><strong>90 min</strong><span>Por sesión</span></article>
-      <article><strong>10–50</strong><span>Personas por cohorte</span></article>
-    </section>
-
-    <section class="section-card">
-      <div class="section-heading"><span>01</span><div><p class="eyebrow">QUÉ RECIBÍS</p><h2>Todo lo incluido en tu inscripción</h2></div></div>
-      <div class="feature-grid">
-        <div class="feature"><b>8 clases en vivo</b><p>Dos encuentros semanales durante un mes.</p></div>
-        <div class="feature"><b>Preguntas en vivo</b><p>Espacio para dudas sobre la clase, tus proyectos y la herramienta.</p></div>
-        <div class="feature"><b>Grabaciones</b><p>Acceso permanente mientras el sistema de alojamiento continúe disponible.</p></div>
-        <div class="feature"><b>Biblioteca de recursos</b><p>Prompts, ejemplos, links y materiales listos para adaptar.</p></div>
-        <div class="feature"><b>Aplicación práctica</b><p>Ejemplos de soluciones con potencial de uso profesional y comercial.</p></div>
-        <div class="feature"><b>Grupo privado</b><p>Avisos, calendario, enlaces, recursos y grabaciones del programa.</p></div>
+  <section class="card contract-card" id="contrato">
+    <header class="section-title"><b>03</b><div><p class="eyebrow">ACUERDO</p><h2>Acuerdo de prestación del servicio</h2></div></header>
+    <div class="contract">
+      <h3>GENIDEIA ACADEMY — PROGRAMA GRUPAL</h3>
+      <p><strong>Entre:</strong> Genideia, en adelante “el Prestador”, y la persona identificada en este formulario, en adelante “el Participante”, se acuerda lo siguiente:</p>
+      <h4>1. Objeto</h4><p>El presente acuerdo regula la participación en Genideia Academy — Programa grupal, un servicio educativo online orientado al aprendizaje y aplicación práctica de herramientas de inteligencia artificial.</p>
+      <h4>2. Duración</h4><p>El programa tendrá una duración aproximada de 4 semanas, contadas desde la fecha oficial de inicio de la cohorte.</p>
+      <h4>3. Servicio incluido</h4><p>El Participante tendrá derecho a 8 clases grupales online en vivo, de aproximadamente 90 minutos cada una; espacio para preguntas; acceso a grabaciones; recursos, prompts, materiales y ejemplos; y acceso al grupo privado de comunicaciones del programa.</p>
+      <h4>4. Grabaciones</h4><p>Las sesiones serán grabadas. El Participante tendrá acceso permanente mientras Genideia mantenga disponible técnicamente el sistema o plataforma utilizada para alojarlas.</p>
+      <h4>5. Soporte</h4><p>Las preguntas relacionadas con clases, proyectos, herramientas o aplicaciones prácticas podrán plantearse principalmente durante las sesiones en vivo. El grupo privado se utilizará para avisos, enlaces, recursos, grabaciones, calendario e información. El programa grupal no implica soporte individual ilimitado ni acompañamiento 1:1.</p>
+      <h4>6. Responsabilidad del participante</h4><p>El aprovechamiento depende también de la participación, práctica e implementación de cada persona. Genideia se compromete a entregar los componentes descritos, pero no garantiza ingresos, ventas, clientes ni resultados económicos o profesionales específicos.</p>
+      <h4>7. Propiedad intelectual</h4><p>Los recursos, materiales, grabaciones, documentos, prompts y contenidos son para uso del Participante. No podrán revenderse en su formato original, distribuirse públicamente, compartirse de manera masiva ni comercializarse como material educativo propio sin autorización previa. El Participante podrá utilizar los conocimientos adquiridos para crear, implementar y comercializar sus propias soluciones.</p>
+      <h4>8. Inicio de cohorte</h4><p>El programa comenzará una vez conformado un grupo mínimo de 10 participantes y tendrá un máximo de 50. Genideia comunicará la fecha y calendario. El programa deberá comenzar dentro de los 30 días posteriores a la inscripción, salvo acuerdo diferente.</p>
+      <h4>9. Cancelación y reembolsos</h4><p>La inscripción representa la reserva de un lugar dentro de una cohorte limitada. Un simple cambio de opinión no genera automáticamente derecho a reembolso, salvo derecho obligatorio distinto. Una vez iniciada la cohorte, la falta de asistencia, abandono o decisión de no continuar no dará derecho, por sí sola, a devolución.</p>
+      <p>Si Genideia no entregara alguno de los elementos expresamente incluidos y el incumplimiento fuera atribuible a Genideia, el Participante podrá solicitar revisión. Si se comprueba y no pudiera subsanarse razonablemente, se realizará el reembolso correspondiente.</p>
+      <p>Si Genideia no inicia el programa dentro de los 30 días establecidos, el Participante podrá mantener su lugar para la siguiente cohorte o solicitar el reembolso total.</p>
+      <p class="legal">Esta política no limita derechos de cancelación, desistimiento o reembolso que resulten obligatorios conforme a la legislación aplicable al consumidor.</p>
+      <div class="provider-signature">
+        <div class="signature-line"><img src={SIGNATURE} alt="Firma de Andrés Albornoz" crossorigin="anonymous" /></div>
+        <strong>Andrés Albornoz</strong><span>GENIDEIA COMPANY · Firmado</span>
       </div>
-      <div class="cohort-note"><strong>¿Cuándo empieza?</strong><p>La cohorte se confirma al alcanzar un mínimo de 10 participantes y tendrá un máximo de 50. Una vez iniciadas las clases, las inscripciones se cierran hasta la próxima apertura. El plazo máximo de inicio es de 30 días desde tu inscripción.</p></div>
-    </section>
+    </div>
 
-    <section class="section-card" id="datos">
-      <div class="section-heading"><span>02</span><div><p class="eyebrow">TUS DATOS</p><h2>Completá la información del participante</h2></div></div>
-      <form id="academy-form" autocomplete="on">
-        <div class="form-grid">
-          <label>Nombre completo<input required name="nombre" type="text" placeholder="Nombre y apellido" /></label>
-          <label>Documento / identificación<input required name="documento" type="text" placeholder="Documento" /></label>
-          <label>País<input required name="pais" type="text" placeholder="País" /></label>
-          <label>Ciudad<input required name="ciudad" type="text" placeholder="Ciudad" /></label>
-          <label>Dirección<input required name="direccion" type="text" placeholder="Dirección" /></label>
-          <label>Email<input required name="email" type="email" placeholder="tu@email.com" /></label>
-          <label class="full">WhatsApp<input required name="whatsapp" type="tel" placeholder="+598 ..." /></label>
-        </div>
-        <label class="check"><input required type="checkbox" /> <span>Confirmo que la información proporcionada es correcta.</span></label>
-      </form>
-    </section>
+    <div class="acceptance">
+      <label class="check"><input form="academy-form" required id="accept-program" type="checkbox" /> Declaro haber leído y entendido qué incluye Genideia Academy, su modalidad, precio, funcionamiento y condiciones.</label>
+      <label class="check"><input form="academy-form" required id="accept-contract" type="checkbox" /> Acepto el acuerdo de prestación del servicio y la política de reembolso.</label>
+    </div>
 
-    <section class="section-card contract-card" id="contrato">
-      <div class="section-heading"><span>03</span><div><p class="eyebrow">ACUERDO</p><h2>Acuerdo de prestación del servicio</h2></div></div>
-      <div class="contract" id="contract-text">
-        <h3>GENIDEIA ACADEMY — PROGRAMA GRUPAL</h3>
-        <p><strong>Entre:</strong> Genideia, en adelante “el Prestador”, y la persona identificada en este formulario, en adelante “el Participante”, se acuerda lo siguiente:</p>
-        <h4>1. Objeto</h4><p>El presente acuerdo regula la participación en Genideia Academy — Programa grupal, un servicio educativo online orientado al aprendizaje y aplicación práctica de herramientas de inteligencia artificial.</p>
-        <h4>2. Duración</h4><p>El programa tendrá una duración aproximada de 4 semanas, contadas desde la fecha oficial de inicio de la cohorte.</p>
-        <h4>3. Servicio incluido</h4><p>El Participante tendrá derecho a 8 clases grupales online en vivo, de aproximadamente 90 minutos cada una; espacio para realizar preguntas durante las clases; acceso a las grabaciones; recursos, prompts, materiales y ejemplos complementarios; y acceso al grupo privado destinado a comunicaciones del programa.</p>
-        <h4>4. Grabaciones</h4><p>Las sesiones serán grabadas. El Participante tendrá acceso permanente a las grabaciones mientras Genideia mantenga disponible técnicamente el sistema o plataforma utilizada para alojarlas.</p>
-        <h4>5. Soporte</h4><p>Las preguntas relacionadas con las clases, proyectos, herramientas o aplicaciones prácticas podrán plantearse principalmente durante las sesiones en vivo. El grupo privado se utilizará para avisos, enlaces, recursos, grabaciones, calendario e información del programa. La contratación del programa grupal no implica soporte individual ilimitado ni acompañamiento personalizado 1:1.</p>
-        <h4>6. Responsabilidad del participante</h4><p>El aprovechamiento del programa depende también de la participación, práctica e implementación de cada persona. Genideia se compromete a entregar los componentes expresamente descritos en este acuerdo, pero no garantiza ingresos, ventas, clientes ni resultados económicos o profesionales específicos.</p>
-        <h4>7. Propiedad intelectual</h4><p>Los recursos, materiales, grabaciones, documentos, prompts y contenidos entregados son para uso del Participante dentro de su aprendizaje y proyectos. No podrán revenderse en su formato original, distribuirse públicamente, compartirse de manera masiva ni comercializarse como material educativo propio sin autorización previa de Genideia. El Participante podrá utilizar los conocimientos adquiridos para crear, implementar y comercializar sus propias soluciones.</p>
-        <h4>8. Inicio de cohorte</h4><p>El programa comenzará una vez conformado un grupo mínimo de 10 participantes y tendrá un máximo de 50. Genideia comunicará la fecha de inicio y calendario. El programa deberá comenzar dentro de los 30 días posteriores a la inscripción, salvo acuerdo diferente con el Participante.</p>
-        <h4>9. Cancelación y reembolsos</h4><p>La inscripción representa la reserva de un lugar dentro de una cohorte limitada. Un simple cambio de opinión o decisión personal del Participante no genera automáticamente derecho a reembolso, salvo que la normativa aplicable establezca un derecho obligatorio diferente. Una vez iniciada la cohorte, la falta de asistencia, abandono o decisión de no continuar no dará derecho, por sí sola, a devolución.</p>
-        <p>Si Genideia no entregara alguno de los elementos expresamente incluidos en este acuerdo y dicho incumplimiento fuera atribuible a Genideia, el Participante podrá solicitar una revisión. Si se comprueba el incumplimiento y no pudiera subsanarse razonablemente, se realizará el reembolso correspondiente.</p>
-        <p>Si Genideia no inicia el programa dentro de los 30 días establecidos, el Participante podrá mantener su lugar para la siguiente cohorte o solicitar el reembolso total del importe abonado.</p>
-        <p class="legal-note">Esta política no limita los derechos de cancelación, desistimiento o reembolso que resulten obligatorios conforme a la legislación aplicable al consumidor.</p>
-      </div>
+    <div class="signature-wrap">
+      <div class="signature-head"><div><p class="eyebrow">FIRMA DEL PARTICIPANTE</p><h3>Firmá dentro del recuadro</h3></div><button type="button" id="clear-signature">Limpiar firma</button></div>
+      <canvas id="signature-pad" aria-label="Área de firma"></canvas>
+      <div class="signature-meta"><span id="signature-name">Nombre: —</span><span id="signature-date"></span></div>
+    </div>
+    <div class="actions"><button type="button" class="primary" id="confirm-signature">Confirmar firma</button><button type="button" class="secondary" id="print-contract" disabled>Descargar / guardar contrato</button></div>
+    <p class="micro">En esta versión, “Descargar / guardar contrato” abre la vista de impresión para guardarlo como PDF.</p>
+  </section>
 
-      <div class="acceptance">
-        <label class="check"><input form="academy-form" required id="accept-program" type="checkbox" /> <span>Declaro haber leído y entendido qué incluye Genideia Academy, su modalidad, precio, funcionamiento y condiciones.</span></label>
-        <label class="check"><input form="academy-form" required id="accept-contract" type="checkbox" /> <span>Acepto el acuerdo de prestación del servicio y la política de reembolso.</span></label>
-      </div>
+  <section class="card payment is-locked" id="pago">
+    <header class="section-title"><b>04</b><div><p class="eyebrow">PAGO</p><h2>Confirmá tu inscripción</h2></div></header>
+    <div class="total"><span>Total a abonar</span><strong>USD 399</strong></div>
+    <div class="payment-grid">
+      <article>
+        <small>OPCIÓN 1</small><h3>Transferencia internacional · USD</h3>
+        <dl>
+          <div><dt>Titular</dt><dd>Andrés Albornoz</dd></div><div><dt>Cuenta · Caja de ahorro USD</dt><dd>0297709 <button data-copy="0297709">Copiar</button></dd></div>
+          <div><dt>SWIFT / BIC</dt><dd>ITAUUYMM <button data-copy="ITAUUYMM">Copiar</button></dd></div><div><dt>RUT banco</dt><dd>215393460011</dd></div>
+          <div><dt>Banco intermediario</dt><dd>JPMorgan Chase Bank N.A. · New York</dd></div><div><dt>SWIFT intermediario</dt><dd>CHASUS33 <button data-copy="CHASUS33">Copiar</button></dd></div>
+          <div><dt>ABA / Routing</dt><dd>021000021 <button data-copy="021000021">Copiar</button></dd></div><div><dt>Dirección</dt><dd>Luis Bonavita 1266, piso 10, Montevideo, Uruguay</dd></div>
+        </dl>
+        <a class="secondary wide" href={waTransfer} target="_blank">Enviar comprobante por WhatsApp</a>
+      </article>
+      <article>
+        <small>OPCIÓN 2</small><h3>Pago con tarjeta · Payoneer</h3><p>Por ahora este botón solicita el link. Cuando creemos el link genérico de esta apertura, se reemplaza directamente acá.</p>
+        <a class="primary wide" href={waPayoneer} target="_blank">Solicitar link de pago</a>
+        <p class="micro">El pago con tarjeta se procesa fuera de esta página mediante Payoneer.</p>
+      </article>
+    </div>
+    <div class="notice"><strong>¿Qué pasa después?</strong><p>Una vez confirmado el pago, vas a recibir acceso al grupo privado de Genideia Academy con fecha de inicio, calendario, enlaces, recursos y grabaciones.</p></div>
+  </section>
 
-      <div class="signature-wrap">
-        <div class="signature-top"><div><p class="eyebrow">FIRMA DEL PARTICIPANTE</p><h3>Firmá dentro del recuadro</h3></div><button type="button" class="ghost-btn" id="clear-signature">Limpiar firma</button></div>
-        <canvas id="signature-pad" width="1000" height="260" aria-label="Área de firma"></canvas>
-        <div class="signature-meta"><span id="signature-name">Nombre: —</span><span id="signature-date"></span></div>
-      </div>
-      <div class="contract-actions"><button type="button" class="primary-btn" id="confirm-signature">Confirmar firma</button><button type="button" class="secondary-btn" id="print-contract" disabled>Descargar / guardar contrato</button></div>
-      <p class="microcopy">En esta primera versión, “Descargar / guardar contrato” abre la vista de impresión del navegador para que puedas guardarlo como PDF.</p>
-    </section>
-
-    <section class="section-card payment-card is-locked" id="pago">
-      <div class="section-heading"><span>04</span><div><p class="eyebrow">PAGO</p><h2>Confirmá tu inscripción</h2></div></div>
-      <div class="payment-total"><span>Total a abonar</span><strong>USD 399</strong></div>
-      <div class="payment-grid">
-        <article class="payment-option">
-          <div class="payment-head"><div><small>OPCIÓN 1</small><h3>Transferencia internacional · USD</h3></div><span class="badge">Banco Itaú Uruguay S.A.</span></div>
-          <dl>
-            <div><dt>Titular</dt><dd>Andrés Albornoz</dd></div>
-            <div><dt>Cuenta · Caja de ahorro en dólares</dt><dd><span>0297709</span><button class="copy-btn" data-copy="0297709">Copiar</button></dd></div>
-            <div><dt>SWIFT / BIC</dt><dd><span>ITAUUYMM</span><button class="copy-btn" data-copy="ITAUUYMM">Copiar</button></dd></div>
-            <div><dt>RUT banco</dt><dd>215393460011</dd></div>
-            <div><dt>Banco intermediario</dt><dd>JPMorgan Chase Bank N.A. · New York, United States</dd></div>
-            <div><dt>SWIFT intermediario</dt><dd><span>CHASUS33</span><button class="copy-btn" data-copy="CHASUS33">Copiar</button></dd></div>
-            <div><dt>ABA / Routing</dt><dd><span>021000021</span><button class="copy-btn" data-copy="021000021">Copiar</button></dd></div>
-            <div><dt>Dirección</dt><dd>Luis Bonavita 1266, piso 10, Montevideo, Uruguay</dd></div>
-          </dl>
-          <div class="reference-box">Referencia sugerida: <strong>GENIDEIA · ACADEMY</strong></div>
-          <a class="secondary-btn wide" href={`https://wa.me/${WA}?text=${encodeURIComponent('Hola Andrés, ya firmé el acuerdo de Genideia Academy y realicé la transferencia internacional de USD 399. Te envío el comprobante para confirmar mi inscripción.')}`} target="_blank" rel="noopener noreferrer">Enviar comprobante por WhatsApp</a>
-        </article>
-        <article class="payment-option card-pay">
-          <div class="payment-head"><div><small>OPCIÓN 2</small><h3>Pago con tarjeta · Payoneer</h3></div><span class="badge">USD 399</span></div>
-          <p>Solicitá el link de pago y te lo enviamos por WhatsApp para completar el cobro con tarjeta.</p>
-          <a class="primary-btn wide" href={waPayoneer} target="_blank" rel="noopener noreferrer">Solicitar link de pago</a>
-          <p class="secure-note">El pago con tarjeta se procesa fuera de esta página mediante Payoneer.</p>
-        </article>
-      </div>
-      <div class="final-note"><strong>¿Qué pasa después?</strong><p>Una vez confirmado el pago, vas a recibir acceso al grupo privado de Genideia Academy. Ahí comunicamos la fecha oficial de inicio, calendario, enlaces de clases, recursos y grabaciones.</p></div>
-    </section>
-
-    <footer><div><strong>GENIDEIA</strong><span> · Academy</span></div><small>Montevideo, Uruguay</small></footer>
-  </main>
-
-  <script>
-    const form = document.getElementById('academy-form');
-    const canvas = document.getElementById('signature-pad');
-    const ctx = canvas.getContext('2d');
-    const clearBtn = document.getElementById('clear-signature');
-    const confirmBtn = document.getElementById('confirm-signature');
-    const printBtn = document.getElementById('print-contract');
-    const payment = document.getElementById('pago');
-    const nameInput = form.elements.namedItem('nombre');
-    const signatureName = document.getElementById('signature-name');
-    const signatureDate = document.getElementById('signature-date');
-    let drawing = false; let signed = false;
-    signatureDate.textContent = `Fecha: ${new Date().toLocaleDateString('es-UY')}`;
-    nameInput.addEventListener('input', () => signatureName.textContent = `Nombre: ${nameInput.value || '—'}`);
-    function setupCanvas(){ const ratio=Math.max(window.devicePixelRatio||1,1); const rect=canvas.getBoundingClientRect(); canvas.width=rect.width*ratio; canvas.height=210*ratio; ctx.scale(ratio,ratio); ctx.lineWidth=2.2; ctx.lineCap='round'; ctx.strokeStyle='#dfeaf6'; }
-    setupCanvas();
-    function point(e){const r=canvas.getBoundingClientRect();const src=e.touches?e.touches[0]:e;return{x:src.clientX-r.left,y:src.clientY-r.top}}
-    function start(e){e.preventDefault();drawing=true;signed=true;const p=point(e);ctx.beginPath();ctx.moveTo(p.x,p.y)}
-    function move(e){if(!drawing)return;e.preventDefault();const p=point(e);ctx.lineTo(p.x,p.y);ctx.stroke()}
-    function end(){drawing=false}
-    canvas.addEventListener('mousedown',start);canvas.addEventListener('mousemove',move);window.addEventListener('mouseup',end);canvas.addEventListener('touchstart',start,{passive:false});canvas.addEventListener('touchmove',move,{passive:false});canvas.addEventListener('touchend',end);
-    clearBtn.addEventListener('click',()=>{ctx.clearRect(0,0,canvas.width,canvas.height);signed=false;payment.classList.add('is-locked');printBtn.disabled=true;confirmBtn.textContent='Confirmar firma'});
-    confirmBtn.addEventListener('click',()=>{if(!form.reportValidity())return;if(!document.getElementById('accept-program').checked||!document.getElementById('accept-contract').checked){alert('Para continuar, aceptá las condiciones del programa y del acuerdo.');return}if(!signed){alert('Firmá dentro del recuadro para continuar.');return}payment.classList.remove('is-locked');printBtn.disabled=false;confirmBtn.textContent='Firma confirmada ✓';payment.scrollIntoView({behavior:'smooth',block:'start'})});
-    printBtn.addEventListener('click',()=>window.print());
-    document.querySelectorAll('.copy-btn').forEach(btn=>btn.addEventListener('click',async()=>{await navigator.clipboard.writeText(btn.dataset.copy);const old=btn.textContent;btn.textContent='Copiado ✓';setTimeout(()=>btn.textContent=old,1400)}));
-  </script>
-
-  <style>
-    :root{--bg:#030914;--panel:#071523;--text:#eef6ff;--muted:#9eb0c3;--line:rgba(61,176,255,.22);--cyan:#24d7e8;--blue:#1684ff}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% 0%,rgba(20,116,190,.14),transparent 30%),linear-gradient(180deg,#020712,#05101b 60%,#020712);color:var(--text);font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased}a{text-decoration:none;color:inherit}button,input{font:inherit}.page-shell{width:min(1180px,calc(100% - 34px));margin:auto;padding-bottom:46px}.topbar{min-height:88px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);margin-bottom:34px}.brand{display:grid;gap:1px}.brand-main{font-family:'Montserrat';font-weight:800;letter-spacing:.22em}.brand-sub{font-size:.65rem;letter-spacing:.36em;color:var(--cyan)}.step-pill{font-size:.66rem;letter-spacing:.18em;border:1px solid var(--line);padding:9px 13px;border-radius:999px;color:#b7c7d8}.section-card{background:linear-gradient(180deg,rgba(8,24,40,.92),rgba(5,17,30,.92));border:1px solid var(--line);border-radius:24px;padding:34px;margin-bottom:22px;box-shadow:0 24px 80px rgba(0,0,0,.18)}.hero{display:grid;grid-template-columns:1.4fr .6fr;gap:40px;align-items:center}.eyebrow{font-size:.68rem;font-weight:600;letter-spacing:.22em;color:var(--cyan);margin:0 0 7px}.hero h1,.section-heading h2{font-family:'Montserrat';margin:0}.hero h1{font-size:clamp(2.2rem,4vw,4rem);line-height:1.02;letter-spacing:-.04em}.hero h1 span{background:linear-gradient(90deg,var(--cyan),var(--blue));-webkit-background-clip:text;color:transparent}.lead{max-width:720px;color:#b8c6d6;line-height:1.75}.price-card{padding:25px;border:1px solid rgba(36,215,232,.34);border-radius:20px;background:rgba(4,25,39,.85);display:grid;gap:6px}.price-card span{font-size:.67rem;letter-spacing:.17em;color:#9fb1c5}.price-card strong{font:800 2.3rem 'Montserrat'}.price-card small{color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}.stats article{padding:20px 22px;border:1px solid var(--line);background:rgba(5,17,30,.78);border-radius:16px;display:grid;gap:5px}.stats strong{font:700 1.05rem 'Montserrat'}.stats span{font-size:.78rem;color:var(--muted)}.section-heading{display:flex;gap:18px;align-items:flex-start;margin-bottom:26px}.section-heading>span{font:700 .75rem 'Montserrat';color:var(--cyan);border:1px solid rgba(36,215,232,.3);padding:7px 8px;border-radius:8px}.section-heading h2{font-size:clamp(1.45rem,2.4vw,2.15rem)}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.feature{border:1px solid var(--line);border-radius:15px;padding:18px;background:rgba(5,21,35,.72)}.feature b{font-family:'Montserrat'}.feature p,.cohort-note p,.final-note p{color:#aab9c9;line-height:1.6;font-size:.9rem;margin-bottom:0}.cohort-note,.final-note{margin-top:18px;padding:18px;border-left:3px solid var(--cyan);background:rgba(20,116,190,.08);border-radius:8px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.form-grid label{display:grid;gap:7px;font-size:.78rem;color:#b7c6d6}.form-grid .full{grid-column:1/-1}.form-grid input{width:100%;padding:14px 15px;border-radius:11px;border:1px solid var(--line);background:#04111e;color:white;outline:none}.form-grid input:focus{border-color:rgba(36,215,232,.68);box-shadow:0 0 0 3px rgba(36,215,232,.08)}.check{display:flex;gap:10px;align-items:flex-start;margin-top:18px;color:#b8c6d4;font-size:.82rem;line-height:1.5}.check input{margin-top:4px;accent-color:#1fc7da}.contract{max-height:540px;overflow:auto;border:1px solid var(--line);background:#03101c;padding:24px;border-radius:16px;line-height:1.72;color:#c0ccda}.contract h3,.contract h4{font-family:'Montserrat';color:white}.contract h3{margin-top:0}.contract h4{margin-bottom:4px;margin-top:22px}.contract p{font-size:.86rem}.legal-note{padding:13px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.025)}.signature-wrap{margin-top:24px;border:1px solid var(--line);border-radius:16px;padding:18px;background:#04111d}.signature-top{display:flex;justify-content:space-between;gap:18px;align-items:center}.signature-top h3{margin:0;font-family:'Montserrat'}#signature-pad{width:100%;height:210px;display:block;margin-top:15px;background:#071827;border:1px dashed rgba(255,255,255,.18);border-radius:12px;touch-action:none}.signature-meta{display:flex;justify-content:space-between;margin-top:9px;font-size:.75rem;color:var(--muted)}.contract-actions{display:flex;gap:10px;margin-top:18px}.primary-btn,.secondary-btn,.ghost-btn{border:0;border-radius:11px;padding:13px 17px;cursor:pointer;font-weight:600}.primary-btn{background:linear-gradient(90deg,#13bcd1,#147eff);color:white}.secondary-btn{background:#0b2437;border:1px solid rgba(36,215,232,.27);color:#dff8ff}.ghost-btn{background:transparent;border:1px solid var(--line);color:#b9c9d8}.secondary-btn:disabled{opacity:.35;cursor:not-allowed}.microcopy,.secure-note{font-size:.72rem;color:#7f91a4;line-height:1.5}.payment-card{transition:.25s ease}.payment-card.is-locked{opacity:.34;pointer-events:none;filter:saturate(.35)}.payment-total{display:flex;justify-content:space-between;padding:18px 20px;border:1px solid rgba(36,215,232,.22);border-radius:14px;background:rgba(16,78,104,.1);margin-bottom:15px}.payment-total span{color:var(--muted)}.payment-total strong{font:800 1.4rem 'Montserrat'}.payment-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:14px}.payment-option{padding:20px;border:1px solid var(--line);background:#041521;border-radius:16px}.payment-head{display:flex;justify-content:space-between;gap:15px}.payment-head small{font-size:.62rem;letter-spacing:.15em;color:var(--cyan)}.payment-head h3{font-family:'Montserrat';margin:4px 0 15px}.badge{font-size:.65rem;color:#aec0d1;white-space:nowrap}.payment-option dl{display:grid;grid-template-columns:1fr 1fr;gap:10px}.payment-option dl div{padding:11px;border-bottom:1px solid rgba(69,167,224,.12)}dt{font-size:.64rem;color:#7891a9;margin-bottom:4px}dd{margin:0;font-size:.8rem;font-weight:600;color:#dce8f4;display:flex;justify-content:space-between;gap:8px}.copy-btn{border:1px solid rgba(36,215,232,.25);background:transparent;color:#8deaf3;border-radius:7px;font-size:.65rem;padding:4px 7px;cursor:pointer}.reference-box{margin:14px 0;padding:12px;border-radius:10px;background:rgba(36,215,232,.06);font-size:.76rem;color:#9fb1c4}.wide{display:block;text-align:center;width:100%;margin-top:12px}.card-pay p{color:#aab9c9;font-size:.86rem;line-height:1.65}.final-note{margin-top:16px}footer{display:flex;justify-content:space-between;color:#7f91a4;font-size:.76rem;padding:14px 4px}footer strong{color:#d8e7f5;letter-spacing:.12em}@media(max-width:850px){.hero,.payment-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.feature-grid{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}.payment-option dl{grid-template-columns:1fr}.step-pill{display:none}}@media(max-width:560px){.page-shell{width:min(100% - 20px,1180px)}.section-card{padding:20px;border-radius:18px}.stats,.feature-grid{grid-template-columns:1fr}.contract-actions{flex-direction:column}.signature-top,.signature-meta,footer{align-items:flex-start;flex-direction:column}.hero h1{font-size:2.25rem}.payment-head{flex-direction:column}.badge{white-space:normal}}@media print{body{background:white;color:#111}.topbar,.hero,.stats,.feature-grid,.cohort-note,#datos,.section-heading>span,.acceptance,.contract-actions,.microcopy,#pago,footer,.signature-top button{display:none!important}.page-shell{width:100%;padding:0}.section-card{border:0;box-shadow:none;background:white;padding:0}.contract-card{display:block}.contract-card .section-heading{display:block}.contract-card .section-heading .eyebrow{display:none}.contract{max-height:none;overflow:visible;border:0;background:white;color:#222;padding:0}.contract h3,.contract h4{color:#111}.signature-wrap{display:block;border:1px solid #ccc;background:white;page-break-inside:avoid}#signature-pad{background:white;border:1px solid #ccc}.signature-meta{color:#333}}
-  </style>
-</body>
-</html>
+  <footer><strong>GENIDEIA · Academy</strong><span>Montevideo, Uruguay</span></footer>
+</main>
+<script>
+const form=document.getElementById('academy-form');const canvas=document.getElementById('signature-pad');const ctx=canvas.getContext('2d');const payment=document.getElementById('pago');const printBtn=document.getElementById('print-contract');const confirmBtn=document.getElementById('confirm-signature');const clearBtn=document.getElementById('clear-signature');const nameInput=form.elements.namedItem('nombre');const signatureName=document.getElementById('signature-name');const signatureDate=document.getElementById('signature-date');let drawing=false,signed=false;
+signatureDate.textContent=`Fecha: ${new Date().toLocaleDateString('es-UY')}`;nameInput.addEventListener('input',()=>signatureName.textContent=`Nombre: ${nameInput.value||'—'}`);
+function setup(){const r=Math.max(devicePixelRatio||1,1),rect=canvas.getBoundingClientRect();canvas.width=rect.width*r;canvas.height=210*r;ctx.scale(r,r);ctx.lineWidth=2.2;ctx.lineCap='round';ctx.strokeStyle='#dfeaf6'}setup();
+function point(e){const r=canvas.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return{x:s.clientX-r.left,y:s.clientY-r.top}}function start(e){e.preventDefault();drawing=true;signed=true;const p=point(e);ctx.beginPath();ctx.moveTo(p.x,p.y)}function move(e){if(!drawing)return;e.preventDefault();const p=point(e);ctx.lineTo(p.x,p.y);ctx.stroke()}function end(){drawing=false}
+canvas.addEventListener('mousedown',start);canvas.addEventListener('mousemove',move);window.addEventListener('mouseup',end);canvas.addEventListener('touchstart',start,{passive:false});canvas.addEventListener('touchmove',move,{passive:false});canvas.addEventListener('touchend',end);
+clearBtn.onclick=()=>{ctx.clearRect(0,0,canvas.width,canvas.height);signed=false;payment.classList.add('is-locked');printBtn.disabled=true;confirmBtn.textContent='Confirmar firma'};
+confirmBtn.onclick=()=>{if(!form.reportValidity())return;if(!document.getElementById('accept-program').checked||!document.getElementById('accept-contract').checked){alert('Aceptá las condiciones para continuar.');return}if(!signed){alert('Firmá dentro del recuadro para continuar.');return}payment.classList.remove('is-locked');printBtn.disabled=false;confirmBtn.textContent='Firma confirmada ✓';payment.scrollIntoView({behavior:'smooth'})};printBtn.onclick=()=>window.print();document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{await navigator.clipboard.writeText(b.dataset.copy);const t=b.textContent;b.textContent='Copiado ✓';setTimeout(()=>b.textContent=t,1200)});
+</script>
+<style>
+:root{--bg:#030914;--panel:#071523;--text:#eef6ff;--muted:#9eb0c3;--line:rgba(61,176,255,.22);--cyan:#24d7e8;--blue:#1684ff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0%,rgba(20,116,190,.14),transparent 30%),linear-gradient(180deg,#020712,#05101b 60%,#020712);color:var(--text);font-family:Poppins,sans-serif}a{text-decoration:none;color:inherit}.page-shell{width:min(1180px,calc(100% - 34px));margin:auto;padding-bottom:44px}.topbar{min-height:88px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);margin-bottom:34px}.brand{display:grid;font-family:Montserrat;font-weight:800;letter-spacing:.2em}.brand small{font:500 .62rem Poppins;color:var(--cyan);letter-spacing:.34em}.pill{font-size:.66rem;letter-spacing:.15em;border:1px solid var(--line);padding:9px 13px;border-radius:999px;color:#b7c7d8}.card{background:linear-gradient(180deg,rgba(8,24,40,.94),rgba(5,17,30,.94));border:1px solid var(--line);border-radius:24px;padding:34px;margin-bottom:22px}.hero{display:grid;grid-template-columns:1.4fr .6fr;gap:36px;align-items:center}.hero h1,.section-title h2{font-family:Montserrat;margin:0}.hero h1{font-size:clamp(2.2rem,4vw,4rem);line-height:1.03}.hero h1 span{color:var(--cyan)}.hero p,.features p,.notice p,.payment p{color:#aebdcd;line-height:1.65}.hero aside{display:grid;gap:6px;padding:24px;border:1px solid rgba(36,215,232,.35);border-radius:18px}.hero aside strong{font:800 2.3rem Montserrat}.eyebrow{font-size:.68rem;font-weight:600;letter-spacing:.22em;color:var(--cyan);margin:0 0 7px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}.stats div,.features div,.payment-grid article{padding:18px;border:1px solid var(--line);border-radius:15px;background:rgba(5,21,35,.72)}.stats div{display:grid;gap:5px}.stats strong{font-family:Montserrat}.stats span{font-size:.78rem;color:var(--muted)}.section-title{display:flex;gap:18px;align-items:flex-start;margin-bottom:25px}.section-title>b{color:var(--cyan);border:1px solid var(--line);padding:7px 8px;border-radius:8px}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.notice{margin-top:18px;padding:18px;border-left:3px solid var(--cyan);background:rgba(20,116,190,.08);border-radius:8px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.form-grid label{display:grid;gap:7px;font-size:.78rem;color:#b7c6d6}.form-grid .full{grid-column:1/-1}.form-grid input{padding:14px;border-radius:11px;border:1px solid var(--line);background:#04111e;color:white}.check{display:flex;gap:10px;align-items:flex-start;margin-top:18px;color:#b8c6d4;font-size:.82rem}.contract{max-height:650px;overflow:auto;border:1px solid var(--line);background:#03101c;padding:24px;border-radius:16px;line-height:1.72;color:#c0ccda}.contract h3,.contract h4{font-family:Montserrat;color:white}.legal{padding:13px;border:1px solid rgba(255,255,255,.08);border-radius:10px}.provider-signature{margin-top:34px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);width:min(370px,100%);display:grid;justify-items:center}.signature-line{width:100%;height:105px;display:flex;align-items:flex-end;justify-content:center;border-bottom:1px solid #698099}.provider-signature img{max-width:290px;max-height:100px;display:block}.provider-signature strong{margin-top:8px;font-family:Montserrat;color:white}.provider-signature span{font-size:.72rem;color:var(--muted)}.signature-wrap{margin-top:24px;border:1px solid var(--line);border-radius:16px;padding:18px;background:#04111d}.signature-head{display:flex;justify-content:space-between;align-items:center}.signature-head h3{margin:0;font-family:Montserrat}.signature-head button{background:transparent;color:#b9c9d8;border:1px solid var(--line);border-radius:9px;padding:9px 12px}#signature-pad{width:100%;height:210px;display:block;margin-top:15px;background:#071827;border:1px dashed rgba(255,255,255,.18);border-radius:12px;touch-action:none}.signature-meta{display:flex;justify-content:space-between;margin-top:9px;font-size:.75rem;color:var(--muted)}.actions{display:flex;gap:10px;margin-top:18px}.primary,.secondary{border:0;border-radius:11px;padding:13px 17px;cursor:pointer;font-weight:600}.primary{background:linear-gradient(90deg,#13bcd1,#147eff);color:white}.secondary{background:#0b2437;border:1px solid rgba(36,215,232,.27);color:#dff8ff}.secondary:disabled{opacity:.35}.micro{font-size:.72rem;color:#7f91a4}.payment{transition:.25s}.payment.is-locked{opacity:.34;pointer-events:none}.total{display:flex;justify-content:space-between;padding:18px;border:1px solid var(--line);border-radius:14px;margin-bottom:15px}.total strong{font:800 1.4rem Montserrat}.payment-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:14px}.payment-grid h3{font-family:Montserrat}.payment-grid small{color:var(--cyan)}dl{display:grid;grid-template-columns:1fr 1fr;gap:9px}dl div{padding:10px;border-bottom:1px solid rgba(69,167,224,.12)}dt{font-size:.64rem;color:#7891a9}dd{margin:4px 0 0;font-size:.8rem;font-weight:600}dd button{float:right;background:transparent;color:#8deaf3;border:1px solid var(--line);border-radius:6px}.wide{display:block;text-align:center;width:100%;margin-top:14px}footer{display:flex;justify-content:space-between;color:#7f91a4;font-size:.76rem;padding:14px 4px}@media(max-width:850px){.hero,.payment-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.features{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}dl{grid-template-columns:1fr}}@media(max-width:560px){.page-shell{width:calc(100% - 20px)}.card{padding:20px}.stats,.features{grid-template-columns:1fr}.pill{display:none}.actions,.signature-head,.signature-meta,footer{flex-direction:column;align-items:flex-start}}@media print{body{background:white;color:#111}.topbar,.hero,.stats,.features,.notice,#datos,.section-title>b,.acceptance,.actions,.micro,#pago,footer,.signature-head button{display:none!important}.page-shell{width:100%;padding:0}.card{border:0;background:white;padding:0}.contract{max-height:none;overflow:visible;border:0;background:white;color:#222;padding:0}.contract h3,.contract h4,.provider-signature strong{color:#111}.provider-signature span,.signature-meta{color:#333}.signature-wrap{border:1px solid #ccc;background:white;page-break-inside:avoid}#signature-pad{background:white;border:1px solid #ccc}}
+</style>
+</body></html>
