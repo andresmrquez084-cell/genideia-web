@@ -34,6 +34,8 @@ Cuando termines:
 - Si alguno queda desconectado, decime el error y cómo lo arreglo.
 
 No hagas nada más: dejá los 4 MCP configurados y verificados.`;
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
 ---
 <RecursoLayout
   titulo="El prompt para conectar los 4 MCP de Claude Code"
@@ -42,9 +44,11 @@ No hagas nada más: dejá los 4 MCP configurados y verificados.`;
   barLabel="Plantilla · @andresalbornozia"
   palabraClave="CONECTOR"
   masterclass={true}
-  mclassUrl="https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t"
+  mclassUrl={grupo}
 >
   <div class="lead"><b>Un MCP es un "conector": le da a Claude Code una capacidad nueva (leer docs, navegar la web, controlar el navegador, mover apps). Este prompt configura los 4 de una.</b></div>
+
+  <div class="alert"><b>Ojo:</b> no copies solo el prompt y te vayas. Abajo están los requisitos (Node 20 y cuentas que tenés que crear <b>antes</b>) y qué hace cada conector. Si te salteás eso, no te va a funcionar.</div>
 
   <h2>Cómo se usa</h2>
   <ol class="steps">
@@ -57,6 +61,10 @@ No hagas nada más: dejá los 4 MCP configurados y verificados.`;
   <div class="codewrap">
     <button class="copy">Copiar</button>
     <pre class="code"><code>{prompt}</code></pre>
+  </div>
+
+  <div class="minicta">
+    Esto es la <b>parte 1</b> de la serie <b>Claude desde 0</b>. La clase completa es gratis — <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
   </div>
 
   <h2>Qué hace cada uno</h2>
