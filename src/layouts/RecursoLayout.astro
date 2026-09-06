@@ -16,6 +16,8 @@ interface Props {
   ctaTexto?: string;
   ctaBtn?: string;
   waMsg?: string;
+  masterclass?: boolean;   // true → reemplaza el CTA genérico por el bloque destacado de la masterclass
+  mclassBullets?: string[];
 }
 const {
   titulo,
@@ -29,6 +31,14 @@ const {
   ctaTexto = 'Escribime por DM y contame qué estás intentando resolver.',
   ctaBtn = 'Click acá →',
   waMsg,
+  masterclass = false,
+  mclassBullets = [
+    'Qué es Claude y cuáles son sus modalidades',
+    'Cómo usar cada modalidad y para qué sirve cada función',
+    'Construir una solución paso a paso (sin ser programador)',
+    'Dejarla funcionando, con su sistema de mantenimiento',
+    'Cómo vender esta solución',
+  ],
 } = Astro.props;
 
 const WA = '59892302941';
@@ -107,13 +117,24 @@ const empresaUrl = `/andres?utm_source=recurso&utm_medium=lead-magnet&utm_conten
     .cta p{margin:8px 0 16px}
     .cta a.btn{display:inline-block;background:var(--cy);color:#06121d;text-decoration:none;font-weight:700;font-size:14px;padding:12px 22px;border-radius:9px}
     .sign{color:var(--cy);font-style:italic;margin-top:16px}
+    /* Bloque MASTERCLASS — CTA destacado para la serie "Claude desde 0" */
+    .mclass{margin-top:34px;border:1px solid var(--cy);border-radius:16px;padding:30px 26px;text-align:center;background:linear-gradient(180deg,rgba(0,200,255,.09),rgba(0,200,255,.02));box-shadow:0 0 0 1px rgba(0,200,255,.14),0 24px 60px -24px rgba(0,200,255,.35)}
+    .mclass .badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--cy);border:1px solid var(--cy);border-radius:999px;padding:5px 13px;margin-bottom:14px}
+    .mclass h3{font-family:Cinzel,serif;font-weight:700;font-size:23px;line-height:1.2;color:var(--ink);margin:0 0 6px}
+    .mclass .sub{color:var(--dim);font-size:14px;margin:0 0 22px}
+    .mclass .learn{list-style:none;padding:0;margin:0 auto 24px;max-width:430px;text-align:left}
+    .mclass .learn li{color:var(--ink);font-size:14px;line-height:1.4;padding:11px 0 11px 32px;position:relative;border-bottom:1px solid var(--line)}
+    .mclass .learn li:last-child{border-bottom:none}
+    .mclass .learn li::before{content:"✓";position:absolute;left:0;top:9px;width:20px;height:20px;border-radius:6px;background:rgba(0,200,255,.14);border:1px solid var(--cy);color:var(--cy);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+    .mclass a.btn{display:inline-block;background:var(--cy);color:#06121d;text-decoration:none;font-weight:700;font-size:15px;padding:14px 30px;border-radius:10px;box-shadow:0 10px 28px -8px rgba(0,200,255,.55)}
+    .mclass .fineprint{color:var(--faint);font-size:12px;margin:14px 0 0}
     /* Puente al embudo de empresas (el ICP que cae acá por excepción) */
     .cta2{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;text-align:left}
     .cta2 .q{font-family:Cinzel,serif;color:var(--ink);font-weight:600;font-size:15px}
     .cta2 p{margin:4px 0 0;font-size:13px}
     .cta2 a{color:var(--cy);text-decoration:none;font-weight:700;font-size:13.5px;white-space:nowrap}
-    @media print{ body{background:#fff;padding:0} .bar{display:none} .cta a.btn{display:none} .doc{border:none;border-radius:0} }
-    @media(max-width:560px){ .grid{grid-template-columns:1fr} .doc{padding:26px 22px} }
+    @media print{ body{background:#fff;padding:0} .bar{display:none} .cta a.btn,.mclass a.btn{display:none} .doc{border:none;border-radius:0} }
+    @media(max-width:560px){ .grid{grid-template-columns:1fr} .doc{padding:26px 22px} .mclass{padding:24px 18px} }
   </style>
 </head>
 <body>
@@ -127,20 +148,35 @@ const empresaUrl = `/andres?utm_source=recurso&utm_medium=lead-magnet&utm_conten
 
     <slot />
 
-    <div class="cta">
-      <div class="big">{ctaTitulo}</div>
-      <p>{ctaTexto}</p>
-      <a class="btn" href={waUrl} target="_blank" rel="noopener noreferrer">{ctaBtn}</a>
-      <div class="sign">— Andrés</div>
-    </div>
+    {masterclass ? (
+      <section class="mclass">
+        <div class="badge">Clase gratuita</div>
+        <h3>De usar Claude a construir tu primer sistema</h3>
+        <p class="sub">Una clase gratuita, desde cero y sin ser programador.</p>
+        <ul class="learn">
+          {mclassBullets.map((b) => <li>{b}</li>)}
+        </ul>
+        <a class="btn" href={waUrl} target="_blank" rel="noopener noreferrer">Quiero mi lugar →</a>
+        <p class="fineprint">Sin fecha todavía: te sumo al grupo y te aviso cuándo arranca.</p>
+      </section>
+    ) : (
+      <Fragment>
+        <div class="cta">
+          <div class="big">{ctaTitulo}</div>
+          <p>{ctaTexto}</p>
+          <a class="btn" href={waUrl} target="_blank" rel="noopener noreferrer">{ctaBtn}</a>
+          <div class="sign">— Andrés</div>
+        </div>
 
-    <aside class="cta2">
-      <div>
-        <div class="q">¿Tenés una empresa?</div>
-        <p>Si no sabés si estás perdiendo dinero con las operaciones que se llevan a cabo, tengo algo para vos.</p>
-      </div>
-      <a href={empresaUrl}>Ver solución →</a>
-    </aside>
+        <aside class="cta2">
+          <div>
+            <div class="q">¿Tenés una empresa?</div>
+            <p>Si no sabés si estás perdiendo dinero con las operaciones que se llevan a cabo, tengo algo para vos.</p>
+          </div>
+          <a href={empresaUrl}>Ver solución →</a>
+        </aside>
+      </Fragment>
+    )}
   </article>
 
   <script>
