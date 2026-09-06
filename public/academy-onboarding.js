@@ -14,13 +14,20 @@
     const grid = document.querySelector('#pago .payment-grid');
     if (grid && !document.getElementById('payoneer-button')) {
       grid.classList.remove('single');
+      grid.style.gridTemplateColumns = '1.35fr .65fr';
+      grid.style.gap = '14px';
+
       const article = document.createElement('article');
+      article.style.padding = '18px';
+      article.style.border = '1px solid rgba(61,176,255,.22)';
+      article.style.borderRadius = '15px';
+      article.style.background = 'rgba(5,21,35,.72)';
       article.innerHTML = `
-        <small>OPCIÓN 2</small>
-        <h3>Pago con tarjeta · Payoneer</h3>
-        <p>Realizá el pago online de USD 799 con tarjeta mediante Payoneer.</p>
-        <a class="primary wide" id="payoneer-button" href="${ONE_TO_ONE_PAYONEER}" target="_blank" rel="noopener noreferrer">Pagar USD 799 con tarjeta</a>
-        <p class="micro">El pago se procesa de forma segura fuera de esta página mediante Payoneer.</p>`;
+        <small style="color:#24d7e8">OPCIÓN 2</small>
+        <h3 style="font-family:Montserrat,sans-serif;margin:12px 0 8px">Pago con tarjeta · Payoneer</h3>
+        <p style="color:#aebdcd;line-height:1.65">Realizá el pago online de USD 799 con tarjeta mediante Payoneer.</p>
+        <a id="payoneer-button" href="${ONE_TO_ONE_PAYONEER}" target="_blank" rel="noopener noreferrer" style="display:block;width:100%;margin-top:14px;text-align:center;background:linear-gradient(90deg,#13bcd1,#147eff);color:#fff;border-radius:11px;padding:13px 17px;font-weight:600;text-decoration:none">Pagar USD 799 con tarjeta</a>
+        <p style="font-size:.72rem;color:#7f91a4;margin-top:10px">El pago se procesa de forma segura fuera de esta página mediante Payoneer.</p>`;
       grid.appendChild(article);
     }
   }
