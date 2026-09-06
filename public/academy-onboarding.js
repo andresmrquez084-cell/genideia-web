@@ -1,8 +1,29 @@
 (() => {
   const API = 'https://dbwuubabafzsinaokawe.supabase.co/functions/v1/academy-enrollment';
+  const ONE_TO_ONE_PAYONEER = 'https://link.payoneer.com/Token?t=92CC9FD225EF4AC2962D8F6387F48367&src=mobile';
   const body = document.body;
   const service = body.dataset.service;
   if (!service || !['grupal', '1a1'].includes(service)) return;
+
+  if (service === '1a1') {
+    const heroPrice = document.querySelector('.hero aside strong');
+    const totalPrice = document.querySelector('#pago .total strong');
+    if (heroPrice) heroPrice.textContent = 'USD 799';
+    if (totalPrice) totalPrice.textContent = 'USD 799';
+
+    const grid = document.querySelector('#pago .payment-grid');
+    if (grid && !document.getElementById('payoneer-button')) {
+      grid.classList.remove('single');
+      const article = document.createElement('article');
+      article.innerHTML = `
+        <small>OPCIÓN 2</small>
+        <h3>Pago con tarjeta · Payoneer</h3>
+        <p>Realizá el pago online de USD 799 con tarjeta mediante Payoneer.</p>
+        <a class="primary wide" id="payoneer-button" href="${ONE_TO_ONE_PAYONEER}" target="_blank" rel="noopener noreferrer">Pagar USD 799 con tarjeta</a>
+        <p class="micro">El pago se procesa de forma segura fuera de esta página mediante Payoneer.</p>`;
+      grid.appendChild(article);
+    }
+  }
 
   const form = document.getElementById('academy-form');
   const canvas = document.getElementById('signature-pad');
