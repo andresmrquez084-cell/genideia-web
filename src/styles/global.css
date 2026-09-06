@@ -327,3 +327,34 @@ select.form-input option {
     scroll-behavior: auto !important;
   }
 }
+
+/* Genideia Academy — contrato como documento físico */
+#contrato .contract {
+  background: #ffffff !important;
+  color: #172033 !important;
+  border-color: rgba(255,255,255,.22) !important;
+  box-shadow: 0 18px 45px rgba(0,0,0,.20);
+}
+#contrato .contract h3,
+#contrato .contract h4,
+#contrato .provider-signature strong {
+  color: #101827 !important;
+}
+#contrato .contract p,
+#contrato .contract .legal,
+#contrato .provider-signature span {
+  color: #445268 !important;
+}
+#contrato .contract .legal {
+  background: #f7f9fc;
+  border-color: #e4e9f0 !important;
+}
+#contrato .provider-signature {
+  border-top-color: #d9e0e8 !important;
+}
+#contrato .signature-line {
+  border-bottom-color: #94a3b8 !important;
+}
+#contrato .provider-signature img {
+  filter: none !important;
+}
