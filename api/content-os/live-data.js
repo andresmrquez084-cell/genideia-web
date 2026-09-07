@@ -21,6 +21,22 @@ async function sb(path) {
   return text ? JSON.parse(text) : [];
 }
 
+async function sbPaged(path, pageSize = 1000) {
+  const rows = [];
+  let offset = 0;
+
+  while (true) {
+    const separator = path.includes('?') ? '&' : '?';
+    const page = await sb(`${path}${separator}limit=${pageSize}&offset=${offset}`);
+    rows.push(...page);
+
+    if (page.length < pageSize) break;
+    offset += pageSize;
+  }
+
+  return rows;
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'GET required' });
   res.setHeader('Cache-Control', 'no-store, max-age=0');
@@ -42,7 +58,7 @@ export default async function handler(req, res) {
     if (contents.length) {
       const ids = contents.map((c) => c.id).join(',');
       classifications = await sb(`content_os_classifications?content_id=in.(${ids})&select=content_id,format,topic,subtopic,hook_text,hook_type,intention,expected_action,audience,cta,visual_style,editing_style,spoken,on_screen_text,tools_mentioned,ai_confidence,manually_reviewed`);
-      metricSnapshots = await sb(`content_os_metric_snapshots?workspace_id=eq.${encodedWorkspace}&select=content_id,captured_at,age_minutes,views,reach,likes,comments,shares,saves,replies,follows,profile_visits,total_interactions,video_view_total_time_ms,avg_watch_time_ms,replays&order=captured_at.asc&limit=5000`);
+      metricSnapshots = await sbPaged(`content_os_metric_snapshots?workspace_id=eq.${encodedWorkspace}&select=content_id,captured_at,age_minutes,views,reach,likes,comments,shares,saves,replies,follows,profile_visits,total_interactions,video_view_total_time_ms,avg_watch_time_ms,replays&order=captured_at.asc`);
     }
 
     const latestByContent = Object.fromEntries(latestMetrics.map((m) => [m.content_id, m]));
