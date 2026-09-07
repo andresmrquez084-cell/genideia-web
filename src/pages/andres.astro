@@ -4,6 +4,7 @@ import '../styles/global.css';
 const WA = '59892302941';
 const waUrl = (msg: string) => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
 const b2cUrl = waUrl('Hola Andrés, vi tu landing y quiero aprender a usar IA de forma práctica.');
+const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
 ---
 
 <!DOCTYPE html>
@@ -27,6 +28,12 @@ const b2cUrl = waUrl('Hola Andrés, vi tu landing y quiero aprender a usar IA de
 
   <body>
     <main class="landing-shell">
+      <a class="mc-bar" href={grupoUrl} target="_blank" rel="noopener noreferrer">
+        <span class="mc-bar-tag">Masterclass gratuita</span>
+        <span class="mc-bar-text">De usar Claude a construir tu primer sistema — <b>próximamente</b></span>
+        <span class="mc-bar-cta">Sumate al grupo →</span>
+      </a>
+
       <div class="brand-watermark" aria-hidden="true">
         <img src="/img/symbol-gii.png" alt="" />
       </div>
@@ -198,6 +205,40 @@ const b2cUrl = waUrl('Hola Andrés, vi tu landing y quiero aprender a usar IA de
         display: block;
         width: 100%;
       }
+
+      .mc-bar {
+        position: relative;
+        z-index: 4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px 14px;
+        padding: 11px 20px;
+        text-align: center;
+        font-size: 0.78rem;
+        color: #eaf1fb;
+        background: linear-gradient(90deg, rgba(18, 108, 255, 0.16), rgba(20, 216, 232, 0.16));
+        border-bottom: 1px solid rgba(48, 154, 255, 0.32);
+        transition: background 0.2s ease;
+      }
+      .mc-bar:hover {
+        background: linear-gradient(90deg, rgba(18, 108, 255, 0.24), rgba(20, 216, 232, 0.24));
+      }
+      .mc-bar-tag {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 800;
+        font-size: 0.66rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #fff;
+        background: linear-gradient(90deg, #126cff, #19c9ff);
+        padding: 4px 10px;
+        border-radius: 999px;
+      }
+      .mc-bar-text { color: #cdd7e5; }
+      .mc-bar-text b { color: #fff; font-weight: 600; }
+      .mc-bar-cta { font-weight: 700; color: #4fd2ff; white-space: nowrap; }
 
       .topbar {
         position: relative;
@@ -498,6 +539,8 @@ const b2cUrl = waUrl('Hola Andrés, vi tu landing y quiero aprender a usar IA de
       }
 
       @media (max-width: 560px) {
+        .mc-bar { font-size: 0.72rem; padding: 9px 14px; gap: 5px 10px; }
+        .mc-bar-tag { font-size: 0.6rem; }
         .topbar { width: calc(100% - 28px); }
         .brand-name { font-size: 1.55rem; }
         .brand-sub { font-size: .55rem; }
