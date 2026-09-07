@@ -1,0 +1,71 @@
+---
+// Lead magnet · palabra clave ManyChat: CLAUDE (reel: "Cómo empezar a usar Claude — parte 1")
+// URL pública: /recursos/claude-desde-cero
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const prompt = `Quiero que me organices la semana.
+
+Mis horarios fijos (lo que ya está ocupado):
+- [poné acá tus bloques: trabajo, clases, gimnasio, etc.]
+
+Mis prioridades de esta semana (3 como máximo):
+- [prioridad 1]
+- [prioridad 2]
+- [prioridad 3]
+
+Mi objetivo principal:
+- [uno solo]
+
+Devolvémelo en una tabla por día (mañana / tarde / noche).
+Después te voy a pedir ajustes, así que no hace falta que quede perfecto.`;
+---
+<RecursoLayout
+  titulo="Cómo empezar a usar Claude desde cero"
+  descripcion="Guía para completar paso a paso: los links, tu primer prompt con contexto y el checklist para arrancar con Claude sin perderte."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="CLAUDE"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Claude no es una sola cosa (hay chat, Projects, Claude Code…). Para empezar solo te importa el chat. No tenés que instalar ni pagar nada — lo único que cambia tu resultado es cómo pedís las cosas.</b></div>
+
+  <div class="alert"><b>Ojo:</b> esta guía es para <b>completar</b>, no para mirar y cerrar. Tomate 10 minutos y hacé cada paso mientras leés. Podés guardarla en PDF (botón de arriba) y escribir sobre ella.</div>
+
+  <h2>1 · Los links que necesitás</h2>
+  <ul class="arrow">
+    <li><b>Web:</b> claude.ai — funciona todo lo básico sin instalar nada.</li>
+    <li><b>App de escritorio:</b> claude.ai/download (Mac y Windows).</li>
+    <li><b>App de celular:</b> buscá "Claude" en App Store o Google Play.</li>
+    <li><b>Planes:</b> claude.ai/upgrade — para ver qué incluye el gratis y qué agregan los pagos.</li>
+  </ul>
+
+  <h2>2 · Hacé cada paso</h2>
+  <ol class="steps">
+    <li><b>Entrá a la página oficial.</b> Andá a claude.ai y creá tu cuenta. Si recién empezás, usalo desde el navegador — no necesitás descargar nada.</li>
+    <li><b>¿Gratis o de pago?</b> Para aprender y probar, el plan gratis alcanza perfecto. El pago tiene sentido cuando lo usás seguido o necesitás más capacidad.</li>
+    <li><b>Dale contexto.</b> No le pidas algo genérico. En vez de "organizame la semana", pasale tus horarios, tus prioridades y tu objetivo. Cuanto más entiende tu situación, mejor te responde. (Abajo tenés el prompt para completar.)</li>
+    <li><b>Pedí que lo ajuste.</b> No te quedes con la primera respuesta. Decile qué no te gustó, qué querés cambiar, el tono, el largo. Personalizá la conversación — ahí está el 80% del resultado.</li>
+  </ol>
+
+  <h2>3 · Tu primer prompt (completalo)</h2>
+  <p>Copialo, reemplazá lo que está entre corchetes con tus datos reales y mandáselo a Claude:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{prompt}</code></pre>
+  </div>
+
+  <div class="minicta">
+    Esto es la <b>parte 1</b> de la serie <b>Claude desde 0</b>. La clase completa es gratis — <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>4 · Checklist antes de cerrar</h2>
+  <ul class="check">
+    <li>Entré a claude.ai y creé mi cuenta.</li>
+    <li>Sé si por ahora voy con el plan gratis o pago.</li>
+    <li>Hice mi primera petición con contexto (horarios + prioridades + objetivo).</li>
+    <li>Le pedí al menos un ajuste sobre la respuesta que me dio.</li>
+  </ul>
+</RecursoLayout>
