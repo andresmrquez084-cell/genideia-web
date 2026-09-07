@@ -295,7 +295,10 @@ export default async function handler(req, res) {
         workspace_id: workspaceId,
         account_id: accountId,
         captured_at: capturedAt,
-        follower_count: a.follower_count ?? profile.followers_count ?? null,
+       follower_count:
+  Number(a.follower_count) > 0
+    ? Number(a.follower_count)
+    : Number(profile.followers_count) || null,
         reach: a.reach ?? null,
         profile_views: a.profile_views ?? null,
         accounts_engaged: a.accounts_engaged ?? null,
