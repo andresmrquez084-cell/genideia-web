@@ -1,0 +1,153 @@
+---
+// Lead magnet · palabra clave ManyChat: PRO (reel: "10 cosas que deberías hacer si pagás Claude")
+// URL pública: /recursos/claude-10-funciones
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const promptCowork = `Necesito que resuelvas esta tarea completa, no que me des una sola respuesta.
+
+Tarea:
+- [describí el resultado final que querés, ej: "un reporte semanal de ventas listo para enviar al equipo"]
+
+Contexto:
+- [de dónde sale la info, qué formato tiene, quién lo va a leer]
+
+Pasos que espero que hagas:
+1. [paso 1]
+2. [paso 2]
+3. [paso 3]
+
+Antes de empezar, hacéme las preguntas que necesites para no asumir nada.`;
+
+const promptSkill = `Quiero convertir esto en una habilidad reutilizable.
+
+Cada vez que te pida "[nombre corto de la tarea]", quiero que hagas exactamente esto:
+- [regla 1: formato, tono, estructura]
+- [regla 2]
+- [regla 3]
+
+Ejemplo de una vez que salió bien:
+- [pegá un caso real o describilo]
+
+Guardalo como habilidad con ese nombre.`;
+---
+<RecursoLayout
+  titulo="Las 10 funciones de Claude que estás pagando y no usás"
+  descripcion="Guía para completar: qué hace cada función, cuándo conviene usarla y la primera acción para estrenarla hoy. Más 2 prompts para copiar."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="PRO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Si pagás Claude y solo lo usás como un chat, estás aprovechando el 20%. Estas 10 funciones ya están incluidas en tu plan — la mayoría se activa en dos clics.</b></div>
+
+  <div class="alert"><b>Ojo:</b> esta guía es para <b>hacer</b>, no para mirar y cerrar. Abrí Claude en otra ventana y estrená al menos 3 funciones mientras leés. Guardala en PDF (botón de arriba) y andá tildando el checklist del final.</div>
+
+  <h2>1 · Utilizá Cowork</h2>
+  <p>En vez de hacerle una pregunta, dale una <b>tarea completa</b> y deja que ejecute varios pasos solo. Sirve cuando el trabajo tiene un principio y un fin claros (armar un reporte, ordenar datos, redactar y revisar).</p>
+  <ul class="arrow">
+    <li>En el compositor, cambiá el modo <b>Chat</b> por <b>Cowork</b>.</li>
+    <li>Describí el <b>resultado final</b>, no el primer paso.</li>
+    <li>Pedile que te haga preguntas antes de arrancar — así no asume.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptCowork}</code></pre>
+  </div>
+
+  <h2>2 · Creá un proyecto</h2>
+  <p>Si trabajás seguido sobre un mismo tema, un proyecto guarda <b>archivos + instrucciones</b> fijas para no repetirle todo cada vez que entrás.</p>
+  <ul class="arrow">
+    <li>Barra lateral → <b>Proyectos</b> → <b>Crear proyecto</b>.</li>
+    <li>Cargá los archivos que siempre necesita (guías, datos, ejemplos).</li>
+    <li>En las instrucciones escribí quién sos, qué querés y cómo tiene que responder.</li>
+  </ul>
+
+  <h2>3 · Creá un skill (habilidad)</h2>
+  <p>Si hay algo que querés que Claude <b>siempre haga de la misma forma</b>, un skill es enseñarle esa tarea una vez para reutilizarla después con un solo pedido.</p>
+  <ul class="arrow">
+    <li>Ajustes → <b>Capacidades / Habilidades</b> → <b>Crear una habilidad</b>.</li>
+    <li>Definí el nombre corto, las reglas y un ejemplo de cómo queda bien.</li>
+    <li>Después la invocás nombrándola, sin volver a explicar nada.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptSkill}</code></pre>
+  </div>
+
+  <h2>4 · Programá tareas</h2>
+  <p>Si esa tarea además se repite todas las semanas, dejala <b>agendada</b>. Ejemplo: todos los lunes Claude investiga, arma un reporte y lo deja listo sin que hagas nada.</p>
+  <ul class="arrow">
+    <li>Menú <b>+</b> del compositor (o Ajustes) → <b>Tareas programadas</b>.</li>
+    <li>Escribí qué tiene que hacer y con qué frecuencia (día y hora).</li>
+    <li>Revisá el primer resultado y ajustá las instrucciones una vez.</li>
+  </ul>
+
+  <h2>5 · Activá la búsqueda web</h2>
+  <p>Para información <b>actual</b>. Con esto Claude no responde solo con lo que ya sabe: busca en varias fuentes y arma una respuesta más completa.</p>
+  <ul class="arrow">
+    <li>Activá <b>Búsqueda web</b> en el menú <b>+</b> del compositor.</li>
+    <li>Pedile explícito: "buscá en la web y pasame las fuentes".</li>
+    <li>Usala para precios, novedades, datos de este año, comparativas.</li>
+  </ul>
+
+  <h2>6 · Convertí una idea en algo</h2>
+  <p>Si tenés una idea, pedile que la convierta en <b>algo usable</b>: una plataforma, un dashboard o una aplicación que después vas modificando.</p>
+  <ul class="arrow">
+    <li>Describí para qué es, quién lo usa y qué tiene que poder hacer.</li>
+    <li>Dejá que te haga preguntas de alcance antes de construir.</li>
+    <li>Pedí cambios de a uno: "ahora sumale…", "cambiá esto por…".</li>
+  </ul>
+
+  <h2>7 · Subí tus archivos</h2>
+  <p>Dale tus propios documentos —un PDF, un Excel, un doc— y preguntale directo sobre lo que hay adentro.</p>
+  <ul class="arrow">
+    <li>Menú <b>+</b> → <b>Agregar archivo</b> (o arrastralo al chat).</li>
+    <li>Si podés elegir, subilo en <b>Markdown</b>: gasta menos tokens que un PDF pesado.</li>
+    <li>Preguntá cosas puntuales: "según este archivo, ¿cuánto…?".</li>
+  </ul>
+
+  <h2>8 · Ejecutá código</h2>
+  <p>Claude puede <b>ejecutar código</b> para resolver una tarea sin que vos sepas programar: limpiar una planilla, cruzar dos listados, generar un gráfico.</p>
+  <ul class="arrow">
+    <li>Subí los datos y describí el resultado que querés.</li>
+    <li>Decile: "resolvelo ejecutando código y mostrame el resultado".</li>
+    <li>Pedí el archivo final descargable (Excel, CSV, imagen).</li>
+  </ul>
+
+  <h2>9 · Investigación con fuentes</h2>
+  <p>Para temas más grandes, Claude hace <b>varias búsquedas</b> y te devuelve algo completo con <b>todas las fuentes</b> para que las revises.</p>
+  <ul class="arrow">
+    <li>Planteá la pregunta amplia y el uso que le vas a dar.</li>
+    <li>Pedile un resumen + la lista de fuentes con link.</li>
+    <li>Revisá 2 o 3 fuentes antes de dar el dato por bueno.</li>
+  </ul>
+
+  <h2>10 · Conectá tus herramientas</h2>
+  <p>Conectá lo que ya usás para dejar de copiar y pegar entre apps. Claude trabaja con <b>conectores</b> a plataformas como Google Drive, Notion y Slack.</p>
+  <ul class="arrow">
+    <li>Ajustes → <b>Conectores</b> → elegí la plataforma y autorizá el acceso.</li>
+    <li>Empezá por una sola (la que más usás).</li>
+    <li>Probá: "buscá en mi Drive el documento X y resumímelo".</li>
+  </ul>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Checklist: estrená las 10</h2>
+  <ul class="check">
+    <li>Usé <b>Cowork</b> para una tarea completa (no una pregunta suelta).</li>
+    <li>Creé un <b>proyecto</b> con archivos e instrucciones fijas.</li>
+    <li>Creé un <b>skill</b> para una tarea que siempre pido igual.</li>
+    <li>Dejé una <b>tarea programada</b> corriendo sola.</li>
+    <li>Activé la <b>búsqueda web</b> y pedí las fuentes.</li>
+    <li>Convertí una <b>idea</b> en un primer prototipo.</li>
+    <li>Subí un <b>archivo</b> propio y pregunté sobre su contenido.</li>
+    <li>Hice que <b>ejecute código</b> sobre mis datos.</li>
+    <li>Pedí una <b>investigación con fuentes</b> sobre un tema real.</li>
+    <li>Conecté <b>una herramienta</b> (Drive, Notion o Slack).</li>
+  </ul>
+</RecursoLayout>
