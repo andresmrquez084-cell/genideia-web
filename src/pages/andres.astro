@@ -29,9 +29,9 @@ const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
   <body>
     <main class="landing-shell">
       <a class="mc-bar" href={grupoUrl} target="_blank" rel="noopener noreferrer">
-        <span class="mc-bar-tag">Masterclass gratuita</span>
-        <span class="mc-bar-text">De usar Claude a construir tu primer sistema — <b>próximamente</b></span>
-        <span class="mc-bar-cta">Sumate al grupo →</span>
+        <span class="mc-bar-tag">🎓 Masterclass gratuita</span>
+        <span class="mc-bar-text">De usar Claude a construir tu primer sistema — <b>este viernes, en vivo</b></span>
+        <span class="mc-bar-cta">Entrar al grupo →</span>
       </a>
 
       <div class="brand-watermark" aria-hidden="true">
@@ -213,32 +213,42 @@ const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 6px 14px;
-        padding: 11px 20px;
+        gap: 10px 18px;
+        padding: 16px 22px;
         text-align: center;
-        font-size: 0.78rem;
-        color: #eaf1fb;
-        background: linear-gradient(90deg, rgba(18, 108, 255, 0.16), rgba(20, 216, 232, 0.16));
-        border-bottom: 1px solid rgba(48, 154, 255, 0.32);
-        transition: background 0.2s ease;
+        font-size: 0.95rem;
+        color: #fff;
+        background: linear-gradient(90deg, #1358d6, #12b7c9);
+        border-bottom: 1px solid rgba(120, 230, 255, 0.55);
+        box-shadow: 0 8px 30px -10px rgba(20, 216, 232, 0.45);
+        transition: filter 0.2s ease;
       }
-      .mc-bar:hover {
-        background: linear-gradient(90deg, rgba(18, 108, 255, 0.24), rgba(20, 216, 232, 0.24));
-      }
+      .mc-bar:hover { filter: brightness(1.06); }
       .mc-bar-tag {
         font-family: 'Montserrat', sans-serif;
         font-weight: 800;
-        font-size: 0.66rem;
+        font-size: 0.72rem;
         letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: #fff;
-        background: linear-gradient(90deg, #126cff, #19c9ff);
-        padding: 4px 10px;
+        color: #0b3a86;
+        background: #fff;
+        padding: 5px 12px;
         border-radius: 999px;
+        white-space: nowrap;
       }
-      .mc-bar-text { color: #cdd7e5; }
-      .mc-bar-text b { color: #fff; font-weight: 600; }
-      .mc-bar-cta { font-weight: 700; color: #4fd2ff; white-space: nowrap; }
+      .mc-bar-text { color: #eaf5ff; font-weight: 500; }
+      .mc-bar-text b { color: #fff; font-weight: 800; }
+      .mc-bar-cta {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 800;
+        font-size: 0.82rem;
+        letter-spacing: 0.02em;
+        color: #0b3a86;
+        background: #fff;
+        padding: 9px 18px;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
 
       .topbar {
         position: relative;
@@ -539,8 +549,9 @@ const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
       }
 
       @media (max-width: 560px) {
-        .mc-bar { font-size: 0.72rem; padding: 9px 14px; gap: 5px 10px; }
-        .mc-bar-tag { font-size: 0.6rem; }
+        .mc-bar { font-size: 0.85rem; padding: 13px 16px; gap: 8px 12px; }
+        .mc-bar-tag { font-size: 0.64rem; }
+        .mc-bar-cta { font-size: 0.78rem; padding: 8px 15px; }
         .topbar { width: calc(100% - 28px); }
         .brand-name { font-size: 1.55rem; }
         .brand-sub { font-size: .55rem; }
