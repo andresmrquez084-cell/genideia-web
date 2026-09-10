@@ -17,7 +17,7 @@
       overlay.innerHTML=`<form id="contentOsLoginForm" style="width:min(430px,100%);padding:34px;border:1px solid rgba(255,255,255,.12);border-radius:24px;background:linear-gradient(180deg,#081222,#050b15);box-shadow:0 30px 100px rgba(0,0,0,.45)">
         <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.55;margin-bottom:12px">GENIDEIA COMPANY</div>
         <h1 style="font-size:30px;line-height:1.1;margin:0 0 8px">Content OS</h1>
-        <p style="margin:0 0 26px;color:rgba(255,255,255,.62);line-height:1.55">Acceso privado a la demostración en vivo.</p>
+        <p style="margin:0 0 26px;color:rgba(255,255,255,.62);line-height:1.55">Acceso privado a Content OS.</p>
         <label style="display:block;font-size:12px;opacity:.7;margin-bottom:7px">Usuario</label>
         <input id="contentOsUser" autocomplete="username" required style="width:100%;box-sizing:border-box;padding:13px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:#030914;color:white;outline:none;margin-bottom:15px"/>
         <label style="display:block;font-size:12px;opacity:.7;margin-bottom:7px">Contraseña</label>
