@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { createContentOsSession, verifyContentOsSession, setContentOsSessionCookie, clearContentOsSessionCookie } from './_session.js';
+import { createContentOsSession, verifyContentOsSession, setContentOsSessionCookie, clearContentOsSessionCookie } from '../../lib/content-os-session.js';
 
 const DEFAULT_SUPABASE_URL = 'https://dbwuubabafzsinaokawe.supabase.co';
 
