@@ -17,5 +17,31 @@
       "destination": "/tadeo",
       "permanent": false
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/content-os",
+      "destination": "https://content-os-navy-seven.vercel.app/content-os"
+    },
+    {
+      "source": "/content-os/:path*",
+      "destination": "https://content-os-navy-seven.vercel.app/content-os/:path*"
+    },
+    {
+      "source": "/content-os-:path*",
+      "destination": "https://content-os-navy-seven.vercel.app/content-os-:path*"
+    },
+    {
+      "source": "/api/content-os/:path*",
+      "destination": "https://content-os-navy-seven.vercel.app/api/content-os/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/content-os/:path*",
+      "headers": [
+        { "key": "x-vercel-enable-rewrite-caching", "value": "0" }
+      ]
+    }
   ]
 }
