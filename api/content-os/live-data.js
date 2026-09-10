@@ -1,4 +1,4 @@
-import { verifyContentOsSession } from './_session.js';
+import { verifyContentOsSession } from '../../lib/content-os-session.js';
 
 const DEFAULT_SUPABASE_URL = 'https://dbwuubabafzsinaokawe.supabase.co';
 const DEFAULT_WORKSPACE_ID = 'f2a0c61f-160c-4300-aac6-dcb8c89d98d7';
