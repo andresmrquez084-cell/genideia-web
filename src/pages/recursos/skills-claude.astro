@@ -1,0 +1,102 @@
+---
+// Lead magnet · palabra clave ManyChat: SKILL (reel: "4 skills que tenés que usar si pagás Claude")
+// URL pública: /recursos/skills-claude
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const instalarAnthropic = `# 1. Agregá el marketplace de Anthropic (una sola vez)
+/plugin marketplace add anthropics/skills
+
+# 2. Instalá el paquete que contiene la skill
+/plugin install document-skills@anthropic-agent-skills   # incluye PPTX (y Word, Excel, PDF)
+/plugin install example-skills@anthropic-agent-skills    # incluye Canvas Design
+
+# 3. Recargá
+/reload-plugins`;
+
+const instalarChrome = `# Requisitos: Node.js 18+ y Google Chrome instalados.
+
+git clone https://github.com/endcycles/chrome-browser-skill ~/.claude/skills/chrome-browser
+cd ~/.claude/skills/chrome-browser/scripts
+npm install
+
+# Claude Code la detecta sola. Reiniciá la sesión.`;
+
+const instalarWebResearch = `/plugin marketplace add GregDurys/claude-skills
+/plugin install web-research@claude-skills
+/reload-plugins
+
+# La skill recién toma efecto en la PRÓXIMA conversación.`;
+---
+<RecursoLayout
+  titulo="Las 4 skills que tenés que instalar en Claude"
+  descripcion="Los 4 repositorios de las skills del reel + cómo instalar cada una paso a paso (Claude Code y Claude.ai)."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="SKILL"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Una "skill" es una capacidad que le agregás a Claude una vez y queda disponible siempre. Estas 4 son gratis y de código abierto — acá tenés el link de cada repo y los comandos exactos para instalarlas.</b></div>
+
+  <div class="alert"><b>Antes de empezar:</b> <b>PPTX</b> y <b>Canvas Design</b> son oficiales de Anthropic y se instalan igual (con un solo bloque de comandos). <b>Chrome Browser</b> y <b>Web Research</b> son de la comunidad y cada una tiene su método. Copiá los bloques tal cual — el botón "Copiar" está arriba a la derecha de cada uno.</div>
+
+  <div class="note"><b>¿Qué es el marketplace?</b> Dentro de Claude Code escribís <b>/plugin</b> y se abre un menú para agregar repositorios de skills y elegir cuáles instalar. Los comandos de abajo hacen lo mismo sin pasar por el menú.</div>
+
+  <h2>1 · PPTX — presentaciones de PowerPoint</h2>
+  <p>Hace que Claude cree y edite presentaciones <b>.pptx</b> completas. Le pasás tu idea o un archivo que ya tengas y te devuelve una presentación lista para seguir trabajando. Oficial de Anthropic.</p>
+  <ul class="arrow">
+    <li>Repo: <b>github.com/anthropics/skills</b> → carpeta <b>skills/pptx</b></li>
+    <li>Viene dentro del paquete <b>document-skills</b> (junto con Word, Excel y PDF).</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{instalarAnthropic}</code></pre>
+  </div>
+  <div class="note"><b>En Claude.ai (sin Claude Code):</b> Ajustes → <b>Capacidades</b> → subís la carpeta de la skill (descargala del repo). Guía oficial: support.claude.com → "Using skills in Claude".</div>
+
+  <h2>2 · Chrome Browser — control del navegador</h2>
+  <p>Le da acceso al navegador: abre Chrome, entra a páginas, cambia de pestaña y ejecuta acciones directamente sobre ellas. Skill de la comunidad (endcycles).</p>
+  <ul class="arrow">
+    <li>Repo: <b>github.com/endcycles/chrome-browser-skill</b></li>
+    <li>Requiere <b>Node.js 18+</b> y <b>Google Chrome</b> instalados. Solo Claude Code.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{instalarChrome}</code></pre>
+  </div>
+
+  <h2>3 · Canvas Design — convertí una idea en una pieza visual</h2>
+  <p>Convierte una idea en un diseño: un póster, una placa para redes o un archivo que después seguís editando. Oficial de Anthropic.</p>
+  <ul class="arrow">
+    <li>Repo: <b>github.com/anthropics/skills</b> → carpeta <b>skills/canvas-design</b></li>
+    <li>Viene dentro del paquete <b>example-skills</b>.</li>
+    <li>Si ya corriste los comandos del punto 1, <b>ya la tenés instalada</b>.</li>
+  </ul>
+
+  <h2>4 · Web Research — procesos completos en la web</h2>
+  <p>Hace búsquedas en varias fuentes y te devuelve información completa y contrastada, no solo un resultado suelto. Usa herramientas gratis primero para no gastar de más. Skill de la comunidad (GregDurys).</p>
+  <ul class="arrow">
+    <li>Repo: <b>github.com/GregDurys/claude-skills</b> → skill <b>web-research</b></li>
+    <li>El mismo repo trae otras: reddit-research, glassdoor-research, linkedin-job-search.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{instalarWebResearch}</code></pre>
+  </div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Agregué el marketplace <b>anthropics/skills</b> y ejecuté los <b>/plugin install</b>.</li>
+    <li>Instalé <b>PPTX</b> y le pedí una presentación de prueba.</li>
+    <li>Instalé <b>Chrome Browser</b> (Node + Chrome + git clone + npm install).</li>
+    <li>Confirmé que <b>Canvas Design</b> quedó instalada con example-skills.</li>
+    <li>Agregué el repo de <b>GregDurys</b> e instalé <b>web-research</b>.</li>
+    <li>Reinicié la sesión / abrí una conversación nueva para que tomen efecto.</li>
+  </ul>
+</RecursoLayout>
