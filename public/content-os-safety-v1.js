@@ -23,6 +23,10 @@
     try{ if(typeof content!=='undefined'&&Array.isArray(content)) content.splice(0,content.length); }catch(_e){}
   };
   const tick=()=>{
+    if(window.ContentOSAuth?.waiting){
+      reveal();
+      return false;
+    }
     const api=window.ContentOSLiveData;
     if(!api?.state) return;
     if(api.state.loaded){
@@ -41,6 +45,7 @@
   };
   const timer=setInterval(()=>{ if(tick()===true) clearInterval(timer); },80);
   setTimeout(()=>{
+    if(window.ContentOSAuth?.waiting) return;
     const api=window.ContentOSLiveData;
     if(!api?.state?.loaded&&!api?.state?.error){
       clearDemoData();
