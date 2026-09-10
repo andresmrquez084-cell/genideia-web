@@ -28,8 +28,8 @@
       "destination": "https://content-os-navy-seven.vercel.app/content-os/:path*"
     },
     {
-      "source": "/content-os-:path*",
-      "destination": "https://content-os-navy-seven.vercel.app/content-os-:path*"
+      "source": "^/content-os-(.*)$",
+      "destination": "https://content-os-navy-seven.vercel.app/content-os-$1"
     },
     {
       "source": "/api/content-os/:path*",
