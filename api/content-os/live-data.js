@@ -1,4 +1,5 @@
-import { verifyContentOsSession } from '../../lib/content-os-session.js';
+import crypto from 'node:crypto';
+import { createContentOsSession, verifyContentOsSession, setContentOsSessionCookie } from '../../lib/content-os-session.js';
 
 const DEFAULT_SUPABASE_URL = 'https://dbwuubabafzsinaokawe.supabase.co';
 const DEFAULT_WORKSPACE_ID = 'f2a0c61f-160c-4300-aac6-dcb8c89d98d7';
@@ -36,29 +37,57 @@ async function sbPaged(path, pageSize = 1000) {
   return rows;
 }
 
+async function credential(username) {
+  const rows = await sb(`content_os_access?username=eq.${encodeURIComponent(username)}&active=eq.true&select=username,password_hash,salt&limit=1`);
+  return rows?.[0] || null;
+}
+
+function validPassword(password, row) {
+  if (!row?.password_hash || !row?.salt || typeof password !== 'string') return false;
+  const calculated = crypto.scryptSync(password, Buffer.from(row.salt, 'hex'), 64).toString('hex');
+  const a = Buffer.from(calculated, 'hex');
+  const b = Buffer.from(row.password_hash, 'hex');
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
+}
+
 export default async function handler(req, res) {
-  if (req.method !== 'GET') return res.status(405).json({ error: 'GET required' });
   res.setHeader('Cache-Control', 'no-store, max-age=0');
-  if (!verifyContentOsSession(req)) return res.status(401).json({ ok: false, error: 'AUTH_REQUIRED' });
+
+  if (req.method === 'POST') {
+    try {
+      const username = String(req.body?.username || '').trim();
+      const password = String(req.body?.password || '');
+      if (!username || !password) return res.status(400).json({ ok: false, error: 'Usuario y contraseña requeridos' });
+      const row = await credential(username);
+      if (!row || !validPassword(password, row)) {
+        await new Promise(resolve => setTimeout(resolve, 350));
+        return res.status(401).json({ ok: false, error: 'Credenciales incorrectas' });
+      }
+      setContentOsSessionCookie(res, createContentOsSession(row.username));
+      return res.status(200).json({ ok: true, authenticated: true, user: row.username });
+    } catch (error) {
+      console.error('content-os auth failed', error);
+      return res.status(500).json({ ok: false, error: 'No se pudo validar el acceso' });
+    }
+  }
+
+  if (req.method !== 'GET') return res.status(405).json({ ok: false, error: 'Method not allowed' });
+
+  const session = verifyContentOsSession(req);
+  if (req.query?.auth === '1') {
+    if (!session) return res.status(401).json({ ok: false, authenticated: false });
+    return res.status(200).json({ ok: true, authenticated: true, user: session.u });
+  }
+  if (!session) return res.status(401).json({ ok: false, error: 'AUTH_REQUIRED' });
 
   try {
     const workspaceId = process.env.CONTENT_OS_WORKSPACE_ID || DEFAULT_WORKSPACE_ID;
     const encodedWorkspace = encodeURIComponent(workspaceId);
-
     const accounts = await sb(`content_os_accounts?workspace_id=eq.${encodedWorkspace}&select=id,platform,external_account_id,username,account_type,display_name,avatar_url,status,last_synced_at,raw_profile&order=last_synced_at.desc`);
     const activeAccount = accounts.find((a) => a.status === 'connected') || accounts[0] || null;
 
     if (!activeAccount) {
-      return res.status(200).json({
-        ok: true,
-        source: 'supabase',
-        workspaceId,
-        accounts: [],
-        content: [],
-        counts: { accounts: 0, content: 0, latestMetrics: 0, snapshots: 0, classifications: 0 },
-        latestSync: null,
-        generatedAt: new Date().toISOString(),
-      });
+      return res.status(200).json({ ok: true, source: 'supabase', workspaceId, accounts: [], content: [], counts: { accounts: 0, content: 0, latestMetrics: 0, snapshots: 0, classifications: 0 }, latestSync: null, generatedAt: new Date().toISOString() });
     }
 
     const encodedAccount = encodeURIComponent(activeAccount.id);
@@ -68,9 +97,7 @@ export default async function handler(req, res) {
       sb(`content_os_sync_runs?workspace_id=eq.${encodedWorkspace}&account_id=eq.${encodedAccount}&select=id,account_id,job_type,status,started_at,finished_at,imported_count,snapshot_count,error_count,error_message&order=started_at.desc&limit=10`),
     ]);
 
-    let latestMetrics = [];
-    let classifications = [];
-    let metricSnapshots = [];
+    let latestMetrics = [], classifications = [], metricSnapshots = [];
     if (contents.length) {
       const ids = contents.map((c) => c.id).join(',');
       [latestMetrics, classifications, metricSnapshots] = await Promise.all([
@@ -83,54 +110,18 @@ export default async function handler(req, res) {
     const latestByContent = Object.fromEntries(latestMetrics.map((m) => [m.content_id, m]));
     const classificationByContent = Object.fromEntries(classifications.map((c) => [c.content_id, c]));
     const snapshotsByContent = {};
-    for (const snapshot of metricSnapshots) {
-      (snapshotsByContent[snapshot.content_id] ||= []).push(snapshot);
-    }
+    for (const snapshot of metricSnapshots) (snapshotsByContent[snapshot.content_id] ||= []).push(snapshot);
 
-    const hydratedContent = contents.map((item) => ({
-      ...item,
-      classification: classificationByContent[item.id] || null,
-      metrics: latestByContent[item.id] || null,
-      snapshots: snapshotsByContent[item.id] || [],
-    }));
-
+    const hydratedContent = contents.map((item) => ({ ...item, classification: classificationByContent[item.id] || null, metrics: latestByContent[item.id] || null, snapshots: snapshotsByContent[item.id] || [] }));
     const latestAccountSnapshot = accountSnapshots[0] || null;
-    const counts = {
-      accounts: 1,
-      content: contents.length,
-      latestMetrics: latestMetrics.length,
-      snapshots: metricSnapshots.length,
-      classifications: classifications.length,
-    };
+    const counts = { accounts: 1, content: contents.length, latestMetrics: latestMetrics.length, snapshots: metricSnapshots.length, classifications: classifications.length };
     const maxSnapshotsPerContent = Math.max(0, ...Object.values(snapshotsByContent).map((items) => items.length));
 
     if (req.query?.health === '1') {
-      return res.status(200).json({
-        ok: true,
-        source: 'supabase',
-        workspaceId,
-        account: activeAccount.username || null,
-        accountId: activeAccount.id,
-        counts,
-        maxSnapshotsPerContent,
-        velocityReady: maxSnapshotsPerContent >= 2,
-        latestSync: syncRuns[0] || null,
-        ignoredDuplicateAccounts: Math.max(0, accounts.length - 1),
-        generatedAt: new Date().toISOString(),
-      });
+      return res.status(200).json({ ok: true, source: 'supabase', workspaceId, account: activeAccount.username || null, accountId: activeAccount.id, counts, maxSnapshotsPerContent, velocityReady: maxSnapshotsPerContent >= 2, latestSync: syncRuns[0] || null, ignoredDuplicateAccounts: Math.max(0, accounts.length - 1), generatedAt: new Date().toISOString() });
     }
 
-    return res.status(200).json({
-      ok: true,
-      source: 'supabase',
-      workspaceId,
-      accounts: [{ ...activeAccount, snapshot: latestAccountSnapshot }],
-      content: hydratedContent,
-      counts,
-      latestSync: syncRuns[0] || null,
-      ignoredDuplicateAccounts: Math.max(0, accounts.length - 1),
-      generatedAt: new Date().toISOString(),
-    });
+    return res.status(200).json({ ok: true, source: 'supabase', workspaceId, accounts: [{ ...activeAccount, snapshot: latestAccountSnapshot }], content: hydratedContent, counts, latestSync: syncRuns[0] || null, ignoredDuplicateAccounts: Math.max(0, accounts.length - 1), generatedAt: new Date().toISOString() });
   } catch (error) {
     console.error('content-os live data failed', error);
     return res.status(500).json({ ok: false, error: error.message });
