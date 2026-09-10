@@ -1,47 +1,38 @@
 {
   "redirects": [
-    {
-      "source": "/experiencia",
-      "destination": "/experiencia/",
-      "permanent": true
-    },
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "andres.genideiacompany.com" }],
-      "destination": "/andres",
-      "permanent": false
-    },
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "tadeo.genideiacompany.com" }],
-      "destination": "/tadeo",
-      "permanent": false
-    }
+    { "source": "/experiencia", "destination": "/experiencia/", "permanent": true },
+    { "source": "/", "has": [{ "type": "host", "value": "andres.genideiacompany.com" }], "destination": "/andres", "permanent": false },
+    { "source": "/", "has": [{ "type": "host", "value": "tadeo.genideiacompany.com" }], "destination": "/tadeo", "permanent": false }
   ],
   "rewrites": [
-    {
-      "source": "/content-os",
-      "destination": "https://content-os-navy-seven.vercel.app/content-os"
-    },
-    {
-      "source": "/content-os/:path*",
-      "destination": "https://content-os-navy-seven.vercel.app/content-os/:path*"
-    },
-    {
-      "source": "^/content-os-(.*)$",
-      "destination": "https://content-os-navy-seven.vercel.app/content-os-$1"
-    },
-    {
-      "source": "/api/content-os/:path*",
-      "destination": "https://content-os-navy-seven.vercel.app/api/content-os/:path*"
-    }
+    { "source": "/content-os", "destination": "https://content-os-navy-seven.vercel.app/content-os" },
+    { "source": "/content-os/:path*", "destination": "https://content-os-navy-seven.vercel.app/content-os/:path*" },
+    { "source": "/content-os-v4-1.css", "destination": "https://content-os-navy-seven.vercel.app/content-os-v4-1.css" },
+    { "source": "/content-os-v4-2.css", "destination": "https://content-os-navy-seven.vercel.app/content-os-v4-2.css" },
+    { "source": "/content-os-v4-3.css", "destination": "https://content-os-navy-seven.vercel.app/content-os-v4-3.css" },
+    { "source": "/content-os-live-refresh-v1.css", "destination": "https://content-os-navy-seven.vercel.app/content-os-live-refresh-v1.css" },
+    { "source": "/content-os-product-v2.css", "destination": "https://content-os-navy-seven.vercel.app/content-os-product-v2.css" },
+    { "source": "/content-os-v4-1.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-v4-1.js" },
+    { "source": "/content-os-v4-2.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-v4-2.js" },
+    { "source": "/content-os-intelligence-v1.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-intelligence-v1.js" },
+    { "source": "/content-os-v4-pages-1.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-v4-pages-1.js" },
+    { "source": "/content-os-v4-pages-2.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-v4-pages-2.js" },
+    { "source": "/content-os-v4-pages-3.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-v4-pages-3.js" },
+    { "source": "/content-os-v4-pages-4.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-v4-pages-4.js" },
+    { "source": "/content-os-v4-pages-5.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-v4-pages-5.js" },
+    { "source": "/content-os-v4-4.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-v4-4.js" },
+    { "source": "/content-os-v4-5.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-v4-5.js" },
+    { "source": "/content-os-stories-v1.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-stories-v1.js" },
+    { "source": "/content-os-auth-v1.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-auth-v1.js" },
+    { "source": "/content-os-live-data.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-live-data.js" },
+    { "source": "/content-os-live-refresh-v1.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-live-refresh-v1.js" },
+    { "source": "/content-os-product-v2.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-product-v2.js" },
+    { "source": "/content-os-autoclassify-v1.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-autoclassify-v1.js" },
+    { "source": "/content-os-masterclass-v1.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-masterclass-v1.js" },
+    { "source": "/content-os-safety-v1.js", "destination": "https://content-os-navy-seven.vercel.app/content-os-safety-v1.js" },
+    { "source": "/api/content-os/:path*", "destination": "https://content-os-navy-seven.vercel.app/api/content-os/:path*" }
   ],
   "headers": [
-    {
-      "source": "/api/content-os/:path*",
-      "headers": [
-        { "key": "x-vercel-enable-rewrite-caching", "value": "0" }
-      ]
-    }
+    { "source": "/api/content-os/:path*", "headers": [{ "key": "x-vercel-enable-rewrite-caching", "value": "0" }] }
   ]
 }
