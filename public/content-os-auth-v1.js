@@ -3,12 +3,10 @@
   const originalFetch=window.fetch.bind(window);
   let resolveAuth;
   let authenticated=false;
-  let checking=true;
   const authReady=new Promise(resolve=>{resolveAuth=resolve;});
   window.ContentOSAuth={waiting:true,authenticated:false};
 
   function showLogin(message=''){
-    checking=false;
     window.ContentOSAuth.waiting=true;
     document.body.style.visibility='visible';
     let overlay=document.getElementById('contentOsLogin');
@@ -34,13 +32,13 @@
         const errorEl=overlay.querySelector('#contentOsLoginError');
         btn.disabled=true;btn.textContent='Validando...';errorEl.textContent='';
         try{
-          const response=await originalFetch('/api/content-os/auth',{
+          const response=await originalFetch('/api/content-os/live-data',{
             method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',
             body:JSON.stringify({username:overlay.querySelector('#contentOsUser').value,password:overlay.querySelector('#contentOsPassword').value})
           });
           const data=await response.json().catch(()=>({}));
           if(!response.ok||!data.ok) throw new Error(data.error||'No se pudo iniciar sesión');
-          authenticated=true;checking=false;
+          authenticated=true;
           window.ContentOSAuth.waiting=false;window.ContentOSAuth.authenticated=true;
           overlay.remove();
           resolveAuth(true);
@@ -58,9 +56,9 @@
 
   async function checkSession(){
     try{
-      const response=await originalFetch('/api/content-os/auth',{cache:'no-store',credentials:'same-origin'});
+      const response=await originalFetch('/api/content-os/live-data?auth=1',{cache:'no-store',credentials:'same-origin'});
       if(response.ok){
-        authenticated=true;checking=false;
+        authenticated=true;
         window.ContentOSAuth.waiting=false;window.ContentOSAuth.authenticated=true;
         resolveAuth(true);
         return;
@@ -71,7 +69,7 @@
 
   window.fetch=async function(input,init){
     const url=typeof input==='string'?input:(input&&input.url)||'';
-    if(url.includes('/api/content-os/live-data')){
+    if(url.includes('/api/content-os/live-data')&&!url.includes('auth=1')&&String(init?.method||'GET').toUpperCase()==='GET'){
       if(!authenticated) await authReady;
     }
     return originalFetch(input,init);
