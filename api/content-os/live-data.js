@@ -1,3 +1,5 @@
+import { verifyContentOsSession } from './_session.js';
+
 const DEFAULT_SUPABASE_URL = 'https://dbwuubabafzsinaokawe.supabase.co';
 const DEFAULT_WORKSPACE_ID = 'f2a0c61f-160c-4300-aac6-dcb8c89d98d7';
 
@@ -37,6 +39,7 @@ async function sbPaged(path, pageSize = 1000) {
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'GET required' });
   res.setHeader('Cache-Control', 'no-store, max-age=0');
+  if (!verifyContentOsSession(req)) return res.status(401).json({ ok: false, error: 'AUTH_REQUIRED' });
 
   try {
     const workspaceId = process.env.CONTENT_OS_WORKSPACE_ID || DEFAULT_WORKSPACE_ID;
