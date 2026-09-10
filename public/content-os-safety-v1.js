@@ -1,7 +1,9 @@
 /* GENIDEIA Content OS — masterclass safety gate */
 (function(){
-  const bootStyle=document.getElementById('contentOsBootGate');
-  const reveal=()=>{ if(bootStyle) bootStyle.remove(); document.documentElement.classList.add('content-os-ready'); };
+  const reveal=()=>{
+    document.body.style.visibility='visible';
+    document.documentElement.classList.add('content-os-ready');
+  };
   const ensureOverlay=()=>{
     let overlay=document.getElementById('contentOsDataError');
     if(overlay) return overlay;
