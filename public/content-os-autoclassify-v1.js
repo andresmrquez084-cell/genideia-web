@@ -23,7 +23,8 @@
       inferred++;
     }
 
-    window.ContentOSInference={applied:true,inferred,total:content.length};
+    const persisted=Number(live.payload?.counts?.classifications||0);
+    window.ContentOSInference={applied:true,inferred,persisted,total:content.length};
     applied=true;
     try{ render(); }catch(_e){}
 
@@ -32,8 +33,8 @@
       const badge=document.createElement('span');
       badge.id='contentOsInferenceBadge';
       badge.className='chip amber';
-      badge.title='Hook, tema, promesa y nivel se infieren automáticamente a partir del texto de las publicaciones. No equivalen a revisión manual.';
-      badge.textContent=`${inferred} clasificaciones automáticas`;
+      badge.title='Clasificación automática provisional. Hook, tema, intención y audiencia todavía pueden requerir revisión manual.';
+      badge.textContent=`${persisted||inferred} piezas clasificadas`;
       top.prepend(badge);
     }
     return true;
