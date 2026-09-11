@@ -1,0 +1,208 @@
+---
+// Lead magnet · palabra clave ManyChat: COMANDOS (reel: "10 comandos que tenés que usar si pagás Claude")
+// URL pública: /recursos/comandos-claude
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const loopEjemplo = `# Correr un chequeo cada 5 minutos
+/loop 5m revisá si terminó el deploy
+
+# Dejar que Claude decida cuándo volver a mirar
+/loop andá revisando el estado de la tarea`;
+
+const scheduleEjemplo = `# Crear una tarea que se repite sola
+/schedule todos los lunes 9am armá el reporte semanal de ventas
+
+# Ver o borrar las que ya tenés
+/schedule list
+/schedule delete`;
+---
+<RecursoLayout
+  titulo="Los 20 comandos de Claude Code que tenés que conocer"
+  descripcion="Guía para completar: qué hace cada comando, cuándo usarlo y cómo probarlo hoy. Los 10 del reel + 10 nuevos."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="COMANDOS"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Estos 20 comandos son todos de <b>Claude Code</b> (la terminal, no claude.ai en el navegador). Se escriben con "/" al principio de la línea. Con la mitad de estos ya usás Claude Code mucho mejor que el 90% de la gente.</b></div>
+
+  <div class="alert"><b>Ojo:</b> abrí Claude Code en otra ventana y probá al menos 5 mientras leés. Guardá esta guía en PDF y andá tildando el checklist del final.</div>
+
+  <h2>1 · /clear</h2>
+  <p>Borra el contexto actual de la conversación para arrancar de cero.</p>
+  <ul class="arrow">
+    <li>Usalo cuando terminaste una tarea y vas a empezar otra sin relación.</li>
+    <li>No borra archivos ni cambios ya hechos — solo la memoria de la charla.</li>
+  </ul>
+
+  <h2>2 · /compact</h2>
+  <p>Resume toda la conversación para que ocupe menos contexto.</p>
+  <ul class="arrow">
+    <li>Usalo cuando el chat ya se hizo muy largo pero todavía querés seguir en el mismo proyecto.</li>
+    <li>A diferencia de <b>/clear</b>, mantiene el hilo — solo lo comprime.</li>
+  </ul>
+
+  <h2>3 · /context</h2>
+  <p>Muestra cuánto contexto (memoria de la conversación) estás usando.</p>
+  <ul class="arrow">
+    <li>Sirve para saber si Claude ya está cargando demasiada información.</li>
+    <li>Si lo ves alto, es el momento de correr <b>/compact</b> o <b>/clear</b>.</li>
+  </ul>
+
+  <h2>4 · /rewind</h2>
+  <p>Te deja volver hacia atrás cuando un cambio no salió bien.</p>
+  <ul class="arrow">
+    <li>Usalo si Claude modificó algo y querés recuperar el punto anterior.</li>
+    <li>Funciona como un "deshacer" de varios pasos, no solo el último.</li>
+  </ul>
+
+  <h2>5 · /cost</h2>
+  <p>Te muestra cuánto uso llevás durante la sesión.</p>
+  <ul class="arrow">
+    <li>Útil si trabajás mucho con Claude Code y querés tener control de eso.</li>
+    <li>No es el gasto de tu plan mensual, es el consumo de esa sesión puntual.</li>
+  </ul>
+
+  <h2>6 · /help</h2>
+  <p>Te muestra los comandos disponibles y cómo utilizarlos.</p>
+  <ul class="arrow">
+    <li>Parece básico, pero es probablemente el primero que conviene usar si recién empezás.</li>
+    <li><b>Solo funciona en terminal</b> — no existe en la app de escritorio.</li>
+  </ul>
+
+  <h2>7 · /memory</h2>
+  <p>Te permite revisar o editar la memoria que Claude ya tiene guardada sobre ese proyecto.</p>
+  <ul class="arrow">
+    <li>Sirve para que recuerde reglas o información que querés que mantenga entre tareas.</li>
+    <li>Es distinto de <b>/context</b>: esto es memoria persistente del proyecto, no de la charla actual.</li>
+  </ul>
+
+  <h2>8 · /permissions</h2>
+  <p>Te deja controlar qué cosas puede hacer Claude sin pedirte permiso cada vez.</p>
+  <ul class="arrow">
+    <li>Por ejemplo, qué comandos puede ejecutar o qué archivos puede modificar solo.</li>
+    <li><b>Solo funciona en terminal</b> — no existe en la app de escritorio.</li>
+  </ul>
+
+  <h2>9 · /doctor</h2>
+  <p>Revisa si Claude Code está funcionando de forma correcta.</p>
+  <ul class="arrow">
+    <li>Si algo falla con la instalación o la configuración, este comando te ayuda a detectar el problema.</li>
+    <li>Es el primero que conviene correr antes de pedir ayuda en un foro o comunidad.</li>
+  </ul>
+
+  <h2>10 · /init</h2>
+  <p>Analiza tu proyecto y crea instrucciones iniciales para que Claude lo entienda mejor.</p>
+  <ul class="arrow">
+    <li>Es de las primeras cosas que conviene hacer al empezar un proyecto nuevo.</li>
+    <li>Genera un archivo <b>CLAUDE.md</b> que Claude lee automáticamente cada vez que trabaja ahí.</li>
+  </ul>
+
+  <h2>11 · /config</h2>
+  <p>Abre el menú de configuración: tema, modelo, permisos, variables de entorno.</p>
+  <ul class="arrow">
+    <li>Usalo recién instalado, para el ajuste inicial.</li>
+    <li>También sirve para cambiar de modelo (Sonnet/Opus) sobre la marcha.</li>
+  </ul>
+
+  <h2>12 · /status</h2>
+  <p>Muestra un diagnóstico rápido: settings activos, servidores MCP conectados y hooks funcionando.</p>
+  <ul class="arrow">
+    <li>Usalo cuando algo raro pasa y querés entender rápido qué está fallando.</li>
+    <li>Es más detallado que <b>/doctor</b>, que se enfoca en la instalación.</li>
+  </ul>
+
+  <h2>13 · /mcp</h2>
+  <p>Te deja ver y gestionar los servidores MCP (herramientas externas conectadas).</p>
+  <ul class="arrow">
+    <li>Usalo cuando una herramienta externa (Gmail, un CRM, un scraper) no responde.</li>
+    <li>Desde ahí podés desconectar o revisar cuáles están activas.</li>
+  </ul>
+
+  <h2>14 · /plugin</h2>
+  <p>Instalá, desinstalá o mirá los plugins y skills del marketplace.</p>
+  <ul class="arrow">
+    <li>Usalo cuando querés agregarle a Claude una capacidad nueva y reutilizable.</li>
+    <li>Es la puerta de entrada a skills como las que ves en <a href="/recursos/skills-claude">esta otra guía</a>.</li>
+  </ul>
+
+  <h2>15 · /agents</h2>
+  <p>Te muestra los agentes (subtareas) corriendo en segundo plano.</p>
+  <ul class="arrow">
+    <li>Usalo si lanzaste una tarea en background y querés ver si terminó sin perder tu sesión actual.</li>
+    <li>Útil cuando le pedís a Claude que investigue algo largo mientras seguís trabajando en otra cosa.</li>
+  </ul>
+
+  <h2>16 · /loop</h2>
+  <p>Repite un comando o un pedido en un intervalo fijo, o dejás que Claude decida el ritmo solo.</p>
+  <ul class="arrow">
+    <li>Sirve para chequear algo cada tanto sin tener que volver a escribirlo vos.</li>
+    <li>Se termina con la misma orden o cerrando la sesión.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{loopEjemplo}</code></pre>
+  </div>
+
+  <h2>17 · /schedule</h2>
+  <p>Crea tareas recurrentes que se disparan solas, sin que vos estés presente.</p>
+  <ul class="arrow">
+    <li>Usalo para reportes, recordatorios o cualquier cosa que necesites cada cierto tiempo.</li>
+    <li>A diferencia de <b>/loop</b>, sigue funcionando aunque cierres la sesión.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{scheduleEjemplo}</code></pre>
+  </div>
+
+  <h2>18 · /feedback</h2>
+  <p>Reporta un bug o pedí una función nueva directo al equipo de Anthropic.</p>
+  <ul class="arrow">
+    <li>Usalo cuando algo se comporta raro y querés que quede documentado, no solo resuelto por vos.</li>
+  </ul>
+
+  <h2>19 · /fork</h2>
+  <p>Clona la sesión actual para probar algo en paralelo sin perder el hilo principal.</p>
+  <ul class="arrow">
+    <li>Usalo cuando querés experimentar un cambio arriesgado sin arriesgar la conversación que ya tenías armada.</li>
+    <li>Las dos sesiones quedan independientes desde ese punto.</li>
+  </ul>
+
+  <h2>20 · /hooks</h2>
+  <p>Te muestra qué automatizaciones tenés configuradas para que se disparen antes o después de una acción.</p>
+  <ul class="arrow">
+    <li>Usalo antes de agregar una automatización nueva, para no pisar una que ya existe.</li>
+    <li>También sirve para debuggear por qué algo se ejecuta solo sin que lo hayas pedido.</li>
+  </ul>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Checklist: probá los 20</h2>
+  <ul class="check">
+    <li>Usé <b>/clear</b> para arrancar una tarea nueva sin arrastrar la anterior.</li>
+    <li>Usé <b>/compact</b> en un chat que se hizo largo.</li>
+    <li>Revisé cuánto contexto llevaba con <b>/context</b>.</li>
+    <li>Volví atrás un cambio con <b>/rewind</b>.</li>
+    <li>Miré cuánto uso llevaba con <b>/cost</b>.</li>
+    <li>Repasé los comandos disponibles con <b>/help</b>.</li>
+    <li>Revisé o edité la memoria del proyecto con <b>/memory</b>.</li>
+    <li>Configuré permisos con <b>/permissions</b>.</li>
+    <li>Corrí <b>/doctor</b> para confirmar que todo funciona bien.</li>
+    <li>Generé el <b>CLAUDE.md</b> de un proyecto con <b>/init</b>.</li>
+    <li>Entré a <b>/config</b> y ajusté modelo o tema.</li>
+    <li>Diagnostiqué mi setup con <b>/status</b>.</li>
+    <li>Revisé mis herramientas conectadas con <b>/mcp</b>.</li>
+    <li>Instalé algo del marketplace con <b>/plugin</b>.</li>
+    <li>Trackeé un agente en background con <b>/agents</b>.</li>
+    <li>Dejé algo corriendo en intervalos con <b>/loop</b>.</li>
+    <li>Programé una tarea recurrente con <b>/schedule</b>.</li>
+    <li>Reporté algo con <b>/feedback</b>.</li>
+    <li>Probé un cambio en paralelo con <b>/fork</b>.</li>
+    <li>Revisé mis automatizaciones con <b>/hooks</b>.</li>
+  </ul>
+</RecursoLayout>
