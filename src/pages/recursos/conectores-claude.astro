@@ -5,16 +5,16 @@ import RecursoLayout from '../../layouts/RecursoLayout.astro';
 
 const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
 
-const zapierPrompt = `Fijate en Zapier si el Zap de [nombre del Zap] corrió bien en las últimas 24 horas. Si hubo algún error, contame cuál fue.`;
-const hubspotPrompt = `Buscá en HubSpot el contacto de [nombre del cliente]. Decime en qué etapa está su trato, cuándo fue el último contacto y si hay alguna tarea pendiente.`;
-const atlassianPrompt = `Creá un ticket en Jira para el proyecto [nombre del proyecto] con este problema: [describí el problema]. Asignalo a [nombre] con prioridad alta.`;
-const linearPrompt = `Armá un issue en Linear con este bug: [describí el bug]. Prioridad alta, y asignalo al equipo de [nombre del equipo].`;
-const asanaPrompt = `Mostrame las tareas del proyecto [nombre del proyecto] en Asana que están vencidas o sin responsable asignado.`;
-const notionPrompt = `Buscá en mi Notion la página de [tema] y armame un resumen con los puntos más importantes.`;
-const slackPrompt = `Buscá en el canal #[nombre del canal] de Slack si alguien mencionó a [cliente o tema] esta semana y resumime lo que encontraste.`;
-const gcalPrompt = `Fijate si tengo un hueco libre el [día] a la tarde y agendá una llamada de 30 minutos con [nombre del cliente].`;
-const gdrivePrompt = `Buscá en mi Google Drive el archivo de [nombre o tema] y decime [qué necesitás saber, ej: qué precio le puse, cuándo lo mandé].`;
-const emailPrompt = `Buscá el último mail de [cliente] y dejame un borrador de respuesta explicándole [qué]. No lo mandes, dejalo como borrador.`;
+const zapierPrompt = `Revisá mis Zaps activos y decime cuáles fallaron esta semana o vienen fallando seguido, para que sepa cuáles tengo que arreglar.`;
+const hubspotPrompt = `Revisá mis tratos abiertos en HubSpot y decime cuáles no tienen actividad hace más de 7 días, ordenados por valor. Esos son a los que tengo que hacerles seguimiento hoy.`;
+const atlassianPrompt = `Resumime el estado del proyecto [nombre del proyecto] en Jira: qué está en progreso, qué está bloqueado y qué falta para llegar a la fecha de entrega.`;
+const linearPrompt = `Revisá los issues abiertos del equipo [nombre del equipo] en Linear y decime cuáles llevan más de una semana sin movimiento — esos son los que se están por perder.`;
+const asanaPrompt = `Armame el resumen semanal del proyecto [nombre del proyecto] en Asana: qué se completó, qué quedó pendiente y qué está atrasado.`;
+const notionPrompt = `Buscá en mi Notion todo lo que tengo sobre [tema] y armame un resumen con los puntos clave y lo que todavía me falta definir.`;
+const slackPrompt = `Resumime lo que se habló en el canal #[nombre del canal] esta semana, para no tener que leer todo el historial.`;
+const gcalPrompt = `Armame el resumen de mi semana: cuántas reuniones tengo, con quién, y si hay algún día sobrecargado para reorganizar.`;
+const gdrivePrompt = `Buscá en mi Google Drive todos los archivos sobre [cliente o proyecto] y armame un resumen de en qué está eso.`;
+const emailPrompt = `Revisá los mails que tengo sin responder hace más de 2 días y armame la lista de a quién tengo que contestar primero, ordenada por urgencia.`;
 ---
 <RecursoLayout
   titulo="Los 10 conectores de Claude que tenés que activar"
@@ -46,7 +46,7 @@ const emailPrompt = `Buscá el último mail de [cliente] y dejame un borrador de
     <pre class="code"><code>{hubspotPrompt}</code></pre>
   </div>
   <ul class="arrow">
-    <li>Útil antes de una llamada: te arma el resumen de esa cuenta en segundos.</li>
+    <li>Arrancás la semana sabiendo a quién llamar, en vez de scrollear el pipeline entero.</li>
   </ul>
 
   <h2>3 · Atlassian (Jira / Confluence)</h2>
@@ -106,7 +106,7 @@ const emailPrompt = `Buscá el último mail de [cliente] y dejame un borrador de
     <pre class="code"><code>{gcalPrompt}</code></pre>
   </div>
   <ul class="arrow">
-    <li>Sirve para coordinar reuniones sin ir y venir entre el chat y el calendario.</li>
+    <li>Sirve para arrancar la semana sabiendo dónde tenés que hacer lugar, antes de que te agarre desprevenido.</li>
   </ul>
 
   <h2>9 · Google Drive</h2>
@@ -126,7 +126,7 @@ const emailPrompt = `Buscá el último mail de [cliente] y dejame un borrador de
     <pre class="code"><code>{emailPrompt}</code></pre>
   </div>
   <ul class="arrow">
-    <li>Claude nunca manda el mail solo — el borrador queda para que lo revises vos.</li>
+    <li>Así no se te escapa nadie importante entre los mails que sí revisás todos los días.</li>
   </ul>
 
   <div class="minicta">
