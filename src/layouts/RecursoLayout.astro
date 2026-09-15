@@ -33,12 +33,14 @@ const {
   ctaBtn = 'Click acá →',
   waMsg,
   masterclass = false,
+  // La masterclass en vivo ya pasó (queda grabada en el grupo) — este bloque ya no vende
+  // "un lugar en la clase", invita a sumarse a la comunidad donde se comparten recursos,
+  // clases grabadas y se resuelven dudas (Andrés, 14/9).
   mclassBullets = [
-    'Qué es Claude y cuáles son sus modalidades',
-    'Cómo usar cada modalidad y para qué sirve cada función',
-    'Construir una solución paso a paso (sin ser programador)',
-    'Dejarla funcionando, con su sistema de mantenimiento',
-    'Cómo vender esta solución',
+    'Guías y prompts nuevos, antes que en ningún lado',
+    'Clases grabadas para aprender Claude desde cero',
+    'Resuelvo dudas puntuales de lo que estés armando',
+    'Aviso primero de todo lo nuevo',
   ],
   mclassUrl,
 } = Astro.props;
@@ -159,14 +161,14 @@ const empresaUrl = `/andres?utm_source=recurso&utm_medium=lead-magnet&utm_conten
 
     {masterclass ? (
       <section class="mclass">
-        <div class="badge">Clase gratuita</div>
-        <h3>De usar Claude a construir tu primer sistema</h3>
-        <p class="sub">Una clase gratuita, desde cero y sin ser programador.</p>
+        <div class="badge">Comunidad gratuita</div>
+        <h3>Sumate a la comunidad de Claude</h3>
+        <p class="sub">Recursos, clases grabadas y dudas resueltas — todo gratis, todo en el grupo.</p>
         <ul class="learn">
           {mclassBullets.map((b) => <li>{b}</li>)}
         </ul>
-        <a class="btn" href={mclassHref} target="_blank" rel="noopener noreferrer">Quiero mi lugar →</a>
-        <p class="fineprint">Sin fecha todavía: entrás al grupo y ahí aviso cuándo arranca.</p>
+        <a class="btn" href={mclassHref} target="_blank" rel="noopener noreferrer">Unirme al grupo →</a>
+        <p class="fineprint">Es gratis — entrás y ya estás adentro.</p>
       </section>
     ) : (
       <Fragment>
