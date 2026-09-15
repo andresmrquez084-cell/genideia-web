@@ -1,0 +1,115 @@
+---
+// Lead magnet · palabra clave ManyChat: CONECTORES (reel: "10 conectores que Claude puede usar")
+// URL pública: /recursos/conectores-claude
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+---
+<RecursoLayout
+  titulo="Los 10 conectores de Claude que tenés que activar"
+  descripcion="Guía para completar: qué es cada plataforma, qué podés pedirle a Claude ahí adentro y cómo activarla en dos clics."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="CONECTORES"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Un conector le da a Claude acceso directo a una herramienta que ya usás — sin copiar y pegar entre pestañas. Se activan en <b>Ajustes → Conectores</b> y después le pedís la tarea con normalidad.</b></div>
+
+  <div class="alert"><b>Ojo:</b> no hace falta activar los 10 de una. Empezá por el que ya usás todos los días y sumá el resto de a poco. Guardá esta guía en PDF y andá tildando el checklist del final.</div>
+
+  <h2>1 · Zapier</h2>
+  <p>La plataforma que conecta miles de apps entre sí sin programar. Con este conector, Claude puede disparar o revisar tus automatizaciones existentes en vez de que vos entres a armarlas a mano.</p>
+  <ul class="arrow">
+    <li>Probá: "fijate si el Zap de nuevos leads corrió bien hoy".</li>
+    <li>Sirve como puente cuando la app que necesitás no tiene conector propio en Claude.</li>
+  </ul>
+
+  <h2>2 · HubSpot</h2>
+  <p>El CRM donde guardás contactos, tratos y el historial de ventas. Conectado, Claude puede buscar un contacto, revisar en qué etapa está un trato o resumirte el pipeline sin que abras el panel.</p>
+  <ul class="arrow">
+    <li>Probá: "buscá el contacto de [cliente] y decime en qué etapa está su trato".</li>
+    <li>Útil antes de una llamada: te arma el resumen de esa cuenta en segundos.</li>
+  </ul>
+
+  <h2>3 · Atlassian (Jira / Confluence)</h2>
+  <p>Donde tu equipo organiza proyectos, tareas y documentación interna. Claude puede leer el estado de un ticket, crear uno nuevo o buscar en la documentación sin que cambies de pestaña.</p>
+  <ul class="arrow">
+    <li>Probá: "creá un ticket en Jira con esto que te acabo de describir".</li>
+    <li>También sirve para que Claude entienda el contexto de un proyecto antes de ayudarte con algo relacionado.</li>
+  </ul>
+
+  <h2>4 · Linear</h2>
+  <p>El tracker de issues y bugs que usan los equipos de producto y desarrollo. Con Claude conectado, podés pedirle que revise el estado de un issue o que te arme uno a partir de una charla.</p>
+  <ul class="arrow">
+    <li>Probá: "armá un issue en Linear con el bug que te acabo de reportar, prioridad alta".</li>
+    <li>Sirve para no perder tiempo pasando de la conversación al tracker a mano.</li>
+  </ul>
+
+  <h2>5 · Asana</h2>
+  <p>Gestión de tareas y proyectos en equipo. Claude puede crear tareas, revisar en qué anda un proyecto o avisarte qué está atrasado.</p>
+  <ul class="arrow">
+    <li>Probá: "mostrame qué tareas del proyecto X están vencidas".</li>
+    <li>Bueno para armar el resumen semanal sin entrar manualmente a revisar cada tablero.</li>
+  </ul>
+
+  <h2>6 · Notion</h2>
+  <p>Donde tenés notas, documentos y bases de datos. Conectado, Claude puede buscar información ahí adentro y usarla como contexto para lo que le estás pidiendo.</p>
+  <ul class="arrow">
+    <li>Probá: "buscá en mi Notion la página de [tema] y resumímela".</li>
+    <li>Es de los conectores que más se nota cuando ya tenés todo documentado ahí.</li>
+  </ul>
+
+  <h2>7 · Slack</h2>
+  <p>La mensajería del equipo. Claude puede leer un canal, buscar una conversación puntual o mandar un mensaje por vos.</p>
+  <ul class="arrow">
+    <li>Probá: "buscá en el canal #ventas si alguien habló del cliente X esta semana".</li>
+    <li>Útil para no scrollear canales enteros buscando un dato suelto.</li>
+  </ul>
+
+  <h2>8 · Google Calendar</h2>
+  <p>Tu agenda. Con este conector Claude puede revisar tu disponibilidad, crear un evento o mover una reunión.</p>
+  <ul class="arrow">
+    <li>Probá: "fijate si tengo un hueco libre el jueves a la tarde y agendá la llamada con [cliente]".</li>
+    <li>Sirve para coordinar reuniones sin ir y venir entre el chat y el calendario.</li>
+  </ul>
+
+  <h2>9 · Google Drive</h2>
+  <p>Tus archivos propios: docs, hojas de cálculo, PDFs. Claude puede buscar un archivo puntual y leer lo que hay adentro.</p>
+  <ul class="arrow">
+    <li>Probá: "buscá en mi Drive la propuesta que le mandé a [cliente] y decime qué precio le puse".</li>
+    <li>Ahorra el "¿dónde guardé ese archivo?" de siempre.</li>
+  </ul>
+
+  <h2>10 · Email</h2>
+  <p>Tu casilla de correo. Conectado, Claude puede leer, buscar y dejarte respuestas redactadas como borrador para que vos las revises antes de mandar.</p>
+  <ul class="arrow">
+    <li>Probá: "buscá el último mail de [cliente] y dejame un borrador de respuesta".</li>
+    <li>Claude nunca manda el mail solo — el borrador queda para que lo revises vos.</li>
+  </ul>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Cómo activarlos</h2>
+  <ol class="steps">
+    <li>Entrá a <b>Ajustes → Conectores</b> en Claude.</li>
+    <li>Elegí la plataforma y autorizá el acceso (login normal de esa app).</li>
+    <li>Empezá por una sola — la que más usás — y probá un pedido simple antes de sumar el resto.</li>
+  </ol>
+
+  <h2>Checklist: activá los que uses</h2>
+  <ul class="check">
+    <li>Activé <b>Zapier</b> para disparar o revisar automatizaciones.</li>
+    <li>Activé <b>HubSpot</b> para consultar contactos y tratos.</li>
+    <li>Activé <b>Atlassian</b> para tickets y documentación de proyecto.</li>
+    <li>Activé <b>Linear</b> para issues y bugs.</li>
+    <li>Activé <b>Asana</b> para tareas y proyectos.</li>
+    <li>Activé <b>Notion</b> para buscar en mis notas y docs.</li>
+    <li>Activé <b>Slack</b> para leer y mandar mensajes del equipo.</li>
+    <li>Activé <b>Google Calendar</b> para revisar y mover reuniones.</li>
+    <li>Activé <b>Google Drive</b> para buscar mis archivos.</li>
+    <li>Activé <b>Email</b> para leer y dejar borradores de respuesta.</li>
+  </ul>
+</RecursoLayout>
