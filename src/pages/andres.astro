@@ -5,6 +5,8 @@ const WA = '59892302941';
 const waUrl = (msg: string) => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
 const b2cUrl = waUrl('Hola Andrés, vi tu landing y quiero aprender a usar IA de forma práctica.');
 const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const replayUrl = 'https://replay-cotizador-genideia.vercel.app/';
+const replayAsesoriasUrl = `${replayUrl}?t=5520`;
 ---
 
 <!DOCTYPE html>
@@ -92,10 +94,23 @@ const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
                 <span>CONSTRUCCIÓN</span>
               </div>
 
-              <a class="cta cta-learn" href={b2cUrl} target="_blank" rel="noopener noreferrer">
+              <button type="button" class="cta cta-learn" id="learn-toggle" aria-expanded="false" aria-controls="learn-panel">
                 <span>Quiero aprender IA</span>
                 <span aria-hidden="true">→</span>
-              </a>
+              </button>
+
+              <div class="learn-panel" id="learn-panel" hidden>
+                <p class="panel-context">En la clase grabada hicimos el recorrido completo de la herramienta, mostramos un caso real de punta a punta y presentamos las modalidades de asesoría.</p>
+                <p class="panel-urgency">⏳ Cupos abiertos — cerramos al completar los primeros lugares del mes.</p>
+                <a class="cta cta-learn" href={replayUrl} target="_blank" rel="noopener noreferrer">
+                  <span>🎥 Mirar la clase completa</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+                <a class="cta cta-learn-alt" href={replayAsesoriasUrl} target="_blank" rel="noopener noreferrer">
+                  <span>⚡ Ir directo a las modalidades de asesoría</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
             </article>
 
             <article class="choice-card choice-card-business" id="empresas">
@@ -468,6 +483,46 @@ const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
         box-shadow: 0 12px 34px rgba(18, 214, 221, .14);
       }
 
+      .cta-learn[aria-expanded="true"] {
+        opacity: 0.55;
+        pointer-events: none;
+      }
+
+      .learn-panel {
+        margin-top: 18px;
+        padding-top: 22px;
+        border-top: 1px solid rgba(48, 154, 255, 0.22);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .panel-context {
+        margin: 0;
+        color: #d4d9e2;
+        font-size: 0.88rem;
+        line-height: 1.55;
+      }
+
+      .panel-urgency {
+        margin: 0 0 4px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        color: #ffcf7a;
+      }
+
+      .cta-learn-alt {
+        background: transparent;
+        border: 1px solid rgba(22, 216, 232, 0.55);
+        color: #cdeeff;
+        box-shadow: none;
+      }
+      .cta-learn-alt:hover {
+        background: rgba(22, 216, 232, 0.08);
+      }
+
       .side-note {
         position: absolute;
         top: 50%;
@@ -571,5 +626,14 @@ const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
         .footer-brand small { letter-spacing: .18em; font-size: .54rem; }
       }
     </style>
+
+    <script>
+      const toggle = document.getElementById('learn-toggle');
+      const panel = document.getElementById('learn-panel');
+      toggle?.addEventListener('click', () => {
+        panel.hidden = false;
+        toggle.setAttribute('aria-expanded', 'true');
+      });
+    </script>
   </body>
 </html>
