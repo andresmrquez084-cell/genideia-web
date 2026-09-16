@@ -1,0 +1,44 @@
+---
+// Lead magnet · palabra clave ManyChat: EXTENSOR (reel: "Claude in Chrome" — investigar
+// potenciales clientes en Maps y organizar los datos en un documento).
+// URL pública: /recursos/instalar-extension-claude-chrome
+//
+// Reemplaza a /recursos/conectar-claude-chrome como destino de la palabra EXTENSOR — esa
+// página quedaba armada para un demo distinto (buscar noticias de IA → Drive). Andrés pidió
+// una guía nueva y acotada solo a instalar + conectar, sin el resto (15/9).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+---
+<RecursoLayout
+  titulo="Instalá y conectá la extensión de Claude en Chrome"
+  descripcion="Guía corta: los pasos exactos para instalar la extensión de Claude en Chrome y dejarla conectada, como en el video."
+  tipo="Mini-guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="EXTENSOR"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>La extensión de Claude para Chrome le da acceso directo a tu navegador: puede buscar, abrir páginas y traerte la información sin que copies y pegues nada. Estos son los pasos para instalarla y dejarla lista.</b></div>
+
+  <h2>Lo que necesitás antes de arrancar</h2>
+  <ul class="check">
+    <li><b>Google Chrome</b> en tu computadora (no funciona en el celular ni en otros navegadores).</li>
+    <li>Una <b>cuenta de Claude con plan pago</b> — desde Pro (~USD 20/mes) para arriba. Con la cuenta gratis todavía no está disponible.</li>
+  </ul>
+
+  <h2>Cómo instalarla y conectarla</h2>
+  <ol class="steps">
+    <li><b>Abrí Google Chrome</b> en tu computadora.</li>
+    <li>Entrá a la <b>Chrome Web Store</b> y buscá la extensión oficial "Claude" (de Anthropic).</li>
+    <li>Tocá <b>"Agregar a Chrome"</b> y confirmá la instalación.</li>
+    <li><b>Iniciá sesión</b> con tu cuenta de Claude (la del plan pago).</li>
+    <li><b>Fijá la extensión:</b> clic en la piecita de rompecabezas arriba a la derecha, y clavá el chinche al lado de "Claude".</li>
+    <li><b>Aceptá los permisos</b> que pide — son los que le dejan leer la página, hacer clic, escribir y manejar pestañas por vos.</li>
+  </ol>
+  <div class="note">Listo: ya te queda el ícono de Claude en la barra de Chrome. Hacé clic ahí cuando quieras que trabaje sobre lo que tenés abierto.</div>
+
+  <div class="minicta">
+    Esto es parte de todo lo que comparto en la comunidad de <b>Claude desde 0</b>: guías, clases grabadas y el espacio donde resuelvo dudas puntuales. <a href={grupo} target="_blank" rel="noopener noreferrer">Entrar al grupo →</a>
+  </div>
+</RecursoLayout>
