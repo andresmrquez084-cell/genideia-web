@@ -1,11 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// NOTA (2026-09-17): esta sección listaba a los 2 socios — Andrés (automatización) y Tadeo (ads).
-// Con el nuevo posicionamiento 100% B2B de sistemas/automatización, la función de Tadeo tal
-// como estaba descripta (ads/publicidad) queda fuera del alcance de este sitio. Se lo deja
-// afuera de esta página hasta que Andrés defina cómo se presenta acá (o si queda solo en su
-// propio dominio). Ver resumen de cambios al final del PR.
+// Andrés (17/09) pidió dejar a Tadeo listado sin detallar su rol específico
+// (antes decía "Ads/Publicidad", que ya no aplica al posicionamiento de este sitio).
 const socios = [
   {
     nombre: 'Andrés Albornoz',
@@ -16,6 +13,16 @@ const socios = [
     linkedin: 'https://www.linkedin.com/in/andres-albornoz-b498823a4',
     wsp: 'https://wa.me/59892302941',
     foto: '/img/andres.jpg',
+  },
+  {
+    nombre: 'Tadeo Granada',
+    rol: 'Cofundador',
+    desc: 'Cofundador de GENIDEIA Company.',
+    ig: 'https://instagram.com/tadeogranadaa',
+    handle: '@tadeogranadaa',
+    linkedin: '',
+    wsp: 'https://wa.me/59892267601',
+    foto: '/img/tadeo.jpg',
   },
 ];
 
@@ -128,13 +135,13 @@ const valores = [
       <div class="text-center mb-12" data-reveal>
         <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Quién está detrás</p>
         <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
-          La persona que responde por tu sistema.
+          Las personas que responden por tu sistema.
         </h2>
       </div>
 
-      <div data-reveal data-delay="1">
+      <div class="grid sm:grid-cols-2 gap-5" data-reveal data-delay="1">
         {socios.map((s) => (
-          <div class="card-hover rounded-xl p-6 flex items-center gap-5 max-w-xl mx-auto" style="background:#111111; border:1px solid rgba(255,255,255,0.07);">
+          <div class="card-hover rounded-xl p-6 flex items-center gap-5" style="background:#111111; border:1px solid rgba(255,255,255,0.07);">
             <div style="flex-shrink:0; width:88px; height:110px; border-radius:0.5rem; overflow:hidden; background:#0B1324; border:1px solid rgba(255,255,255,0.08);" class="flex items-center justify-center">
               <img src={s.foto} alt={s.nombre} style="width:100%; height:100%; object-fit:cover;" />
             </div>
