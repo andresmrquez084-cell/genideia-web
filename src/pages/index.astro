@@ -1,29 +1,48 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Section from '../components/Section.astro';
-import StepList from '../components/StepList.astro';
-import ProblemaCard from '../components/ProblemaCard.astro';
 import SistemaCard from '../components/SistemaCard.astro';
-import { PROBLEMAS, PASOS_TRABAJO, DIFERENCIALES, SISTEMAS } from '../data/soluciones';
+import { DIFERENCIALES, SISTEMAS } from '../data/soluciones';
 
-const sistemasDestacados = SISTEMAS.slice(0, 3);
+// El sitio pasa a ser 1 sola página con 3 pestañas reales (JS, sin recargar), pedido
+// por Andrés (17/09): Nosotros · Agendá tu auditoría · Nuestra experiencia — cada una
+// con su propio CTA. Reemplaza /soluciones, /casos, /como-trabajamos y /nosotros
+// (borrados). El nav (Nav.astro) son los mismos 3 links, funcionan también como
+// navegación normal desde otras páginas (ej. /recursos/*) vía hash (#nosotros, etc).
+const sistemasDestacados = SISTEMAS.slice(0, 4);
 
-// Home = breve presentación + portfolio integrado + video → agendar llamada directo.
-// No es la "web de presentación completa" (eso vive en /soluciones, /casos, /como-trabajamos
-// vía nav) — el objetivo acá es que entienda el ecosistema en 10 segundos y agende.
-// Andrés (17/09) pidió "agendar la auditoría", pero el Calendly real del funnel personal
-// (calendly.com/genideiaconsultoraia/llamada-de-diagnostico) es la "Llamada de exploración"
-// gratis de 30 min — la auditoría paga es un paso posterior (ver [[project-albornoz-embudo]]).
-// Usamos acá "llamada de exploración" para no prometer algo distinto de lo que agenda.
-// Confirmar con Andrés si quiere crear un evento de Calendly propio para la empresa.
 const WA = '59892302941';
 const waMsg = encodeURIComponent('Hola, quiero agendar una llamada con GENIDEIA.');
 const waUrl = `https://wa.me/${WA}?text=${waMsg}`;
+
+// Andrés pidió "agendar la auditoría", pero el Calendly real del funnel personal
+// es la "Llamada de exploración" gratis de 30 min — la auditoría paga es un paso
+// posterior (ver [[project-albornoz-embudo]]). Usamos ese término para no prometer
+// algo distinto de lo que la persona agenda. Confirmar si quiere un evento propio.
 const CALENDLY = 'https://calendly.com/genideiaconsultoraia/llamada-de-diagnostico';
 const calendlyEmbed = `${CALENDLY}?hide_gdpr_banner=1&background_color=0b1324&text_color=f2f4f7&primary_color=00c8ff`;
 
-// Micro-indicadores del hero — concretos, sin "IA"/"innovación" sueltos.
-const indicadores = ['Automatización de procesos', 'Sistemas a medida', 'Seguimiento y control', 'Implementación real'];
+const socios = [
+  {
+    nombre: 'Andrés Albornoz',
+    rol: 'Cofundador · Sistemas y automatización',
+    desc: 'Diseña e implementa sistemas y automatizaciones a medida de la operación de cada empresa.',
+    ig: 'https://instagram.com/andresalbornozia',
+    handle: '@andresalbornozia',
+    linkedin: 'https://www.linkedin.com/in/andres-albornoz-b498823a4',
+    wsp: 'https://wa.me/59892302941',
+    foto: '/img/andres.jpg',
+  },
+  {
+    nombre: 'Tadeo Granada',
+    rol: 'Cofundador',
+    desc: 'Cofundador de GENIDEIA Company.',
+    ig: 'https://instagram.com/tadeogranadaa',
+    handle: '@tadeogranadaa',
+    linkedin: '',
+    wsp: 'https://wa.me/59892267601',
+    foto: '/img/tadeo.jpg',
+  },
+];
 ---
 
 <BaseLayout
@@ -32,179 +51,175 @@ const indicadores = ['Automatización de procesos', 'Sistemas a medida', 'Seguim
   path="/"
 >
 
-  <!-- ── HERO ───────────────────────────────────────────────── -->
-  <section class="max-w-6xl mx-auto px-6 pt-24 pb-16" style="position:relative; overflow:hidden;">
-    <div class="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
-
-      <!-- Izquierda: texto -->
-      <div style="position:relative; z-index:2;">
-        <p class="hero-animate text-xs font-medium mb-6 uppercase" data-delay="1" style="color:#00C8FF; letter-spacing:3px;">
-          Automatización · Sistemas · Procesos
-        </p>
-        <h1 class="hero-animate mb-6" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.0; letter-spacing:-1.5px; font-size:clamp(2.6rem, 6vw, 4.6rem);">
-          Convertimos procesos<br />
-          <span style="color:#B8BEC7; font-weight:300; font-style:italic;">en sistemas.</span>
-        </h1>
-        <p class="hero-animate mb-9 leading-relaxed max-w-lg text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
-          Diseñamos automatizaciones y soluciones a medida para reducir tareas manuales, ordenar operaciones y mejorar el seguimiento dentro de tu empresa.
-        </p>
-        <div class="hero-animate flex flex-col sm:flex-row gap-4 mb-8" data-delay="4">
-          <a href="#agenda" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">
-            Contanos qué querés mejorar
-          </a>
-          <a href="/como-trabajamos" style="border:1px solid rgba(255,255,255,0.12); color:#B8BEC7;" class="px-8 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors text-center">
-            Ver cómo trabajamos
-          </a>
-        </div>
-        <div class="hero-animate flex flex-wrap gap-x-5 gap-y-2 mb-6" data-delay="5" style="font-family:'Inter',sans-serif;">
-          {indicadores.map((m) => (
-            <span class="flex items-center gap-2" style="color:#B8BEC7; font-size:0.78rem; font-weight:400;">
-              <span style="width:6px; height:6px; border-radius:9999px; background:#00C8FF; box-shadow:0 0 8px rgba(0,200,255,0.6); flex-shrink:0; display:inline-block;"></span>
-              {m}
-            </span>
-          ))}
-        </div>
-        <p class="hero-animate text-sm" data-delay="5" style="color:rgba(160,160,160,0.45); font-weight:300; letter-spacing:0.5px;">
-          7 proyectos en producción · Montevideo, Uruguay
-        </p>
-      </div>
-
-      <!-- Derecha: el isotipo GII se arma y desarma con partículas (canvas) -->
-      <div class="hero-animate order-first lg:order-last" data-delay="3" style="position:relative;">
-        <div class="hero-glow" style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,200,255,0.30) 0%, transparent 66%); z-index:0;" aria-hidden="true"></div>
-        <div style="position:relative; z-index:1; width:100%; max-width:720px; aspect-ratio:1; margin:0 auto;">
-          <canvas id="hero-logo" style="width:100%; height:100%; display:block;" aria-hidden="true"></canvas>
-          <img src="/img/symbol-gii.png" alt="GENIDEIA Company" width="700" height="700" style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none;" />
-        </div>
-      </div>
-
-    </div>
+  <!-- ── INTRO BREVE (siempre visible, arriba de las pestañas) ─ -->
+  <section class="max-w-4xl mx-auto px-6 pt-20 pb-10 text-center" style="position:relative; overflow:hidden;">
+    <p class="hero-animate text-xs font-medium mb-5 uppercase" data-delay="1" style="color:#00C8FF; letter-spacing:3px;">
+      Automatización · Sistemas · Procesos
+    </p>
+    <h1 class="hero-animate mb-5" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.02; letter-spacing:-1.3px; font-size:clamp(2.3rem, 5.2vw, 3.6rem);">
+      Convertimos procesos <span style="color:#B8BEC7; font-weight:300; font-style:italic;">en sistemas.</span>
+    </h1>
+    <p class="hero-animate mx-auto leading-relaxed max-w-xl text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
+      Diseñamos automatizaciones y soluciones a medida para reducir tareas manuales, ordenar operaciones y mejorar el seguimiento dentro de tu empresa.
+    </p>
   </section>
 
-  <!-- ── PORTFOLIO (sistemas reales, integrado — no es un destino aparte) ── -->
-  <Section
-    id="portfolio"
-    border="both"
-    kicker="Lo que ya construimos"
-    title="Sistemas reales, no ejemplos de pizarrón"
-    maxWidth="max-w-6xl"
-  >
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {sistemasDestacados.map((s) => <SistemaCard sistema={s} />)}
+  <!-- ── TABS ───────────────────────────────────────────────── -->
+  <div class="max-w-4xl mx-auto px-6 mb-4" data-reveal>
+    <div class="tabstrip" role="tablist" aria-label="Secciones">
+      <button type="button" class="tab-btn" data-tab-btn="nosotros" role="tab">Nosotros</button>
+      <button type="button" class="tab-btn" data-tab-btn="agenda" role="tab">Agendá tu auditoría</button>
+      <button type="button" class="tab-btn" data-tab-btn="experiencia" role="tab">Nuestra experiencia</button>
     </div>
-    <p class="text-center mt-12" data-reveal>
-      <a href="/experiencia/" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
-        Ver el portfolio completo →
-      </a>
-    </p>
-  </Section>
+  </div>
 
-  <!-- ── PROBLEMAS QUE RESOLVEMOS ──────────────────────────── -->
-  <Section
-    id="problemas"
-    border="both"
-    kicker="Problemas que resolvemos"
-    title="¿Con cuál de esto te encontrás en tu empresa?"
-    maxWidth="max-w-6xl"
-  >
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      {PROBLEMAS.map((p) => <ProblemaCard problema={p} />)}
-    </div>
-    <p class="text-center mt-12 max-w-2xl mx-auto" style="color:#B8BEC7; font-weight:300;" data-reveal>
-      No partimos de una herramienta. Partimos del problema y construimos el sistema alrededor de tu operación.
-    </p>
-  </Section>
-
-  <!-- ── CÓMO TRABAJAMOS (condensado) ──────────────────────── -->
-  <Section
-    id="metodo"
-    bg="soft"
-    border="both"
-    kicker="Cómo trabajamos"
-    title="Diagnóstico, diseño, construcción, implementación y mejora."
-    subtitle="No entregamos software suelto: una solución que tiene que funcionar dentro del proceso que ya existe en tu empresa."
-  >
-    <StepList pasos={PASOS_TRABAJO} />
-    <p class="text-center mt-12" data-reveal>
-      <a href="/como-trabajamos" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
-        Ver el método completo →
-      </a>
-    </p>
-  </Section>
-
-  <!-- ── QUÉ NOS DIFERENCIA ─────────────────────────────────── -->
-  <Section
-    bg="soft"
-    border="both"
-    kicker="Qué nos diferencia"
-    title="No empezamos por la tecnología. Empezamos por entender el proceso."
-    maxWidth="max-w-4xl"
-  >
-    <div class="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
-      <div data-reveal>
-        <p style="color:rgba(160,160,160,0.5); font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">Lo que no hacemos</p>
-        <ul class="space-y-3">
-          {DIFERENCIALES.no.map((item) => (
-            <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-2.5">
-              <span style="color:rgba(160,160,160,0.6); flex-shrink:0;">—</span>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div data-reveal data-delay="1">
-        <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">Cómo trabajamos</p>
-        <ul class="space-y-3">
-          {DIFERENCIALES.si.map((item) => (
-            <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-2.5">
-              <span style="color:#00C8FF; flex-shrink:0;">→</span>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </Section>
-
-  <!-- ── VIDEO (VSL) ───────────────────────────────────────── -->
-  <Section
-    id="video"
-    bg="soft"
-    border="both"
-    kicker="Antes de agendar"
-    title="Un video corto sobre cómo pensamos esto"
-    maxWidth="max-w-3xl"
-  >
-    <div class="video-main-wrap" data-video-wrap data-reveal>
-      <video id="vid-home" controls playsinline preload="metadata" style="width:100%; height:100%; object-fit:contain; display:block; background:#0B1324;">
-        <source src="/videos/andres-01-porque.mp4" type="video/mp4" />
-        Tu navegador no soporta el video.
-      </video>
-      <button type="button" class="video-cover" data-video-cover aria-label="Reproducir video">
-        <span class="play-btn"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-        <span class="cover-hint">Voy a ayudarte a ahorrar tiempo y dinero en tu empresa automatizando tareas manuales.</span>
-      </button>
-    </div>
-  </Section>
-
-  <!-- ── AGENDÁ TU AUDITORÍA (Calendly) ─────────────────────── -->
-  <section id="agenda" class="py-24">
-    <div class="max-w-3xl mx-auto px-6">
-      <div class="text-center mb-10" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">El siguiente paso</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
-          Agendá tu llamada de exploración.
-        </h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed">
-          Analizamos dónde se pierde tiempo, dónde aparecen errores y qué partes tiene sentido automatizar.
-        </p>
-      </div>
-      <div id="calendly-box" class="calendly-inline-widget" data-url={calendlyEmbed} style="min-width:320px; height:700px; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2);" data-reveal></div>
-      <p class="text-center mt-6 text-sm" style="color:#B8BEC7; font-weight:300;" data-reveal>
-        ¿Preferís escribir? <a href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; text-decoration:underline;">Hablemos por WhatsApp →</a>
+  <!-- ── PESTAÑA 1 · NOSOTROS ──────────────────────────────── -->
+  <div id="panel-nosotros" class="tab-panel" data-panel="nosotros" role="tabpanel">
+    <section class="max-w-3xl mx-auto px-6 pt-6 pb-16 text-center" data-reveal>
+      <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Quiénes somos</p>
+      <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.9rem, 4.5vw, 2.9rem);" class="mb-5">
+        Consultoría operativa, no agencia.
+      </h2>
+      <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed max-w-2xl mx-auto">
+        GENIDEIA diseña sistemas alrededor de cómo funciona cada empresa. No vendemos paquetes
+        cerrados ni soluciones de estantería: primero entendemos el problema, después diseñamos
+        el sistema, y usamos IA, automatización, bases de datos e integraciones solo cuando tienen sentido.
       </p>
-    </div>
-  </section>
+    </section>
+
+    <section class="max-w-3xl mx-auto px-6 pb-16">
+      <div class="grid sm:grid-cols-2 gap-5" data-reveal data-delay="1">
+        {socios.map((s) => (
+          <div class="card-hover rounded-xl p-6 flex items-center gap-5" style="background:#111111; border:1px solid rgba(255,255,255,0.07);">
+            <div style="flex-shrink:0; width:72px; height:90px; border-radius:0.5rem; overflow:hidden; background:#0B1324; border:1px solid rgba(255,255,255,0.08);" class="flex items-center justify-center">
+              <img src={s.foto} alt={s.nombre} style="width:100%; height:100%; object-fit:cover;" />
+            </div>
+            <div class="min-w-0">
+              <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.15rem;" class="leading-tight">{s.nombre}</h3>
+              <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:1px; font-weight:500;" class="uppercase mt-1 mb-2">{s.rol}</p>
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+                <a href={s.ig} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">{s.handle}</a>
+                {s.wsp && <a href={s.wsp} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">WhatsApp</a>}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-16">
+      <div class="max-w-3xl mx-auto px-6">
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-8 text-center" data-reveal>Qué nos diferencia</p>
+        <div class="grid sm:grid-cols-2 gap-8">
+          <div data-reveal>
+            <p style="color:rgba(160,160,160,0.5); font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">Lo que no hacemos</p>
+            <ul class="space-y-3">
+              {DIFERENCIALES.no.map((item) => (
+                <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-2.5">
+                  <span style="color:rgba(160,160,160,0.6); flex-shrink:0;">—</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div data-reveal data-delay="1">
+            <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">Cómo trabajamos</p>
+            <ul class="space-y-3">
+              {DIFERENCIALES.si.map((item) => (
+                <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-2.5">
+                  <span style="color:#00C8FF; flex-shrink:0;">→</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-2xl mx-auto px-6 py-16 text-center" data-reveal>
+      <button type="button" data-tab-btn="agenda" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-9 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block text-base">
+        Quiero agendar mi llamada →
+      </button>
+    </section>
+  </div>
+
+  <!-- ── PESTAÑA 2 · AGENDÁ TU AUDITORÍA ───────────────────── -->
+  <div id="panel-agenda" class="tab-panel" data-panel="agenda" role="tabpanel" hidden>
+    <section class="max-w-3xl mx-auto px-6 pt-6 pb-10 text-center" data-reveal>
+      <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">El siguiente paso</p>
+      <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.9rem, 4.5vw, 2.9rem);" class="mb-4">
+        Agendá tu llamada de exploración.
+      </h2>
+      <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed">
+        Antes, un par de videos cortos de Andrés sobre cómo pensamos esto. Después, elegís el horario.
+      </p>
+    </section>
+
+    <section class="max-w-3xl mx-auto px-6 pb-14">
+      <div class="space-y-6">
+        <div class="video-main-wrap" data-video-wrap data-reveal>
+          <video controls playsinline preload="metadata" style="width:100%; height:100%; object-fit:contain; display:block; background:#0B1324;">
+            <source src="/videos/andres-01-porque.mp4" type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
+          <button type="button" class="video-cover" data-video-cover aria-label="Reproducir video">
+            <span class="play-btn"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="cover-hint">Parte 1 — Voy a ayudarte a ahorrar tiempo y dinero en tu empresa automatizando tareas manuales.</span>
+          </button>
+        </div>
+        <div class="video-main-wrap" data-video-wrap data-reveal data-delay="1">
+          <video controls playsinline preload="metadata" style="width:100%; height:100%; object-fit:contain; display:block; background:#0B1324;">
+            <source src="/videos/andres-02-metodo.mp4" type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
+          <button type="button" class="video-cover" data-video-cover aria-label="Reproducir video">
+            <span class="play-btn"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="cover-hint">Parte 2 — El método, paso a paso.</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07);" class="py-16">
+      <div class="max-w-3xl mx-auto px-6">
+        <div id="calendly-box" class="calendly-inline-widget" data-url={calendlyEmbed} style="min-width:320px; height:700px; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2);" data-reveal></div>
+        <p class="text-center mt-6 text-sm" style="color:#B8BEC7; font-weight:300;" data-reveal>
+          ¿Preferís escribir? <a href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; text-decoration:underline;">Hablemos por WhatsApp →</a>
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── PESTAÑA 3 · NUESTRA EXPERIENCIA ───────────────────── -->
+  <div id="panel-experiencia" class="tab-panel" data-panel="experiencia" role="tabpanel" hidden>
+    <section class="max-w-3xl mx-auto px-6 pt-6 pb-12 text-center" data-reveal>
+      <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Lo que ya construimos</p>
+      <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.9rem, 4.5vw, 2.9rem);" class="mb-4">
+        Sistemas reales, no ejemplos de pizarrón.
+      </h2>
+      <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed">
+        Problema → sistema → resultado. Así encaramos cada proyecto.
+      </p>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 pb-10">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {sistemasDestacados.map((s) => <SistemaCard sistema={s} />)}
+      </div>
+      <p class="text-center mt-10" data-reveal>
+        <a href="/experiencia/" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
+          Ver el portfolio completo (con diagnósticos y más proyectos) →
+        </a>
+      </p>
+    </section>
+
+    <section class="max-w-2xl mx-auto px-6 py-16 text-center" data-reveal>
+      <button type="button" data-tab-btn="agenda" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-9 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block text-base">
+        Agendá tu llamada →
+      </button>
+    </section>
+  </div>
 
 </BaseLayout>
 
@@ -223,12 +238,23 @@ const indicadores = ['Automatización de procesos', 'Sistemas a medida', 'Seguim
 </script>
 
 <style>
+  .tabstrip { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 4px 0 22px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .tab-btn {
+    font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.2px;
+    padding: 10px 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12);
+    color: #B8BEC7; background: transparent; cursor: pointer; transition: all .2s ease;
+  }
+  .tab-btn:hover { color: #F2F4F7; border-color: rgba(0,200,255,0.4); }
+  .tab-btn.active { background: linear-gradient(135deg,#00C8FF,#007BFF); color: #0A0F1A; border-color: transparent; }
+  .tab-panel { animation: panelFade .35s ease; }
+  @keyframes panelFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
   .video-main-wrap { position:relative; width:100%; aspect-ratio:16/9; border-radius:18px; overflow:hidden; border:1px solid rgba(0,200,255,0.25); background:#0B1324; box-shadow:0 12px 60px rgba(0,200,255,0.12); }
   .video-cover { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; cursor:pointer; border:none; padding:24px; background:linear-gradient(180deg, rgba(7,8,13,0.30) 0%, rgba(7,8,13,0.60) 100%); transition:opacity .3s; }
   .video-main-wrap.playing .video-cover { opacity:0; pointer-events:none; }
-  .play-btn { width:76px; height:76px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#0A0F1A; background:linear-gradient(135deg,#00C8FF,#007BFF); box-shadow:0 0 0 0 rgba(0,200,255,0.5); animation:playPulse 2.2s ease-in-out infinite; flex-shrink:0; }
+  .play-btn { width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#0A0F1A; background:linear-gradient(135deg,#00C8FF,#007BFF); box-shadow:0 0 0 0 rgba(0,200,255,0.5); animation:playPulse 2.2s ease-in-out infinite; flex-shrink:0; }
   @keyframes playPulse { 0%{ box-shadow:0 0 0 0 rgba(0,200,255,0.45);} 70%{ box-shadow:0 0 0 22px rgba(0,200,255,0);} 100%{ box-shadow:0 0 0 0 rgba(0,200,255,0);} }
-  .cover-hint { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.05rem; line-height:1.35; color:#F2F4F7; text-align:center; text-shadow:0 2px 12px rgba(0,0,0,0.6); max-width:36ch; }
+  .cover-hint { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1rem; line-height:1.35; color:#F2F4F7; text-align:center; text-shadow:0 2px 12px rgba(0,0,0,0.6); max-width:36ch; }
   @media (prefers-reduced-motion: reduce) { .play-btn { animation:none; } }
 </style>
 
@@ -255,108 +281,52 @@ const indicadores = ['Automatización de procesos', 'Sistemas a medida', 'Seguim
     cover.addEventListener('click', () => { (v as HTMLVideoElement).play(); });
     v.addEventListener('play', () => wrap.classList.add('playing'));
   });
-</script>
 
-<style>
-  @keyframes heroGlowPulse {
-    0%, 100% { opacity: 0.55; transform: scale(1); }
-    50%      { opacity: 1; transform: scale(1.08); }
+  // ── Tabs (Nosotros · Agendá tu auditoría · Nuestra experiencia) ────
+  const TABS = ['nosotros', 'agenda', 'experiencia'];
+  const panels = Object.fromEntries(TABS.map((t) => [t, document.getElementById(`panel-${t}`)]));
+  const tabButtons = document.querySelectorAll('[data-tab-btn]');
+  const navTabLinks = document.querySelectorAll('[data-nav-tab]');
+
+  function activateTab(id: string) {
+    if (!TABS.includes(id)) id = 'nosotros';
+    TABS.forEach((t) => {
+      panels[t]?.toggleAttribute('hidden', t !== id);
+    });
+    tabButtons.forEach((btn) => {
+      const isStripBtn = btn.closest('.tabstrip');
+      if (!isStripBtn) return;
+      btn.classList.toggle('active', btn.getAttribute('data-tab-btn') === id);
+      btn.setAttribute('aria-selected', String(btn.getAttribute('data-tab-btn') === id));
+    });
+    history.replaceState(null, '', `#${id}`);
   }
-  .hero-glow { animation: heroGlowPulse 5s ease-in-out infinite; }
-  @media (prefers-reduced-motion: reduce) {
-    .hero-glow { animation: none; }
-  }
-</style>
 
-<script>
-  // El isotipo GII se ARMA y DESARMA: partículas que convergen en la silueta del logo
-  // (muestreada de la imagen) y se dispersan — en loop infinito.
-  (() => {
-    const canvas = document.getElementById('hero-logo');
-    if (!(canvas instanceof HTMLCanvasElement)) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    let W = 0, H = 0, DPR = 1;
-    function resize() {
-      const rect = canvas.getBoundingClientRect();
-      DPR = Math.min(window.devicePixelRatio || 1, 2);
-      W = rect.width; H = rect.height;
-      canvas.width = Math.round(W * DPR);
-      canvas.height = Math.round(H * DPR);
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    const MAX = window.innerWidth < 640 ? 440 : 860;
-    let pts = [];
-
-    function buildTargets(img) {
-      const S = 150;
-      const off = document.createElement('canvas');
-      off.width = S; off.height = S;
-      const octx = off.getContext('2d');
-      if (!octx) return;
-      octx.drawImage(img, 0, 0, S, S);
-      let data;
-      try { data = octx.getImageData(0, 0, S, S).data; } catch (e) { return; }
-      const raw = [];
-      for (let y = 0; y < S; y += 2) {
-        for (let x = 0; x < S; x += 2) {
-          const i = (y * S + x) * 4;
-          const a = data[i + 3];
-          const bright = (data[i] + data[i + 1] + data[i + 2]) / 3;
-          const nx = (x / S) * 2 - 1, ny = (y / S) * 2 - 1;
-          if (nx * nx + ny * ny > 1) continue;          // recorte circular
-          if (a > 40 && bright > 95) raw.push([nx, ny]); // sólo anillo + GII + glow
-        }
+  tabButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-tab-btn');
+      if (id) {
+        activateTab(id);
+        panels[id]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-      const stride = Math.max(1, Math.floor(raw.length / MAX));
-      pts = [];
-      for (let i = 0; i < raw.length; i += stride) {
-        pts.push({
-          x: raw[i][0], y: raw[i][1],
-          sx: (Math.random() * 2 - 1) * 1.9,
-          sy: (Math.random() * 2 - 1) * 1.9,
-          r: 0.95 + Math.random() * 1.3,
-          a0: 0.5 + Math.random() * 0.45,
-        });
+    });
+  });
+
+  // Los links del nav (misma página) también funcionan como tabs — en otras
+  // páginas (ej. /recursos/*) el href normal de "/#agenda" navega acá y este
+  // mismo script activa la pestaña correcta al cargar.
+  navTabLinks.forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href') || '';
+      const hash = href.split('#')[1];
+      if (hash && TABS.includes(hash)) {
+        e.preventDefault();
+        activateTab(hash);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-    }
+    });
+  });
 
-    const T_A = 2400, T_H = 2000, T_D = 2000, T_H2 = 650;
-    const CYCLE = T_A + T_H + T_D + T_H2;
-    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-    function assembly(ms) {
-      const t = ms % CYCLE;
-      if (t < T_A) return ease(t / T_A);
-      if (t < T_A + T_H) return 1;
-      if (t < T_A + T_H + T_D) return 1 - ease((t - T_A - T_H) / T_D);
-      return 0;
-    }
-
-    let started = 0;
-    function frame(now) {
-      if (!started) started = now;
-      const a = reduced ? 1 : assembly(now - started);
-      const R = Math.min(W, H) * 0.54;
-      const cx = W / 2, cy = H / 2;
-      ctx.clearRect(0, 0, W, H);
-      for (const p of pts) {
-        const X = p.sx + (p.x - p.sx) * a;
-        const Y = p.sy + (p.y - p.sy) * a;
-        ctx.fillStyle = 'rgba(130,215,255,' + (p.a0 * (0.3 + 0.7 * a)).toFixed(3) + ')';
-        ctx.beginPath();
-        ctx.arc(cx + X * R, cy + Y * R, p.r * (0.7 + 0.3 * a), 0, Math.PI * 2);
-        ctx.fill();
-      }
-      requestAnimationFrame(frame);
-    }
-
-    const img = new Image();
-    img.onload = () => { buildTargets(img); if (pts.length) requestAnimationFrame(frame); };
-    img.src = '/img/symbol-gii.png';
-  })();
+  const initial = location.hash.replace('#', '');
+  activateTab(TABS.includes(initial) ? initial : 'nosotros');
 </script>
