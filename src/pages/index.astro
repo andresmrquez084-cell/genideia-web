@@ -1,46 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SistemaCard from '../components/SistemaCard.astro';
-import { DIFERENCIALES, SISTEMAS } from '../data/soluciones';
 
-// El sitio pasa a ser 1 sola página con 3 pestañas reales (JS, sin recargar), pedido
-// por Andrés (17/09): Nosotros · Agendá tu auditoría · Nuestra experiencia — cada una
-// con su propio CTA. Reemplaza /soluciones, /casos, /como-trabajamos y /nosotros
-// (borrados). El nav (Nav.astro) son los mismos 3 links, funcionan también como
-// navegación normal desde otras páginas (ej. /recursos/*) vía hash (#nosotros, etc).
-const sistemasDestacados = SISTEMAS.slice(0, 4);
-
-const WA = '59892302941';
-const waMsg = encodeURIComponent('Hola, quiero agendar una llamada con GENIDEIA.');
-const waUrl = `https://wa.me/${WA}?text=${waMsg}`;
-
-// Andrés pidió "agendar la auditoría", pero el Calendly real del funnel personal
-// es la "Llamada de exploración" gratis de 30 min — la auditoría paga es un paso
-// posterior (ver [[project-albornoz-embudo]]). Usamos ese término para no prometer
-// algo distinto de lo que la persona agenda. Confirmar si quiere un evento propio.
-const CALENDLY = 'https://calendly.com/genideiaconsultoraia/llamada-de-diagnostico';
-const calendlyEmbed = `${CALENDLY}?hide_gdpr_banner=1&background_color=0b1324&text_color=f2f4f7&primary_color=00c8ff`;
-
-const socios = [
+// Home = presentación breve + 3 tarjetas que llevan DIRECTO a la página real
+// correspondiente (nada de contenido copiado/recreado acá — pedido explícito
+// de Andrés, 17/09). Mismos 3 destinos que Nav.astro.
+const destinos = [
   {
-    nombre: 'Andrés Albornoz',
-    rol: 'Cofundador · Sistemas y automatización',
-    desc: 'Diseña e implementa sistemas y automatizaciones a medida de la operación de cada empresa.',
-    ig: 'https://instagram.com/andresalbornozia',
-    handle: '@andresalbornozia',
-    linkedin: 'https://www.linkedin.com/in/andres-albornoz-b498823a4',
-    wsp: 'https://wa.me/59892302941',
-    foto: '/img/andres.jpg',
+    eyebrow: 'Quiénes somos',
+    titulo: 'Nosotros',
+    desc: 'Cómo pensamos GENIDEIA, quién está detrás y qué nos diferencia.',
+    href: '/nosotros',
+    cta: 'Conocer al equipo',
   },
   {
-    nombre: 'Tadeo Granada',
-    rol: 'Cofundador',
-    desc: 'Cofundador de GENIDEIA Company.',
-    ig: 'https://instagram.com/tadeogranadaa',
-    handle: '@tadeogranadaa',
-    linkedin: '',
-    wsp: 'https://wa.me/59892267601',
-    foto: '/img/tadeo.jpg',
+    eyebrow: 'El siguiente paso',
+    titulo: 'Agendá tu diagnóstico',
+    desc: 'Mirá el video, los ejemplos por rubro, y coordiná tu diagnóstico con Andrés.',
+    href: 'https://andres.genideiacompany.com/empresa',
+    cta: 'Ver el video y agendar',
+  },
+  {
+    eyebrow: 'Lo que ya construimos',
+    titulo: 'Nuestra experiencia',
+    desc: 'Sistemas reales, diagnósticos y proyectos — el portfolio completo.',
+    href: 'https://genideiacompany.com/experiencia/',
+    cta: 'Ver el portfolio',
   },
 ];
 ---
@@ -51,12 +35,12 @@ const socios = [
   path="/"
 >
 
-  <!-- ── INTRO BREVE (siempre visible, arriba de las pestañas) ─ -->
-  <section class="max-w-4xl mx-auto px-6 pt-20 pb-10 text-center" style="position:relative; overflow:hidden;">
+  <!-- ── INTRO BREVE ────────────────────────────────────────── -->
+  <section class="max-w-3xl mx-auto px-6 pt-24 pb-14 text-center">
     <p class="hero-animate text-xs font-medium mb-5 uppercase" data-delay="1" style="color:#00C8FF; letter-spacing:3px;">
       Automatización · Sistemas · Procesos
     </p>
-    <h1 class="hero-animate mb-5" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.02; letter-spacing:-1.3px; font-size:clamp(2.3rem, 5.2vw, 3.6rem);">
+    <h1 class="hero-animate mb-5" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.05; letter-spacing:-1.3px; font-size:clamp(2.3rem, 5.2vw, 3.6rem);">
       Convertimos procesos <span style="color:#B8BEC7; font-weight:300; font-style:italic;">en sistemas.</span>
     </h1>
     <p class="hero-animate mx-auto leading-relaxed max-w-xl text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
@@ -64,202 +48,37 @@ const socios = [
     </p>
   </section>
 
-  <!-- ── TABS ───────────────────────────────────────────────── -->
-  <div class="max-w-4xl mx-auto px-6 mb-4" data-reveal>
-    <div class="tabstrip" role="tablist" aria-label="Secciones">
-      <button type="button" class="tab-btn" data-tab-btn="nosotros" role="tab">Nosotros</button>
-      <button type="button" class="tab-btn" data-tab-btn="agenda" role="tab">Agendá tu auditoría</button>
-      <button type="button" class="tab-btn" data-tab-btn="experiencia" role="tab">Nuestra experiencia</button>
-    </div>
-  </div>
-
-  <!-- ── PESTAÑA 1 · NOSOTROS ──────────────────────────────── -->
-  <div id="panel-nosotros" class="tab-panel" data-panel="nosotros" role="tabpanel">
-    <section class="max-w-3xl mx-auto px-6 pt-6 pb-16 text-center" data-reveal>
-      <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Quiénes somos</p>
-      <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.9rem, 4.5vw, 2.9rem);" class="mb-5">
-        Consultoría operativa, no agencia.
-      </h2>
-      <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed max-w-2xl mx-auto">
-        GENIDEIA diseña sistemas alrededor de cómo funciona cada empresa. No vendemos paquetes
-        cerrados ni soluciones de estantería: primero entendemos el problema, después diseñamos
-        el sistema, y usamos IA, automatización, bases de datos e integraciones solo cuando tienen sentido.
-      </p>
-    </section>
-
-    <section class="max-w-3xl mx-auto px-6 pb-16">
-      <div class="grid sm:grid-cols-2 gap-5" data-reveal data-delay="1">
-        {socios.map((s) => (
-          <div class="card-hover rounded-xl p-6 flex items-center gap-5" style="background:#111111; border:1px solid rgba(255,255,255,0.07);">
-            <div style="flex-shrink:0; width:72px; height:90px; border-radius:0.5rem; overflow:hidden; background:#0B1324; border:1px solid rgba(255,255,255,0.08);" class="flex items-center justify-center">
-              <img src={s.foto} alt={s.nombre} style="width:100%; height:100%; object-fit:cover;" />
-            </div>
-            <div class="min-w-0">
-              <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.15rem;" class="leading-tight">{s.nombre}</h3>
-              <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:1px; font-weight:500;" class="uppercase mt-1 mb-2">{s.rol}</p>
-              <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
-                <a href={s.ig} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">{s.handle}</a>
-                {s.wsp && <a href={s.wsp} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">WhatsApp</a>}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-16">
-      <div class="max-w-3xl mx-auto px-6">
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-8 text-center" data-reveal>Qué nos diferencia</p>
-        <div class="grid sm:grid-cols-2 gap-8">
-          <div data-reveal>
-            <p style="color:rgba(160,160,160,0.5); font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">Lo que no hacemos</p>
-            <ul class="space-y-3">
-              {DIFERENCIALES.no.map((item) => (
-                <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-2.5">
-                  <span style="color:rgba(160,160,160,0.6); flex-shrink:0;">—</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div data-reveal data-delay="1">
-            <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">Cómo trabajamos</p>
-            <ul class="space-y-3">
-              {DIFERENCIALES.si.map((item) => (
-                <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-2.5">
-                  <span style="color:#00C8FF; flex-shrink:0;">→</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="max-w-2xl mx-auto px-6 py-16 text-center" data-reveal>
-      <button type="button" data-tab-btn="agenda" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-9 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block text-base">
-        Quiero agendar mi llamada →
-      </button>
-    </section>
-  </div>
-
-  <!-- ── PESTAÑA 2 · AGENDÁ TU AUDITORÍA ───────────────────── -->
-  <div id="panel-agenda" class="tab-panel" data-panel="agenda" role="tabpanel" hidden>
-    <section class="max-w-3xl mx-auto px-6 pt-6 pb-10 text-center" data-reveal>
-      <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">El siguiente paso</p>
-      <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.9rem, 4.5vw, 2.9rem);" class="mb-4">
-        Agendá tu llamada de exploración.
-      </h2>
-      <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed">
-        Antes, un par de videos cortos de Andrés sobre cómo pensamos esto. Después, elegís el horario.
-      </p>
-    </section>
-
-    <section class="max-w-3xl mx-auto px-6 pb-14">
-      <div class="space-y-6">
-        <div class="video-main-wrap" data-video-wrap data-reveal>
-          <video controls playsinline preload="metadata" style="width:100%; height:100%; object-fit:contain; display:block; background:#0B1324;">
-            <source src="/videos/andres-01-porque.mp4" type="video/mp4" />
-            Tu navegador no soporta el video.
-          </video>
-          <button type="button" class="video-cover" data-video-cover aria-label="Reproducir video">
-            <span class="play-btn"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-            <span class="cover-hint">Parte 1 — Voy a ayudarte a ahorrar tiempo y dinero en tu empresa automatizando tareas manuales.</span>
-          </button>
-        </div>
-        <div class="video-main-wrap" data-video-wrap data-reveal data-delay="1">
-          <video controls playsinline preload="metadata" style="width:100%; height:100%; object-fit:contain; display:block; background:#0B1324;">
-            <source src="/videos/andres-02-metodo.mp4" type="video/mp4" />
-            Tu navegador no soporta el video.
-          </video>
-          <button type="button" class="video-cover" data-video-cover aria-label="Reproducir video">
-            <span class="play-btn"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-            <span class="cover-hint">Parte 2 — El método, paso a paso.</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07);" class="py-16">
-      <div class="max-w-3xl mx-auto px-6">
-        <div id="calendly-box" class="calendly-inline-widget" data-url={calendlyEmbed} style="min-width:320px; height:700px; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2);" data-reveal></div>
-        <p class="text-center mt-6 text-sm" style="color:#B8BEC7; font-weight:300;" data-reveal>
-          ¿Preferís escribir? <a href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; text-decoration:underline;">Hablemos por WhatsApp →</a>
-        </p>
-      </div>
-    </section>
-  </div>
-
-  <!-- ── PESTAÑA 3 · NUESTRA EXPERIENCIA ───────────────────── -->
-  <div id="panel-experiencia" class="tab-panel" data-panel="experiencia" role="tabpanel" hidden>
-    <section class="max-w-3xl mx-auto px-6 pt-6 pb-12 text-center" data-reveal>
-      <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Lo que ya construimos</p>
-      <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.9rem, 4.5vw, 2.9rem);" class="mb-4">
-        Sistemas reales, no ejemplos de pizarrón.
-      </h2>
-      <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed">
-        Problema → sistema → resultado. Así encaramos cada proyecto.
-      </p>
-    </section>
-
-    <section class="max-w-6xl mx-auto px-6 pb-10">
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {sistemasDestacados.map((s) => <SistemaCard sistema={s} />)}
-      </div>
-      <p class="text-center mt-10" data-reveal>
-        <a href="/experiencia/" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
-          Ver el portfolio completo (con diagnósticos y más proyectos) →
+  <!-- ── 3 DESTINOS ─────────────────────────────────────────── -->
+  <section class="max-w-5xl mx-auto px-6 pb-24">
+    <div class="grid sm:grid-cols-3 gap-6">
+      {destinos.map((d, i) => (
+        <a
+          href={d.href}
+          target={d.href.startsWith('http') ? '_blank' : undefined}
+          rel={d.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+          class="card-hover rounded-xl p-7 flex flex-col"
+          style="background:#111111; border:1px solid rgba(255,255,255,0.07); border-top:2px solid #00C8FF;"
+          data-reveal
+          data-delay={String(i + 1)}
+        >
+          <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-3">{d.eyebrow}</p>
+          <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; color:#F2F4F7; font-size:1.4rem;" class="mb-3">
+            {d.titulo}
+          </h2>
+          <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-6 flex-1">
+            {d.desc}
+          </p>
+          <span style="color:#00C8FF; font-weight:500;" class="text-sm">
+            {d.cta} →
+          </span>
         </a>
-      </p>
-    </section>
-
-    <section class="max-w-2xl mx-auto px-6 py-16 text-center" data-reveal>
-      <button type="button" data-tab-btn="agenda" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-9 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block text-base">
-        Agendá tu llamada →
-      </button>
-    </section>
-  </div>
+      ))}
+    </div>
+  </section>
 
 </BaseLayout>
 
-<script src="https://assets.calendly.com/assets/external/widget.js" async is:inline></script>
-
-<script define:vars={{ calendlyEmbed }}>
-  function initCalendly() {
-    const box = document.getElementById('calendly-box');
-    if (box && window.Calendly && !box.dataset.ready) {
-      box.dataset.ready = '1';
-      box.innerHTML = '';
-      window.Calendly.initInlineWidget({ url: calendlyEmbed, parentElement: box });
-    }
-  }
-  window.addEventListener('load', () => setTimeout(initCalendly, 300));
-</script>
-
-<style>
-  .tabstrip { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 4px 0 22px; border-bottom: 1px solid rgba(255,255,255,0.07); }
-  .tab-btn {
-    font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.2px;
-    padding: 10px 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12);
-    color: #B8BEC7; background: transparent; cursor: pointer; transition: all .2s ease;
-  }
-  .tab-btn:hover { color: #F2F4F7; border-color: rgba(0,200,255,0.4); }
-  .tab-btn.active { background: linear-gradient(135deg,#00C8FF,#007BFF); color: #0A0F1A; border-color: transparent; }
-  .tab-panel { animation: panelFade .35s ease; }
-  @keyframes panelFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-
-  .video-main-wrap { position:relative; width:100%; aspect-ratio:16/9; border-radius:18px; overflow:hidden; border:1px solid rgba(0,200,255,0.25); background:#0B1324; box-shadow:0 12px 60px rgba(0,200,255,0.12); }
-  .video-cover { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; cursor:pointer; border:none; padding:24px; background:linear-gradient(180deg, rgba(7,8,13,0.30) 0%, rgba(7,8,13,0.60) 100%); transition:opacity .3s; }
-  .video-main-wrap.playing .video-cover { opacity:0; pointer-events:none; }
-  .play-btn { width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#0A0F1A; background:linear-gradient(135deg,#00C8FF,#007BFF); box-shadow:0 0 0 0 rgba(0,200,255,0.5); animation:playPulse 2.2s ease-in-out infinite; flex-shrink:0; }
-  @keyframes playPulse { 0%{ box-shadow:0 0 0 0 rgba(0,200,255,0.45);} 70%{ box-shadow:0 0 0 22px rgba(0,200,255,0);} 100%{ box-shadow:0 0 0 0 rgba(0,200,255,0);} }
-  .cover-hint { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1rem; line-height:1.35; color:#F2F4F7; text-align:center; text-shadow:0 2px 12px rgba(0,0,0,0.6); max-width:36ch; }
-  @media (prefers-reduced-motion: reduce) { .play-btn { animation:none; } }
-</style>
-
 <script>
-  // ── Scroll reveal ──────────────────────────────────────────
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -272,61 +91,4 @@ const socios = [
     { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
   );
   document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
-
-  // ── Video-cover (VSL) ────────────────────────────────────────
-  document.querySelectorAll('[data-video-wrap]').forEach((wrap) => {
-    const v = wrap.querySelector('video');
-    const cover = wrap.querySelector('[data-video-cover]');
-    if (!v || !cover) return;
-    cover.addEventListener('click', () => { (v as HTMLVideoElement).play(); });
-    v.addEventListener('play', () => wrap.classList.add('playing'));
-  });
-
-  // ── Tabs (Nosotros · Agendá tu auditoría · Nuestra experiencia) ────
-  const TABS = ['nosotros', 'agenda', 'experiencia'];
-  const panels = Object.fromEntries(TABS.map((t) => [t, document.getElementById(`panel-${t}`)]));
-  const tabButtons = document.querySelectorAll('[data-tab-btn]');
-  const navTabLinks = document.querySelectorAll('[data-nav-tab]');
-
-  function activateTab(id: string) {
-    if (!TABS.includes(id)) id = 'nosotros';
-    TABS.forEach((t) => {
-      panels[t]?.toggleAttribute('hidden', t !== id);
-    });
-    tabButtons.forEach((btn) => {
-      const isStripBtn = btn.closest('.tabstrip');
-      if (!isStripBtn) return;
-      btn.classList.toggle('active', btn.getAttribute('data-tab-btn') === id);
-      btn.setAttribute('aria-selected', String(btn.getAttribute('data-tab-btn') === id));
-    });
-    history.replaceState(null, '', `#${id}`);
-  }
-
-  tabButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-tab-btn');
-      if (id) {
-        activateTab(id);
-        panels[id]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-
-  // Los links del nav (misma página) también funcionan como tabs — en otras
-  // páginas (ej. /recursos/*) el href normal de "/#agenda" navega acá y este
-  // mismo script activa la pestaña correcta al cargar.
-  navTabLinks.forEach((a) => {
-    a.addEventListener('click', (e) => {
-      const href = a.getAttribute('href') || '';
-      const hash = href.split('#')[1];
-      if (hash && TABS.includes(hash)) {
-        e.preventDefault();
-        activateTab(hash);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    });
-  });
-
-  const initial = location.hash.replace('#', '');
-  activateTab(TABS.includes(initial) ? initial : 'nosotros');
 </script>

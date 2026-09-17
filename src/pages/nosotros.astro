@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { DIFERENCIALES } from '../data/soluciones';
+
+const socios = [
+  {
+    nombre: 'Andrés Albornoz',
+    rol: 'Cofundador · Sistemas y automatización',
+    desc: 'Diseña e implementa sistemas y automatizaciones a medida de la operación de cada empresa.',
+    ig: 'https://instagram.com/andresalbornozia',
+    handle: '@andresalbornozia',
+    linkedin: 'https://www.linkedin.com/in/andres-albornoz-b498823a4',
+    wsp: 'https://wa.me/59892302941',
+    foto: '/img/andres.jpg',
+  },
+  {
+    nombre: 'Tadeo Granada',
+    rol: 'Cofundador',
+    desc: 'Cofundador de GENIDEIA Company.',
+    ig: 'https://instagram.com/tadeogranadaa',
+    handle: '@tadeogranadaa',
+    linkedin: '',
+    wsp: 'https://wa.me/59892267601',
+    foto: '/img/tadeo.jpg',
+  },
+];
+---
+
+<BaseLayout
+  title="Nosotros — GENIDEIA Company"
+  description="GENIDEIA diseña sistemas alrededor de cómo funciona cada empresa. Consultoría operativa, no agencia."
+  path="/nosotros"
+>
+  <section class="max-w-3xl mx-auto px-6 pt-24 pb-16 text-center">
+    <p class="hero-animate text-xs font-medium mb-4 uppercase" data-delay="1" style="color:#00C8FF; letter-spacing:3px;">Quiénes somos</p>
+    <h1 class="hero-animate mb-5" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 4.5vw, 3.2rem);">
+      Consultoría operativa, no agencia.
+    </h1>
+    <p class="hero-animate mx-auto leading-relaxed max-w-2xl text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
+      GENIDEIA diseña sistemas alrededor de cómo funciona cada empresa. No vendemos paquetes
+      cerrados ni soluciones de estantería: primero entendemos el problema, después diseñamos
+      el sistema, y usamos IA, automatización, bases de datos e integraciones solo cuando tienen sentido.
+    </p>
+  </section>
+
+  <section class="max-w-3xl mx-auto px-6 pb-16">
+    <div class="grid sm:grid-cols-2 gap-5" data-reveal>
+      {socios.map((s) => (
+        <div class="card-hover rounded-xl p-6 flex items-center gap-5" style="background:#111111; border:1px solid rgba(255,255,255,0.07);">
+          <div style="flex-shrink:0; width:72px; height:90px; border-radius:0.5rem; overflow:hidden; background:#0B1324; border:1px solid rgba(255,255,255,0.08);" class="flex items-center justify-center">
+            <img src={s.foto} alt={s.nombre} style="width:100%; height:100%; object-fit:cover;" />
+          </div>
+          <div class="min-w-0">
+            <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.15rem;" class="leading-tight">{s.nombre}</h3>
+            <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:1px; font-weight:500;" class="uppercase mt-1 mb-2">{s.rol}</p>
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+              <a href={s.ig} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">{s.handle}</a>
+              {s.wsp && <a href={s.wsp} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">WhatsApp</a>}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-16">
+    <div class="max-w-3xl mx-auto px-6">
+      <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-8 text-center" data-reveal>Qué nos diferencia</p>
+      <div class="grid sm:grid-cols-2 gap-8">
+        <div data-reveal>
+          <p style="color:rgba(160,160,160,0.5); font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">Lo que no hacemos</p>
+          <ul class="space-y-3">
+            {DIFERENCIALES.no.map((item) => (
+              <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-2.5">
+                <span style="color:rgba(160,160,160,0.6); flex-shrink:0;">—</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div data-reveal data-delay="1">
+          <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">Cómo trabajamos</p>
+          <ul class="space-y-3">
+            {DIFERENCIALES.si.map((item) => (
+              <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-2.5">
+                <span style="color:#00C8FF; flex-shrink:0;">→</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-2xl mx-auto px-6 py-20 text-center" data-reveal>
+    <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.8rem, 4vw, 2.6rem);" class="mb-6">
+      ¿Tiene sentido trabajar juntos?
+    </h2>
+    <a href="/empresa" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-9 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block text-base">
+      Agendá tu auditoría →
+    </a>
+  </section>
+</BaseLayout>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+</script>
