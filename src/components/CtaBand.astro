@@ -9,7 +9,7 @@ interface Props {
 
 const { title, subtitle, waMessage, servicio, waNumber = '59892302941' } = Astro.props;
 const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
-const formHref = servicio ? `/#diagnostico?servicio=${servicio}` : '/#diagnostico';
+const formHref = '/#agenda';
 ---
 
 <section class="max-w-3xl mx-auto px-6 py-24 text-center" data-reveal>
@@ -39,7 +39,7 @@ const formHref = servicio ? `/#diagnostico?servicio=${servicio}` : '/#diagnostic
       style="border:1px solid rgba(255,255,255,0.12); color:#B8BEC7;"
       class="px-9 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors inline-block text-base"
     >
-      Completar formulario
+      Agendar mi llamada
     </a>
   </div>
   <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-sm mt-6">

@@ -3,12 +3,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import StepList from '../components/StepList.astro';
 import ProblemaCard from '../components/ProblemaCard.astro';
-import SistemaCard from '../components/SistemaCard.astro';
-import { PROBLEMAS, SISTEMAS, PASOS_TRABAJO, DIFERENCIALES } from '../data/soluciones';
+import PortfolioStrip from '../components/PortfolioStrip.astro';
+import { PROBLEMAS, PASOS_TRABAJO, DIFERENCIALES } from '../data/soluciones';
 
-// Home = versión condensada del posicionamiento. El detalle completo vive en /soluciones,
-// /casos y /como-trabajamos (ver nav). Objetivo: que se entienda en 10 segundos.
-const sistemasDestacados = SISTEMAS.slice(0, 3);
+// Home = breve presentación + portfolio integrado + video → agendar llamada directo.
+// No es la "web de presentación completa" (eso vive en /soluciones, /casos, /como-trabajamos
+// vía nav) — el objetivo acá es que entienda el ecosistema en 10 segundos y agende.
+// Andrés (17/09) pidió "agendar la auditoría", pero el Calendly real del funnel personal
+// (calendly.com/genideiaconsultoraia/llamada-de-diagnostico) es la "Llamada de exploración"
+// gratis de 30 min — la auditoría paga es un paso posterior (ver [[project-albornoz-embudo]]).
+// Usamos acá "llamada de exploración" para no prometer algo distinto de lo que agenda.
+// Confirmar con Andrés si quiere crear un evento de Calendly propio para la empresa.
+const WA = '59892302941';
+const waMsg = encodeURIComponent('Hola, quiero agendar una llamada con GENIDEIA.');
+const waUrl = `https://wa.me/${WA}?text=${waMsg}`;
+const CALENDLY = 'https://calendly.com/genideiaconsultoraia/llamada-de-diagnostico';
+const calendlyEmbed = `${CALENDLY}?hide_gdpr_banner=1&background_color=0b1324&text_color=f2f4f7&primary_color=00c8ff`;
 
 // Micro-indicadores del hero — concretos, sin "IA"/"innovación" sueltos.
 const indicadores = ['Automatización de procesos', 'Sistemas a medida', 'Seguimiento y control', 'Implementación real'];
@@ -37,7 +47,7 @@ const indicadores = ['Automatización de procesos', 'Sistemas a medida', 'Seguim
           Diseñamos automatizaciones y soluciones a medida para reducir tareas manuales, ordenar operaciones y mejorar el seguimiento dentro de tu empresa.
         </p>
         <div class="hero-animate flex flex-col sm:flex-row gap-4 mb-8" data-delay="4">
-          <a href="#diagnostico" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">
+          <a href="#agenda" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">
             Contanos qué querés mejorar
           </a>
           <a href="/como-trabajamos" style="border:1px solid rgba(255,255,255,0.12); color:#B8BEC7;" class="px-8 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors text-center">
@@ -66,6 +76,13 @@ const indicadores = ['Automatización de procesos', 'Sistemas a medida', 'Seguim
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- ── PORTFOLIO (integrado, no es un destino aparte) ─────── -->
+  <section style="border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-10">
+    <div class="max-w-6xl mx-auto px-6">
+      <PortfolioStrip />
     </div>
   </section>
 
@@ -98,23 +115,6 @@ const indicadores = ['Automatización de procesos', 'Sistemas a medida', 'Seguim
     <p class="text-center mt-12" data-reveal>
       <a href="/como-trabajamos" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
         Ver el método completo →
-      </a>
-    </p>
-  </Section>
-
-  <!-- ── TIPO DE SISTEMAS QUE DISEÑAMOS ────────────────────── -->
-  <Section
-    id="soluciones"
-    kicker="Soluciones"
-    title="El tipo de sistema que diseñamos para cada problema"
-    maxWidth="max-w-6xl"
-  >
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {sistemasDestacados.map((s) => <SistemaCard sistema={s} />)}
-    </div>
-    <p class="text-center mt-12" data-reveal>
-      <a href="/casos" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
-        Ver más ejemplos →
       </a>
     </p>
   </Section>
@@ -153,116 +153,71 @@ const indicadores = ['Automatización de procesos', 'Sistemas a medida', 'Seguim
     </div>
   </Section>
 
-  <!-- ── DIAGNÓSTICO ──────────────────────────────────────── -->
-  <section id="diagnostico" class="py-24">
-    <div class="max-w-2xl mx-auto px-6">
-      <div class="text-center mb-12" data-reveal>
-        <h2
-          style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
-          class="mb-4"
-        >
-          ¿Cuál es el proceso que querés mejorar?
+  <!-- ── VIDEO (VSL) ───────────────────────────────────────── -->
+  <Section
+    id="video"
+    bg="soft"
+    border="both"
+    kicker="Antes de agendar"
+    title="Un video corto sobre cómo pensamos esto"
+    maxWidth="max-w-3xl"
+  >
+    <div class="video-main-wrap" data-video-wrap data-reveal>
+      <video id="vid-home" controls playsinline preload="metadata" style="width:100%; height:100%; object-fit:contain; display:block; background:#0B1324;">
+        <source src="/videos/andres-01-porque.mp4" type="video/mp4" />
+        Tu navegador no soporta el video.
+      </video>
+      <button type="button" class="video-cover" data-video-cover aria-label="Reproducir video">
+        <span class="play-btn"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="cover-hint">Voy a ayudarte a ahorrar tiempo y dinero en tu empresa automatizando tareas manuales.</span>
+      </button>
+    </div>
+  </Section>
+
+  <!-- ── AGENDÁ TU AUDITORÍA (Calendly) ─────────────────────── -->
+  <section id="agenda" class="py-24">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="text-center mb-10" data-reveal>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">El siguiente paso</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
+          Agendá tu llamada de exploración.
         </h2>
         <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed">
-          Contanos qué está pasando hoy en tu empresa. Analizamos si tiene sentido automatizarlo
-          y qué sistema tendría que construirse alrededor.
+          Analizamos dónde se pierde tiempo, dónde aparecen errores y qué partes tiene sentido automatizar.
         </p>
       </div>
-
-      <form id="diagnostico-form" class="space-y-5" data-reveal>
-        <!-- Área -->
-        <div>
-          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
-            Área del proceso
-          </label>
-          <select name="area" id="diagnostico-area" required class="form-input">
-            <option value="">Seleccioná una categoría</option>
-            <option value="Ventas y seguimiento">Ventas y seguimiento</option>
-            <option value="Operaciones">Operaciones</option>
-            <option value="Administración">Administración</option>
-            <option value="Personal">Personal</option>
-            <option value="Logística">Logística</option>
-            <option value="Otro / No sé cómo clasificarlo">Otro / No sé cómo clasificarlo</option>
-          </select>
-        </div>
-
-        <!-- Problema -->
-        <div>
-          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
-            Describí el proceso
-          </label>
-          <textarea
-            name="problema"
-            rows="5"
-            required
-            placeholder="¿Cómo funciona hoy? ¿Qué tarea te consume más tiempo o dónde aparecen más errores?"
-            class="form-input resize-none"
-          ></textarea>
-        </div>
-
-        <!-- Nombre -->
-        <div>
-          <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
-            Tu nombre <span style="color:rgba(160,160,160,0.4);">(opcional)</span>
-          </label>
-          <input
-            name="nombre"
-            type="text"
-            placeholder="Para personalizar la respuesta"
-            class="form-input"
-          />
-        </div>
-
-        <!-- Submit -->
-        <button
-          type="submit"
-          style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; width:100%;"
-          class="py-3.5 rounded-lg hover:opacity-90 transition-opacity text-base"
-        >
-          Analizar mi caso →
-        </button>
-        <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-xs text-center">
-          Se abre WhatsApp con tu mensaje ya armado · Respondemos en menos de 24 horas
-        </p>
-      </form>
-
-      <!-- Success state -->
-      <div id="diagnostico-success" class="hidden text-center py-8" data-reveal>
-        <p style="color:#00C8FF; font-size:1.5rem; margin-bottom:1rem;">✓</p>
-        <p style="color:#F2F4F7; font-weight:500;" class="text-lg mb-2">¡Perfecto!</p>
-        <p style="color:#B8BEC7; font-weight:300;">
-          Se abrió WhatsApp con tu mensaje. En menos de 24 horas te respondemos con una propuesta.
-        </p>
-      </div>
+      <div id="calendly-box" class="calendly-inline-widget" data-url={calendlyEmbed} style="min-width:320px; height:700px; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2);" data-reveal></div>
+      <p class="text-center mt-6 text-sm" style="color:#B8BEC7; font-weight:300;" data-reveal>
+        ¿Preferís escribir? <a href={waUrl} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; text-decoration:underline;">Hablemos por WhatsApp →</a>
+      </p>
     </div>
   </section>
 
-  <!-- ── CTA FINAL ─────────────────────────────────────────── -->
-  <section id="contactar" class="max-w-3xl mx-auto px-6 py-28 text-center" data-reveal>
-    <h2
-      style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
-      class="mb-5"
-    >
-      Contanos cómo funciona hoy tu proceso.
-    </h2>
-    <p style="color:#B8BEC7; font-weight:300;" class="text-lg mb-10 leading-relaxed">
-      Analizamos dónde se pierde tiempo, dónde aparecen errores y qué partes tiene sentido automatizar.
-    </p>
-    <a
-      href="https://wa.me/59892302941"
-      target="_blank"
-      rel="noopener noreferrer"
-      style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;"
-      class="px-10 py-4 rounded-lg hover:opacity-90 transition-opacity inline-block text-base"
-    >
-      Hablar con Genideia
-    </a>
-    <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-sm mt-5">
-      Respondemos en menos de 24 horas
-    </p>
-  </section>
-
 </BaseLayout>
+
+<script src="https://assets.calendly.com/assets/external/widget.js" async is:inline></script>
+
+<script define:vars={{ calendlyEmbed }}>
+  function initCalendly() {
+    const box = document.getElementById('calendly-box');
+    if (box && window.Calendly && !box.dataset.ready) {
+      box.dataset.ready = '1';
+      box.innerHTML = '';
+      window.Calendly.initInlineWidget({ url: calendlyEmbed, parentElement: box });
+    }
+  }
+  window.addEventListener('load', () => setTimeout(initCalendly, 300));
+</script>
+
+<style>
+  .video-main-wrap { position:relative; width:100%; aspect-ratio:16/9; border-radius:18px; overflow:hidden; border:1px solid rgba(0,200,255,0.25); background:#0B1324; box-shadow:0 12px 60px rgba(0,200,255,0.12); }
+  .video-cover { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; cursor:pointer; border:none; padding:24px; background:linear-gradient(180deg, rgba(7,8,13,0.30) 0%, rgba(7,8,13,0.60) 100%); transition:opacity .3s; }
+  .video-main-wrap.playing .video-cover { opacity:0; pointer-events:none; }
+  .play-btn { width:76px; height:76px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#0A0F1A; background:linear-gradient(135deg,#00C8FF,#007BFF); box-shadow:0 0 0 0 rgba(0,200,255,0.5); animation:playPulse 2.2s ease-in-out infinite; flex-shrink:0; }
+  @keyframes playPulse { 0%{ box-shadow:0 0 0 0 rgba(0,200,255,0.45);} 70%{ box-shadow:0 0 0 22px rgba(0,200,255,0);} 100%{ box-shadow:0 0 0 0 rgba(0,200,255,0);} }
+  .cover-hint { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.05rem; line-height:1.35; color:#F2F4F7; text-align:center; text-shadow:0 2px 12px rgba(0,0,0,0.6); max-width:36ch; }
+  @media (prefers-reduced-motion: reduce) { .play-btn { animation:none; } }
+</style>
 
 <script>
   // ── Scroll reveal ──────────────────────────────────────────
@@ -279,29 +234,13 @@ const indicadores = ['Automatización de procesos', 'Sistemas a medida', 'Seguim
   );
   document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
 
-  // ── Diagnóstico form ───────────────────────────────────────
-  const form = document.getElementById('diagnostico-form') as HTMLFormElement | null;
-  const successDiv = document.getElementById('diagnostico-success');
-
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const data = new FormData(form);
-    const area     = (data.get('area')     as string) || '';
-    const problema = (data.get('problema') as string) || '';
-    const nombre   = (data.get('nombre')   as string) || '';
-
-    const nombreTexto = nombre ? `Hola, soy ${nombre}.` : 'Hola,';
-    const areaTexto   = area   ? `\n\n*Área:* ${area}` : '';
-    const msg = `${nombreTexto} quiero contarles sobre un proceso de mi empresa.${areaTexto}\n\n*Proceso:*\n${problema}`;
-    const waUrl = `https://wa.me/59892302941?text=${encodeURIComponent(msg)}`;
-    window.open(waUrl, '_blank');
-
-    form.classList.add('hidden');
-    if (successDiv) {
-      successDiv.classList.remove('hidden');
-      successDiv.classList.add('is-visible');
-    }
+  // ── Video-cover (VSL) ────────────────────────────────────────
+  document.querySelectorAll('[data-video-wrap]').forEach((wrap) => {
+    const v = wrap.querySelector('video');
+    const cover = wrap.querySelector('[data-video-cover]');
+    if (!v || !cover) return;
+    cover.addEventListener('click', () => { (v as HTMLVideoElement).play(); });
+    v.addEventListener('play', () => wrap.classList.add('playing'));
   });
 </script>
 
