@@ -66,41 +66,48 @@ export interface Sistema {
   problema: string;
   sistema: string;
   resultado: string;
+  url?: string;
+  urlLabel?: string;
 }
 
-// Ejemplos ilustrativos del tipo de sistema que diseñamos por problema operativo.
-// No son casos de cliente nombrados ni traen métricas — cuando existan casos reales
-// con datos verificables, se reemplazan acá (ver feedback al final del PR).
+// Sistemas reales del portfolio de GENIDEIA (fuente: public/experiencia/base.html,
+// el micro-site "Experiencia aplicada" ya construido — no inventar, solo curar y
+// resumir al formato problema/sistema/resultado). Actualizar ambos lados si cambia
+// uno: acá vive el resumen corto para home/casos, allá vive la ficha completa.
 export const SISTEMAS: Sistema[] = [
   {
-    nombre: 'Seguimiento comercial',
-    problema: 'Oportunidades sin seguimiento y vendedores dependiendo de memoria o WhatsApp.',
-    sistema: 'Estados, responsables, alertas y seguimiento automático.',
-    resultado: 'Mayor control y menos oportunidades olvidadas.',
+    nombre: 'GENIDEIA TMS',
+    problema: 'Dar una vista común de la operación de transporte sin que WhatsApp y planillas terminen siendo el sistema central.',
+    sistema: 'Solicitudes, viajes, conductores, vehículos, documentación y mantenimiento en un panel único, con alertas por evento.',
+    resultado: 'Demo navegable pública — se puede probar en vivo.',
+    url: 'https://genideia-tms.vercel.app/?pais=ar',
+    urlLabel: 'Abrir demo navegable →',
   },
   {
-    nombre: 'Gestión de personal',
-    problema: 'Altas, vencimientos y documentación dispersa entre planillas y carpetas.',
-    sistema: 'Panel único con estados, alertas de vencimiento y registro de movimientos.',
-    resultado: 'Menos errores administrativos y control real del equipo.',
+    nombre: 'Sistema de membresías (Cevven)',
+    problema: 'Evitar que membresías, renovaciones, pagos, reservas y control de acceso dependan de planillas, memoria y tareas separadas.',
+    sistema: 'Socios, membresías, pagos, actividades, acceso y automatizaciones centralizados, con portal propio para cada socio.',
+    resultado: 'Prototipo funcional ya construido.',
   },
   {
-    nombre: 'Logística y transporte',
-    problema: 'Pedidos y entregas sin trazabilidad, estados que dependen de llamadas.',
-    sistema: 'Seguimiento de pedidos, remitos digitales y estados en tiempo real.',
-    resultado: 'Visibilidad completa de cada entrega, sin depender de una persona.',
+    nombre: 'Asistente de WhatsApp con IA',
+    problema: 'Responder rápido sin obligar al profesional a interrumpir su trabajo por cada consulta.',
+    sistema: 'Entiende texto y audio, consulta disponibilidad en Google Calendar, agenda, cancela, reagenda y hace seguimiento de indecisos.',
+    resultado: 'Automatización funcional, en uso real.',
   },
   {
-    nombre: 'Automatización administrativa',
-    problema: 'Carga manual de datos, reportes armados a mano y errores recurrentes.',
-    sistema: 'Captura automática de información, reportes generados solos y alertas ante errores.',
-    resultado: 'Menos horas de carga manual y datos más confiables.',
+    nombre: 'GENIDEIA OS',
+    problema: 'No depender de memoria, chats y documentos separados para dirigir la operación de la empresa.',
+    sistema: 'Clientes, proyectos, diagnósticos, contenido y portfolio centralizados en un panel interno propio.',
+    resultado: 'Sistema propio, en desarrollo — lo usamos día a día.',
   },
   {
-    nombre: 'Paneles operativos',
-    problema: 'Falta de visibilidad sobre lo que pasa en la operación día a día.',
-    sistema: 'Panel interno con estados, alertas automáticas y datos centralizados.',
-    resultado: 'Decisiones con información real, no con intuición.',
+    nombre: 'Firmador digital',
+    problema: 'Reducir la fricción documental y centralizar el estado de la firma de contratos.',
+    sistema: 'Carga, firma digital y estado del documento en un solo flujo.',
+    resultado: 'Herramienta desarrollada y funcionando.',
+    url: 'https://genideia-firmador.vercel.app/',
+    urlLabel: 'Ver la herramienta →',
   },
 ];
 

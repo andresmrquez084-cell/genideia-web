@@ -7,7 +7,7 @@ import { SISTEMAS } from '../data/soluciones';
 
 <BaseLayout
   title="Casos — GENIDEIA Company"
-  description="El tipo de sistema que diseñamos para cada problema operativo: seguimiento comercial, gestión de personal, logística, administración y paneles internos."
+  description="Sistemas reales que ya construimos: GENIDEIA TMS, GENIDEIA OS, membresías, asistente de WhatsApp con IA y más."
   path="/casos"
 >
 
@@ -16,7 +16,7 @@ import { SISTEMAS } from '../data/soluciones';
       Casos
     </p>
     <h1 class="hero-animate mb-6" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-1px; font-size:clamp(2.2rem, 5.5vw, 3.8rem);">
-      El tipo de sistema que diseñamos para cada problema.
+      Sistemas reales que ya construimos.
     </h1>
     <p class="hero-animate mx-auto leading-relaxed max-w-xl text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
       Problema → sistema → resultado. Así encaramos cada proyecto, sea cual sea el rubro de tu empresa.
@@ -27,6 +27,11 @@ import { SISTEMAS } from '../data/soluciones';
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {SISTEMAS.map((s) => <SistemaCard sistema={s} />)}
     </div>
+    <p class="text-center mt-12" data-reveal>
+      <a href="/experiencia/" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
+        Ver el portfolio completo (con diagnósticos y más proyectos) →
+      </a>
+    </p>
   </section>
 
   <CtaBand

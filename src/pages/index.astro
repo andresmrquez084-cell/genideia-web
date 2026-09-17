@@ -3,8 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import StepList from '../components/StepList.astro';
 import ProblemaCard from '../components/ProblemaCard.astro';
-import PortfolioStrip from '../components/PortfolioStrip.astro';
-import { PROBLEMAS, PASOS_TRABAJO, DIFERENCIALES } from '../data/soluciones';
+import SistemaCard from '../components/SistemaCard.astro';
+import { PROBLEMAS, PASOS_TRABAJO, DIFERENCIALES, SISTEMAS } from '../data/soluciones';
+
+const sistemasDestacados = SISTEMAS.slice(0, 3);
 
 // Home = breve presentación + portfolio integrado + video → agendar llamada directo.
 // No es la "web de presentación completa" (eso vive en /soluciones, /casos, /como-trabajamos
@@ -79,12 +81,23 @@ const indicadores = ['Automatización de procesos', 'Sistemas a medida', 'Seguim
     </div>
   </section>
 
-  <!-- ── PORTFOLIO (integrado, no es un destino aparte) ─────── -->
-  <section style="border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-10">
-    <div class="max-w-6xl mx-auto px-6">
-      <PortfolioStrip />
+  <!-- ── PORTFOLIO (sistemas reales, integrado — no es un destino aparte) ── -->
+  <Section
+    id="portfolio"
+    border="both"
+    kicker="Lo que ya construimos"
+    title="Sistemas reales, no ejemplos de pizarrón"
+    maxWidth="max-w-6xl"
+  >
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {sistemasDestacados.map((s) => <SistemaCard sistema={s} />)}
     </div>
-  </section>
+    <p class="text-center mt-12" data-reveal>
+      <a href="/experiencia/" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
+        Ver el portfolio completo →
+      </a>
+    </p>
+  </Section>
 
   <!-- ── PROBLEMAS QUE RESOLVEMOS ──────────────────────────── -->
   <Section
