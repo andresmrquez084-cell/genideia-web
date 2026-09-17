@@ -1,12 +1,12 @@
 ---
-// El sitio pasa a ser 1 sola página con 3 pestañas (Nosotros · Agendá tu auditoría ·
-// Nuestra experiencia) — este nav ES la navegación entre pestañas. Los href con hash
-// funcionan como link normal (cross-page, ej. desde /recursos/*) y como tab-switch
-// in-page (interceptado por el script de index.astro cuando ya estás en "/").
+// 3 links directos a las páginas reales — nada de contenido duplicado/copiado acá,
+// cada uno lleva de punta a punta a su página (pedido explícito de Andrés, 17/09).
+// URLs exactas que pasó Andrés (mismo repo, /empresa se sirve tanto en genideiacompany.com
+// como en el subdominio andres.genideiacompany.com — usamos la que él especificó).
 const navLinks = [
-  { href: '/#nosotros', label: 'Nosotros' },
-  { href: '/#agenda', label: 'Agendá tu auditoría' },
-  { href: '/#experiencia', label: 'Nuestra experiencia' },
+  { href: '/nosotros', label: 'Nosotros' },
+  { href: 'https://andres.genideiacompany.com/empresa', label: 'Agendá tu diagnóstico' },
+  { href: 'https://genideiacompany.com/experiencia/', label: 'Nuestra experiencia' },
 ];
 ---
 
@@ -25,13 +25,12 @@ const navLinks = [
       </span>
     </a>
 
-    <!-- Desktop: pestañas -->
+    <!-- Desktop: links -->
     <ul class="hidden lg:flex items-center gap-6 text-sm flex-1 justify-center">
       {navLinks.map(link => (
         <li>
           <a
             href={link.href}
-            data-nav-tab
             style="color:#B8BEC7; font-weight:300; font-size:0.82rem; letter-spacing:0.2px;"
             class="hover:text-[#00C8FF] transition-colors whitespace-nowrap"
           >
@@ -110,7 +109,6 @@ const navLinks = [
           <li>
             <a
               href={link.href}
-              data-nav-tab
               style="color:#B8BEC7; font-weight:300; font-size:1rem;"
               class="nav-mobile-link block py-2.5 hover:text-[#00C8FF] transition-colors"
             >
