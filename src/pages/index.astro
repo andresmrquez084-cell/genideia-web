@@ -1,68 +1,22 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
-import ServiceCard from '../components/ServiceCard.astro';
 import StepList from '../components/StepList.astro';
-import { clientes, serviciosInfo } from '../data/clientes';
+import ProblemaCard from '../components/ProblemaCard.astro';
+import SistemaCard from '../components/SistemaCard.astro';
+import { PROBLEMAS, SISTEMAS, PASOS_TRABAJO, DIFERENCIALES } from '../data/soluciones';
 
-// Selector de servicios — la puerta de entrada a cada solución (home ya no explica todo, solo orienta).
-const serviciosSelector = [
-  {
-    slug: 'contenido-marketing',
-    nombre: serviciosInfo['contenido-marketing'].nombre,
-    desc: 'Construimos una marca que las personas reconozcan y entiendan: identidad, contenido y posicionamiento.',
-    beneficio: 'La categoría con más proyectos reales y evidencia comprobable hoy.',
-    cta: 'Ver contenido y marketing',
-  },
-  {
-    slug: 'anuncios',
-    nombre: serviciosInfo.anuncios.nombre,
-    desc: 'Llegá a personas que ya pueden estar buscando una solución como la tuya.',
-    beneficio: 'Campañas con método, no solo "hacer anuncios".',
-    cta: 'Ver anuncios',
-  },
-  {
-    slug: 'presencia-digital',
-    nombre: serviciosInfo['presencia-digital'].nombre,
-    desc: 'Reuní tu página web, perfiles y canales de contacto en una presencia profesional.',
-    beneficio: 'Todo conectado. Una sola presencia digital.',
-    cta: 'Ver presencia digital',
-  },
-  {
-    slug: 'automatizaciones',
-    nombre: serviciosInfo.automatizaciones.nombre,
-    desc: 'Reducí tareas manuales y ordená procesos que hoy dependen de personas, mensajes o memoria.',
-    beneficio: 'Sistemas con IA ya funcionando, no promesas abstractas.',
-    cta: 'Ver automatizaciones',
-  },
-] as const;
+// Home = versión condensada del posicionamiento. El detalle completo vive en /soluciones,
+// /casos y /como-trabajamos (ver nav). Objetivo: que se entienda en 10 segundos.
+const sistemasDestacados = SISTEMAS.slice(0, 3);
 
-// Método unificado — antes existían dos bloques de "3 pasos" casi idénticos en esta misma página.
-const pasos = [
-  {
-    num: '01',
-    nombre: 'Diagnóstico',
-    desc: 'Analizamos la posición actual de tu empresa y detectamos las oportunidades: qué procesos automatizar, qué resolver con IA y dónde escalar con publicidad. Salís con un diagnóstico claro. Es gratuito.',
-  },
-  {
-    num: '02',
-    nombre: 'Construcción',
-    desc: 'Trazamos el camino hacia donde querés llegar y lo ejecutamos con procedimientos concretos: implementamos los sistemas, soluciones o campañas que tu negocio necesita. De punta a punta, lo armamos nosotros.',
-  },
-  {
-    num: '03',
-    nombre: 'Seguimiento',
-    desc: 'Medimos las estadísticas en cada etapa para confirmar que vamos por el camino correcto. Si los números no acompañan, ajustamos. No te dejamos solo después de entregar.',
-  },
-];
-
-// Micro-indicadores del hero
-const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA a medida', 'Resultados medibles'];
+// Micro-indicadores del hero — concretos, sin "IA"/"innovación" sueltos.
+const indicadores = ['Automatización de procesos', 'Sistemas a medida', 'Seguimiento y control', 'Implementación real'];
 ---
 
 <BaseLayout
-  title="GENIDEIA Company — Automatización, marketing y ads para PyMEs"
-  description="Presentamos tu negocio, conseguimos oportunidades y automatizamos procesos con IA aplicada. Contenido y marketing, anuncios, presencia digital y automatizaciones para PyMEs de Uruguay."
+  title="GENIDEIA Company — Sistemas y automatización para empresas"
+  description="Diseñamos automatizaciones y sistemas a medida para reducir tareas manuales, ordenar procesos y mejorar el seguimiento operativo de tu empresa."
   path="/"
 >
 
@@ -73,21 +27,21 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
       <!-- Izquierda: texto -->
       <div style="position:relative; z-index:2;">
         <p class="hero-animate text-xs font-medium mb-6 uppercase" data-delay="1" style="color:#00C8FF; letter-spacing:3px;">
-          Marketing · Ads · Automatización · IA
+          Automatización · Sistemas · Procesos
         </p>
         <h1 class="hero-animate mb-6" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.0; letter-spacing:-1.5px; font-size:clamp(2.6rem, 6vw, 4.6rem);">
-          Tu negocio, un sistema que crece<br />
-          <span style="color:#B8BEC7; font-weight:300; font-style:italic;">sin depender de vos.</span>
+          Convertimos procesos<br />
+          <span style="color:#B8BEC7; font-weight:300; font-style:italic;">en sistemas.</span>
         </h1>
         <p class="hero-animate mb-9 leading-relaxed max-w-lg text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
-          Ayudamos a tu empresa a presentarse profesionalmente, conseguir oportunidades y ordenar sus procesos con tecnología aplicada — no genérica.
+          Diseñamos automatizaciones y soluciones a medida para reducir tareas manuales, ordenar operaciones y mejorar el seguimiento dentro de tu empresa.
         </p>
         <div class="hero-animate flex flex-col sm:flex-row gap-4 mb-8" data-delay="4">
-          <a href="https://wa.me/59892302941" target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">
-            Hablemos por WhatsApp
+          <a href="#diagnostico" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-8 py-3.5 rounded-lg hover:opacity-90 transition-opacity text-center">
+            Contanos qué querés mejorar
           </a>
-          <a href="#diagnostico" style="border:1px solid rgba(255,255,255,0.12); color:#B8BEC7;" class="px-8 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors text-center">
-            Diagnóstico gratis →
+          <a href="/como-trabajamos" style="border:1px solid rgba(255,255,255,0.12); color:#B8BEC7;" class="px-8 py-3.5 rounded-lg hover:border-[#00C8FF] hover:text-[#00C8FF] transition-colors text-center">
+            Ver cómo trabajamos
           </a>
         </div>
         <div class="hero-animate flex flex-wrap gap-x-5 gap-y-2 mb-6" data-delay="5" style="font-family:'Inter',sans-serif;">
@@ -115,77 +69,88 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
     </div>
   </section>
 
-  <!-- ── LOGOS / CLIENTES REALES (compacto, el detalle vive en /casos) ── -->
-  <section style="border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-10">
-    <div class="max-w-6xl mx-auto px-6">
-      <p class="text-center mb-8" style="color:rgba(160,160,160,0.5); font-size:0.65rem; letter-spacing:3px; font-weight:500;" data-reveal>
-        NEGOCIOS REALES · SISTEMAS REALES · RESULTADOS REALES
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-6" data-reveal data-delay="1">
-        {clientes.map((c) => (
-          <a href={c.url} target="_blank" rel="noopener noreferrer" class="text-center" style="opacity:0.65;">
-            <span style="font-family:'Montserrat',sans-serif; font-size:1.25rem; font-weight:600; color:#F2F4F7; letter-spacing:0.5px; display:block; line-height:1.1;">{c.nombre}</span>
-            <span style="color:#B8BEC7; font-size:0.58rem; letter-spacing:1.5px; font-weight:400;" class="uppercase">{c.rubro}</span>
-          </a>
-        ))}
-      </div>
-      <p class="text-center mt-8" data-reveal>
-        <a href="/casos" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">Ver todos los casos →</a>
-      </p>
-    </div>
-  </section>
-
-  <!-- ── PILAR: CERO DEMOS ─────────────────────────────────── -->
-  <section style="background:linear-gradient(135deg, rgba(0,200,255,0.08), rgba(0,123,255,0.05));" class="py-14">
-    <div class="max-w-5xl mx-auto px-6 text-center" data-reveal>
-      <h2 style="font-family:'Montserrat',sans-serif; font-weight:800; letter-spacing:-0.5px; font-size:clamp(1.8rem, 4.5vw, 2.8rem);" class="mb-3">
-        Cero demos. <span style="color:#00C8FF;">100% producción.</span>
-      </h2>
-      <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-2xl mx-auto leading-relaxed">
-        No entregamos pruebas de concepto: implementamos sistemas listos para operar y facturar desde el primer día.
-      </p>
-    </div>
-  </section>
-
-  <!-- ── SELECTOR DE SERVICIOS ─────────────────────────────── -->
+  <!-- ── PROBLEMAS QUE RESOLVEMOS ──────────────────────────── -->
   <Section
-    id="servicios"
-    kicker="Qué hacemos"
-    title="¿Qué necesitás mejorar?"
-    subtitle="Elegí el área que te interesa y profundizá solo en eso — sin tener que leer todo lo demás."
+    id="problemas"
+    border="both"
+    kicker="Problemas que resolvemos"
+    title="¿Con cuál de esto te encontrás en tu empresa?"
     maxWidth="max-w-6xl"
   >
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      {serviciosSelector.map((s, i) => (
-        <div data-delay={String(i + 1)}>
-          <ServiceCard
-            nombre={s.nombre}
-            desc={s.desc}
-            beneficio={s.beneficio}
-            href={serviciosInfo[s.slug].ruta}
-            color={serviciosInfo[s.slug].color}
-            cta={s.cta}
-          />
-        </div>
-      ))}
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {PROBLEMAS.map((p) => <ProblemaCard problema={p} />)}
     </div>
+    <p class="text-center mt-12 max-w-2xl mx-auto" style="color:#B8BEC7; font-weight:300;" data-reveal>
+      No partimos de una herramienta. Partimos del problema y construimos el sistema alrededor de tu operación.
+    </p>
   </Section>
 
-  <!-- ── MÉTODO (único, sin duplicar) ──────────────────────── -->
+  <!-- ── CÓMO TRABAJAMOS (condensado) ──────────────────────── -->
   <Section
     id="metodo"
     bg="soft"
     border="both"
-    kicker="Cómo lo hacemos"
-    title="Diagnóstico, construcción y seguimiento."
-    subtitle="Sabemos en qué posición está hoy tu empresa, trazamos el camino hacia donde querés llegar y medimos en cada etapa para confirmar que vamos por el rumbo correcto."
+    kicker="Cómo trabajamos"
+    title="Diagnóstico, diseño, construcción, implementación y mejora."
+    subtitle="No entregamos software suelto: una solución que tiene que funcionar dentro del proceso que ya existe en tu empresa."
   >
-    <StepList pasos={pasos} />
+    <StepList pasos={PASOS_TRABAJO} />
     <p class="text-center mt-12" data-reveal>
-      <a href="#diagnostico" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
-        Empecemos por el diagnóstico gratis →
+      <a href="/como-trabajamos" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
+        Ver el método completo →
       </a>
     </p>
+  </Section>
+
+  <!-- ── TIPO DE SISTEMAS QUE DISEÑAMOS ────────────────────── -->
+  <Section
+    id="soluciones"
+    kicker="Soluciones"
+    title="El tipo de sistema que diseñamos para cada problema"
+    maxWidth="max-w-6xl"
+  >
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {sistemasDestacados.map((s) => <SistemaCard sistema={s} />)}
+    </div>
+    <p class="text-center mt-12" data-reveal>
+      <a href="/casos" style="color:#00C8FF; font-weight:400;" class="text-sm hover:opacity-70 transition-opacity">
+        Ver más ejemplos →
+      </a>
+    </p>
+  </Section>
+
+  <!-- ── QUÉ NOS DIFERENCIA ─────────────────────────────────── -->
+  <Section
+    bg="soft"
+    border="both"
+    kicker="Qué nos diferencia"
+    title="No empezamos por la tecnología. Empezamos por entender el proceso."
+    maxWidth="max-w-4xl"
+  >
+    <div class="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
+      <div data-reveal>
+        <p style="color:rgba(160,160,160,0.5); font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">Lo que no hacemos</p>
+        <ul class="space-y-3">
+          {DIFERENCIALES.no.map((item) => (
+            <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-2.5">
+              <span style="color:rgba(160,160,160,0.6); flex-shrink:0;">—</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div data-reveal data-delay="1">
+        <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">Cómo trabajamos</p>
+        <ul class="space-y-3">
+          {DIFERENCIALES.si.map((item) => (
+            <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-2.5">
+              <span style="color:#00C8FF; flex-shrink:0;">→</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   </Section>
 
   <!-- ── DIAGNÓSTICO ──────────────────────────────────────── -->
@@ -196,11 +161,11 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
           style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
           class="mb-4"
         >
-          ¿Cuál es el desafío de tu negocio?
+          ¿Cuál es el proceso que querés mejorar?
         </h2>
         <p style="color:#B8BEC7; font-weight:300;" class="text-lg leading-relaxed">
-          Describilo en tus palabras. En base a eso te presentamos cómo podemos ayudarte
-          — y si no existe la solución, la construimos.
+          Contanos qué está pasando hoy en tu empresa. Analizamos si tiene sentido automatizarlo
+          y qué sistema tendría que construirse alrededor.
         </p>
       </div>
 
@@ -208,14 +173,15 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
         <!-- Área -->
         <div>
           <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
-            Área del problema
+            Área del proceso
           </label>
           <select name="area" id="diagnostico-area" required class="form-input">
             <option value="">Seleccioná una categoría</option>
-            <option value="Contenido y marketing digital">Contenido y marketing digital</option>
-            <option value="Anuncios / publicidad">Anuncios / publicidad</option>
-            <option value="Presencia digital (web, perfiles, WhatsApp)">Presencia digital (web, perfiles, WhatsApp)</option>
-            <option value="Automatización y procesos internos">Automatización y procesos internos</option>
+            <option value="Ventas y seguimiento">Ventas y seguimiento</option>
+            <option value="Operaciones">Operaciones</option>
+            <option value="Administración">Administración</option>
+            <option value="Personal">Personal</option>
+            <option value="Logística">Logística</option>
             <option value="Otro / No sé cómo clasificarlo">Otro / No sé cómo clasificarlo</option>
           </select>
         </div>
@@ -223,13 +189,13 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
         <!-- Problema -->
         <div>
           <label style="color:#B8BEC7; font-size:0.8rem; font-weight:400; letter-spacing:0.5px;" class="block mb-2 uppercase">
-            Describí el problema
+            Describí el proceso
           </label>
           <textarea
             name="problema"
             rows="5"
             required
-            placeholder="¿Qué está pasando en tu negocio? ¿Qué te gustaría resolver o mejorar?"
+            placeholder="¿Cómo funciona hoy? ¿Qué tarea te consume más tiempo o dónde aparecen más errores?"
             class="form-input resize-none"
           ></textarea>
         </div>
@@ -277,10 +243,10 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
       style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);"
       class="mb-5"
     >
-      ¿Dónde está tu negocio hoy?
+      Contanos cómo funciona hoy tu proceso.
     </h2>
     <p style="color:#B8BEC7; font-weight:300;" class="text-lg mb-10 leading-relaxed">
-      Contanos en qué punto estás y definimos juntos el siguiente paso.
+      Analizamos dónde se pierde tiempo, dónde aparecen errores y qué partes tiene sentido automatizar.
     </p>
     <a
       href="https://wa.me/59892302941"
@@ -289,7 +255,7 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
       style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;"
       class="px-10 py-4 rounded-lg hover:opacity-90 transition-opacity inline-block text-base"
     >
-      Hablar por WhatsApp
+      Hablar con Genideia
     </a>
     <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-sm mt-5">
       Respondemos en menos de 24 horas
@@ -313,20 +279,6 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
   );
   document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
 
-  // ── Preselección de servicio vía ?servicio=slug (viene de una página de servicio) ──
-  const AREA_POR_SERVICIO: Record<string, string> = {
-    'contenido-marketing': 'Contenido y marketing digital',
-    anuncios: 'Anuncios / publicidad',
-    'presencia-digital': 'Presencia digital (web, perfiles, WhatsApp)',
-    automatizaciones: 'Automatización y procesos internos',
-  };
-  const params = new URLSearchParams(window.location.search);
-  const servicioParam = params.get('servicio');
-  const areaSelect = document.getElementById('diagnostico-area') as HTMLSelectElement | null;
-  if (servicioParam && areaSelect && AREA_POR_SERVICIO[servicioParam]) {
-    areaSelect.value = AREA_POR_SERVICIO[servicioParam];
-  }
-
   // ── Diagnóstico form ───────────────────────────────────────
   const form = document.getElementById('diagnostico-form') as HTMLFormElement | null;
   const successDiv = document.getElementById('diagnostico-success');
@@ -341,7 +293,7 @@ const indicadores = ['Estrategia inteligente', 'Automatización operativa', 'IA 
 
     const nombreTexto = nombre ? `Hola, soy ${nombre}.` : 'Hola,';
     const areaTexto   = area   ? `\n\n*Área:* ${area}` : '';
-    const msg = `${nombreTexto} me gustaría un diagnóstico para mi negocio.${areaTexto}\n\n*Problema:*\n${problema}`;
+    const msg = `${nombreTexto} quiero contarles sobre un proceso de mi empresa.${areaTexto}\n\n*Proceso:*\n${problema}`;
     const waUrl = `https://wa.me/59892302941?text=${encodeURIComponent(msg)}`;
     window.open(waUrl, '_blank');
 

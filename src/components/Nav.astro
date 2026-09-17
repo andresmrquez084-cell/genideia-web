@@ -1,11 +1,9 @@
 ---
-import { serviciosInfo } from '../data/clientes';
-
-const servicios = Object.values(serviciosInfo);
-
 const navLinks = [
   { href: '/', label: 'Inicio' },
+  { href: '/soluciones', label: 'Soluciones' },
   { href: '/casos', label: 'Casos' },
+  { href: '/como-trabajamos', label: 'Cómo trabajamos' },
   { href: '/nosotros', label: 'Nosotros' },
   { href: '/#diagnostico', label: 'Contacto' },
 ];
@@ -22,51 +20,13 @@ const navLinks = [
       <img src="/img/logo-nav.png" width="40" height="40" alt="GENIDEIA Company" style="flex-shrink:0; border-radius:10px;" />
       <span class="flex flex-col leading-none">
         <span style="font-family:'Montserrat',sans-serif; font-size:1.15rem; font-weight:700; color:#F2F4F7; letter-spacing:1.5px;">GENIDEIA <span style="font-weight:500; color:#B8BEC7;">Company</span></span>
-        <span style="color:#00C8FF; font-size:0.5rem; letter-spacing:1.5px; font-weight:500; margin-top:2px;" class="uppercase hidden sm:block">Soluciones con Inteligencia Artificial</span>
+        <span style="color:#00C8FF; font-size:0.5rem; letter-spacing:1.5px; font-weight:500; margin-top:2px;" class="uppercase hidden sm:block">Sistemas y automatización para empresas</span>
       </span>
     </a>
 
     <!-- Desktop: links principales -->
     <ul class="hidden lg:flex items-center gap-6 text-sm flex-1 justify-center">
-      <li>
-        <a href="/" style="color:#B8BEC7; font-weight:300; font-size:0.82rem; letter-spacing:0.2px;" class="hover:text-[#00C8FF] transition-colors whitespace-nowrap">
-          Inicio
-        </a>
-      </li>
-
-      <!-- Servicios: dropdown -->
-      <li class="relative" id="nav-servicios-wrap">
-        <button
-          id="nav-servicios-btn"
-          style="color:#B8BEC7; font-weight:300; font-size:0.82rem; letter-spacing:0.2px;"
-          class="hover:text-[#00C8FF] transition-colors whitespace-nowrap flex items-center gap-1"
-          aria-expanded="false"
-          aria-haspopup="true"
-        >
-          Servicios
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-        </button>
-        <div
-          id="nav-servicios-menu"
-          class="hidden absolute top-full left-1/2 -translate-x-1/2 pt-3"
-          style="min-width:240px;"
-        >
-          <div style="background:#111111; border:1px solid rgba(255,255,255,0.1); border-radius:0.75rem;" class="p-2 shadow-2xl">
-            {servicios.map((s) => (
-              <a
-                href={s.ruta}
-                style="color:#B8BEC7; font-size:0.85rem; font-weight:400;"
-                class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg hover:bg-white/5 transition-colors whitespace-nowrap"
-              >
-                <span style={`width:6px; height:6px; border-radius:9999px; background:${s.color}; flex-shrink:0;`}></span>
-                {s.nombre}
-              </a>
-            ))}
-          </div>
-        </div>
-      </li>
-
-      {navLinks.slice(1).map(link => (
+      {navLinks.map(link => (
         <li>
           <a
             href={link.href}
@@ -89,13 +49,6 @@ const navLinks = [
             <rect x="2" y="2" width="20" height="20" rx="5"/>
             <circle cx="12" cy="12" r="4"/>
             <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-          </svg>
-        </a>
-        <a href="https://youtube.com/@genideiacompany" target="_blank" rel="noopener noreferrer"
-          style="color:#B8BEC7;" class="hover:text-[#00C8FF] transition-colors p-1.5" aria-label="YouTube">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.4 19.54C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
-            <polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="currentColor" stroke="none"/>
           </svg>
         </a>
         <a href="mailto:andres@genideiacompany.com"
@@ -154,40 +107,7 @@ const navLinks = [
   >
     <div class="max-w-6xl mx-auto px-6 py-5">
       <ul class="flex flex-col gap-1 mb-6">
-        <li>
-          <a href="/" style="color:#B8BEC7; font-weight:300; font-size:1rem;" class="nav-mobile-link block py-2.5 hover:text-[#00C8FF] transition-colors">
-            Inicio
-          </a>
-        </li>
-
-        <!-- Servicios: acordeón mobile -->
-        <li>
-          <button
-            id="nav-servicios-btn-mobile"
-            style="color:#B8BEC7; font-weight:300; font-size:1rem;"
-            class="w-full flex items-center justify-between py-2.5 hover:text-[#00C8FF] transition-colors"
-            aria-expanded="false"
-          >
-            Servicios
-            <svg id="nav-servicios-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition:transform 0.2s ease;"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <ul id="nav-servicios-submenu" class="hidden pl-4 flex flex-col gap-1 pb-2">
-            {servicios.map((s) => (
-              <li>
-                <a
-                  href={s.ruta}
-                  style="color:#B8BEC7; font-weight:300; font-size:0.92rem;"
-                  class="nav-mobile-link flex items-center gap-2.5 py-2 hover:text-[#00C8FF] transition-colors"
-                >
-                  <span style={`width:6px; height:6px; border-radius:9999px; background:${s.color}; flex-shrink:0;`}></span>
-                  {s.nombre}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </li>
-
-        {navLinks.slice(1).map(link => (
+        {navLinks.map(link => (
           <li>
             <a
               href={link.href}
@@ -207,13 +127,6 @@ const navLinks = [
             <rect x="2" y="2" width="20" height="20" rx="5"/>
             <circle cx="12" cy="12" r="4"/>
             <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-          </svg>
-        </a>
-        <a href="https://youtube.com/@genideiacompany" target="_blank" rel="noopener noreferrer"
-          style="color:#B8BEC7;" class="hover:text-[#00C8FF] transition-colors" aria-label="YouTube">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.4 19.54C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
-            <polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="currentColor" stroke="none"/>
           </svg>
         </a>
         <a href="mailto:andres@genideiacompany.com"
@@ -248,30 +161,5 @@ const navLinks = [
       toggle?.classList.remove('is-open');
       toggle?.setAttribute('aria-expanded', 'false');
     });
-  });
-
-  // Servicios dropdown — desktop (click, cierra al hacer click afuera)
-  const servBtn = document.getElementById('nav-servicios-btn');
-  const servMenu = document.getElementById('nav-servicios-menu');
-  servBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const isHidden = servMenu?.classList.contains('hidden');
-    servMenu?.classList.toggle('hidden', !isHidden);
-    servBtn.setAttribute('aria-expanded', String(isHidden));
-  });
-  document.addEventListener('click', () => {
-    servMenu?.classList.add('hidden');
-    servBtn?.setAttribute('aria-expanded', 'false');
-  });
-
-  // Servicios acordeón — mobile
-  const servBtnM = document.getElementById('nav-servicios-btn-mobile');
-  const servSubmenu = document.getElementById('nav-servicios-submenu');
-  const servChevron = document.getElementById('nav-servicios-chevron');
-  servBtnM?.addEventListener('click', () => {
-    const isHidden = servSubmenu?.classList.contains('hidden');
-    servSubmenu?.classList.toggle('hidden', !isHidden);
-    servBtnM.setAttribute('aria-expanded', String(isHidden));
-    if (servChevron) servChevron.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
   });
 </script>

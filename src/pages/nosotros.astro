@@ -1,27 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Los dos socios / cofundadores — antes vivían en la home, ahora acá (con la historia).
+// NOTA (2026-09-17): esta sección listaba a los 2 socios — Andrés (automatización) y Tadeo (ads).
+// Con el nuevo posicionamiento 100% B2B de sistemas/automatización, la función de Tadeo tal
+// como estaba descripta (ads/publicidad) queda fuera del alcance de este sitio. Se lo deja
+// afuera de esta página hasta que Andrés defina cómo se presenta acá (o si queda solo en su
+// propio dominio). Ver resumen de cambios al final del PR.
 const socios = [
   {
     nombre: 'Andrés Albornoz',
-    rol: 'Cofundador · Soluciones con automatización',
-    desc: 'Ayuda a empresas a optimizar sus operaciones diarias con herramientas de Inteligencia Artificial.',
+    rol: 'Cofundador · Sistemas y automatización',
+    desc: 'Diseña e implementa sistemas y automatizaciones a medida de la operación de cada empresa.',
     ig: 'https://instagram.com/andresalbornozia',
     handle: '@andresalbornozia',
     linkedin: 'https://www.linkedin.com/in/andres-albornoz-b498823a4',
     wsp: 'https://wa.me/59892302941',
     foto: '/img/andres.jpg',
-  },
-  {
-    nombre: 'Tadeo Granada',
-    rol: 'Fundador · Ads / Publicidad',
-    desc: 'Lleva los anuncios: Meta, Instagram, Google, TikTok y LinkedIn. Estudia el mercado, contacta y produce el contenido de las campañas que traen clientes.',
-    ig: 'https://instagram.com/tadeogranadaa',
-    handle: '@tadeogranadaa',
-    linkedin: '',
-    wsp: 'https://wa.me/59892267601',
-    foto: '/img/tadeo.jpg',
   },
 ];
 
@@ -29,24 +23,24 @@ const valores = [
   {
     num: '01',
     titulo: 'Problema primero',
-    desc: 'Antes de proponer cualquier solución, entendemos qué está pasando realmente en el negocio. Las herramientas vienen después.',
+    desc: 'Antes de proponer cualquier solución, entendemos qué está pasando realmente en la operación. Las herramientas vienen después.',
   },
   {
     num: '02',
     titulo: 'Sin sobre-ingeniería',
-    desc: 'Si se resuelve con algo simple, usamos algo simple. La complejidad tiene que justificarse con resultados, no con tecnología por la tecnología.',
+    desc: 'Si se resuelve con algo simple, usamos algo simple. La complejidad tiene que justificarse con la operación, no con tecnología por la tecnología.',
   },
   {
     num: '03',
     titulo: 'Presencia posterior',
-    desc: 'No entregamos y desaparecemos. Medimos, ajustamos y seguimos. El éxito del cliente es el único indicador que nos importa.',
+    desc: 'No entregamos y desaparecemos. El sistema se ajusta con el uso real y seguimos presentes después de la implementación.',
   },
 ];
 ---
 
 <BaseLayout
   title="Nosotros — GENIDEIA Company"
-  description="Dos socios, un objetivo: hacer crecer negocios reales con contenido, ads, presencia digital y automatización aplicada."
+  description="Diseñamos soluciones personalizadas para problemas operativos reales: consultoría operativa, diseño de sistemas, automatización e implementación."
   path="/nosotros"
 >
 
@@ -58,17 +52,17 @@ const valores = [
         Quiénes somos
       </p>
       <h1 class="hero-animate mb-7" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.05; letter-spacing:-1px; font-size:clamp(2.5rem, 6vw, 4.5rem);">
-        Una historia personal.<br />
-        <span style="color:#B8BEC7; font-weight:300; font-style:italic;">Una alianza estratégica.</span>
+        Diseñamos soluciones<br />
+        <span style="color:#B8BEC7; font-weight:300; font-style:italic;">para problemas operativos reales.</span>
       </h1>
       <p class="hero-animate mx-auto leading-relaxed max-w-xl text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
-        GENIDEIA IA nació de la convicción de que la tecnología bien aplicada
-        puede cambiar la forma en que los negocios en América Latina operan y crecen.
+        GENIDEIA es una empresa de consultoría operativa y diseño de sistemas: entendemos cómo
+        funciona un negocio, detectamos dónde se pierde tiempo y construimos el sistema alrededor de eso.
       </p>
     </div>
   </section>
 
-  <!-- ── HISTORIA DE ANDRÉS ────────────────────────────────── -->
+  <!-- ── HISTORIA ──────────────────────────────────────────── -->
   <section style="border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
     <div class="max-w-3xl mx-auto px-6">
 
@@ -82,71 +76,65 @@ const valores = [
 
         <div class="space-y-5" style="color:#B8BEC7; font-weight:300; line-height:1.85; font-size:1rem;">
           <p data-reveal data-delay="1">
-            Empecé a explorar la automatización e inteligencia artificial no como tendencia,
-            sino como respuesta a una frustración real: procesos manuales, tiempo perdido,
-            negocios que dejaban dinero sobre la mesa por falta de sistemas.
+            Empecé a explorar la automatización no como tendencia, sino como respuesta a una
+            frustración real: procesos manuales, tiempo perdido, información dispersa, negocios
+            que operaban sin sistema.
           </p>
           <p data-reveal data-delay="2">
-            Lo que empezó como curiosidad se convirtió en oficio. Aprendí a construir
-            bots de WhatsApp, workflows de n8n, sistemas de contenido automatizado.
-            Y lo más importante: aprendí a entender el problema antes de proponer la solución.
+            Lo que empezó como curiosidad se convirtió en oficio. Aprendí a mapear procesos,
+            a construir bots, workflows y paneles internos. Y lo más importante: aprendí a
+            entender el problema antes de proponer la solución.
           </p>
           <p data-reveal data-delay="3">
-            Hoy trabajo desde Montevideo con negocios de Uruguay y la región, ayudándolos
-            a crecer sin tener que estar presentes las 24 horas. Marketing que genera demanda,
-            automatizaciones que operan solas, herramientas a medida.
+            Hoy trabajo desde Montevideo con empresas de Uruguay y la región, diseñando sistemas
+            que ordenan la operación y reducen el trabajo manual — sin imponer herramientas
+            genéricas que no encajan con cómo funciona cada negocio.
           </p>
         </div>
       </div>
 
       <div style="border-top:1px solid rgba(255,255,255,0.07);" class="my-16"></div>
 
-      <!-- GENIDEIA IA -->
+      <!-- GENIDEIA -->
       <div data-reveal>
         <span style="color:#00C8FF; font-size:0.65rem; letter-spacing:2.5px; font-weight:500;" class="uppercase mb-6 block">
-          GENIDEIA IA
+          GENIDEIA
         </span>
         <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.8rem, 4vw, 3rem);" class="mb-8">
-          La alianza que escala la visión
+          Consultoría operativa, no agencia.
         </h2>
 
         <div class="space-y-5" style="color:#B8BEC7; font-weight:300; line-height:1.85; font-size:1rem;">
           <p data-reveal data-delay="1">
-            GENIDEIA IA es la estructura que permite hacer esto a mayor escala.
-            Una alianza entre dos socios con enfoque complementario: visión estratégica
-            y ejecución técnica trabajando en paralelo.
+            No vendemos paquetes cerrados ni soluciones de estantería. Cada proyecto empieza
+            con la misma pregunta: ¿cuál es el problema real?
           </p>
           <p data-reveal data-delay="2">
-            No somos una agencia tradicional. No vendemos paquetes cerrados ni soluciones
-            de estantería. Cada proyecto empieza con una pregunta: ¿cuál es el problema real?
+            Trabajamos en cuatro etapas: entendemos el proceso, diseñamos el sistema, lo
+            construimos y lo implementamos dentro de la operación real de la empresa.
           </p>
           <p data-reveal data-delay="3">
-            Operamos en la intersección de marketing digital, automatización e inteligencia artificial,
-            con foco en PyMEs latinoamericanas que quieren crecer de forma inteligente —
-            sin depender de más horas de trabajo manual.
+            El foco es siempre el mismo: empresas que operan a mano y quieren un sistema
+            que ordene, automatice y dé seguimiento — sin depender de que alguien se acuerde de hacerlo.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── LOS SOCIOS ─────────────────────────────────────────── -->
+  <!-- ── EL EQUIPO ─────────────────────────────────────────── -->
   <section style="border-top:1px solid rgba(255,255,255,0.07);" class="py-24">
-    <div class="max-w-5xl mx-auto px-6">
+    <div class="max-w-3xl mx-auto px-6">
       <div class="text-center mb-12" data-reveal>
-        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Quiénes están detrás</p>
+        <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-4">Quién está detrás</p>
         <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(2rem, 5vw, 3.5rem);" class="mb-4">
-          Los socios que responden por tu negocio.
+          La persona que responde por tu sistema.
         </h2>
-        <p style="color:#B8BEC7; font-weight:300;" class="text-lg max-w-xl mx-auto">
-          Dos socios que entran por frentes distintos —automatización y ads— y convergen
-          en un solo objetivo: hacer crecer tu negocio.
-        </p>
       </div>
 
-      <div class="grid sm:grid-cols-2 gap-6" data-reveal data-delay="1">
+      <div data-reveal data-delay="1">
         {socios.map((s) => (
-          <div class="card-hover rounded-xl p-6 flex items-center gap-5" style="background:#111111; border:1px solid rgba(255,255,255,0.07);">
+          <div class="card-hover rounded-xl p-6 flex items-center gap-5 max-w-xl mx-auto" style="background:#111111; border:1px solid rgba(255,255,255,0.07);">
             <div style="flex-shrink:0; width:88px; height:110px; border-radius:0.5rem; overflow:hidden; background:#0B1324; border:1px solid rgba(255,255,255,0.08);" class="flex items-center justify-center">
               <img src={s.foto} alt={s.nombre} style="width:100%; height:100%; object-fit:cover;" />
             </div>
@@ -214,7 +202,7 @@ const valores = [
       Hablar por WhatsApp
     </a>
     <p style="color:rgba(160,160,160,0.35); font-weight:300;" class="text-sm mt-5">
-      Sin compromiso · Respondemos en menos de 24 horas
+      Respondemos en menos de 24 horas
     </p>
   </section>
 

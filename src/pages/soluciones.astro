@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import ProblemaCard from '../components/ProblemaCard.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { PROBLEMAS } from '../data/soluciones';
+
+const disenamos = [
+  'Sistemas internos',
+  'Automatizaciones',
+  'Flujos operativos',
+  'Seguimiento comercial',
+  'Gestión de personal',
+  'Sistemas administrativos',
+  'Soluciones para logística',
+  'Alertas y estados',
+  'Paneles internos',
+  'Integraciones',
+];
+---
+
+<BaseLayout
+  title="Soluciones — GENIDEIA Company"
+  description="Diseñamos sistemas internos, automatizaciones, flujos operativos y paneles a medida de cómo funciona cada empresa. No vendemos herramientas cerradas."
+  path="/soluciones"
+>
+
+  <!-- ── HERO ──────────────────────────────────────────────── -->
+  <section class="max-w-4xl mx-auto px-6 pt-24 pb-16 text-center">
+    <p class="hero-animate text-xs font-medium mb-6 uppercase" data-delay="1" style="color:#00C8FF; letter-spacing:3px;">
+      Soluciones
+    </p>
+    <h1 class="hero-animate mb-6" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.05; letter-spacing:-1px; font-size:clamp(2.4rem, 5.5vw, 3.8rem);">
+      Diseñamos sistemas alrededor de cómo funciona tu empresa.
+    </h1>
+    <p class="hero-animate mx-auto mb-9 leading-relaxed max-w-2xl text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
+      No vendemos soluciones cerradas como si fueran productos estándar. Cada sistema se diseña
+      a partir de cómo opera realmente tu negocio: quién hace qué, con qué información y en qué orden.
+    </p>
+  </section>
+
+  <!-- ── QUÉ DISEÑAMOS ─────────────────────────────────────── -->
+  <Section bg="soft" border="both" kicker="Qué diseñamos" title="Genideia diseña:" maxWidth="max-w-4xl">
+    <div class="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto" data-reveal>
+      {disenamos.map((d) => (
+        <span
+          style="background:#111111; border:1px solid rgba(255,255,255,0.1); color:#B8BEC7;"
+          class="px-4 py-2 rounded-lg text-sm font-light"
+        >
+          {d}
+        </span>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ── PROBLEMAS QUE RESOLVEMOS (completo) ───────────────── -->
+  <Section
+    id="problemas"
+    kicker="Problemas que resolvemos"
+    title="No es una lista de servicios. Es una lista de problemas."
+    maxWidth="max-w-6xl"
+  >
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {PROBLEMAS.map((p) => <ProblemaCard problema={p} />)}
+    </div>
+    <p class="text-center mt-12 max-w-2xl mx-auto" style="color:#B8BEC7; font-weight:300;" data-reveal>
+      No partimos de una herramienta. Partimos del problema y construimos el sistema alrededor de tu operación.
+    </p>
+  </Section>
+
+  <CtaBand
+    title="¿Alguno de estos problemas es el tuyo?"
+    subtitle="Contanos cómo funciona hoy y evaluamos qué sistema tendría sentido construir."
+    waMessage="Hola, vi las soluciones de GENIDEIA y quiero contarles un problema de mi empresa."
+  />
+
+</BaseLayout>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+</script>
