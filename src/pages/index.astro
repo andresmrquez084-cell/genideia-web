@@ -11,6 +11,10 @@ const destinos = [
     desc: 'Cómo pensamos GENIDEIA, quién está detrás y qué nos diferencia.',
     href: '/nosotros',
     cta: 'Conocer al equipo',
+    color: '#00C8FF',
+    glow: 'rgba(0,200,255,.16)',
+    primary: false,
+    icon: 'M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM4.5 20.5a7.5 7.5 0 0 1 15 0',
   },
   {
     eyebrow: 'El siguiente paso',
@@ -18,6 +22,10 @@ const destinos = [
     desc: 'Mirá el video, los ejemplos por rubro, y coordiná tu diagnóstico con Andrés.',
     href: 'https://andres.genideiacompany.com/empresa',
     cta: 'Ver el video y agendar',
+    color: '#007BFF',
+    glow: 'rgba(0,123,255,.22)',
+    primary: true,
+    icon: 'M8 2v4M16 2v4M3.5 9h17M5 4.5h14A1.5 1.5 0 0 1 20.5 6v14a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 20V6A1.5 1.5 0 0 1 5 4.5Z M9 13.5l2 2 4-4.5',
   },
   {
     eyebrow: 'Lo que ya construimos',
@@ -25,6 +33,10 @@ const destinos = [
     desc: 'Sistemas reales, diagnósticos y proyectos — el portfolio completo.',
     href: 'https://genideiacompany.com/experiencia/',
     cta: 'Ver el portfolio',
+    color: '#34D399',
+    glow: 'rgba(52,211,153,.16)',
+    primary: false,
+    icon: 'M4 19.5V6a1.5 1.5 0 0 1 1.5-1.5H15l5 5v9.5A1.5 1.5 0 0 1 18.5 20.5h-13A1.5 1.5 0 0 1 4 19.5ZM14.5 4.5V9a1 1 0 0 0 1 1h4.5',
   },
 ];
 ---
@@ -56,25 +68,69 @@ const destinos = [
           href={d.href}
           target={d.href.startsWith('http') ? '_blank' : undefined}
           rel={d.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-          class="card-hover rounded-xl p-7 flex flex-col"
-          style="background:#111111; border:1px solid rgba(255,255,255,0.07); border-top:2px solid #00C8FF;"
+          class:list={["dest-card card-hover rounded-xl p-7 flex flex-col", d.primary && "dest-card-primary"]}
+          style={`--dest-color:${d.color}; --dest-glow:${d.glow};`}
           data-reveal
           data-delay={String(i + 1)}
         >
-          <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-3">{d.eyebrow}</p>
+          <div class="dest-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d={d.icon} />
+            </svg>
+          </div>
+          <p style={`color:${d.color}; letter-spacing:2px;`} class="text-xs font-medium uppercase mb-3">{d.eyebrow}</p>
           <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; color:#F2F4F7; font-size:1.4rem;" class="mb-3">
             {d.titulo}
           </h2>
           <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-6 flex-1">
             {d.desc}
           </p>
-          <span style="color:#00C8FF; font-weight:500;" class="text-sm">
+          <span style={`color:${d.color};`} class="text-sm font-medium">
             {d.cta} →
           </span>
         </a>
       ))}
     </div>
   </section>
+
+  <style>
+    .dest-card {
+      position: relative;
+      overflow: hidden;
+      background: #111111;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-top: 2px solid var(--dest-color);
+    }
+    .dest-card::before {
+      content: '';
+      position: absolute;
+      inset: -40% -40% auto auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--dest-glow), transparent 70%);
+      pointer-events: none;
+    }
+    .dest-card-primary {
+      background: linear-gradient(160deg, rgba(0,123,255,0.14), #111111 55%);
+      border-color: rgba(0,123,255,0.35);
+      box-shadow: 0 0 0 1px rgba(0,123,255,0.12), 0 20px 60px rgba(0,123,255,0.08);
+    }
+    .dest-icon {
+      position: relative;
+      z-index: 1;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      color: var(--dest-color);
+      background: color-mix(in srgb, var(--dest-color) 12%, transparent);
+      border: 1px solid color-mix(in srgb, var(--dest-color) 35%, transparent);
+      margin-bottom: 22px;
+    }
+    .dest-icon svg { width: 22px; height: 22px; }
+  </style>
 
 </BaseLayout>
 
