@@ -1,0 +1,38 @@
+---
+import type { Sistema } from '../data/soluciones';
+
+interface Props {
+  sistema: Sistema;
+}
+
+const { sistema } = Astro.props;
+---
+
+<div
+  class="card-hover rounded-xl p-7 flex flex-col"
+  style="background:#111111; border:1px solid rgba(255,255,255,0.07);"
+  data-reveal
+>
+  <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.2rem;" class="mb-5">
+    {sistema.nombre}
+  </h3>
+  <div class="space-y-4">
+    <div>
+      <p style="color:rgba(160,160,160,0.5); font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-1.5">Problema</p>
+      <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{sistema.problema}</p>
+    </div>
+    <div>
+      <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-1.5">Sistema</p>
+      <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{sistema.sistema}</p>
+    </div>
+    <div>
+      <p style="color:#34D399; font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-1.5">Resultado</p>
+      <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed">{sistema.resultado}</p>
+    </div>
+  </div>
+  {sistema.url && (
+    <a href={sistema.url} target="_blank" rel="noopener noreferrer" style="color:#00C8FF; font-weight:400;" class="text-sm mt-5 hover:opacity-70 transition-opacity">
+      {sistema.urlLabel || 'Ver más →'}
+    </a>
+  )}
+</div>
