@@ -1,0 +1,102 @@
+---
+// Lead magnet · palabra clave ManyChat: COWORK (reel: "Cowork de Claude" — dividir tareas en
+// paralelo, navegador propio, tareas programadas, conectores, celular, combinar todo).
+// URL pública: /recursos/cowork-claude
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const paraleloPrompt = `Necesito investigar 3 herramientas de IA para [tarea]. Dividí el trabajo: investigá cada una en paralelo, compará precios y funciones, y armame un documento final con la comparativa y tu recomendación.`;
+const navegadorPrompt = `Abrí mi navegador y buscá información actualizada sobre [tema]. Después completá este formulario con lo que encontraste: [link del formulario o página].`;
+const programadasPrompt = `Todos los lunes a las 8am, revisá mis emails y reuniones de la semana que arranca y dejame un resumen preparado, sin que tenga que pedírtelo de nuevo cada vez.`;
+const conectadasPrompt = `En el resumen diario que me armás, sumá también lo que pasó en mis reuniones de Google Calendar y los mensajes importantes de Slack — no solo los emails.`;
+const celularPrompt = `Empezá esta tarea ahora en la computadora: [tarea]. Voy a seguir revisándola y corrigiéndola desde la app del celular durante el día, sin volver a sentarme frente a la compu.`;
+const combinarPrompt = `Armame un informe del cliente [nombre] usando mis archivos de Drive, buscando información actualizada en internet sobre su rubro, y agregando los datos de HubSpot — todo junto en un mismo documento final.`;
+---
+<RecursoLayout
+  titulo="Cowork de Claude: las 6 funciones que tenés que conocer"
+  descripcion="Guía con un mini prompt listo para copiar por cada función — para que empieces a usar Cowork hoy mismo, como en el video."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="COWORK"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Cowork es el modo de Claude que le permite trabajar por vos en segundo plano: dividir una tarea grande, navegar solo, ejecutarse en horarios que vos definís y seguir el trabajo aunque cambies de dispositivo.</b></div>
+
+  <h2>1 · Dividí tareas en paralelo</h2>
+  <p>Si la tarea es muy grande o tiene varias partes, Claude la puede dividir y trabajar cada parte al mismo tiempo — mientras una investiga, otra ordena datos y otra arma el documento final.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{paraleloPrompt}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li>Ideal para research o comparativas: en vez de esperar una cosa a la vez, avanza todo junto.</li>
+  </ul>
+
+  <h2>2 · Navegá páginas por su cuenta</h2>
+  <p>Claude puede abrir su propio navegador y trabajar directamente dentro de páginas web: entrar a un sitio, leer información, hacer clic, escribir y completar formularios, mientras vos seguís con otra cosa.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{navegadorPrompt}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li>No hace falta que le pases los datos vos: los busca, los lee y los usa.</li>
+  </ul>
+
+  <h2>3 · Programá tareas automáticas</h2>
+  <p>Le podés dejar tareas programadas para que se ejecuten solas, en el horario que vos elijas, sin que tengas que volver a pedírselo cada vez.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{programadasPrompt}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li>Se configura una sola vez y queda corriendo — vos solo revisás el resultado.</li>
+  </ul>
+
+  <h2>4 · Usá herramientas conectadas</h2>
+  <p>Esas tareas programadas no tienen por qué trabajar solo con lo que vos escribiste: pueden combinar las herramientas que tengas conectadas y preparar, por ejemplo, un resumen diario de tus emails, reuniones o mensajes del trabajo.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{conectadasPrompt}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li>Cuantos más conectores tengas activos, más completo sale el resumen.</li>
+  </ul>
+
+  <div class="minicta">
+    Si todavía no activaste tus conectores, tengo una guía aparte con los 10 principales y un mini prompt para cada uno. Pedila en la comunidad de <b>Claude desde 0</b>. <a href={grupo} target="_blank" rel="noopener noreferrer">Entrar al grupo →</a>
+  </div>
+
+  <h2>5 · Seguila desde el celular</h2>
+  <p>Podés empezar un trabajo desde la computadora y después seguir controlándolo desde el teléfono: revisar qué está haciendo, corregir algo o ver el resultado, sin tener que estar sentado frente a un mismo dispositivo.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{celularPrompt}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li>Arrancás una tarea larga antes de salir y la vas revisando en el celular durante el día.</li>
+  </ul>
+
+  <h2>6 · Combiná todo en un mismo trabajo</h2>
+  <p>Acá es donde se combina un poco de todo: una tarea que necesite usar tus archivos, otra que busque información en internet, y otra que consulte tus herramientas conectadas — pero todo dentro del mismo trabajo.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{combinarPrompt}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li>Esta es la que más tiempo ahorra: en vez de tres pedidos sueltos, uno solo que arma el resultado final.</li>
+  </ul>
+
+  <div class="note"><b>Ojo:</b> no uses Cowork para tareas por volumen (buscar cientos de empresas, por ejemplo) — ahí tarda más y consume más uso. Es mejor para tareas específicas y acotadas como las de arriba.</div>
+
+  <h2>Checklist: probá cada función</h2>
+  <ul class="check">
+    <li>Le di una tarea grande para que la divida y trabaje en paralelo.</li>
+    <li>Le pedí que navegue una página y complete algo por su cuenta.</li>
+    <li>Configuré una tarea programada para que se repita sola.</li>
+    <li>Sumé herramientas conectadas a esa tarea programada.</li>
+    <li>Empecé un trabajo en la compu y lo seguí desde el celular.</li>
+    <li>Le pedí un trabajo que combine archivos, internet y conectores juntos.</li>
+  </ul>
+</RecursoLayout>
