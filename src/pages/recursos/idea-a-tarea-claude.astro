@@ -1,0 +1,61 @@
+---
+// Lead magnet · palabra clave ManyChat: CLAUDE (carrusel: "Usás Claude, pero sentís que no le sacás provecho")
+// URL pública: /recursos/idea-a-tarea-claude
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const plantilla = `TAREA
+[La tarea puntual y recurrente que querés resolver. Ej: "armar
+el resumen semanal de ventas para el grupo de WhatsApp del equipo"]
+
+CONTEXTO
+[Qué información maneja hoy esta tarea: de dónde salen los datos,
+qué formato tienen, quién la lee después. Pegá acá un ejemplo real
+de cómo la resolvés hoy, aunque sea a mano o mal hecho.]
+
+RESULTADO QUE NECESITO
+[Cómo tiene que quedar el resultado final: formato, extensión,
+tono, para quién es. Si tenés un ejemplo de "así SÍ" o "así NO",
+pegalo también.]
+
+RESTRICCIONES
+[Qué no puede faltar / qué tiene que evitar. Ej: "nada de
+tecnicismos", "máximo 5 líneas", "en español rioplatense".]
+
+Trabajá conmigo sobre esta tarea hasta dejarla resuelta. Después
+de tu primera respuesta te voy a decir qué ajustar — seguí
+iterando sobre esta misma conversación, no empieces de nuevo.`;
+---
+<RecursoLayout
+  titulo="De una idea suelta a una tarea que Claude puede resolver"
+  descripcion="No necesitás aprender 'todo Claude'. La plantilla de 2 pasos que uso para pasar de una idea a una tarea bien estructurada, hasta dejarla resuelta."
+  tipo="Espacio de trabajo"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="CLAUDE"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>No necesitás aprender "todo Claude". Necesitás una sola tarea real, bien planteada. Esta es la plantilla que uso para pasar de "tengo una idea" a "Claude me lo dejó resuelto", en dos pasos.</b></div>
+
+  <h2>Antes de arrancar</h2>
+  <ul class="check">
+    <li>Elegí <b>una sola tarea</b> que ya hacés todas las semanas (no una hipotética).</li>
+    <li>Tené a mano lo que Claude necesita para entenderla: un ejemplo real, una planilla, un texto anterior.</li>
+    <li>Una cuenta de Claude abierta (sirve la gratis para empezar).</li>
+  </ul>
+
+  <h2>El método en 2 pasos</h2>
+  <ol class="steps">
+    <li><b>Elegí la tarea correcta.</b> No arranques por "aprender la herramienta". Arrancá por algo puntual que repetís seguido: responder el mismo tipo de mensaje, armar el mismo informe, resumir el mismo tipo de reunión. Si es recurrente, vale la pena dejarlo resuelto una vez.</li>
+    <li><b>Dale contexto y el resultado que necesitás.</b> No le pidas "ayudame con X". Mostrale un ejemplo de cómo te queda hoy, decile exactamente cómo lo necesitás y quedate iterando sobre esa misma conversación hasta que el resultado sea el que usarías de verdad — no el primer intento.</li>
+  </ol>
+
+  <h2>La plantilla (copiala y completala)</h2>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{plantilla}</code></pre>
+  </div>
+
+  <div class="note"><b>Tip:</b> guardá esta conversación una vez que quede bien. La próxima semana, en vez de escribir todo de nuevo, volvé a ella y pedile "hacé lo mismo pero con estos datos nuevos".</div>
+</RecursoLayout>
