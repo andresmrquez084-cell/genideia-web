@@ -1,0 +1,111 @@
+---
+// Lead magnet · palabra clave ManyChat: GUIA (reel "Preguntas frecuentes de Claude Pro" — 10
+// dudas típicas de quien paga Claude). Esta guía amplía las respuestas cortas del reel.
+// URL pública: /recursos/guia-pro-claude
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+---
+<RecursoLayout
+  titulo="Guía rápida de Claude Pro: qué incluye, qué cambia y cuándo usar cada función"
+  descripcion="La continuación del reel de preguntas frecuentes — qué te destraba Claude Pro, cuánto cambia el uso, y qué función conviene según lo que necesitás hacer."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="GUIA"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Claude Pro no es "más de lo mismo" — destraba modalidades enteras (Claude Code, Projects sin límite, Cowork) que con el plan gratis no están disponibles o están muy acotadas.</b> Acá está todo junto: qué cambia, para qué sirve cada función y cuál te conviene según lo que estés haciendo.</div>
+
+  <h2>Qué incluye Claude Pro</h2>
+  <div class="grid">
+    <div class="col no">
+      <h3>Plan gratis</h3>
+      <ul>
+        <li>Uso limitado por sesión</li>
+        <li>Hasta 5 Projects</li>
+        <li>Sin Claude Code</li>
+        <li>Sin Cowork</li>
+      </ul>
+    </div>
+    <div class="col si">
+      <h3>Plan Pro</h3>
+      <ul>
+        <li>Al menos 5x más uso por sesión</li>
+        <li>Projects sin ese límite</li>
+        <li>Claude Code incluido</li>
+        <li>Cowork incluido</li>
+      </ul>
+    </div>
+  </div>
+  <ul class="arrow">
+    <li>Vale la pena sobre todo si lo usás a diario o necesitás más capacidad — no hay un beneficio fijo si lo usás una vez por semana para algo chico.</li>
+  </ul>
+
+  <h2>Cuánto cambia el uso respecto al plan gratis</h2>
+  <p>No existe una cantidad fija de mensajes ni con Pro ni con el gratis — depende de cuánto contexto uses, cuántos archivos cargues y qué tan compleja sea la tarea. Lo que sí es consistente: Pro te da bastante más capacidad antes de toparte con un límite.</p>
+
+  <h2>Claude Code</h2>
+  <p>Viene incluido con Pro o Max, con la misma suscripción — lo usás desde la terminal, la versión de escritorio o entornos de desarrollo compatibles. No hace falta ser programador: está pensado sobre todo para trabajar con código y proyectos técnicos, pero a diferencia de un chat común, trabaja directamente dentro de tu entorno y sobre los archivos reales del proyecto.</p>
+  <ul class="arrow">
+    <li>El uso de Claude Code cuenta dentro del mismo límite de tu suscripción — no es un cupo aparte.</li>
+  </ul>
+
+  <h2>Projects</h2>
+  <p>Está disponible también en el plan gratis (hasta 5 proyectos) — la diferencia con Pro es que no tenés ese tope. Conviene usarlo cuando vas a trabajar varias veces sobre el mismo tema: en vez de empezar de cero en cada chat, dejás los archivos, instrucciones y contexto organizados en un mismo espacio.</p>
+
+  <h2>Conectores</h2>
+  <p>Los conectores web están disponibles para todos los usuarios, no solo los que pagan. Le sirven a Claude para acceder a información de otras aplicaciones e incluso ejecutar acciones puntuales, dependiendo del conector y los permisos que le des.</p>
+
+  <h2>Tareas programadas</h2>
+  <p>Podés dejarle tareas para que se ejecuten solas en un horario fijo, sin tener que pedírselo cada vez — y esas tareas programadas pueden combinar tus conectores activos (Calendar, Slack, email) para armarte, por ejemplo, un resumen diario ya preparado.</p>
+
+  <div class="minicta">
+    Estas dos últimas (conectores + tareas programadas) son las que más tiempo ahorran cuando se combinan. Si querés el mini prompt para activar cada una, pedilo en la comunidad de <b>Claude desde 0</b>. <a href={grupo} target="_blank" rel="noopener noreferrer">Entrar al grupo →</a>
+  </div>
+
+  <h2>Qué pasó con Cowork y cómo funciona ahora</h2>
+  <p>Cowork es el modo para tareas más completas, donde Claude trabaja durante varios pasos usando archivos, conectores, navegador y otras herramientas. Anthropic está integrando Chat y Cowork en una misma experiencia: vos pedís lo que necesitás y Claude decide si responde rápido o ejecuta una tarea completa — dejando de ser dos modalidades separadas.</p>
+  <p>Funciona en escritorio, web y móvil, y podés retomar una sesión que empezaste en otro dispositivo. Algunas funciones que dependen directamente de tu computadora necesitan que Claude Desktop siga abierto, pero la sesión en sí puede seguir desde otro lado.</p>
+
+  <h2>Qué función usar según el caso</h2>
+  <ul class="score">
+    <li><b>Necesitás resolver algo puntual, rápido →</b> Chat normal.</li>
+    <li><b>Vas a volver sobre el mismo tema varias veces →</b> Project.</li>
+    <li><b>La tarea toca código o un entorno de desarrollo →</b> Claude Code.</li>
+    <li><b>Necesita pasos largos, herramientas y archivos combinados →</b> Cowork.</li>
+    <li><b>Se repite siempre en el mismo horario →</b> Tarea programada + conectores.</li>
+  </ul>
+
+  <h2>Límites y aclaraciones básicas</h2>
+  <div class="note"><b>Ojo:</b> el uso de Claude y de Claude Code cuentan dentro del MISMO límite de tu suscripción — no son cupos separados. Y no uses Cowork para tareas por volumen (revisar cientos de casos, por ejemplo): ahí tarda más y consume más uso que resolverlo de otra forma.</div>
+
+  <h2>Lo que mucha gente cree vs. lo que realmente está disponible</h2>
+  <div class="grid">
+    <div class="col no">
+      <h3>Se suele creer</h3>
+      <ul>
+        <li>Projects es solo para quien paga</li>
+        <li>Los conectores son función Pro</li>
+        <li>Chat y Cowork son dos productos separados para siempre</li>
+      </ul>
+    </div>
+    <div class="col si">
+      <h3>Lo que realmente pasa</h3>
+      <ul>
+        <li>Projects existe en el plan gratis (con tope de 5)</li>
+        <li>Los conectores web son para todos los usuarios</li>
+        <li>Se están integrando en una misma experiencia</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Checklist: repasá tu caso</h2>
+  <ul class="check">
+    <li>Sé qué cambia entre el plan gratis y Pro en mi caso puntual.</li>
+    <li>Identifiqué si mi trabajo necesita Claude Code, Projects, Cowork o alguna combinación.</li>
+    <li>Activé al menos un conector para probar una tarea programada.</li>
+    <li>Sé que Claude y Claude Code comparten el mismo límite de uso.</li>
+    <li>Entiendo para qué NO conviene usar Cowork (tareas por volumen).</li>
+  </ul>
+</RecursoLayout>
