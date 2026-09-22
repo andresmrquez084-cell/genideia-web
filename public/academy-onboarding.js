@@ -13,6 +13,13 @@
   const SPECIAL_CONDITIONS_HTML = `<h4>10. Condiciones especiales — Cliente Fundador</h4><p>Por tratarse de un cliente fundador de este formato de acompañamiento, se le otorgan además las siguientes condiciones:</p><ul><li>Acceso garantizado a la comunidad de Genideia en School, a habilitarse próximamente.</li><li>Posibilidad de actualizar su servicio a futuro a Genideia Academy Pro.</li></ul><p class="legal">Estas condiciones especiales son adicionales al servicio descripto en las cláusulas anteriores y no reemplazan ni modifican el resto del acuerdo.</p>`;
 
   if (isExternalPayment) {
+    const heroDesc = document.getElementById('hero-desc');
+    const feature1Desc = document.getElementById('feature-1-desc');
+    const clause3Body = document.getElementById('clause3-body');
+    if (heroDesc) heroDesc.textContent = 'Un sistema híbrido de 8 módulos para aprender herramientas de inteligencia artificial —principalmente Claude y ChatGPT, la base sobre la que después se suman conectores y otras plataformas— y aplicarlas directamente sobre tu situación, tus tareas y tus objetivos diarios. A tu ritmo: podés avanzar hasta 2 módulos por semana.';
+    if (feature1Desc) feature1Desc.textContent = 'Aprendés herramientas de inteligencia artificial (Claude y ChatGPT como base) y las aplicás sobre las tareas y acciones diarias que ya llevás a cabo. Podés avanzar hasta 2 módulos por semana, según tu tiempo.';
+    if (clause3Body) clause3Body.textContent = 'El Participante tendrá derecho a 8 módulos privados online, en formato híbrido: cada módulo combina el aprendizaje de herramientas de inteligencia artificial (Claude y ChatGPT como base) con su aplicación práctica sobre la situación, tareas y objetivos actuales del Participante. El primer módulo funcionará como diagnóstico inicial y los siguientes se organizarán de acuerdo con el objetivo, el avance y las necesidades detectadas. El servicio incluye recursos y materiales de apoyo vinculados al proceso.';
+
     const contract = document.querySelector('.contract');
     const providerSignature = document.querySelector('.provider-signature');
     if (contract && providerSignature && !document.getElementById('special-conditions')) {
