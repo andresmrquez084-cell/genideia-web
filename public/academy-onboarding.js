@@ -1,34 +1,44 @@
 (() => {
   const API = 'https://dbwuubabafzsinaokawe.supabase.co/functions/v1/academy-enrollment';
-  const ONE_TO_ONE_PAYONEER = 'https://link.payoneer.com/Token?t=92CC9FD225EF4AC2962D8F6387F48367&src=mobile';
+  // TODO: cuando Andrés genere el link de Payoneer para USD 300, agregarlo acá y
+  // restaurar el bloque que lo inyecta en #pago .payment-grid (el anterior apuntaba
+  // a un cobro fijo de USD 799 y ya no sirve).
   const body = document.body;
   const service = body.dataset.service;
   if (!service || !['grupal', '1a1'].includes(service)) return;
 
-  if (service === '1a1') {
-    const heroPrice = document.querySelector('.hero aside strong');
-    const totalPrice = document.querySelector('#pago .total strong');
-    if (heroPrice) heroPrice.textContent = 'USD 799';
-    if (totalPrice) totalPrice.textContent = 'USD 799';
+  const params = new URLSearchParams(location.search);
+  const isExternalPayment = params.get('fundador') === '1';
 
-    const grid = document.querySelector('#pago .payment-grid');
-    if (grid && !document.getElementById('payoneer-button')) {
-      grid.classList.remove('single');
-      grid.style.gridTemplateColumns = '1.35fr .65fr';
-      grid.style.gap = '14px';
+  const SPECIAL_CONDITIONS_HTML = `<h4>10. Condiciones especiales — Cliente Fundador</h4><p>Por tratarse de un cliente fundador de este formato de acompañamiento, se le otorgan además las siguientes condiciones:</p><ul><li>Acceso garantizado a la comunidad de Genideia en School, a habilitarse próximamente.</li><li>Posibilidad de actualizar su servicio a futuro a Genideia Academy Pro.</li></ul><p class="legal">Estas condiciones especiales son adicionales al servicio descripto en las cláusulas anteriores y no reemplazan ni modifican el resto del acuerdo.</p>`;
 
-      const article = document.createElement('article');
-      article.style.padding = '18px';
-      article.style.border = '1px solid rgba(61,176,255,.22)';
-      article.style.borderRadius = '15px';
-      article.style.background = 'rgba(5,21,35,.72)';
-      article.innerHTML = `
-        <small style="color:#24d7e8">OPCIÓN 2</small>
-        <h3 style="font-family:Montserrat,sans-serif;margin:12px 0 8px">Pago con tarjeta · Payoneer</h3>
-        <p style="color:#aebdcd;line-height:1.65">Realizá el pago online de USD 799 con tarjeta mediante Payoneer.</p>
-        <a id="payoneer-button" href="${ONE_TO_ONE_PAYONEER}" target="_blank" rel="noopener noreferrer" style="display:block;width:100%;margin-top:14px;text-align:center;background:linear-gradient(90deg,#13bcd1,#147eff);color:#fff;border-radius:11px;padding:13px 17px;font-weight:600;text-decoration:none">Pagar USD 799 con tarjeta</a>
-        <p style="font-size:.72rem;color:#7f91a4;margin-top:10px">El pago se procesa de forma segura fuera de esta página mediante Payoneer.</p>`;
-      grid.appendChild(article);
+  if (isExternalPayment) {
+    const contract = document.querySelector('.contract');
+    const providerSignature = document.querySelector('.provider-signature');
+    if (contract && providerSignature && !document.getElementById('special-conditions')) {
+      const clause = document.createElement('div');
+      clause.id = 'special-conditions';
+      clause.innerHTML = SPECIAL_CONDITIONS_HTML;
+      contract.insertBefore(clause, providerSignature);
+    }
+
+    const paymentSection = document.getElementById('pago');
+    if (paymentSection) {
+      const totalDiv = paymentSection.querySelector('.total');
+      const grid = paymentSection.querySelector('.payment-grid');
+      const proofBox = paymentSection.querySelector('.proof-box');
+      const afterNotice = paymentSection.querySelector('.notice p');
+      if (totalDiv) totalDiv.style.display = 'none';
+      if (grid) grid.style.display = 'none';
+      if (proofBox) proofBox.style.display = 'none';
+      if (afterNotice) afterNotice.textContent = 'Ya validamos tu pago. Vamos a crear tu espacio privado y coordinar tu primer módulo (diagnóstico).';
+      if (!document.getElementById('external-payment-notice')) {
+        const notice = document.createElement('div');
+        notice.id = 'external-payment-notice';
+        notice.className = 'notice';
+        notice.innerHTML = '<strong>Pago ya recibido</strong><p>Tu pago fue realizado y confirmado por fuera de este sistema. No es necesario que hagas ningún pago adicional acá.</p>';
+        paymentSection.insertBefore(notice, paymentSection.querySelector('.notice'));
+      }
     }
   }
 
@@ -65,14 +75,22 @@
   function setupCanvas() {
     const ratio = Math.max(window.devicePixelRatio || 1, 1);
     const rect = canvas.getBoundingClientRect();
+    if (rect.width < 10) return;
     canvas.width = rect.width * ratio;
     canvas.height = 210 * ratio;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(ratio, ratio);
     ctx.lineWidth = 2.2;
     ctx.lineCap = 'round';
     ctx.strokeStyle = '#dfeaf6';
   }
   setupCanvas();
+  // El ancho real del canvas puede no estar disponible todavía en la primera
+  // pasada (fuentes cargando, layout sin asentar). Se reintenta hasta que la
+  // firma tenga un tamaño válido, y se recalcula si cambia el layout (resize,
+  // rotación de pantalla), siempre que el Participante todavía no haya firmado.
+  window.addEventListener('load', () => { if (!signed) setupCanvas(); });
+  window.addEventListener('resize', () => { if (!signed) setupCanvas(); });
 
   function point(e) {
     const rect = canvas.getBoundingClientRect();
