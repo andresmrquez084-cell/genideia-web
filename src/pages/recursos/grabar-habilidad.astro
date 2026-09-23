@@ -1,0 +1,54 @@
+---
+// Lead magnet · palabra clave ManyChat: HABILIDAD (reel "Grabar habilidad" — enseñarle a
+// Claude una tarea mostrándosela en vez de describírsela con palabras).
+// URL pública: /recursos/grabar-habilidad
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+---
+<RecursoLayout
+  titulo="Grabar habilidad: enseñale a Claude una tarea mostrándosela"
+  descripcion="Guía paso a paso de la función que convierte tu forma de trabajar en una habilidad reutilizable — con ejemplos de qué tareas conviene grabar."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="HABILIDAD"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>En vez de explicarle con palabras cómo querés que haga una tarea, esta vez se la mostrás.</b> Grabás el proceso una sola vez y Claude lo convierte en una habilidad que puede repetir sola, cada vez que aparezca una tarea igual o parecida.</div>
+
+  <h2>1 · Activá grabar habilidad</h2>
+  <p>Antes de arrancar la tarea, activás la opción "grabar habilidad" — a partir de ese momento, Claude va a ir registrando todo lo que hacés mientras trabajás.</p>
+
+  <h2>2 · Ejecutá la tarea normal</h2>
+  <p>Hacé la tarea exactamente como la harías sin Claude mirando: qué información usás, qué pasos seguís, qué criterios tenés en cuenta y cómo te gusta que quede el resultado final. No hace falta explicar nada — solo trabajar.</p>
+  <ul class="arrow">
+    <li>Cuanto más natural sea tu proceso real, mejor sale la habilidad — no ensayes un proceso "para la cámara".</li>
+  </ul>
+
+  <h2>3 · Se convierte en habilidad reutilizable</h2>
+  <p>Cuando terminás, Claude convierte ese proceso grabado en una habilidad. La próxima vez que aparezca una tarea igual o similar, la puede replicar sola siguiendo el mismo camino que le mostraste — sin que vuelvas a explicarle nada.</p>
+
+  <div class="note"><b>Ojo:</b> esto no reemplaza a un buen prompt para tareas puntuales o que cambian cada vez — sirve específicamente para lo que hacés de forma repetida y con un proceso más o menos fijo.</div>
+
+  <h2>¿Qué tareas conviene grabar como habilidad?</h2>
+  <ul class="score">
+    <li><b>Armar un informe con el mismo formato →</b> cada vez que cambian los datos pero la estructura es igual.</li>
+    <li><b>Procesar un tipo de archivo que te llega seguido →</b> mismo tipo de planilla, mismo tipo de documento.</li>
+    <li><b>Responder un tipo de consulta repetida →</b> mismos criterios, mismos pasos de verificación.</li>
+    <li><b>Preparar contenido con tu estilo propio →</b> mismo orden, mismo tono, mismas revisiones.</li>
+  </ul>
+
+  <div class="minicta">
+    Si querés ver más ejemplos aplicados a tu negocio puntual, pedime ideas en la comunidad de <b>Claude desde 0</b>. <a href={grupo} target="_blank" rel="noopener noreferrer">Entrar al grupo →</a>
+  </div>
+
+  <h2>Checklist: probá grabar tu primera habilidad</h2>
+  <ul class="check">
+    <li>Elegí una tarea que hagas seguido y con un proceso más o menos fijo.</li>
+    <li>Activé la opción "grabar habilidad" antes de arrancar.</li>
+    <li>Hice la tarea de forma natural, sin explicarle nada de más.</li>
+    <li>Confirmé que Claude la convirtió en una habilidad reutilizable.</li>
+    <li>La probé de nuevo con una tarea similar para ver si la replica bien.</li>
+  </ul>
+</RecursoLayout>
