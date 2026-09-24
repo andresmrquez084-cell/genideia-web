@@ -1,0 +1,225 @@
+---
+// VSL — Genideia Academy: aprender a usar IA de forma práctica.
+// Hero → video de ventas → CTA WhatsApp.
+import Loader from '../transitions/Loader.astro';
+import '../transitions/transitions.css';
+import '../styles/global.css';
+
+const WA = '59892302941';
+const waUrl = (msg: string) => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+const waDefault = waUrl('Hola Andrés, vi el video de Genideia Academy y quiero aprender a usar IA de forma práctica.');
+
+const VIDEO = '/videos/vsl-academy.mp4';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Genideia Academy — Aprendé IA y aplicala a casos reales en 4 semanas</title>
+  <meta name="description" content="Voy a ayudarte a aprender IA y saber aplicarla a casos reales en 4 semanas. Formación 1 a 1, diagnóstico personalizado y un programa de 8 módulos adaptado a tu situación real." />
+  <meta property="og:title" content="Voy a ayudarte a aprender IA y saber aplicarla a casos reales en 4 semanas" />
+  <meta property="og:description" content="Formación 1 a 1 en IA aplicada, armada alrededor de tu situación real." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://genideiacompany.com/og-genideia.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://genideiacompany.com/og-genideia.png" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script>import '../transitions/reveal.js';</script>
+</head>
+<body>
+  <Loader logoSrc="/img/logo-nav.png" />
+  <div class="progress" id="progress"></div>
+
+  <!-- ── HEADER (pill flotante) ─────────────────────────────── -->
+  <header class="site-header">
+    <a href="/andres" class="brand">
+      <span class="brand-mark"><img src="/img/symbol-gii.png" alt="GENIDEIA" /></span>
+      <span class="brand-copy">
+        <strong>GENIDEIA</strong>
+        <small>Academy</small>
+      </span>
+    </a>
+    <a href={waDefault} target="_blank" rel="noopener noreferrer" class="btn-primary" data-track-lead>Hablemos →</a>
+  </header>
+
+  <!-- ── HERO ──────────────────────────────────────────────── -->
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <h1 class="hero-title" data-reveal>
+        <span>Voy a ayudarte a aprender IA</span>
+        <span>y saber aplicarla a casos reales en 4 semanas.</span>
+      </h1>
+    </div>
+  </section>
+
+  <!-- ── VIDEO PRINCIPAL ──────────────────────────────────────── -->
+  <section class="vsl-section">
+    <div class="wrap">
+      <div class="video-shell" data-reveal>
+        <div class="video-frame">
+          <video id="vid-principal" controls playsinline preload="metadata">
+            <source src={VIDEO} type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
+        </div>
+        <div class="video-cta">
+          <a href={waDefault} target="_blank" rel="noopener noreferrer" class="btn-primary" data-track-lead>Quiero agendar mi diagnóstico →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div>
+        <p class="footer-nombre">Genideia Academy</p>
+        <p class="footer-sub">Un programa de <a href="/">GENIDEIA Company</a> · Formación 1 a 1</p>
+      </div>
+      <div class="footer-contact">
+        <a href={waDefault} target="_blank" rel="noopener noreferrer" data-track-lead>WhatsApp +598 92 302 941</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Barra fija mobile: siempre visible, manda directo a WhatsApp -->
+  <a href={waDefault} target="_blank" rel="noopener noreferrer" class="mobile-cta" data-track-lead>
+    Agendar diagnóstico <span>↗</span>
+  </a>
+
+  <style>
+    :root {
+      --bg:#030405; --text:#f5f7fb; --muted:#9aa3af; --line:rgba(255,255,255,.10);
+      --cyan:#18cfff; --blue:#1677ff;
+    }
+    body {
+      margin:0; color:var(--text); font-family:'Poppins',sans-serif; -webkit-font-smoothing:antialiased;
+      background:
+        linear-gradient(rgba(2,5,12,.80),rgba(2,5,12,.92)),
+        url('/img/bg-circuit.jpg') center top / cover fixed no-repeat,
+        #02050c;
+    }
+    @media (max-width: 620px) { body { background-attachment: scroll; } }
+    .wrap { width:min(1180px, calc(100% - 28px)); margin:auto; }
+
+    .progress { position:fixed; top:0; left:0; z-index:80; height:2px; width:0; background:linear-gradient(90deg,#15d6ff,#1677ff); box-shadow:0 0 14px rgba(24,207,255,.45); }
+
+    /* ── Header flotante (pill) ─────────────────────────────── */
+    .site-header {
+      position:fixed; top:16px; left:50%; transform:translateX(-50%); z-index:50;
+      width:min(1180px, calc(100% - 26px)); min-height:64px;
+      display:flex; align-items:center; justify-content:space-between; gap:20px;
+      padding:8px 10px 8px 14px; border-radius:999px;
+      background:rgba(3,8,18,.76); backdrop-filter:blur(16px);
+      border:1px solid rgba(24,207,255,.16);
+      box-shadow:0 14px 60px rgba(0,0,0,.28), 0 0 35px rgba(24,207,255,.035);
+    }
+    .brand { display:inline-flex; align-items:center; gap:10px; min-width:0; flex:1 1 auto; overflow:hidden; }
+    .brand-mark {
+      width:38px; height:38px; flex:0 0 38px; border-radius:50%; overflow:hidden;
+      border:1px solid rgba(24,207,255,.30); box-shadow:0 0 22px rgba(24,207,255,.10);
+    }
+    .brand-mark img { width:100%; height:100%; object-fit:cover; display:block; }
+    .brand-copy { display:grid; gap:1px; min-width:0; overflow:hidden; }
+    .brand-copy strong { display:block; font-family:'Montserrat',sans-serif; font-size:0.85rem; color:#F2F4F7; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .brand-copy small { display:block; color:var(--cyan); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    @media (max-width: 400px) { .brand-copy small { display:none; } }
+
+    .btn-primary {
+      position:relative; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      border-radius:999px; padding:16px 28px; font-size:0.9rem; font-weight:700; letter-spacing:0.01em;
+      color:#fff; white-space:nowrap; border:1.5px solid transparent;
+      background:
+        linear-gradient(#0a1420,#0a1420) padding-box,
+        linear-gradient(135deg,#18cfff,#7c5cff 55%,#18cfff) border-box;
+      box-shadow:0 16px 44px rgba(0,0,0,.4);
+      transition:transform .25s, box-shadow .25s;
+      animation:ctaPulse 2.6s ease-in-out infinite;
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 20px 54px rgba(0,0,0,.5), 0 0 34px rgba(24,207,255,.4); }
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow:0 16px 44px rgba(0,0,0,.4), 0 0 0 rgba(24,207,255,0); }
+      50% { box-shadow:0 16px 44px rgba(0,0,0,.4), 0 0 26px rgba(24,207,255,.38); }
+    }
+    .site-header .btn-primary { padding:12px 20px; font-size:0.78rem; animation:none; }
+    @media (prefers-reduced-motion: reduce) { .btn-primary { animation:none; } }
+
+    /* ── Hero ─────────────────────────────────────────────────── */
+    .hero { position:relative; padding:150px 0 46px; text-align:center; }
+    .hero:before {
+      content:""; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(700px 260px at 50% 42%, rgba(24,207,255,.08), transparent 70%);
+    }
+    .hero .wrap { position:relative; z-index:1; }
+    .hero-title {
+      margin:0 auto; width:min(1180px,100%);
+      font-family:'Montserrat',sans-serif; font-weight:800; line-height:.97; letter-spacing:-.055em;
+      font-size:clamp(2rem, 3.6vw, 3.6rem);
+      text-shadow:0 0 42px rgba(24,207,255,.055);
+    }
+    .hero-title span { display:block; white-space:nowrap; }
+    @media (max-width:1180px) and (min-width:621px) { .hero-title { font-size:clamp(1.85rem, 3vw, 2.8rem); } }
+    @media (max-width:620px) {
+      .hero { padding:100px 0 30px; }
+      .hero-title { width:100%; font-size:clamp(1.55rem, 7vw, 2.15rem); line-height:1.22; letter-spacing:-.02em; }
+      .hero-title span { display:inline; white-space:normal; }
+      .hero-title span:first-child::after { content:" "; }
+    }
+
+    /* ── Video shell ──────────────────────────────────────────── */
+    .vsl-section { padding:0 0 74px; }
+    .video-shell {
+      max-width:980px; margin:0 auto; border-radius:26px; overflow:hidden;
+      border:1px solid rgba(24,207,255,.22);
+      background:linear-gradient(180deg, rgba(6,15,29,.94), rgba(5,9,17,.96));
+      box-shadow:0 35px 120px rgba(0,0,0,.48), 0 0 48px rgba(24,207,255,.07);
+    }
+    .video-frame { padding:18px; background:linear-gradient(180deg, rgba(24,207,255,.035), rgba(255,255,255,.01)); }
+    .video-frame video { display:block; width:100%; aspect-ratio:16/9; background:#000; border-radius:16px; border:1px solid rgba(24,207,255,.08); }
+    .video-cta { padding:18px; border-top:1px solid rgba(255,255,255,.08); display:flex; justify-content:center; }
+    @media (max-width:620px) { .video-frame { padding:10px; } }
+
+    /* ── Footer ───────────────────────────────────────────────── */
+    .site-footer {
+      position:relative; overflow:hidden; background:#020610;
+      border-top:1px solid rgba(24,207,255,.10);
+    }
+    .site-footer:before {
+      content:""; position:absolute; inset:0;
+      background:
+        linear-gradient(rgba(2,6,16,.90), rgba(2,6,16,.94)),
+        url('/img/banner-genideia.jpg') center / cover no-repeat;
+      opacity:.34;
+    }
+    .footer-inner {
+      position:relative; z-index:1; padding:28px 0 34px;
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;
+    }
+    .footer-nombre { font-family:'Montserrat',sans-serif; font-size:1.05rem; color:#F2F4F7; margin:0; }
+    .footer-sub { font-weight:300; font-size:0.8rem; color:var(--muted); margin:2px 0 0; }
+    .footer-sub a { color:var(--cyan); }
+    .footer-contact { display:flex; flex-direction:column; align-items:flex-end; gap:4px; font-size:0.85rem; color:var(--muted); }
+    .footer-contact a:hover { color:var(--cyan); }
+
+    /* ── Barra fija mobile ───────────────────────────────────── */
+    .mobile-cta { display:none; }
+    @media (max-width:800px) {
+      .mobile-cta {
+        display:flex; position:fixed; z-index:45; right:12px; bottom:12px; left:12px;
+        min-height:54px; padding:0 18px; align-items:center; justify-content:space-between;
+        border:1px solid rgba(255,255,255,.14); border-radius:13px;
+        background:linear-gradient(135deg,#15d6ff,#1787ff); color:#0A0F1A;
+        font-weight:700; font-size:0.9rem; box-shadow:0 14px 40px rgba(0,0,0,.35);
+      }
+    }
+
+    html { scroll-behavior:smooth; }
+  </style>
+</body>
+</html>
