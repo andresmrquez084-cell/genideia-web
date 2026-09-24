@@ -5,7 +5,6 @@ const WA = '59892302941';
 const waUrl = (msg: string) => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
 const b2cUrl = waUrl('Hola Andrés, vi tu landing y quiero aprender a usar IA de forma práctica.');
 const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
-const replayUrl = 'https://replay-cotizador-genideia.vercel.app/';
 ---
 
 <!DOCTYPE html>
@@ -95,7 +94,7 @@ const replayUrl = 'https://replay-cotizador-genideia.vercel.app/';
 
               <p class="panel-urgency">⏳ Cupos abiertos — cerramos al completar los primeros lugares del mes.</p>
 
-              <a class="cta cta-learn" href={replayUrl} target="_blank" rel="noopener noreferrer">
+              <a class="cta cta-learn" href="/aprender-ia">
                 <span>Quiero aprender IA</span>
                 <span aria-hidden="true">→</span>
               </a>
