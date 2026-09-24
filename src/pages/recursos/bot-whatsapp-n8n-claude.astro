@@ -1,0 +1,65 @@
+---
+// Lead magnet · palabra clave ManyChat: WHATSAPP (carrusel: "Cómo crear un asistente de WhatsApp con n8n + Claude")
+// URL pública: /recursos/bot-whatsapp-n8n-claude
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const plantilla = `CONTEXTO DE MI NEGOCIO
+[Qué vendés o qué servicio ofrecés, y qué preguntas te hacen
+siempre por WhatsApp. Ej: "vendo indumentaria online, me
+preguntan talles, stock, tiempos de envío y forma de pago".]
+
+QUÉ QUIERO QUE HAGA EL ASISTENTE
+[Elegí uno o varios: responder consultas frecuentes / tomar
+datos de un pedido o turno / derivar a una persona cuando el
+tema se complica. Sé específico con qué SÍ y qué NO tiene que
+resolver solo — eso es lo que más se suele dejar sin definir.]
+
+MI SITUACIÓN TÉCNICA HOY
+[¿Ya tenés WhatsApp Business? ¿Usás alguna herramienta de
+automatización (n8n, Make, Zapier)? ¿Alguien de tu equipo sabe
+programar, aunque sea poco?]
+
+Con esto, ayudame a:
+1. Armar el prompt de sistema para Claude, con mi tono, lo que
+   vendo y mis reglas puntuales.
+2. Definir paso a paso qué nodos necesito en n8n para conectar
+   WhatsApp (vía la app de Meta) con Claude.
+3. Anticiparme los 2-3 problemas más comunes al conectar la API
+   de WhatsApp Business, para que no me trabe justo ahí.
+
+Dame todo en el orden en que lo tengo que hacer, no una lista
+genérica — quiero poder seguirlo paso a paso con mi caso real.
+Después de tu primera respuesta te voy a decir qué ajustar —
+seguí iterando sobre esta misma conversación.`;
+---
+<RecursoLayout
+  titulo="El prompt para armar tu asistente de WhatsApp"
+  descripcion="No es una guía genérica: es el prompt que le das a Claude para que arme el plan de tu asistente de WhatsApp con n8n, a medida de tu negocio."
+  tipo="Prompt"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="WHATSAPP"
+>
+  <div class="lead"><b>Un asistente de WhatsApp no se arma copiando el mismo flujo para todos. Se arma respondiendo qué vendés, qué te preguntan siempre y qué tiene que resolver solo. Esta plantilla se lo explica a Claude para que arme el plan con vos, no un tutorial genérico.</b></div>
+
+  <h2>Antes de arrancar</h2>
+  <ul class="check">
+    <li>Tené a mano tus 3-5 preguntas más repetidas de clientes por WhatsApp.</li>
+    <li>Una cuenta de Claude abierta (sirve la gratis para empezar).</li>
+    <li>No hace falta que sepas programar — el plan que te arma Claude va a decirte exactamente qué click dar en cada herramienta.</li>
+  </ul>
+
+  <h2>La plantilla (copiala y completala)</h2>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{plantilla}</code></pre>
+  </div>
+
+  <h2>Por qué funciona así</h2>
+  <ul class="arrow">
+    <li><b>Contexto de tu negocio</b> — sin esto, Claude te da un asistente genérico que nadie usa de verdad.</li>
+    <li><b>Qué SÍ y qué NO resuelve solo</b> — es la parte que más se salta, y la que evita que el asistente invente respuestas donde no debe.</li>
+    <li><b>Tu situación técnica</b> — el plan cambia si ya tenés WhatsApp Business o si arrancás de cero. Se lo decís y ajusta los pasos.</li>
+  </ul>
+
+  <div class="note"><b>Tip:</b> guardá la conversación una vez que el plan te cierre. Cuando quieras sumar una segunda tarea al asistente (por ejemplo, tomar pedidos además de responder consultas), volvé a esa misma conversación en vez de arrancar una nueva — Claude ya tiene todo tu contexto cargado.</div>
+</RecursoLayout>
