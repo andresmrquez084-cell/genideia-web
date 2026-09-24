@@ -130,7 +130,6 @@ footer{padding:50px 0;color:#637c99;font-size:12px} .foot{display:flex;justify-c
         <p>Un sistema para centralizar solicitudes, viajes, conductores, vehículos y documentación. El video recorre la operación completa: qué información entra, cómo se registra y dónde intervienen las alertas.</p>
         <div class="flow"><span class="chip">Solicitud</span><span class="chip">Viaje</span><span class="chip">Unidad</span><span class="chip">Documentación</span><span class="chip">Alerta</span></div>
         <div class="systemMeta"><div><strong>Interfaz</strong>Panel de operación</div><div><strong>Datos</strong>Estados y responsables</div><div><strong>Automatización</strong>Alertas por evento</div></div>
-        <a class="btn primary" href="https://genideia-tms.vercel.app/?pais=ar" target="_blank" rel="noreferrer">Abrir demo navegable ↗</a>
       </div>
     </article>
   </div>
@@ -243,7 +242,7 @@ function openProject(id){
   const p=PROJECTS.find(x=>x.id===id); if(!p)return;
   const head=document.getElementById('modalHead');
   head.innerHTML=`<button class="close" onclick="closeModal()">×</button>`+(p.image?`<img src="${fullImage(p)}" alt="${esc(p.title)}" decoding="async">`:`<div class="placeholder"><div class="picon">GII</div><b>${esc(p.title)}</b><small>${esc(p.state)}</small></div>`);
-  const actions=p.access==='public'&&p.url?`<a class="btn primary" target="_blank" rel="noopener" href="${p.url}">${p.actionLabel||'Abrir demo pública ↗'}</a>`:`<span class="btn">Sistema privado · ver evidencia en esta ficha</span>`;
+  const actions=`<span class="btn">Evidencia disponible en esta ficha</span>`;
   document.getElementById('modalContent').innerHTML=`
     <div class="meta"><span class="badge">${esc(p.cat)}</span><span class="badge ${p.stateClass}">${esc(p.state)}</span></div>
     <h2>${esc(p.title)}</h2><div class="subtitle">${esc(p.subtitle)}</div><p class="desc">${esc(p.summary)}</p>
