@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Home = presentación breve + 3 tarjetas que llevan DIRECTO a la página real
+// Home = presentación breve + 4 tarjetas que llevan DIRECTO a la página real
 // correspondiente (nada de contenido copiado/recreado acá — pedido explícito
-// de Andrés, 17/09). Mismos 3 destinos que Nav.astro.
+// de Andrés, 17/09). Mismos destinos que Nav.astro.
 const destinos = [
   {
     eyebrow: 'Quiénes somos',
@@ -38,6 +38,17 @@ const destinos = [
     primary: false,
     icon: 'M4 19.5V6a1.5 1.5 0 0 1 1.5-1.5H15l5 5v9.5A1.5 1.5 0 0 1 18.5 20.5h-13A1.5 1.5 0 0 1 4 19.5ZM14.5 4.5V9a1 1 0 0 0 1 1h4.5',
   },
+  {
+    eyebrow: 'Formación 1 a 1',
+    titulo: 'Genideia Academy',
+    desc: 'Aprendé a usar IA de forma práctica, aplicada a tu trabajo o tu proyecto real.',
+    href: '/aprender-ia',
+    cta: 'Conocer la Academy',
+    color: '#A78BFA',
+    glow: 'rgba(167,139,250,.16)',
+    primary: false,
+    icon: 'M4 10 12 6 20 10 12 14 4 10Z M6 11.5V16.5C6 16.5 8.5 18.5 12 18.5C15.5 18.5 18 16.5 18 16.5V11.5 M20 10V15',
+  },
 ];
 ---
 
@@ -62,7 +73,7 @@ const destinos = [
 
   <!-- ── 3 DESTINOS ─────────────────────────────────────────── -->
   <section class="max-w-5xl mx-auto px-6 pb-24">
-    <div class="grid sm:grid-cols-3 gap-6">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {destinos.map((d, i) => (
         <a
           href={d.href}
