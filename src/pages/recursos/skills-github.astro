@@ -1,0 +1,123 @@
+---
+// Lead magnet · palabra clave ManyChat: SKILLS2 (reel: "4 skills de GitHub que te pueden ser
+// de utilidad" — Excel/CSV, audio→transcripción, testing de apps, subtítulos).
+// URL pública: /recursos/skills-github
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const instalarAnthropic = `# 1. Agregá el marketplace de Anthropic (una sola vez)
+/plugin marketplace add anthropics/skills
+
+# 2. Instalá el paquete que contiene la skill
+/plugin install document-skills@anthropic-agent-skills   # incluye Excel/CSV (y Word, PPTX, PDF)
+/plugin install example-skills@anthropic-agent-skills    # incluye webapp-testing
+
+# 3. Recargá
+/reload-plugins`;
+
+const instalarCaption = `git clone https://github.com/ahkamboh/agent-caption ~/.claude/skills/agent-caption
+cd ~/.claude/skills/agent-caption
+python setup.py   # una sola vez: crea el entorno y baja el modelo (~4 GB)
+
+# Claude Code la detecta sola. Reiniciá la sesión.`;
+
+const audioSkillMd = `---
+name: audio-transcribe
+description: Transcribe audios y notas de voz (ogg, opus, mp3, m4a, wav, mp4) a texto de forma local con faster-whisper, sin API key. Usar cuando el usuario pase un audio y pida "transcribilo", "pasalo a texto", "qué dice este audio".
+---
+
+# Audio Transcription Skill
+Transcripción local con faster-whisper (sin API key, sin costo).
+
+## Uso
+python3 ~/.claude/skills/audio-transcribe/scripts/transcribe.py /ruta/al/audio.ogg`;
+
+const audioScript = `#!/usr/bin/env python3
+import argparse, sys
+from faster_whisper import WhisperModel
+
+parser = argparse.ArgumentParser()
+parser.add_argument("audio")
+parser.add_argument("--model", default="small")
+parser.add_argument("--lang", default=None)
+args = parser.parse_args()
+
+model = WhisperModel(args.model, device="cpu", compute_type="int8")
+segments, info = model.transcribe(args.audio, language=args.lang, vad_filter=True)
+print(f"[idioma: {info.language} ({info.language_probability:.0%})]", file=sys.stderr)
+print(" ".join(s.text.strip() for s in segments))`;
+---
+<RecursoLayout
+  titulo="4 skills de GitHub que te pueden ser de utilidad"
+  descripcion="Los repos + instalación exacta de cada skill del video: gráficos desde Excel/CSV, transcripción de audio, testing de tu app, y subtítulos sincronizados."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="SKILLS2"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Una "skill" es una capacidad que le agregás a Claude una vez y queda disponible siempre.</b> Estas 4 son gratis — acá tenés el repo (o el código, cuando no hay uno público) y los comandos exactos para instalar cada una.</div>
+
+  <div class="note"><b>¿Qué es el marketplace?</b> Dentro de Claude Code escribís <b>/plugin</b> y se abre un menú para agregar repositorios de skills y elegir cuáles instalar. Los comandos de abajo hacen lo mismo sin pasar por el menú.</div>
+
+  <h2>1 · Excel / CSV — gráficos y patrones</h2>
+  <p>Agarra un Excel o CSV, genera gráficos y encuentra patrones en los datos. Oficial de Anthropic (skill <b>xlsx</b>).</p>
+  <ul class="arrow">
+    <li>Repo: <b>github.com/anthropics/skills</b> → carpeta <b>skills/xlsx</b></li>
+    <li>Viene dentro del paquete <b>document-skills</b> (junto con Word, PPTX y PDF) — si ya la instalaste para otra skill, ya la tenés.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{instalarAnthropic}</code></pre>
+  </div>
+  <div class="note"><b>En Claude.ai (sin Claude Code):</b> Ajustes → <b>Capacidades</b> → activás Excel directamente, ya viene integrada.</div>
+
+  <h2>2 · Audio → transcripción organizada</h2>
+  <p>Convierte una grabación o un audio en una transcripción con timestamps. Esta la armé yo mismo con <b>faster-whisper</b> (100% local, sin costo ni API key) — no tiene un repo público, así que acá te dejo el código para que te la armes vos.</p>
+  <div class="alert"><b>Requisito:</b> <code>pip3 install faster-whisper</code> (el modelo se descarga solo la primera vez, ~244 MB).</div>
+  <ul class="steps">
+    <li>Creá la carpeta <b>~/.claude/skills/audio-transcribe/</b> y adentro un archivo <b>SKILL.md</b> con este contenido:</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{audioSkillMd}</code></pre>
+  </div>
+  <ul class="steps">
+    <li>Dentro de esa misma carpeta, creá <b>scripts/transcribe.py</b> con este código:</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{audioScript}</code></pre>
+  </div>
+
+  <div class="minicta">
+    Si te trabás armando esta, pedime una mano en la comunidad de <b>Claude desde 0</b>. <a href={grupo} target="_blank" rel="noopener noreferrer">Entrar al grupo →</a>
+  </div>
+
+  <h2>3 · Testing de tu app — encontrá errores solo</h2>
+  <p>Recorre una aplicación que vos controles, prueba diferentes flujos y detecta posibles problemas. Oficial de Anthropic (skill <b>webapp-testing</b>, con Playwright).</p>
+  <ul class="arrow">
+    <li>Repo: <b>github.com/anthropics/skills</b> → carpeta <b>skills/webapp-testing</b></li>
+    <li>Viene dentro del paquete <b>example-skills</b> — mismos comandos que arriba.</li>
+  </ul>
+
+  <h2>4 · Subtítulos sincronizados sobre tu video</h2>
+  <p>Genera subtítulos con forced-alignment (timing preciso), 100% local, en cualquier idioma. Skill de la comunidad (<b>ahkamboh</b>).</p>
+  <ul class="arrow">
+    <li>Repo: <b>github.com/ahkamboh/agent-caption</b></li>
+    <li>Requiere <b>Python 3.10+</b> y <b>ffmpeg</b> instalados, y ~4 GB libres para el modelo.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{instalarCaption}</code></pre>
+  </div>
+
+  <h2>Checklist: instalá las 4</h2>
+  <ul class="check">
+    <li>Excel/CSV (xlsx) instalada vía document-skills.</li>
+    <li>Armé mi propia audio-transcribe con faster-whisper.</li>
+    <li>webapp-testing instalada vía example-skills.</li>
+    <li>agent-caption clonada e instalada.</li>
+  </ul>
+</RecursoLayout>
