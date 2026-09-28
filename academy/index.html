@@ -92,4 +92,4 @@ function showTab(name){state.tab=name;["programa","sesiones","recursos","clase"]
 addEventListener("input",e=>{if(e.target.matches("[data-save]")){const root=e.target.closest("[data-module]");if(root)saveModule(Number(root.dataset.module),true)}});
 addEventListener("change",e=>{if(e.target.matches("[data-save]")){const root=e.target.closest("[data-module]");if(root)saveModule(Number(root.dataset.module),true)}if(e.target.id==="sessionStatus")onStatusChange()});
 [1,2].forEach(loadModule);document.querySelectorAll(".modblock").forEach(b=>b.style.display=b.dataset.module==String(state.openModule)?"":"none");document.getElementById("moduleBadge").textContent="Módulo "+state.openModule+" de 8";document.getElementById("sessionStatus").value=moduleStatus[state.openModule]||defaultStatus(state.openModule);buildSteps();go(moduleStep[state.openModule]||0);
-</script></body></html>
+</script><script src="module-materials.js"></script></body></html>
