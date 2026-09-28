@@ -1,0 +1,138 @@
+---
+// Lead magnet · palabra clave ManyChat: AGENTES (reel: "Sub-agentes de Claude Code", 28/9)
+// URL pública: /recursos/subagentes-claude-code
+// Datos técnicos verificados en code.claude.com/docs/es/sub-agents (28/9).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const promptEquipo = `Quiero armar un equipo de sub-agentes en Claude Code para esta tarea:
+[DESCRIBÍ ACÁ LA TAREA O EL ENTREGABLE QUE QUERÉS RESOLVER]
+
+Antes de crear nada, haceme las preguntas que necesites para entender bien el objetivo, el resultado que espero y cómo me doy cuenta de que quedó bien.
+
+Después diseñá el equipo con esta lógica:
+- Un sub-agente por responsabilidad (por ejemplo: investigar, analizar, preparar una primera versión, revisar y corregir). Adaptá los roles a mi tarea: sumá, sacá o renombrá los que haga falta.
+- Para cada uno definí: qué hace, bajo qué criterios trabaja, qué resultado tiene que devolver, qué herramientas necesita (solo las mínimas) y qué modelo conviene (haiku para tareas simples y rápidas, sonnet para el trabajo general, opus para revisar o tomar decisiones).
+- Siempre incluí un sub-agente revisor que controle el trabajo antes de entregármelo.
+
+Mostrame el equipo en una tabla (rol · qué hace · criterios · resultado · modelo) y esperá mi OK.
+
+Con mi OK, creá cada sub-agente como un archivo .md en .claude/agents/ (uno por agente, con frontmatter name, description, tools y model).`;
+
+const promptUsar = `Usá mi equipo de sub-agentes para resolver esto:
+[TU TAREA DE HOY]
+
+Seguí este orden: [agente 1] → [agente 2] → [agente 3] → revisor.
+Cada uno recibe el resultado del anterior. Si el revisor encuentra errores, devolvé el trabajo al agente que corresponda y volvé a revisar.
+
+Al final, juntá todo y entregame la versión final con un resumen corto de qué hizo cada sub-agente.`;
+
+const ejemploRevisor = `---
+name: revisor
+description: Revisa el trabajo antes de entregarlo. Usalo siempre al final, antes de armar la versión final.
+tools: Read, Grep, WebSearch
+model: opus
+---
+Sos el revisor del equipo. Tu trabajo es encontrar errores antes de que el entregable llegue al usuario.
+
+Criterios:
+- Cada dato importante tiene una fuente o se puede verificar.
+- Cumple exactamente con lo que se pidió (ni más, ni menos).
+- Tono claro, sin relleno ni repeticiones.
+
+Resultado esperado:
+- La versión corregida.
+- Una lista corta de lo que cambiaste y por qué.`;
+
+const molde = `---
+name: [nombre-en-minusculas]
+description: [Qué hace y CUÁNDO usarlo. Claude lee esto para decidir si le delega.]
+tools: [Solo las que necesita. Ej: Read, Grep, WebSearch]
+model: [haiku | sonnet | opus | inherit]
+---
+Sos [rol]. Tu trabajo es [una sola responsabilidad].
+
+Criterios:
+- [criterio 1]
+- [criterio 2]
+
+Resultado esperado:
+- [qué tiene que devolver y en qué formato]`;
+---
+<RecursoLayout
+  titulo="Tu primer equipo de sub-agentes en Claude Code"
+  descripcion="El prompt para que Claude diseñe y cree tu equipo de sub-agentes a medida, cómo usarlo y la plantilla para armar los tuyos."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="AGENTES"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>En vez de darle todo el trabajo a un solo agente, lo separás en responsabilidades: uno investiga, otro analiza, otro prepara una primera versión y otro revisa antes de entregar. El agente principal junta todo y te da la versión final.</b></div>
+
+  <h2>1 · Qué es un sub-agente</h2>
+  <p>Es un Claude especializado que trabaja <b>aparte</b>: tiene su propio contexto, sus propias instrucciones, sus propias herramientas y hasta puede usar un modelo distinto. El agente principal le pasa una tarea, el sub-agente la resuelve y le devuelve solo el resultado.</p>
+  <ul class="arrow">
+    <li>Cada sub-agente es un archivo <b>.md</b> que dice qué hace, con qué criterios y qué tiene que devolver.</li>
+    <li>Si lo guardás en <b>.claude/agents/</b> sirve para ese proyecto. En <b>~/.claude/agents/</b>, para todos tus proyectos.</li>
+    <li>Claude los usa solo cuando la tarea coincide con su descripción, o cuando vos se lo pedís.</li>
+  </ul>
+
+  <h2>2 · Armá tu equipo con este prompt</h2>
+  <p>Abrí Claude Code en la carpeta de tu proyecto, pegá el prompt y reemplazá lo que está entre corchetes por <b>tu</b> tarea: una propuesta comercial, un informe, contenido para redes, lo que necesites. Claude te va a hacer preguntas, te propone el equipo y, con tu OK, crea los archivos.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptEquipo}</code></pre>
+  </div>
+  <div class="note"><b>¿Por qué pide tu OK antes de crear?</b> Porque la clave no es tener muchos agentes, sino definir bien <b>quién hace qué</b> y <b>cómo se revisa</b>. Mirá la tabla, ajustá lo que no te cierre y recién ahí dejá que los cree.</div>
+
+  <h2>3 · Así se ve un sub-agente por dentro</h2>
+  <p>Este es el revisor del video. Arriba va la configuración (nombre, cuándo usarlo, herramientas y modelo) y abajo sus instrucciones: rol, criterios y resultado esperado.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{ejemploRevisor}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li><b>description</b> es lo más importante: Claude la lee para decidir cuándo delegarle.</li>
+    <li><b>tools</b>: dale solo las herramientas que necesita. Menos herramientas = menos errores.</li>
+    <li><b>model</b>: <b>haiku</b> para tareas simples y rápidas, <b>sonnet</b> para el trabajo general, <b>opus</b> para revisar o decidir. <b>inherit</b> usa el mismo modelo que tu conversación.</li>
+  </ul>
+
+  <h2>4 · Ponelo a trabajar</h2>
+  <p>Con el equipo creado, pedile la tarea y el orden. Reemplazá los nombres por los de tus sub-agentes.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptUsar}</code></pre>
+  </div>
+  <div class="note"><b>Para llamar a uno solo:</b> nombralo en tu mensaje ("usá el sub-agente revisor para revisar esto") o escribí <b>@agent-revisor</b> seguido de lo que necesitás.</div>
+
+  <h2>5 · Plantilla para armar los tuyos</h2>
+  <p>Si preferís crearlos a mano, copiá este molde, completalo y guardalo como <b>.claude/agents/nombre.md</b>. Un archivo por sub-agente.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{molde}</code></pre>
+  </div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿En qué se diferencia de una skill?</b> Una skill le suma una capacidad a Claude dentro de tu misma conversación. Un sub-agente es otro Claude que trabaja aparte, con su propio contexto, y te devuelve solo el resultado.</li>
+    <li><b>¿Cuántos conviene tener?</b> Empezá con 3 o 4, uno por responsabilidad. Sumá más solo si hay una tarea que ninguno cubre.</li>
+    <li><b>Creé uno y Claude no lo encuentra.</b> Si es el primero y la carpeta <b>.claude/agents/</b> no existía cuando abriste la sesión, reiniciá Claude Code. Después de eso, los cambios se detectan solos.</li>
+    <li><b>¿Y el comando /agents?</b> En las versiones nuevas ya no abre un asistente: los sub-agentes se crean pidiéndoselo a Claude (como en el paso 2) o editando la carpeta.</li>
+    <li><b>Si dos tienen el mismo nombre,</b> gana el del proyecto sobre el global.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Pegué el prompt del paso 2 con <b>mi</b> tarea y respondí las preguntas de Claude.</li>
+    <li>Revisé la tabla del equipo: cada rol tiene criterios y un resultado claro.</li>
+    <li>El equipo tiene un <b>revisor</b> al final.</li>
+    <li>Los archivos quedaron en <b>.claude/agents/</b>.</li>
+    <li>Probé el equipo con el prompt del paso 4 y recibí la versión final.</li>
+  </ul>
+</RecursoLayout>
