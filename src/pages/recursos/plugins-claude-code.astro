@@ -1,0 +1,123 @@
+---
+// Lead magnet · palabra clave ManyChat: PLUGINS (reel: "5 plugins de Claude Code", 28/9)
+// URL pública: /recursos/plugins-claude-code
+// Nombres y comandos verificados en el marketplace oficial (anthropics/claude-plugins-official)
+// y en code.claude.com/docs/en/discover-plugins (28/9).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const plugins = [
+  {
+    n: 1,
+    nombre: 'Frontend Design',
+    id: 'frontend-design',
+    autor: 'Anthropic',
+    que: 'Le da a Claude criterios de diseño: dirección visual, tipografía, composición, jerarquía y experiencia. Así las interfaces dejan de verse todas iguales (el típico gradiente violeta con "Get started").',
+    cuando: 'Cuando armás una landing, un dashboard o cualquier proyecto donde lo visual importa.',
+    tip: 'Pedile una dirección concreta: "estilo editorial, sobrio, tipografía con carácter". Cuanto más claro el estilo, mejor el resultado.',
+  },
+  {
+    n: 2,
+    nombre: 'Context7',
+    id: 'context7',
+    autor: 'Upstash',
+    que: 'Le da a Claude acceso a la documentación actual de las librerías y herramientas que usás, en la versión exacta. Menos código con funciones viejas o que ya no existen.',
+    cuando: 'Cuando trabajás con librerías que cambian rápido (Next.js, Tailwind, Supabase, etc.) y no querés errores por información desactualizada.',
+    tip: 'Sumá "usá context7" en tu pedido cuando la versión importe: "armá el login con la última versión de Next.js, usá context7".',
+  },
+  {
+    n: 3,
+    nombre: 'Supabase',
+    id: 'supabase',
+    autor: 'Supabase',
+    que: 'Deja que Claude trabaje directo sobre el backend de tu proyecto: base de datos, usuarios, autenticación y almacenamiento de archivos.',
+    cuando: 'Cuando tu app necesita guardar datos, registrar usuarios o subir archivos.',
+    tip: 'La primera vez te va a pedir conectar tu cuenta de Supabase. Empezá con un proyecto de prueba, no con el de producción.',
+  },
+  {
+    n: 4,
+    nombre: 'Playwright',
+    id: 'playwright',
+    autor: 'Microsoft',
+    que: 'Claude abre un navegador real y prueba tu app: navega, hace clic, completa formularios y saca capturas. No te quedás con que el código "parece" correcto: comprobás que funciona.',
+    cuando: 'Después de implementar una funcionalidad importante (registro, pago, formulario) para verificar que anda de verdad.',
+    tip: 'Pedíselo así: "abrí localhost:3000, probá el registro de punta a punta y decime qué falla".',
+  },
+  {
+    n: 5,
+    nombre: 'Superpowers',
+    id: 'superpowers',
+    autor: 'Jesse Vincent (obra)',
+    que: 'No suma una herramienta más: le da a Claude una forma estructurada de trabajar. Idea → plan → desarrollo con sub-agentes → revisión de código → tests.',
+    cuando: 'Cuando querés que Claude trabaje de forma consistente durante todo el desarrollo de un proyecto, no solo en una tarea suelta.',
+    tip: 'Arrancá contándole la idea y dejá que te haga preguntas antes de escribir código: ahí está la diferencia.',
+  },
+];
+
+const todos = plugins.map((p) => `claude plugin install ${p.id}@claude-plugins-official`).join('\n');
+---
+<RecursoLayout
+  titulo="5 plugins para Claude Code"
+  descripcion="La lista completa del video: qué hace cada plugin, cuándo usarlo y el comando para instalarlo."
+  tipo="Lista"
+  barLabel="Lista · @andresalbornozia"
+  palabraClave="PLUGINS"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Los 5 plugins del video, con el comando para instalar cada uno. Todos están en el marketplace oficial de Claude Code: no necesitás agregar nada raro.</b></div>
+
+  <h2>Cómo se instala un plugin</h2>
+  <ol class="steps">
+    <li>Abrí Claude Code en tu proyecto (en la terminal: <b>claude</b>).</li>
+    <li>Pegá el comando del plugin, por ejemplo <b>/plugin install frontend-design@claude-plugins-official</b>.</li>
+    <li>Elegí dónde instalarlo: <b>para vos</b> (en todos tus proyectos) es lo más cómodo para empezar.</li>
+    <li>Si te lo pide, escribí <b>/reload-plugins</b>. Para ver lo que tenés instalado: <b>/plugin</b> → pestaña <b>Installed</b>.</li>
+  </ol>
+  <div class="note"><b>¿Usás la app de escritorio?</b> Tocá el <b>+</b> al lado de la caja de texto → <b>Plugins</b> → <b>Add plugin</b> y buscalo por nombre.</div>
+
+  {plugins.map((p) => (
+    <>
+      <h2>{p.n} · {p.nombre}</h2>
+      <p>{p.que}</p>
+      <ul class="arrow">
+        <li><b>Usalo:</b> {p.cuando}</li>
+        <li><b>Tip:</b> {p.tip}</li>
+      </ul>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{`/plugin install ${p.id}@claude-plugins-official`}</code></pre>
+      </div>
+      <p style="font-size:13px">Página oficial: <a href={`https://claude.com/plugins/${p.id}`} target="_blank" rel="noopener noreferrer">claude.com/plugins/{p.id}</a> · de {p.autor}</p>
+    </>
+  ))}
+
+  <h2>Los 5 de una sola vez</h2>
+  <p>Si preferís instalarlos todos juntos, pegá esto en la terminal (fuera de Claude Code). Se activan la próxima vez que abras Claude Code.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{todos}</code></pre>
+  </div>
+  <div class="alert"><b>Ojo:</b> cada plugin suma un poco de contexto a cada mensaje. Instalá los que vas a usar y desactivá los que no (en <b>/plugin</b> → <b>Installed</b>, con la barra espaciadora).</div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Plugin, skill o MCP?</b> Un plugin es un paquete: puede traer skills, comandos, sub-agentes y conexiones MCP juntos. Lo instalás con un comando y listo.</li>
+    <li><b>¿Son gratis?</b> Los plugins sí. Supabase necesita una cuenta (tiene plan gratis) y Claude Code necesita tu plan de Claude.</li>
+    <li><b>Lo instalé y no aparece.</b> Escribí <b>/reload-plugins</b> o cerrá y volvé a abrir Claude Code. En <b>/plugin</b> → <b>Errors</b> ves si algo falló.</li>
+    <li><b>¿Cuál instalo primero?</b> Si hacés webs: Frontend Design y Playwright. Si programás con librerías: Context7. Si tu app guarda datos: Supabase. Si arrancás un proyecto largo: Superpowers.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Instalé los plugins que voy a usar (no todos por las dudas).</li>
+    <li>Los veo en <b>/plugin</b> → <b>Installed</b>.</li>
+    <li>Probé cada uno con un pedido real de mi proyecto.</li>
+    <li>Desactivé los que no uso para no gastar contexto.</li>
+  </ul>
+</RecursoLayout>
