@@ -28,12 +28,6 @@ const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
 
   <body>
     <main class="landing-shell">
-      <a class="mc-bar" href={grupoUrl} target="_blank" rel="noopener noreferrer">
-        <span class="mc-bar-tag">🎥 Clase grabada</span>
-        <span class="mc-bar-text">Claude desde cero — <b>accedé en el grupo</b></span>
-        <span class="mc-bar-cta">Entrar al grupo →</span>
-      </a>
-
       <div class="brand-watermark" aria-hidden="true">
         <img src="/img/symbol-gii.png" alt="" />
       </div>
@@ -71,6 +65,34 @@ const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
           <h1>¿Por dónde querés <span>empezar?</span></h1>
 
           <div class="cards">
+            <article class="choice-card choice-card-business" id="empresas">
+              <div class="icon-box" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 39V15H25V39" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+                  <path d="M25 22H38V39" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+                  <path d="M15 21H19M15 27H19M15 33H19M30 27H34M30 33H34" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M6 39H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+
+              <p class="eyebrow">EMPRESAS</p>
+              <h2>Quiero aplicar IA <span>en mi empresa</span></h2>
+              <p class="description">Detectamos procesos, pérdidas de tiempo y oportunidades para construir soluciones con impacto real.</p>
+
+              <div class="keywords" aria-label="Qué incluye">
+                <span>DIAGNÓSTICO</span>
+                <i></i>
+                <span>AUTOMATIZACIÓN</span>
+                <i></i>
+                <span>SISTEMAS</span>
+              </div>
+
+              <a class="cta cta-business" href="/empresa">
+                <span>Ver cómo puedo ayudarte</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </article>
+
             <article class="choice-card choice-card-learn" id="aprender">
               <div class="icon-box" aria-hidden="true">
                 <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -99,35 +121,13 @@ const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
                 <span aria-hidden="true">→</span>
               </a>
             </article>
-
-            <article class="choice-card choice-card-business" id="empresas">
-              <div class="icon-box" aria-hidden="true">
-                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 39V15H25V39" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
-                  <path d="M25 22H38V39" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
-                  <path d="M15 21H19M15 27H19M15 33H19M30 27H34M30 33H34" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                  <path d="M6 39H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                </svg>
-              </div>
-
-              <p class="eyebrow">EMPRESAS</p>
-              <h2>Quiero aplicar IA <span>en mi empresa</span></h2>
-              <p class="description">Detectamos procesos, pérdidas de tiempo y oportunidades para construir soluciones con impacto real.</p>
-
-              <div class="keywords" aria-label="Qué incluye">
-                <span>DIAGNÓSTICO</span>
-                <i></i>
-                <span>AUTOMATIZACIÓN</span>
-                <i></i>
-                <span>SISTEMAS</span>
-              </div>
-
-              <a class="cta cta-business" href="/empresa">
-                <span>Ver cómo puedo ayudarte</span>
-                <span aria-hidden="true">→</span>
-              </a>
-            </article>
           </div>
+
+          <a class="mc-bar" href={grupoUrl} target="_blank" rel="noopener noreferrer">
+            <span class="mc-bar-tag">🎥 Clase grabada</span>
+            <span class="mc-bar-text">Claude desde cero — <b>accedé en el grupo</b></span>
+            <span class="mc-bar-cta">Entrar al grupo →</span>
+          </a>
         </div>
       </section>
 
@@ -216,12 +216,14 @@ const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
         justify-content: center;
         flex-wrap: wrap;
         gap: 10px 18px;
+        margin-top: 30px;
         padding: 16px 22px;
         text-align: center;
         font-size: 0.95rem;
         color: #fff;
         background: linear-gradient(90deg, #1358d6, #12b7c9);
-        border-bottom: 1px solid rgba(120, 230, 255, 0.55);
+        border: 1px solid rgba(120, 230, 255, 0.55);
+        border-radius: 14px;
         box-shadow: 0 8px 30px -10px rgba(20, 216, 232, 0.45);
         transition: filter 0.2s ease;
       }
