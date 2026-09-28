@@ -1,0 +1,166 @@
+---
+// Lead magnet · palabra clave ManyChat: WORKFLOW (reel: "Claude + Codex en el mismo proyecto", 28/9)
+// URL pública: /recursos/claude-codex-workflow
+// Verificado (28/9): Claude Code lee AGENTS.md (code.claude.com/docs/en/memory);
+// Codex CLI: instalación, /init y /review (learn.chatgpt.com/docs/codex/cli).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const reglas = `# Reglas del proyecto (las leen Claude Code y Codex)
+
+## Qué estamos construyendo
+[DESCRIBÍ EN 2 O 3 LÍNEAS QUÉ ES EL PROYECTO Y PARA QUIÉN]
+
+## Cómo trabajamos entre los dos
+- El plan vive en PLAN.md. Nadie escribe código sin un plan aprobado.
+- Las observaciones de la revisión van en REVIEW.md, ordenadas por prioridad.
+- Cada tarea del plan se marca [x] cuando está terminada.
+- Si algo del plan no se puede hacer, se anota en PLAN.md en vez de improvisar.`;
+
+const pPlan = `Leé AGENTS.md. Quiero construir esto:
+[DESCRIBÍ LA TAREA: QUÉ QUERÉS, PARA QUÉ Y CÓMO TE DAS CUENTA DE QUE QUEDÓ BIEN]
+
+Antes de planificar, haceme las preguntas que necesites.
+Después escribí el plan en PLAN.md: objetivo, archivos que se tocan, pasos numerados con casillas [ ] y cómo se prueba cada uno.
+No escribas código todavía.`;
+
+const pEjecutar = `Leé AGENTS.md y PLAN.md.
+Implementá el plan paso por paso, en orden. Al terminar cada paso, marcalo [x] en PLAN.md.
+Si un paso no se puede hacer como está escrito, frená, anotá el motivo en PLAN.md y seguí con el siguiente.
+Al final, resumime qué cambiaste.`;
+
+const pRevisar = `Revisá los cambios contra PLAN.md.
+Buscá errores, casos que no se contemplaron y decisiones que cuestionarías.
+Escribí todo en REVIEW.md, ordenado por prioridad (alta, media, baja), con el archivo y el motivo de cada punto.
+No modifiques el código.`;
+
+const pCorregir = `Leé REVIEW.md.
+Corregí los puntos de prioridad alta y media. Si no estás de acuerdo con alguno, explicá por qué en REVIEW.md en vez de cambiarlo.
+Marcá cada punto como resuelto y resumime qué corregiste.`;
+
+const pRamas = `git switch -c intento-claude
+git switch main
+git worktree add ../intento-codex -b intento-codex`;
+
+const pComparar = `Compará las ramas intento-claude e intento-codex para esta tarea:
+[LA MISMA TAREA QUE LES DISTE A LOS DOS]
+
+Para cada una decime: qué resuelve bien, qué le falta, riesgos y qué tan fácil es de mantener.
+Terminá con una recomendación: cuál conviene, o qué tomar de cada una.`;
+---
+<RecursoLayout
+  titulo="Claude + Codex: un mismo proyecto, dos cerebros"
+  descripcion="La guía para que Claude Code y Codex trabajen sobre la misma tarea y uno complemente el trabajo del otro: el relevo y la comparación, con los prompts listos."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="WORKFLOW"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>La pregunta no es cuál de los dos usar. Es cómo repartirles el trabajo: Codex planifica y revisa, Claude Code ejecuta y corrige. O les das el mismo problema a los dos y te quedás con la mejor solución.</b></div>
+
+  <h2>1 · Lo que necesitás</h2>
+  <ul class="arrow">
+    <li><b>Claude Code</b> instalado y con tu cuenta de Claude.</li>
+    <li><b>Codex</b> instalado: en la terminal, <b>npm install -g @openai/codex</b>, y después <b>codex</b> para iniciar sesión con tu cuenta de ChatGPT.</li>
+    <li>Una <b>carpeta de proyecto</b> que abrís con los dos (idealmente con git, para poder volver atrás).</li>
+  </ul>
+
+  <h2>2 · Un archivo de reglas que leen los dos</h2>
+  <p>Creá un archivo <b>AGENTS.md</b> en la raíz del proyecto. Codex lo lee siempre, y Claude Code también lo lee si no tenés un CLAUDE.md. Si ya tenés un CLAUDE.md, agregale una línea con <b>@AGENTS.md</b> para que lo importe.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{reglas}</code></pre>
+  </div>
+  <div class="note"><b>La clave es que se pasen el trabajo por archivos:</b> PLAN.md (qué hacer) y REVIEW.md (qué corregir). Así ninguno depende de que le copies y pegues lo que dijo el otro.</div>
+
+  <h2>3 · Modo relevo: uno complementa al otro</h2>
+  <p>Cuatro pasos. Cada uno se hace en la herramienta indicada, con el prompt listo.</p>
+
+  <h3>Paso 1 · Codex planifica</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{pPlan}</code></pre>
+  </div>
+  <p style="font-size:13px">Leé PLAN.md antes de seguir. Si algo no te cierra, pedile a Codex que lo ajuste.</p>
+
+  <h3>Paso 2 · Claude Code ejecuta</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{pEjecutar}</code></pre>
+  </div>
+
+  <h3>Paso 3 · Codex revisa</h3>
+  <p>Podés usar el comando <b>/review</b> de Codex (revisa los cambios sin tocar el código) o este prompt, que además deja todo por escrito:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{pRevisar}</code></pre>
+  </div>
+
+  <h3>Paso 4 · Claude Code corrige</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{pCorregir}</code></pre>
+  </div>
+  <div class="note"><b>¿Cuántas vueltas?</b> Repetí los pasos 3 y 4 hasta que la revisión no encuentre nada de prioridad alta. Normalmente alcanza con una o dos.</div>
+
+  <h2>4 · Modo comparar: mismo problema, dos soluciones</h2>
+  <p>Para cuando no sabés cuál es el mejor camino. Cada uno trabaja en su propia rama, así no se pisan.</p>
+  <ol class="steps">
+    <li>Creá las dos ramas (en la terminal, dentro del proyecto):</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{pRamas}</code></pre>
+  </div>
+  <ol class="steps" start="2">
+    <li>En la rama <b>intento-claude</b> abrí Claude Code; en la carpeta <b>../intento-codex</b> abrí Codex. Dales exactamente el mismo pedido.</li>
+    <li>Cuando terminen los dos, pedile a cualquiera de ellos la comparación:</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{pComparar}</code></pre>
+  </div>
+
+  <h2>5 · ¿Cuál modo uso?</h2>
+  <div class="grid">
+    <div class="col si">
+      <h3>Relevo</h3>
+      <ul>
+        <li>Agregar una función nueva</li>
+        <li>Cambios grandes que conviene planificar</li>
+        <li>Cuando querés una segunda mirada antes de publicar</li>
+      </ul>
+    </div>
+    <div class="col si">
+      <h3>Comparar</h3>
+      <ul>
+        <li>Un error que no podés resolver</li>
+        <li>Mejorar el diseño o el funcionamiento</li>
+        <li>Ver dos formas distintas de resolver lo mismo</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Necesito pagar los dos?</b> Sí: Claude Code funciona con tu plan de Claude y Codex con tu cuenta de ChatGPT. Si tenés uno solo, podés hacer el mismo relevo con dos sesiones del mismo (una planifica y revisa, otra ejecuta).</li>
+    <li><b>¿Y si no están de acuerdo?</b> Mejor: ahí está el valor. El que revisa sugiere, el que ejecuta explica, y vos decidís. Por eso todo queda escrito en REVIEW.md.</li>
+    <li><b>¿Por qué Codex planifica y Claude ejecuta?</b> Es un reparto que funciona bien, no una regla. Probá al revés y quedate con el que te dé mejores resultados en tu proyecto.</li>
+    <li><b>¿Puedo usarlo si no programo?</b> Sí. El mismo relevo sirve para documentos, informes o contenido: cambiá "código" por el entregable que necesites.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Tengo Claude Code y Codex abriendo la misma carpeta.</li>
+    <li>Creé AGENTS.md con las reglas del proyecto.</li>
+    <li>Codex escribió PLAN.md y lo revisé antes de ejecutar.</li>
+    <li>Claude Code ejecutó el plan y marcó cada paso.</li>
+    <li>Codex revisó y Claude corrigió hasta no tener prioridades altas.</li>
+  </ul>
+</RecursoLayout>
