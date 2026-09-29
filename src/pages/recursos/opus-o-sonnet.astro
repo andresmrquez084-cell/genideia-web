@@ -1,0 +1,116 @@
+---
+// Lead magnet · palabra clave ManyChat: SONNET (reel: "Salió Claude Sonnet 5.5", 29/9)
+// URL pública: /recursos/opus-o-sonnet
+// Datos verificados en el anuncio oficial https://www.anthropic.com/claude-sonnet-5-5 (28/9/2026):
+// velocidad, costo por tarea, precios por 1M tokens, benchmarks y casos de uso recomendados.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const tareas = [
+  { tarea: 'Arreglar un bug concreto', modelo: 'Sonnet 5.5', por: 'Es una tarea bien definida: importa la velocidad.' },
+  { tarea: 'Armar un documento, slides o una planilla', modelo: 'Sonnet 5.5', por: 'Anthropic lo destaca justo para esto.' },
+  { tarea: 'Cambios chicos y muchas vueltas de prueba', modelo: 'Sonnet 5.5', por: 'Iterás rápido y gastás menos por tarea.' },
+  { tarea: 'Automatizaciones con mucho volumen', modelo: 'Sonnet 5.5', por: 'Mitad de precio por token que Opus.' },
+  { tarea: 'Diseñar la arquitectura de un sistema', modelo: 'Opus 5.5', por: 'Hay decisiones abiertas y hace falta criterio.' },
+  { tarea: 'Un problema que no sabés bien cómo encarar', modelo: 'Opus 5.5', por: 'Trabajo abierto, sin un camino claro.' },
+  { tarea: 'Revisar una estrategia o una decisión difícil', modelo: 'Opus 5.5', por: 'Análisis cuidadoso y sostenido.' },
+  { tarea: 'Un proyecto largo con muchas partes', modelo: 'Opus 5.5', por: 'Mantiene el criterio de punta a punta.' },
+];
+
+const prompt = `Antes de empezar, clasificá esta tarea.
+Decime si es una tarea BIEN DEFINIDA (el resultado esperado está claro) o ABIERTA (hay que decidir el enfoque, comparar opciones o usar mucho criterio).
+Si es bien definida, recomendame Claude Sonnet 5.5; si es abierta, Claude Opus 5.5.
+Explicámelo en una línea y después preguntame si seguimos.
+La tarea es: [DESCRIBÍ TU TAREA ACÁ]`;
+---
+<RecursoLayout
+  titulo="Opus o Sonnet: cuál usar según la tarea"
+  descripcion="El resumen del video: qué cambia con Sonnet 5.5, cuánto cuesta cada modelo y cuál conviene para cada tipo de tarea."
+  tipo="Resumen"
+  barLabel="Resumen · @andresalbornozia"
+  palabraClave="SONNET"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Anthropic lanzó Claude Sonnet 5.5 el 28 de septiembre, una semana después de Opus 5.5. No es solo un modelo más rápido: los dos modelos ahora tienen roles distintos. Acá tenés cuál usar según lo que vayas a hacer.</b></div>
+
+  <h2>La regla en una línea</h2>
+  <div class="grid">
+    <div class="col si">
+      <h3>Sonnet 5.5</h3>
+      <ul>
+        <li>Tareas bien definidas</li>
+        <li>Importa la velocidad</li>
+        <li>Importa el costo</li>
+        <li>Iterar rápido</li>
+      </ul>
+    </div>
+    <div class="col si">
+      <h3>Opus 5.5</h3>
+      <ul>
+        <li>Trabajo complejo</li>
+        <li>Problemas abiertos</li>
+        <li>Mucho criterio</li>
+        <li>Proyectos largos</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Qué cambia con Sonnet 5.5</h2>
+  <ul class="arrow">
+    <li><b>30 % más rápido:</b> genera las respuestas más de un 30 % más rápido que Sonnet 5.</li>
+    <li><b>Hasta 30 % menos por tarea:</b> el precio por token es el mismo, pero necesita menos tokens y menos pasos para terminar.</li>
+    <li><b>Muy cerca de Opus en código:</b> en Terminal-Bench 4.0 saca 70,6 % (Opus 5.5: 66,4 %). En tareas complejas y abiertas, Opus sigue adelante.</li>
+  </ul>
+
+  <h2>Cuánto cuesta cada uno</h2>
+  <p>Precio por millón de tokens en la API (en la app de Claude lo usás con tu plan):</p>
+  <ul class="arrow">
+    <li><b>Sonnet 5.5:</b> $2 de entrada · $10 de salida.</li>
+    <li><b>Opus 5.5:</b> $4 de entrada · $20 de salida.</li>
+  </ul>
+  <div class="note"><b>Traducido:</b> Sonnet cuesta la mitad por token y, encima, gasta menos tokens por tarea. Para todo lo que es repetitivo o está bien definido, la diferencia se nota a fin de mes.</div>
+
+  <h2>Cuál usar para cada tarea</h2>
+  <ul class="arrow">
+    {tareas.map((x) => (
+      <li><b>{x.tarea} → {x.modelo}.</b> {x.por}</li>
+    ))}
+  </ul>
+  <div class="note"><b>¿Dudás?</b> Arrancá con Sonnet. Si ves que se traba, da vueltas o le falta criterio, pasá a Opus para esa parte.</div>
+
+  <h2>Prompt para que Claude te diga cuál usar</h2>
+  <p>Pegalo al principio de un chat y completá tu tarea al final:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{prompt}</code></pre>
+  </div>
+
+  <h2>Cómo cambiar de modelo</h2>
+  <ol class="steps">
+    <li><b>En claude.ai o la app:</b> tocá el nombre del modelo debajo de la caja de texto y elegí <b>Sonnet 5.5</b> u <b>Opus 5.5</b>.</li>
+    <li><b>En Claude Code:</b> escribí <b>/model</b> y elegí el modelo de la lista.</li>
+    <li><b>En la API:</b> usá <b>claude-sonnet-5-5</b> u <b>claude-opus-5-5</b> como nombre del modelo.</li>
+  </ol>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Sonnet 5.5 reemplaza a Opus?</b> No. Anthropic los separa por rol: Sonnet para lo definido y rápido, Opus para lo complejo.</li>
+    <li><b>¿Es más barato?</b> Cuesta lo mismo por token que Sonnet 5, pero gasta menos tokens, así que cada tarea sale hasta un 30 % más barata.</li>
+    <li><b>¿Dónde está disponible?</b> En claude.ai, la app, Claude Code y la API (también en AWS, Google Cloud y Azure).</li>
+    <li><b>¿Y Haiku?</b> Anthropic anunció Haiku 5.5 para las próximas semanas: el más chico y rápido, para mucho volumen.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Sé si mi tarea es bien definida o abierta.</li>
+    <li>Uso Sonnet 5.5 para lo definido y lo repetitivo.</li>
+    <li>Paso a Opus 5.5 cuando hace falta criterio.</li>
+    <li>Sé cambiar de modelo en la app y en Claude Code.</li>
+  </ul>
+</RecursoLayout>
