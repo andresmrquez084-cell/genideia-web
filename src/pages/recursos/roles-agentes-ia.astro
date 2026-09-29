@@ -1,0 +1,168 @@
+---
+// Lead magnet · palabra clave ManyChat: AGENTE (reel: "Un rol para cada agente", Agentes 1, 29/9)
+// URL pública: /recursos/roles-agentes-ia
+// Formato de sub-agentes verificado en la doc oficial https://code.claude.com/docs/es/sub-agents (29/9/2026):
+// archivos Markdown con frontmatter name / description (y opcionales tools / model) en .claude/agents/.
+// Referencia del "juez": LLM Council de Andrej Karpathy (github.com/karpathy/llm-council).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const roles = [
+  {
+    n: '1',
+    nombre: 'El cliente',
+    para: 'Mira la idea con los ojos de quien tendría que pagarla.',
+    prompt: `Sos el CLIENTE ideal de esta idea. No sos el dueño ni un consultor: sos quien tendría que pagar.
+Función: decir si comprarías esto y por qué sí o por qué no.
+Analizá: qué problema te resuelve, cuánto te duele hoy, qué usás en su lugar y cuánto pagarías.
+Criterios: sé honesto y concreto; si algo no te convence, decilo; nada de elogios de compromiso.
+Resultado: 1) ¿Lo comprarías? Sí/No/Depende. 2) Las 3 objeciones más fuertes. 3) Qué tendría que cambiar para que digas que sí.
+La idea es: [DESCRIBÍ TU IDEA ACÁ]`,
+  },
+  {
+    n: '2',
+    nombre: 'Costos, márgenes y riesgos',
+    para: 'Hace las cuentas que uno siempre deja para después.',
+    prompt: `Sos el ANALISTA FINANCIERO de esta idea.
+Función: ver si los números cierran.
+Analizá: costos fijos y variables, precio posible, margen por venta, cuántas ventas hacen falta para cubrir costos y los riesgos económicos.
+Criterios: si te falta un dato, hacé un supuesto razonable y marcalo como SUPUESTO; no inventes cifras como si fueran reales.
+Resultado: una tabla corta con costos, precio, margen y punto de equilibrio, y los 3 riesgos económicos principales.
+La idea es: [DESCRIBÍ TU IDEA ACÁ]
+Mis datos (si los tengo): [PRECIOS, COSTOS, PRESUPUESTO]`,
+  },
+  {
+    n: '3',
+    nombre: '¿Es viable con lo que tenés?',
+    para: 'Baja la idea a tu realidad de hoy: tiempo, plata y habilidades.',
+    prompt: `Sos el RESPONSABLE DE OPERACIONES de esta idea.
+Función: evaluar si esta persona puede ejecutarla HOY con los recursos que tiene.
+Analizá: tiempo disponible, presupuesto, habilidades, herramientas y contactos; qué falta y cuánto cuesta conseguirlo.
+Criterios: pensá en los próximos 90 días, no en un escenario ideal.
+Resultado: 1) Viable / Viable con ajustes / No viable hoy. 2) Qué falta. 3) El primer paso concreto para esta semana.
+La idea es: [DESCRIBÍ TU IDEA ACÁ]
+Mis recursos: [TIEMPO POR SEMANA, PRESUPUESTO, LO QUE SÉ HACER]`,
+  },
+  {
+    n: '4',
+    nombre: 'El abogado del diablo',
+    para: 'Su único trabajo es encontrar por qué puede fallar.',
+    prompt: `Sos el ABOGADO DEL DIABLO de esta idea.
+Función: encontrar los motivos por los que esta idea puede fallar.
+Analizá: supuestos que nadie comprobó, competencia, mercado, dependencia de terceros, errores típicos de este tipo de negocio.
+Criterios: no suavices nada; cada riesgo tiene que venir con el motivo, no con una opinión.
+Resultado: los 5 motivos de falla más probables, ordenados de mayor a menor, cada uno con su probabilidad (alta/media/baja) y cómo detectarlo a tiempo.
+La idea es: [DESCRIBÍ TU IDEA ACÁ]`,
+  },
+];
+
+const juez = `Sos el JUEZ FINAL. Recibiste el análisis de 4 agentes con roles distintos sobre la misma idea.
+Función: comparar las 4 respuestas y llegar a UNA sola conclusión.
+Analizá: en qué coinciden, en qué se contradicen y qué riesgo aparece en más de un análisis.
+Criterios: no promedies opiniones; pesá cada punto por la evidencia que trae. Si falta información para decidir, decilo.
+Resultado:
+1) Veredicto: SEGUIR / SEGUIR CON CAMBIOS / NO SEGUIR.
+2) Los 3 motivos principales del veredicto.
+3) Los cambios que harías antes de avanzar.
+4) El próximo paso concreto.
+
+Análisis del CLIENTE: [PEGAR]
+Análisis de COSTOS: [PEGAR]
+Análisis de VIABILIDAD: [PEGAR]
+Análisis del ABOGADO DEL DIABLO: [PEGAR]`;
+
+const plantilla = `Sos [NOMBRE DEL ROL].
+Función: [QUÉ TIENE QUE HACER, EN UNA FRASE]
+Analizá: [QUÉ MIRA, EN CONCRETO]
+Criterios: [CON QUÉ LO MIDE Y QUÉ NO VALE]
+Resultado: [QUÉ TE ENTREGA Y EN QUÉ FORMATO]
+El tema es: [LO QUE QUERÉS EVALUAR]`;
+
+const archivo = `---
+name: abogado-del-diablo
+description: Busca los motivos por los que una idea o decisión puede fallar. Usalo antes de decidir.
+---
+Sos el ABOGADO DEL DIABLO.
+Función: encontrar los motivos por los que la idea puede fallar.
+Criterios: cada riesgo con su motivo; nada de opiniones sueltas.
+Resultado: 5 motivos de falla ordenados, con probabilidad y cómo detectarlos a tiempo.`;
+---
+<RecursoLayout
+  titulo="Un rol para cada agente: la estructura"
+  descripcion="Los 4 roles para evaluar una idea desde distintos ángulos, el prompt del juez que saca una sola conclusión y una plantilla para armar tus propios roles."
+  tipo="Plantilla"
+  barLabel="Plantilla · @andresalbornozia"
+  palabraClave="AGENTE"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Si le das la misma instrucción a 5 agentes, recibís 5 versiones parecidas de la misma respuesta. Lo útil es darle a cada uno un rol distinto y, al final, que uno solo compare todo y concluya. Acá tenés los roles listos para copiar.</b></div>
+
+  <h2>Cómo funciona</h2>
+  <ol class="steps">
+    <li><b>Cada agente, un rol.</b> Le pasás la misma idea a cada uno, pero con su propio prompt.</li>
+    <li><b>Que respondan por separado.</b> Si uno ve la respuesta del otro, se copian. Un chat nuevo por rol (o un sub-agente por rol).</li>
+    <li><b>El juez decide.</b> Le pegás las 4 respuestas al último agente y te da una sola conclusión.</li>
+  </ol>
+  <div class="note"><b>Todo rol tiene 4 partes:</b> función (qué hace), qué analiza, con qué criterios y qué resultado te entrega. Si falta una, el agente improvisa.</div>
+
+  <h2>Los 4 roles (ejemplo: evaluar una idea de negocio)</h2>
+  {roles.map((r) => (
+    <>
+      <h3>{r.n}. {r.nombre}</h3>
+      <p>{r.para}</p>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{r.prompt}</code></pre>
+      </div>
+    </>
+  ))}
+
+  <h2>5. El juez: una sola conclusión</h2>
+  <p>Abrí un chat nuevo, pegá este prompt y reemplazá cada <b>[PEGAR]</b> por la respuesta de ese agente:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{juez}</code></pre>
+  </div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Plantilla para tus propios roles</h2>
+  <p>No es solo para negocios: sirve para comparar dos herramientas, elegir entre dos ideas, revisar una estrategia o tomar una decisión. Cambiá los roles según el tema:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{plantilla}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li><b>Comparar dos herramientas:</b> el usuario que la va a usar todos los días · el que mira el precio · el que busca sus límites · el juez.</li>
+    <li><b>Elegir entre dos ideas:</b> un defensor de cada idea · el abogado del diablo · el juez.</li>
+    <li><b>Revisar una estrategia:</b> el cliente · la competencia · el que la tiene que ejecutar · el juez.</li>
+  </ul>
+
+  <h2>Si usás Claude Code: un sub-agente por rol</h2>
+  <p>En Claude Code cada rol puede ser un sub-agente: un archivo Markdown en <b>.claude/agents/</b> (del proyecto) o en <b>~/.claude/agents/</b> (para todos tus proyectos). Cada sub-agente trabaja en su propio contexto, así no se contaminan entre sí.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{archivo}</code></pre>
+  </div>
+  <p>Guardalo como <b>.claude/agents/abogado-del-diablo.md</b>. También podés escribir <b>/agents</b> en Claude Code y pedirle que lo cree por vos.</p>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Necesito Claude Code?</b> No. En el chat funciona igual: un chat nuevo por rol y uno más para el juez.</li>
+    <li><b>¿Cuántos agentes uso?</b> Entre 3 y 5 roles más el juez. Más que eso suma texto, no claridad.</li>
+    <li><b>¿Por qué no los pongo a todos en un mismo chat?</b> Porque se influyen: el segundo responde mirando al primero. Separados, cada uno mira de verdad desde su lado.</li>
+    <li><b>¿De dónde sale la idea del juez?</b> Andrej Karpathy la armó como "LLM Council": varios modelos responden, se revisan y un "presidente" arma la respuesta final.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Cada agente tiene un rol distinto.</li>
+    <li>Cada rol tiene función, qué analiza, criterios y resultado.</li>
+    <li>Los roles responden por separado.</li>
+    <li>Un juez compara todo y me da una sola conclusión.</li>
+  </ul>
+</RecursoLayout>
