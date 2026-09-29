@@ -34,6 +34,16 @@
       "has": [
         {
           "type": "host",
+          "value": "links.hechoconelalma.shop"
+        }
+      ],
+      "destination": "/hechoconelalma/index.html"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
           "value": "genideia-academy.vercel.app"
         }
       ],

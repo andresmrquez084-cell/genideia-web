@@ -1,0 +1,73 @@
+{
+  "_comentario": "Link-in-bio de Hecho con el Alma (/hechoconelalma). TODO el texto y los links se editan acá, no en la página. En los títulos, \n marca el salto de línea. Para prender el bloque de lanzamiento: lanzamiento.activo = true.",
+
+  "seo": {
+    "titulo": "Hecho con el Alma — Arte y artesanía uruguaya",
+    "descripcion": "Descubrí piezas, artistas e historias creadas en Uruguay.",
+    "imagen": "https://genideiacompany.com/hechoconelalma/og.jpg"
+  },
+
+  "marca": {
+    "bajada": "Arte y artesanía uruguaya",
+    "texto": "Descubrí piezas, artistas e historias\ncreadas en Uruguay."
+  },
+
+  "lanzamiento": {
+    "activo": false,
+    "etiqueta": "Novedad · Lanzamiento",
+    "titulo": "[Nombre de la acción]",
+    "texto": "",
+    "boton": "Participar",
+    "url": "https://wa.me/59894743435?text=Hola!%20Quiero%20participar."
+  },
+
+  "accesos": [
+    {
+      "id": "piezas",
+      "titulo": "Explorar\npiezas y obras",
+      "texto": "Descubrí la selección disponible en la plataforma.",
+      "url": "https://www.hechoconelalma.shop/?utm_source=instagram&utm_medium=bio&utm_content=piezas#galeria",
+      "imagen": "/hechoconelalma/piezas.webp",
+      "icono": "vasija"
+    },
+    {
+      "id": "artistas",
+      "titulo": "Conocer\na los artistas",
+      "texto": "Descubrí quién está detrás de cada obra y pieza.",
+      "url": "https://www.hechoconelalma.shop/?utm_source=instagram&utm_medium=bio&utm_content=artistas#artistas",
+      "imagen": "/hechoconelalma/artistas.webp",
+      "icono": "personas"
+    },
+    {
+      "id": "historias",
+      "titulo": "Descubrir\nhistorias",
+      "texto": "Procesos, materiales y relatos detrás de lo que se crea.",
+      "url": "https://www.instagram.com/hechoconelalma.uy",
+      "imagen": "/hechoconelalma/historias.webp",
+      "icono": "libro"
+    }
+  ],
+
+  "registro": {
+    "titulo": "Enterarme\nde lo próximo",
+    "texto": "Recibí novedades y futuras experiencias de Hecho con el Alma.",
+    "imagen": "/hechoconelalma/registro.webp",
+    "campoNombre": "Nombre",
+    "campoContacto": "Email o WhatsApp",
+    "boton": "Quiero enterarme",
+    "exito": "¡Gracias! Te vamos a avisar de lo próximo.",
+    "_endpoint": "URL que recibe el POST JSON {nombre, contacto, origen, fecha} (webhook n8n, Supabase, etc.). Si queda vacía, el registro se envía por WhatsApp.",
+    "endpoint": "",
+    "whatsappMensaje": "Hola! Quiero enterarme de lo próximo de Hecho con el Alma."
+  },
+
+  "_redes": "Los íconos solo aparecen si el link no está vacío.",
+  "redes": {
+    "instagram": "https://www.instagram.com/hechoconelalma.uy",
+    "facebook": "",
+    "youtube": "",
+    "whatsapp": "59894743435"
+  },
+
+  "cierre": "Más que objetos,\nhistorias que nos conectan."
+}
