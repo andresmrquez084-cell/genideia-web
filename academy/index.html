@@ -93,8 +93,8 @@ button,input,textarea,select{font:inherit}.top{height:78px;padding:0 3.4vw;displ
 const MODULES=[
 {id:1,title:'Diagnóstico y preparación',objective:'Entender el punto de partida, objetivos, casos reales y entorno de trabajo del alumno.',topics:['Diagnóstico','Objetivos','Casos de aplicación','Entorno'],presentation:'',resources:'',task:'Definir punto de partida, prioridades y casos reales.'},
 {id:2,title:'Conversar bien con IA',objective:'Transformar una necesidad en una instrucción clara, ejecutarla, revisarla y reconocer loops y workflows dentro del proceso.',topics:['Prompt','Contexto','Markdown','Auditoría','Loop','Workflow','Skill','Tarea programada','Agente'],presentation:'/modulos/02/presentacion.html#1',resources:'https://drive.google.com/drive/folders/1jarrK2eJb6-RiaA5NWFLZZJH6WXXGOec?usp=drive_link',task:'Aplicar el mismo procedimiento a una tarea real distinta: construir prompt, auditar, ejecutar, mejorar mediante loop e identificar el workflow final.'},
-{id:3,title:'Contexto y continuidad',objective:'Crear contexto reutilizable para no volver a explicar todo desde cero en tareas y proyectos que continúan en el tiempo.',topics:['Contexto personal','Contexto de proyecto','Continuidad','Actualización de contexto'],presentation:'',resources:'',task:''},
-{id:4,title:'Investigar y comparar',objective:'Investigar información actual, comparar fuentes y construir conclusiones verificables.',topics:['Investigación','Fuentes','Comparación','Verificación'],presentation:'',resources:'',task:''},
+{id:3,title:'Contexto reutilizable y continuidad',objective:'Separar, organizar y reutilizar contexto personal, de proyecto y de tarea para no reconstruir información en cada nueva sesión.',topics:['Contexto reutilizable','Estable vs temporal','Persona · proyecto · tarea · datos','Markdown','Extractor de contexto','Auditoría de contexto','Actualización de contexto','Estructura de carpetas','CLAUDE.md'],presentation:'',resources:'',task:'Completar y auditar el contexto personal; crear el contexto del proyecto de autos con la plantilla de proyecto; verificar que la estructura quede ordenada y probar una tarea nueva usando ese contexto sin volver a explicar información ya guardada.'},
+{id:4,title:'Investigar, comparar y verificar',objective:'Investigar información actual con IA, acceder a fuentes externas, comparar evidencia y construir conclusiones verificables antes de usar esa información en una tarea o proyecto.',topics:['Investigación','Fuentes externas','Comparación','Verificación','Criterios de comparabilidad','Conclusiones'],presentation:'',resources:'',task:''},
 {id:5,title:'Crear materiales reutilizables',objective:'Convertir conocimiento y resultados en activos reutilizables.',topics:['Plantillas','Kits','Documentos','Reutilización'],presentation:'',resources:'',task:''},
 {id:6,title:'Delegar procesos de varios pasos',objective:'Diseñar y delegar procesos completos con varias etapas.',topics:['Workflows','Decisiones','Herramientas','Control'],presentation:'',resources:'',task:''},
 {id:7,title:'Construir una solución rápida',objective:'Convertir una necesidad real en un prototipo funcional.',topics:['Prototipo','Sistema','Implementación','Prueba'],presentation:'',resources:'',task:''},
@@ -102,12 +102,13 @@ const MODULES=[
 ];
 
 const SEED={
-students:[{id:'marcelo',name:'Marcelo Noceda',initials:'MN',currentModule:3,status:'Activo',notes:'Aprendizaje aplicado 1 a 1. Casos principales: organización personal y proyecto de autos.'}],
+students:[{id:'marcelo',name:'Marcelo Noceda',initials:'MN',currentModule:4,status:'Activo',notes:'Aprendizaje aplicado 1 a 1. Casos principales: organización personal y proyecto de autos. M3 completado: contexto personal organizado y base de contexto reutilizable construida.'}],
 sessions:[
 {id:'s1',studentId:'marcelo',moduleId:1,date:'2026-09-23',status:'Completada',recording:'https://drive.google.com/file/d/1C3ZZUkbMPikeogSpoJuLzAIXHPz5O0Kj/view?usp=drivesdk',transcript:'',summary:'Diagnóstico inicial, objetivos, prioridades y casos reales sobre los que se va a aplicar el programa.',application:'Definir el punto de partida y seleccionar organización personal + proyecto de autos como casos principales.',task:'Preparar contexto y materiales reales para comenzar a trabajar.',deliverables:'Contexto inicial y casos priorizados.',criteria:'Que los casos sean reales, relevantes y utilizables durante el programa.',review:{done:'',good:'',stuck:'',tried:'',cause:'',solution:'',resolved:'Pendiente',next:''}},
-{id:'s2',studentId:'marcelo',moduleId:2,date:'2026-09-25',status:'Completada',recording:'https://drive.google.com/file/d/1sbNn62AlJHLwspIblsHjwhq817qK7aZP/view?usp=drivesdk',transcript:'',summary:'Construcción de instrucciones útiles y aplicación sobre un plan de 90 días. Se trabajó prompt, auditoría, loops y workflow.',application:'Construcción y mejora del plan de 90 días de Marcelo.',task:'Repetir el mismo procedimiento sobre otra tarea real: construir la instrucción, auditarla, ejecutarla, mejorar el resultado mediante un loop y representar el workflow final.',deliverables:'Prompt final · auditoría · primera respuesta · versión final después del loop · workflow identificado.',criteria:'La tarea debe usar información real, no inventar datos, tener criterios de calidad y mostrar el proceso de revisión.',review:{done:'',good:'',stuck:'',tried:'',cause:'',solution:'',resolved:'Pendiente',next:'Revisar la entrega al comenzar la próxima sesión.'}}
+{id:'s2',studentId:'marcelo',moduleId:2,date:'2026-09-25',status:'Completada',recording:'https://drive.google.com/file/d/1sbNn62AlJHLwspIblsHjwhq817qK7aZP/view?usp=drivesdk',transcript:'',summary:'Construcción de instrucciones útiles y aplicación sobre un plan de 90 días. Se trabajó prompt, auditoría, loops y workflow.',application:'Construcción y mejora del plan de 90 días de Marcelo.',task:'Repetir el mismo procedimiento sobre otra tarea real: construir la instrucción, auditarla, ejecutarla, mejorar el resultado mediante un loop y representar el workflow final.',deliverables:'Prompt final · auditoría · primera respuesta · versión final después del loop · workflow identificado.',criteria:'La tarea debe usar información real, no inventar datos, tener criterios de calidad y mostrar el proceso de revisión.',review:{done:'Avanzó en la construcción de una aplicación vinculada al plan de 90 días y llegó a una primera versión funcional, pero dejó incompleta la configuración técnica antes de la siguiente clase.',good:'Pudo llegar a un resultado funcional conversando con Claude y entendió la lógica general del sistema.',stuck:'Se trabó especialmente con Supabase y con conceptos técnicos de infraestructura y programación. No tenía seguridad sobre qué estaba haciendo ni sobre si la aplicación había quedado correctamente configurada.',tried:'Siguió las instrucciones de Claude y avanzó paso a paso hasta donde pudo. Dejó el proceso detenido cuando la parte técnica empezó a exigir configuraciones que no entendía.',cause:'La ejecución avanzó más rápido que la comprensión del sistema. Faltaba distinguir almacenamiento, repositorio, hosting, autenticación y qué debía configurarse manualmente.',solution:'Se revisó el proceso en vivo y se configuraron Supabase, GitHub y Vercel. Se explicó el rol de cada herramienta, se vinculó el repositorio, se configuró almacenamiento/autenticación, se desplegó la aplicación y se probó desde web y móvil.',resolved:'Resuelto',next:'Usar lo aprendido como base, pero separar planificación de ejecución y evitar avanzar únicamente con “ejecutar” sin comprender la estructura.'}},
+{id:'s3',studentId:'marcelo',moduleId:3,date:'2026-09-28',status:'Completada',recording:'https://fathom.video/share/maq_-Rm2QL-kjfQPsjsWZc5p3w_n7T4h',transcript:'',summary:'La sesión comenzó cerrando la aplicación pendiente del módulo anterior y luego trabajó contexto reutilizable. Se distinguió información estable, temporal, de proyecto y de tarea; se construyó la arquitectura persona → proyecto → tarea → datos; y se usaron extractor, plantillas y auditor para convertir información previa en contexto organizado.',application:'Se recuperó contexto ya existente de ChatGPT/Claude, se llevó a Markdown, se organizó con plantillas de contexto personal y proyecto, se revisó la estructura de carpetas y se auditó para detectar duplicados, faltantes y datos mal ubicados. También se explicó cómo usar el contexto como referencia y cómo incorporar nuevos proyectos sin volver a explicar la información personal.',task:'Terminar de responder las preguntas pendientes del contexto, dejar la estructura auditada y ordenada, y desarrollar el contexto del proyecto de autos usando la plantilla de contexto de proyecto. Después probar una tarea nueva usando ese contexto y verificar que Claude no vuelva a pedir información que ya quedó documentada.',deliverables:'Contexto personal final en Markdown · plan de 90 días integrado como referencia · estructura de carpetas validada · contexto del proyecto de autos · primera tarea de prueba usando el contexto.',criteria:'La información debe estar separada entre persona, proyecto, tarea y datos; no debe haber duplicados innecesarios; el contexto personal debe funcionar como referencia; el proyecto de autos debe tener suficiente información para iniciar una tarea nueva sin reconstruir todo desde cero.',review:{done:'',good:'',stuck:'',tried:'',cause:'',solution:'',resolved:'Pendiente',next:'Revisar el contexto del proyecto de autos y la tarea de prueba antes de comenzar M4.'}}
 ],
-issues:[]
+issues:[{id:'issue_m2_infra',title:'Ejecutar una solución sin comprender la infraestructura',category:'Construcción con IA',moduleId:2,symptom:'El alumno puede llegar a una aplicación funcional siguiendo instrucciones de Claude, pero quedar sin seguridad sobre qué se configuró, cómo está conectado o cómo replicarlo.',cause:'La ejecución avanza más rápido que la comprensión: se mezclan almacenamiento, autenticación, repositorio, hosting y despliegue sin un mapa claro.',solution:'Separar planificación de ejecución, explicar el rol de cada herramienta y validar la arquitectura antes de seguir acumulando cambios. En el caso trabajado: Supabase = datos/autenticación, GitHub = repositorio/historial, Vercel = despliegue/web.',count:1}]
 };
 
 const KEY='genideia-academy-v2';
@@ -115,7 +116,31 @@ let data=loadData();
 
 function clone(v){return JSON.parse(JSON.stringify(v))}
 function loadData(){
-  try{const d=JSON.parse(localStorage.getItem(KEY)||'null');if(d&&d.students&&d.sessions)return d}catch(e){}
+  try{
+    const d=JSON.parse(localStorage.getItem(KEY)||'null');
+    if(d&&d.students&&d.sessions){
+      const seedStudent=SEED.students.find(s=>s.id==='marcelo');
+      const currentStudent=d.students.find(s=>s.id==='marcelo');
+      if(currentStudent&&Number(currentStudent.currentModule)<4) currentStudent.currentModule=4;
+      if(currentStudent&&seedStudent&&(!currentStudent.notes||!currentStudent.notes.includes('M3 completado'))) currentStudent.notes=seedStudent.notes;
+
+      SEED.sessions.forEach(seedSession=>{
+        const current=d.sessions.find(s=>s.id===seedSession.id);
+        if(!current) d.sessions.push(clone(seedSession));
+        else if(seedSession.id==='s2'&&(!current.review||!current.review.done)){
+          current.review=clone(seedSession.review);
+        }
+      });
+
+      if(!Array.isArray(d.issues)) d.issues=[];
+      SEED.issues.forEach(seedIssue=>{
+        if(!d.issues.some(i=>i.id===seedIssue.id)) d.issues.push(clone(seedIssue));
+      });
+
+      localStorage.setItem(KEY,JSON.stringify(d));
+      return d;
+    }
+  }catch(e){}
   return clone(SEED)
 }
 function save(){localStorage.setItem(KEY,JSON.stringify(data));renderAll()}
