@@ -1,0 +1,73 @@
+{
+  "_comentario": "Link-in-bio de Hecho con el Alma (/hechoconelalma). TODO el texto y los links se editan acá, no en la página. Para prender el bloque de lanzamiento: lanzamiento.activo = true.",
+
+  "seo": {
+    "titulo": "Hecho con el Alma — Arte y artesanía uruguaya",
+    "descripcion": "Descubrí piezas, artistas e historias creadas en Uruguay.",
+    "imagen": "https://www.hechoconelalma.shop/images/logo-badge.png"
+  },
+
+  "marca": {
+    "logo": "https://www.hechoconelalma.shop/images/logo-badge.png",
+    "nombre": "Hecho con el Alma",
+    "bajada": "Arte y artesanía uruguaya con historia.",
+    "texto": "Descubrí piezas, artistas e historias creadas en Uruguay."
+  },
+
+  "lanzamiento": {
+    "activo": false,
+    "etiqueta": "Novedad · Lanzamiento",
+    "titulo": "[Nombre de la acción]",
+    "texto": "",
+    "boton": "Participar",
+    "url": "https://wa.me/59894743435?text=Hola!%20Quiero%20participar."
+  },
+
+  "accesos": [
+    {
+      "id": "piezas",
+      "titulo": "Explorar piezas y obras",
+      "texto": "Descubrí la selección disponible en la plataforma.",
+      "url": "https://www.hechoconelalma.shop/?utm_source=instagram&utm_medium=bio&utm_content=piezas#galeria",
+      "imagen": "https://www.hechoconelalma.shop/images/ceramistas-blanquillo/pieza-01.jpg",
+      "icono": "vasija"
+    },
+    {
+      "id": "artistas",
+      "titulo": "Conocer a los artistas",
+      "texto": "Descubrí quién está detrás de cada obra y pieza.",
+      "url": "https://www.hechoconelalma.shop/?utm_source=instagram&utm_medium=bio&utm_content=artistas#artistas",
+      "imagen": "https://www.hechoconelalma.shop/images/gimena-damiano/perfil-taller.jpg",
+      "icono": "personas"
+    },
+    {
+      "id": "historias",
+      "titulo": "Descubrir historias",
+      "texto": "Procesos, materiales y relatos detrás de lo que se crea.",
+      "url": "https://www.instagram.com/hechoconelalma.uy",
+      "imagen": "https://www.hechoconelalma.shop/images/carmen/poncho-rombos-01.jpg",
+      "icono": "libro"
+    }
+  ],
+
+  "registro": {
+    "titulo": "Enterarme de lo próximo",
+    "texto": "Recibí novedades y próximas experiencias de Hecho con el Alma.",
+    "imagen": "https://www.hechoconelalma.shop/images/fabian-trinidad/playa-grande-01.jpg",
+    "campoNombre": "Nombre",
+    "campoContacto": "Email o WhatsApp",
+    "boton": "Quiero enterarme",
+    "exito": "¡Listo! Te vamos a avisar de lo próximo.",
+    "_endpoint": "URL que recibe el POST JSON {nombre, contacto, origen} (webhook n8n, Supabase, etc.). Si queda vacía, el registro se envía por WhatsApp.",
+    "endpoint": "",
+    "whatsappMensaje": "Hola! Quiero enterarme de lo próximo de Hecho con el Alma."
+  },
+
+  "redes": {
+    "instagram": "https://www.instagram.com/hechoconelalma.uy",
+    "whatsapp": "59894743435",
+    "email": "hechoconelalma.uy@gmail.com"
+  },
+
+  "cierre": "Más que objetos, historias que nos conectan."
+}

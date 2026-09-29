@@ -1,0 +1,294 @@
+---
+// Link-in-bio de Hecho con el Alma (cliente). Destino del link del perfil de Instagram:
+// la persona elige qué quiere hacer y la mandamos al lugar correcto.
+// Orden: marca → [lanzamiento, oculto hasta activarlo] → piezas (protagonista) →
+// artistas → historias → registro → redes.
+// ⚠️ TODO EL TEXTO Y LOS LINKS viven en src/data/hechoconelalma.json — editar ese archivo, NO este.
+// Autocontenida a propósito (su propio <html>, sin global.css): usa la marca del cliente, no la de GENIDEIA.
+import d from '../data/hechoconelalma.json';
+
+const waUrl = (msg: string) => `https://wa.me/${d.redes.whatsapp}?text=${encodeURIComponent(msg)}`;
+
+const iconos: Record<string, string> = {
+  vasija: '<path d="M9 3h6M10 3v3.2c0 .6-.3 1.1-.8 1.5C7.3 9 6 11.2 6 14a6 6 0 0 0 12 0c0-2.8-1.3-5-3.2-6.3-.5-.4-.8-.9-.8-1.5V3"/>',
+  personas: '<circle cx="12" cy="7.5" r="2.8"/><circle cx="5.5" cy="9" r="2.2"/><circle cx="18.5" cy="9" r="2.2"/><path d="M6.8 19.5a5.2 5.2 0 0 1 10.4 0M1.8 18.5a4 4 0 0 1 4.7-4.3M22.2 18.5a4 4 0 0 0-4.7-4.3"/>',
+  libro: '<path d="M12 6.5C10.3 5 7.8 4.5 3 4.5v14c4.8 0 7.3.5 9 2 1.7-1.5 4.2-2 9-2v-14c-4.8 0-7.3.5-9 2Zm0 0v14"/>',
+  sobre: '<rect x="3" y="5.5" width="18" height="13" rx="1.5"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/>',
+};
+---
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{d.seo.titulo}</title>
+  <meta name="description" content={d.seo.descripcion} />
+  <meta name="theme-color" content="#F4EDE1" />
+  <meta property="og:title" content={d.seo.titulo} />
+  <meta property="og:description" content={d.seo.descripcion} />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content={d.seo.imagen} />
+  <link rel="icon" type="image/png" href={d.marca.logo} />
+  <link rel="apple-touch-icon" href={d.marca.logo} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --crema: #F4EDE1;
+      --crema-2: #EAE0CF;
+      --tinta: #2E2A1C;
+      --tinta-suave: #5E5647;
+      --dorado: #B08638;
+      --oliva: #4B4C31;
+      --tierra: #5B4330;
+      --arcilla: #86653F;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Jost', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 80% 45% at 50% 0%, rgba(176,134,56,0.10), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(75,76,49,0.08), transparent 70%),
+        var(--crema);
+      color: var(--tinta);
+      font-family: var(--sans);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 480px; margin: 0 auto; padding: 40px 16px 48px; }
+
+    /* ── Marca ─────────────────────────────── */
+    .marca { text-align: center; margin-bottom: 28px; }
+    .marca img { width: 132px; height: 132px; object-fit: contain; display: block; margin: 0 auto 18px; }
+    .marca h1 {
+      font-family: var(--serif); font-weight: 500; text-transform: uppercase;
+      font-size: clamp(1.9rem, 8.6vw, 2.5rem); line-height: 1; letter-spacing: 0.5px; white-space: nowrap;
+    }
+    .marca h1 .chico { font-size: 0.7em; }
+    .bajada {
+      display: flex; align-items: center; gap: 12px; justify-content: center;
+      margin: 12px 0 18px; font-size: 0.62rem; letter-spacing: 2.2px; text-transform: uppercase; color: var(--tinta-suave);
+    }
+    .bajada::before, .bajada::after { content: ''; height: 1px; flex: 0 1 28px; background: currentColor; opacity: 0.5; }
+    @media (max-width: 400px) { .bajada::before, .bajada::after { display: none; } }
+    .texto { font-family: var(--serif); font-size: 1.28rem; line-height: 1.3; color: var(--tinta); max-width: 22ch; margin: 0 auto; }
+
+    /* ── Lanzamiento (oculto hasta activarlo) ── */
+    .lanzamiento {
+      border: 1px solid var(--dorado); border-radius: 18px; padding: 20px 20px 22px; margin-bottom: 14px;
+      text-align: center; background: rgba(255,255,255,0.45);
+    }
+    .lanzamiento small { display: block; font-size: 0.66rem; letter-spacing: 3px; text-transform: uppercase; color: var(--dorado); margin-bottom: 8px; font-weight: 500; }
+    .lanzamiento h2 { font-family: var(--serif); font-weight: 500; font-size: 1.6rem; line-height: 1.1; }
+    .lanzamiento p { font-size: 0.9rem; color: var(--tinta-suave); margin-top: 8px; }
+    .lanzamiento a {
+      display: inline-block; margin-top: 16px; padding: 12px 28px; border-radius: 999px;
+      background: var(--oliva); color: var(--crema); font-weight: 400; letter-spacing: 1px; font-size: 0.9rem;
+    }
+
+    /* ── Accesos ───────────────────────────── */
+    .accesos { display: grid; gap: 12px; }
+    .acceso {
+      position: relative; display: flex; align-items: center; gap: 14px;
+      min-height: 124px; padding: 18px 16px 18px 0; border-radius: 18px; overflow: hidden;
+      color: #F7F1E6; isolation: isolate;
+      box-shadow: 0 10px 24px -14px rgba(46,42,28,0.55);
+      transition: transform .2s ease, box-shadow .2s ease;
+      width: 100%; border: 0; font: inherit; text-align: left; cursor: pointer;
+    }
+    .acceso:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -16px rgba(46,42,28,0.6); }
+    .acceso:focus-visible { outline: 2px solid var(--dorado); outline-offset: 3px; }
+    .acceso .foto {
+      position: absolute; inset: 0 auto 0 0; width: 42%; height: 100%; object-fit: cover; z-index: -1;
+    }
+    .acceso::after {
+      content: ''; position: absolute; inset: 0; z-index: -1;
+      background: linear-gradient(90deg, transparent 0%, var(--fondo) 40%, var(--fondo) 100%);
+    }
+    .acceso[data-sin-foto]::after { background: var(--fondo); }
+    .acceso .icono { flex: 0 0 auto; width: 30px; height: 30px; margin-left: 26%; opacity: 0.95; }
+    .acceso[data-sin-foto] .icono { margin-left: 20px; }
+    .acceso .cuerpo { flex: 1; min-width: 0; }
+    .acceso .t { display: block;  font-family: var(--serif); font-weight: 500; font-size: 1.4rem; line-height: 1.05; }
+    .acceso .d { display: block;  font-size: 0.82rem; line-height: 1.35; margin-top: 6px; opacity: 0.9; }
+    .acceso .flecha {
+      flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%;
+      display: grid; place-items: center; background: rgba(247,241,230,0.92); color: var(--tinta);
+    }
+    .acceso .flecha svg { width: 16px; height: 16px; }
+
+    .acceso.piezas { --fondo: var(--oliva); min-height: 148px; }
+    .acceso.piezas .t { font-size: 1.6rem; }
+    .acceso.artistas { --fondo: var(--tierra); }
+    .acceso.historias { --fondo: var(--arcilla); }
+    .acceso.registro { --fondo: var(--crema-2); color: var(--tinta); }
+    .acceso.registro .flecha { background: #fff; }
+    .acceso.registro .flecha svg { transition: transform .2s ease; }
+    .acceso.registro[aria-expanded="true"] .flecha svg { transform: rotate(90deg); }
+
+    /* ── Registro ──────────────────────────── */
+    .form {
+      background: var(--crema-2); border-radius: 0 0 18px 18px; margin-top: -22px; padding: 34px 18px 20px;
+      display: grid; gap: 10px;
+    }
+    .form[hidden] { display: none; }
+    .form label { font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--tinta-suave); display: grid; gap: 6px; }
+    .form input {
+      font: inherit; font-size: 1rem; text-transform: none; letter-spacing: 0; color: var(--tinta);
+      padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(46,42,28,0.18); background: #FBF7EF;
+    }
+    .form input:focus { outline: 2px solid var(--dorado); outline-offset: 1px; }
+    .form button {
+      margin-top: 6px; padding: 14px; border: 0; border-radius: 999px; cursor: pointer;
+      background: var(--oliva); color: var(--crema); font: inherit; font-weight: 400; font-size: 0.95rem; letter-spacing: 1px;
+    }
+    .form button:disabled { opacity: 0.6; cursor: wait; }
+    .form .error { font-size: 0.82rem; color: #8A3B2A; }
+    .exito { text-align: center; font-family: var(--serif); font-size: 1.25rem; padding: 10px 0; }
+
+    /* ── Pie ───────────────────────────────── */
+    .redes { display: flex; justify-content: center; gap: 14px; margin: 36px 0 26px; padding-top: 28px; border-top: 1px solid rgba(46,42,28,0.15); }
+    .redes a {
+      width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+      background: var(--oliva); color: var(--crema); transition: opacity .2s;
+    }
+    .redes a:hover { opacity: 0.85; }
+    .redes svg { width: 20px; height: 20px; }
+    .cierre { text-align: center; font-family: var(--serif); font-style: italic; font-size: 1.35rem; line-height: 1.25; color: var(--tinta-suave); max-width: 20ch; margin: 0 auto; }
+
+    @media (prefers-reduced-motion: reduce) { .acceso, .acceso .flecha { transition: none; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+
+    <header class="marca">
+      <img src={d.marca.logo} alt="" width="132" height="132" onerror="this.remove()" />
+      <h1>Hecho <span class="chico">con el</span> Alma</h1>
+      <p class="bajada">{d.marca.bajada}</p>
+      <p class="texto">{d.marca.texto}</p>
+    </header>
+
+    {d.lanzamiento.activo && (
+      <section class="lanzamiento" aria-label="Lanzamiento">
+        <small>{d.lanzamiento.etiqueta}</small>
+        <h2>{d.lanzamiento.titulo}</h2>
+        {d.lanzamiento.texto && <p>{d.lanzamiento.texto}</p>}
+        <a href={d.lanzamiento.url} target="_blank" rel="noopener">{d.lanzamiento.boton}</a>
+      </section>
+    )}
+
+    <nav class="accesos" aria-label="¿Qué querés hacer?">
+      {d.accesos.map((a) => (
+        <a class={`acceso ${a.id}`} href={a.url} target="_blank" rel="noopener">
+          <img class="foto" src={a.imagen} alt="" loading={a.id === 'piezas' ? 'eager' : 'lazy'} />
+          <svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={iconos[a.icono]} />
+          <span class="cuerpo">
+            <span class="t">{a.titulo}</span>
+            <span class="d">{a.texto}</span>
+          </span>
+          <span class="flecha" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></span>
+        </a>
+      ))}
+
+      <div>
+        <button class="acceso registro" type="button" aria-expanded="false" aria-controls="registro-form" id="registro-btn">
+          <img class="foto" src={d.registro.imagen} alt="" loading="lazy" />
+          <svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={iconos.sobre} />
+          <span class="cuerpo">
+            <span class="t">{d.registro.titulo}</span>
+            <span class="d">{d.registro.texto}</span>
+          </span>
+          <span class="flecha" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></span>
+        </button>
+        <form class="form" id="registro-form" hidden
+          data-endpoint={d.registro.endpoint}
+          data-wa={d.redes.whatsapp}
+          data-wa-msg={d.registro.whatsappMensaje}
+          data-exito={d.registro.exito}>
+          <label>{d.registro.campoNombre}
+            <input name="nombre" type="text" autocomplete="name" required />
+          </label>
+          <label>{d.registro.campoContacto}
+            <input name="contacto" type="text" autocomplete="email" inputmode="email" required />
+          </label>
+          <p class="error" hidden></p>
+          <button type="submit">{d.registro.boton}</button>
+        </form>
+      </div>
+    </nav>
+
+    <footer>
+      <div class="redes">
+        <a href={d.redes.instagram} target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href={waUrl('Hola, me interesa saber más sobre Hecho con el Alma')} target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z"/></svg>
+        </a>
+        <a href={`mailto:${d.redes.email}`} aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="1.5"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg>
+        </a>
+      </div>
+      <p class="cierre">{d.cierre}</p>
+    </footer>
+  </main>
+
+  <script>
+    // Si una foto del cliente no carga, la tarjeta queda con su color liso.
+    document.querySelectorAll<HTMLImageElement>('.acceso .foto').forEach((img) => {
+      const fallar = () => { img.closest('.acceso')?.setAttribute('data-sin-foto', ''); img.remove(); };
+      if (img.complete && img.naturalWidth === 0) fallar(); else img.addEventListener('error', fallar);
+    });
+
+    const btn = document.getElementById('registro-btn')!;
+    const form = document.getElementById('registro-form') as HTMLFormElement;
+    btn.addEventListener('click', () => {
+      const abrir = form.hidden;
+      form.hidden = !abrir;
+      btn.setAttribute('aria-expanded', String(abrir));
+      if (abrir) form.querySelector('input')?.focus();
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nombre = (form.elements.namedItem('nombre') as HTMLInputElement).value.trim();
+      const contacto = (form.elements.namedItem('contacto') as HTMLInputElement).value.trim();
+      const error = form.querySelector<HTMLElement>('.error')!;
+      const enviar = form.querySelector<HTMLButtonElement>('button')!;
+      const { endpoint, wa, waMsg, exito } = form.dataset;
+      error.hidden = true;
+
+      const listo = () => { form.innerHTML = `<p class="exito">${exito}</p>`; };
+
+      // Sin endpoint configurado: el registro llega por WhatsApp a Hecho con el Alma.
+      if (!endpoint) {
+        const texto = `${waMsg}\nNombre: ${nombre}\nContacto: ${contacto}`;
+        window.open(`https://wa.me/${wa}?text=${encodeURIComponent(texto)}`, '_blank', 'noopener');
+        listo();
+        return;
+      }
+
+      enviar.disabled = true;
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre, contacto, origen: 'link-in-bio', fecha: new Date().toISOString() }),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        listo();
+      } catch {
+        error.textContent = 'No pudimos registrarte. Probá de nuevo en un momento.';
+        error.hidden = false;
+        enviar.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
