@@ -1,0 +1,152 @@
+---
+// Lead magnet · palabra clave ManyChat: TOKENS (reel: "Llegás rápido a los límites de Claude", tokens-1, 30/9)
+// URL pública: /recursos/limites-claude-tokens
+// Datos verificados en la doc oficial "Manage costs effectively" https://code.claude.com/docs/en/costs (30/9/2026):
+// /usage con desglose por skills/subagentes/MCP, /clear vs /compact, skills que cargan solo al usarse,
+// CLAUDE.md < 200 líneas, subagentes para operaciones verbosas (model: haiku), plan mode, objetivos verificables,
+// límite de sesión compartido entre modelos, caché de 1 h en suscripción.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const diagnostico = `Quiero bajar cuánto de mi límite de Claude gasto sin necesidad. Hacé una auditoría de este proyecto y de mi forma de trabajar.
+Revisá: mi CLAUDE.md (cuántas líneas tiene y qué parte solo sirve para tareas puntuales), las skills que tengo, los servidores MCP conectados y los subagentes.
+Buscá estas fugas: instrucciones que repito en cada conversación, reglas del CLAUDE.md que deberían ser una skill, tareas con mucha salida (tests, logs, documentación) que hago en la conversación principal y MCP que no uso.
+Resultado: una tabla con cada fuga, dónde está, cuánto pesa (alto, medio o bajo) y la corrección concreta. Ordenala de mayor a menor impacto.
+No cambies nada todavía: primero mostrame la tabla.`;
+
+const convertirSkill = `Hay una tarea que te explico siempre igual: [DESCRIBÍ LA TAREA, POR EJEMPLO: ANALIZAR UN DOCUMENTO Y SACAR RESUMEN, RIESGOS Y PRÓXIMOS PASOS].
+Convertila en una skill para que no tenga que explicártela de nuevo.
+Creá la carpeta ~/.claude/skills/[nombre-de-la-skill]/ con un SKILL.md que tenga: un frontmatter con name y una description que diga cuándo usarla, y abajo los pasos exactos, el formato del resultado y los errores que no tenés que cometer.
+Antes de guardarla, preguntame lo que te falte saber del proceso.`;
+
+const skillEjemplo = `---
+name: analizar-docs
+description: Analiza un documento y devuelve resumen, riesgos y próximos pasos. Usala cuando te pase un contrato, propuesta o informe para revisar.
+---
+1. Resumen en 5 líneas, sin adjetivos.
+2. Riesgos: plazos, montos y cláusulas que me comprometen.
+3. Próximos pasos: qué tengo que hacer yo y para cuándo.
+Formato: tres títulos cortos y listas. Si falta un dato, escribí FALTA en vez de inventarlo.`;
+
+const subagente = `---
+name: investigador
+description: Lee documentación, logs o resultados de tests largos y devuelve solo un resumen con lo importante. Usalo para cualquier tarea que genere mucha salida.
+model: haiku
+---
+Sos el INVESTIGADOR del proyecto.
+Función: leer todo lo que te pidan (documentación, logs, salida de tests) sin llenar la conversación principal.
+Resultado: un resumen de máximo 10 líneas con lo que importa para la tarea, los errores exactos si los hay y dónde están (archivo y línea).
+No propongas cambios de código: solo informá.`;
+
+const revision = `## Antes de dar una tarea por terminada
+- Releé lo que te pedí y marcá cada punto como cumplido o no.
+- Si hay tests, correlos. Si hay una web, abrila y probala.
+- Buscá los errores que ya te corregí antes en este proyecto y confirmá que no se repiten.
+- Recién ahí decime que terminaste, con la lista de lo que verificaste.`;
+
+const revisor = `---
+name: revisor
+description: Revisa un cambio antes de darlo por terminado. Usalo siempre al final de una tarea, antes de avisarme que está listo.
+---
+Sos el REVISOR.
+Función: encontrar lo que está mal antes de que yo lo vea.
+Analizá: si el cambio cumple lo que se pidió, si rompe algo que ya andaba y si repite errores ya corregidos.
+Criterios: probá, no supongas. Cada problema con archivo, línea y cómo reproducirlo.
+Resultado: APROBADO o una lista de problemas ordenada por gravedad.`;
+---
+<RecursoLayout
+  titulo="Dónde se te va el límite de Claude (y cómo corregirlo)"
+  descripcion="Las fugas más comunes de tokens, un prompt para que Claude audite tu forma de trabajar y las 3 correcciones del video listas para copiar: skills, subagentes y una capa de revisión."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="TOKENS"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Llegar rápido al límite casi nunca es por usar mucho Claude: es por hacerle procesar lo mismo una y otra vez. Esta guía te ayuda a encontrar dónde se te va y a corregirlo en tus tareas.</b></div>
+
+  <h2>Por qué se gasta tan rápido</h2>
+  <ul class="arrow">
+    <li><b>Cada mensaje manda toda la conversación.</b> Una pregunta de una línea en una charla que abriste a la mañana "cuesta" toda la charla.</li>
+    <li><b>El límite de sesión es compartido entre modelos.</b> Si llegaste al límite de la sesión, cambiar de modelo no te lo destraba.</li>
+    <li><b>Las pausas largas salen caras.</b> En una suscripción, si volvés después de más de una hora, Claude vuelve a procesar todo el contexto desde el principio.</li>
+    <li><b>Corregir también gasta.</b> Muchas veces lo que se come el límite no es la primera respuesta: son las cinco vueltas corrigiendo lo mismo.</li>
+  </ul>
+  <div class="note"><b>Mirá dónde se te va:</b> en Claude Code escribí <b>/usage</b>. En los planes Pro, Max, Team y Enterprise te muestra qué porcentaje se llevan tus skills, subagentes y MCP, y te marca si algo (como el contexto largo) supera el 10 %. Con <b>/context</b> ves qué está ocupando la conversación ahora.</div>
+
+  <h2>1. Que Claude te diga dónde estás gastando</h2>
+  <p>Abrí Claude Code en tu proyecto y pegá esto:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{diagnostico}</code></pre>
+  </div>
+
+  <h2>2. Las fugas más comunes</h2>
+  <ul class="arrow">
+    <li><b>Explicás lo mismo en cada conversación.</b> → Convertilo en una skill (abajo tenés el prompt).</li>
+    <li><b>Tu CLAUDE.md es enorme.</b> Se carga entero en cada sesión, aunque no lo uses. → Dejá solo lo esencial (menos de 200 líneas) y pasá las instrucciones de tareas puntuales a skills, que se cargan solo cuando se usan.</li>
+    <li><b>Una sola conversación para todo.</b> → Usá <b>/clear</b> cuando cambiás de tarea. Antes, <b>/rename</b> para ponerle nombre y volver con <b>/resume</b>.</li>
+    <li><b>Tests, logs o documentación larga en la conversación principal.</b> → Delegalo a un subagente: toda esa salida queda en su contexto y a vos te vuelve el resumen.</li>
+    <li><b>Corregir el mismo error varias veces.</b> → Agregá una capa de revisión antes de dar la tarea por terminada.</li>
+    <li><b>Pedidos vagos.</b> "Mejorá el código" hace que Claude lea de todo. "Agregá validación al login en auth.ts" va directo.</li>
+    <li><b>El modelo más grande para todo.</b> → Para tareas simples, un modelo más chico. Con <b>/model</b> lo cambiás.</li>
+    <li><b>MCP conectados que no usás.</b> → Con <b>/mcp</b> desactivá los que no necesitás en esa tarea.</li>
+    <li><b>/compact para "empezar de nuevo".</b> Compactar también es un pedido grande porque lee toda la conversación. Si no necesitás continuidad, <b>/clear</b> no cuesta nada.</li>
+  </ul>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>3. Lo que se repite → una skill</h2>
+  <p>Una skill es un proceso que Claude ya sabe hacer. En vez de explicarlo cada vez, lo escribís una vez y Claude lo carga solo cuando lo necesita. Pedile que te la arme:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{convertirSkill}</code></pre>
+  </div>
+  <p>Así queda una skill terminada (guardada como <b>~/.claude/skills/analizar-docs/SKILL.md</b>):</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{skillEjemplo}</code></pre>
+  </div>
+
+  <h2>4. Tareas aparte → un subagente</h2>
+  <p>Si una parte del trabajo no necesita compartir contexto con el resto, delegala. El subagente trabaja en su propia ventana y a tu conversación vuelve solo el resumen. Guardalo como <b>.claude/agents/investigador.md</b>:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{subagente}</code></pre>
+  </div>
+  <p>La línea <b>model: haiku</b> hace que use un modelo más chico: para leer y resumir alcanza. Ojo: lo que hace el subagente también cuenta para tu límite, pero no te llena la conversación principal.</p>
+
+  <h2>5. Una capa de revisión antes de terminar</h2>
+  <p>Pegá esto en tu CLAUDE.md para que Claude se revise antes de decirte "listo":</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{revision}</code></pre>
+  </div>
+  <p>O armá un subagente revisor que lo haga siempre al final (<b>.claude/agents/revisor.md</b>):</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{revisor}</code></pre>
+  </div>
+  <div class="note"><b>Dale algo para verificar.</b> Casos de prueba, una captura o el resultado que esperás: si Claude puede comprobar su propio trabajo, encuentra los errores antes que vos. Y en tareas grandes, arrancá en modo plan (Shift+Tab) para acordar el camino antes de que escriba código.</div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Sirve si uso Claude en el chat y no Claude Code?</b> Sí: abrir un chat nuevo por tema, no repetir contexto y pedir que se revise antes de terminar vale igual. Los comandos (/usage, /clear, skills, subagentes) son de Claude Code.</li>
+    <li><b>¿Los subagentes gastan?</b> Sí, sus pedidos cuentan. La ventaja es que no llenan tu conversación principal, que es la que se reenvía en cada mensaje.</li>
+    <li><b>¿Cambiar de modelo me destraba el límite?</b> El límite de sesión es compartido entre todos los modelos. Solo si el aviso es de un modelo puntual ("límite de Opus"), cambiar a otro te deja seguir.</li>
+    <li><b>¿Cuántas skills conviene tener?</b> Una por cada proceso que repetís. No pesan mientras no se usan.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Miré /usage y sé qué se lleva mi límite.</li>
+    <li>Lo que explico siempre igual ya es una skill.</li>
+    <li>Mi CLAUDE.md tiene menos de 200 líneas.</li>
+    <li>Uso /clear cuando cambio de tarea.</li>
+    <li>Lo que genera mucha salida lo hace un subagente.</li>
+    <li>Claude se revisa antes de decirme que terminó.</li>
+  </ul>
+</RecursoLayout>
