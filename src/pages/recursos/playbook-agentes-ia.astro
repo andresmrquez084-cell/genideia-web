@@ -1,0 +1,142 @@
+---
+// Lead magnet · palabra clave ManyChat: PLAYBOOK (reel: "Playbooks para tus agentes", Agentes 2, 1/10/2026)
+// URL pública: /recursos/playbook-agentes-ia
+// Verificado en la doc oficial de Claude Code (1/10/2026):
+//   https://code.claude.com/docs/en/best-practices — "Let Claude interview you" (entrevista antes de una tarea grande)
+//   https://code.claude.com/docs/en/skills — un skill es un SKILL.md con frontmatter name/description + instrucciones,
+//   en ~/.claude/skills/<nombre>/SKILL.md (personal) o .claude/skills/<nombre>/SKILL.md (proyecto).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const entrevista = `Quiero documentar una tarea que delego seguido para convertirla en un playbook reutilizable para mis agentes.
+La tarea es: [NOMBRE DE LA TAREA, EN UNA FRASE]
+Entrevistame antes de escribir nada. Hacé UNA pregunta por vez y esperá mi respuesta.
+Preguntame, como mínimo:
+1. Qué quiero conseguir con esta tarea y para quién es.
+2. Qué información o archivos uso para hacerla.
+3. Qué decisiones tomo en el camino y con qué criterio.
+4. Qué errores quiero evitar (y cuáles ya pasaron).
+5. Qué herramientas necesito o tengo disponibles.
+6. Cómo se ve un resultado bien hecho (si puedo, te paso un ejemplo).
+No hagas preguntas obvias: buscá lo que yo hago sin darme cuenta.
+Cuando tengas todo, escribí el playbook con la plantilla que te paso abajo, sin inventar datos: si algo falta, marcalo como [COMPLETAR].`;
+
+const plantilla = `# Playbook: [NOMBRE DE LA TAREA]
+
+## Objetivo
+[Qué se consigue y para quién]
+
+## Información de entrada
+[Qué datos o archivos hacen falta y dónde están]
+
+## Pasos
+1. [Paso]
+2. [Paso]
+3. [Paso]
+
+## Decisiones y criterios
+- [Si pasa X, hacé Y]
+- [Qué se prioriza cuando hay dudas]
+
+## Herramientas disponibles
+- [Herramienta y para qué se usa]
+
+## Errores a evitar
+- [Error] → [Cómo evitarlo]
+
+## Entregables y formato
+[Qué archivos se entregan, con qué nombre y en qué formato]
+
+## Revisión antes de terminar
+- [ ] [Chequeo 1]
+- [ ] [Chequeo 2]
+- [ ] [Chequeo 3]`;
+
+const corregir = `El agente cometió este error al seguir el playbook: [DESCRIBÍ EL ERROR]
+No lo arregles solo en esta respuesta. Actualizá el playbook para que no vuelva a pasar:
+- agregá el error en "Errores a evitar" con cómo evitarlo,
+- si hace falta, sumá un chequeo en "Revisión antes de terminar",
+- no cambies nada más.
+Devolveme el playbook completo actualizado.`;
+
+const skill = `---
+name: propuesta-comercial
+description: Arma una propuesta comercial siguiendo mi playbook. Usalo cuando te pida una propuesta o presupuesto.
+---
+[PEGÁ ACÁ EL PLAYBOOK COMPLETO]`;
+---
+<RecursoLayout
+  titulo="Playbook para tus agentes: la guía"
+  descripcion="Cómo documentar una tarea y convertirla en un proceso reutilizable para tus agentes: el prompt para que un agente te entreviste, la plantilla del playbook y cómo corregirlo cuando falla."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="PLAYBOOK"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Tener varios agentes no te hace trabajar mejor si cada uno recibe instrucciones improvisadas. Lo que cambia el resultado es un playbook: un procedimiento por tipo de tarea, que se escribe una vez y se mejora cada vez que algo sale mal.</b></div>
+
+  <h2>Cómo funciona</h2>
+  <ol class="steps">
+    <li><b>Un agente te entrevista.</b> Antes de delegar, le contás la tarea y te hace las preguntas que te faltan.</li>
+    <li><b>Escribe el playbook.</b> Con tus respuestas arma el procedimiento: pasos, criterios, formato y revisión.</li>
+    <li><b>Tus agentes lo siguen.</b> Cada vez que aparece esa tarea, el agente usa el mismo playbook.</li>
+    <li><b>Si se equivoca, corregís el playbook.</b> No el chat: así el error no vuelve en la próxima.</li>
+  </ol>
+
+  <h2>1. El prompt de la entrevista</h2>
+  <p>Abrí un chat nuevo (Claude, ChatGPT o el que uses), pegá esto y completá el nombre de la tarea:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{entrevista}</code></pre>
+  </div>
+  <div class="note"><b>Tip:</b> respondé con ejemplos reales ("la última vez pasó esto"). Cuanto más concreto, menos improvisa el agente después.</div>
+
+  <h2>2. La plantilla del playbook</h2>
+  <p>Pegala en el mismo chat, después del prompt de la entrevista. Es lo que el agente va a completar:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{plantilla}</code></pre>
+  </div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>3. Dónde guardarlo para que tus agentes lo usen</h2>
+  <ul class="arrow">
+    <li><b>Claude (chat):</b> creá un Proyecto y pegá el playbook en las instrucciones del proyecto.</li>
+    <li><b>ChatGPT:</b> un GPT personalizado o un Proyecto, con el playbook en las instrucciones.</li>
+    <li><b>Claude Code:</b> como skill. Un archivo <b>SKILL.md</b> en <b>~/.claude/skills/&lt;nombre&gt;/</b> (para todos tus proyectos) o en <b>.claude/skills/&lt;nombre&gt;/</b> (solo ese proyecto).</li>
+  </ul>
+  <p>Ejemplo de skill en Claude Code (cambiá el nombre y la descripción por los de tu tarea):</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{skill}</code></pre>
+  </div>
+
+  <h2>4. Cuando el agente repite un error</h2>
+  <p>Si lo corregís en el chat, el arreglo se pierde en la próxima conversación. Corregí el playbook:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{corregir}</code></pre>
+  </div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Un playbook es un prompt largo?</b> No. Un prompt es para una vez; el playbook es el procedimiento de un tipo de tarea, y se reutiliza y se mejora.</li>
+    <li><b>¿Para qué tareas conviene?</b> Las que delegás seguido y siempre explicás igual: propuestas, reportes, respuestas a clientes, publicaciones, análisis.</li>
+    <li><b>¿Necesito Claude Code?</b> No. Funciona en cualquier chat con proyectos o instrucciones guardadas. Claude Code suma que lo podés usar como skill.</li>
+    <li><b>¿Cada cuánto lo actualizo?</b> Cada vez que el agente comete el mismo error dos veces, o cuando cambia la forma de hacer la tarea.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Elegí una tarea que delego seguido.</li>
+    <li>Un agente me entrevistó antes de escribir nada.</li>
+    <li>El playbook tiene pasos, criterios, formato y revisión final.</li>
+    <li>Lo guardé donde mis agentes lo encuentran.</li>
+    <li>Cuando falla, corrijo el playbook y no solo el chat.</li>
+  </ul>
+</RecursoLayout>
