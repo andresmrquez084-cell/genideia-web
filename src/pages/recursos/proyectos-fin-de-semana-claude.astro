@@ -1,0 +1,163 @@
+---
+// Lead magnet · palabra clave ManyChat: PROYECTO (reel: "5 proyectos de fin de semana con Claude", 6/10/2026)
+// URL pública: /recursos/proyectos-fin-de-semana-claude
+// Verificado en documentación oficial (6/10/2026):
+//   https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them
+//     — artifact = documento, dashboard o herramienta interactiva; en todos los planes; requiere "Cloud code execution
+//       and file creation" en Settings > Capabilities; guardar datos (personal/compartido, 20 MB, solo texto) y conectar
+//       apps: Pro, Max, Team y Enterprise; artifacts que usan Claude sin API key.
+//   https://support.claude.com/en/articles/9517075-what-are-projects — proyectos con documentos, contexto e instrucciones.
+//   https://developers.facebook.com/documentation/instagram-platform — API solo para cuentas profesionales; insights;
+//   Business Discovery (datos de otras cuentas profesionales) solo con la API con Facebook Login.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const gastos = `Armame una app para controlar mis gastos personales, como artifact.
+Quiero:
+- Registrar ingresos y gastos con fecha, monto, descripción y categoría.
+- Categorías editables. Las mías son: [TUS CATEGORÍAS, por ejemplo comida, auto, casa, salud].
+- Un resumen del mes: total de ingresos, total de gastos, saldo y gasto por categoría.
+- Que los datos queden guardados entre sesiones (almacenamiento personal, no compartido).
+- Un botón para pegar el texto de un comprobante y que la app cargue el gasto sola (monto, fecha, comercio y categoría sugerida).
+Moneda: [TU MONEDA]. Diseño simple y que se use bien desde el celular.
+Antes de armarla, haceme las preguntas que necesites.`;
+
+const comprobante = `Te paso la foto de un comprobante. Extraé fecha, comercio, monto total y una categoría sugerida.
+Devolvémelo en una sola línea con este formato: fecha | comercio | monto | categoría
+Si algún dato no se lee bien, marcalo con [REVISAR] en vez de adivinar.`;
+
+const dashboard = `Quiero un dashboard para mi negocio, como artifact.
+Mi negocio es: [QUÉ HACÉS, EN UNA FRASE].
+Hoy tengo la información repartida en: [WhatsApp / Excel / notas / cuadernos…].
+Quiero ver en una sola pantalla:
+- Ventas: [qué datos registro, por ejemplo fecha, cliente, producto y monto].
+- Clientes: [qué datos].
+- Tareas pendientes, con estado.
+- Inventario: [productos y stock mínimo para avisarme].
+Que pueda cargar datos a mano y también pegar una tabla copiada de Excel.
+Que los datos queden guardados entre sesiones.
+Empezá preguntándome cómo se ve hoy un día normal en el negocio.`;
+
+const contenido = `Quiero armar mi sistema de contenido para Instagram, como artifact.
+Te voy a pasar los datos de mis publicaciones: [pegá una tabla con fecha, tipo (reel/carrusel/foto), tema, visualizaciones, alcance, me gusta, comentarios y guardados].
+Con eso:
+1. Separá lo que funcionó de lo que no, y decime qué tienen en común las que funcionaron (tema, formato, gancho, duración).
+2. Te paso también publicaciones de competidores que me gustan: [links o descripción]. Decime qué hacen distinto.
+3. Proponeme 10 ideas nuevas basadas en lo que funcionó, con gancho y formato para cada una.
+Guardá todo en el artifact para sumar datos cada semana.`;
+
+const revisor = `Sos mi agente revisor de [TIPO DE DOCUMENTOS: contratos, facturas, propuestas…].
+Instrucciones:
+- Revisá cada documento que te pase, uno por uno.
+- Criterio de revisión: [LO QUE TENÉS QUE CONTROLAR, por ejemplo fechas, montos, firmas, cláusulas, datos del cliente].
+- Para cada documento devolvé: nombre, estado (OK / A REVISAR), qué encontraste y en qué parte.
+- No inventes datos: si algo falta o no se lee, decilo.
+Formato del resultado: una tabla al final con todos los documentos.`;
+
+const herramienta = `Hoy hago esta tarea a mano: [DESCRIBÍ LA TAREA, por ejemplo armar presupuestos, seguir clientes o pedidos].
+Lo hago así: [PASO A PASO DE CÓMO LO HACÉS HOY].
+Me lleva [TIEMPO] cada vez y lo hago [CADA CUÁNTO].
+Armame una herramienta simple, como artifact, que haga esa tarea por mí.
+Antes de armarla:
+1. Decime qué datos tendría que cargar yo y qué calcula la herramienta sola.
+2. Proponeme la versión más simple que ya me sirva.
+Después la armamos y la vamos mejorando.`;
+---
+<RecursoLayout
+  titulo="5 proyectos para crear con Claude este fin de semana"
+  descripcion="La guía al detalle de los 5 proyectos del video: qué necesitás, el prompt para arrancar cada uno y lo que tenés que considerar antes de crearlo. Sin saber programar."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="PROYECTO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>No necesitás saber programar. Necesitás saber qué querés y cómo explicárselo a Claude. Acá tenés, para cada proyecto, el prompt para arrancar y lo que conviene decidir antes.</b></div>
+
+  <h2>Antes de empezar</h2>
+  <ul class="arrow">
+    <li><b>Dónde se arman:</b> en un chat de Claude (web o escritorio). Le pedís el proyecto y lo crea como <b>artifact</b>: una app que se abre al costado del chat y queda guardada en la pestaña "Artifacts".</li>
+    <li><b>Activalo:</b> en <b>Settings &gt; Capabilities</b> tiene que estar prendido "Cloud code execution and file creation".</li>
+    <li><b>Plan:</b> crear artifacts está en todos los planes. Para que la app <b>guarde datos</b> entre sesiones o se conecte a tus apps, necesitás Pro o superior.</li>
+    <li><b>Datos guardados:</b> hasta 20 MB por app y solo texto. Si es para vos, pedí almacenamiento <b>personal</b>; el compartido lo ve cualquiera que use la app.</li>
+  </ul>
+
+  <h2>1. App para controlar tus gastos</h2>
+  <p>Registrás ingresos y gastos, los ordenás por categoría y ves el saldo del mes. Lo mejor: le pasás el comprobante y lo carga sola.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{gastos}</code></pre>
+  </div>
+  <p>Para los comprobantes: la app guarda texto, no imágenes. Mandale la foto a Claude en el chat con este prompt y pegá el resultado en la app:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{comprobante}</code></pre>
+  </div>
+  <div class="note"><b>Considerá:</b> definí tus categorías antes (5 a 8 alcanzan) y cargá un mes real para probarla. No guardes números de tarjeta ni claves.</div>
+
+  <h2>2. Dashboard para tu negocio</h2>
+  <p>Ventas, clientes, tareas e inventario en una sola pantalla, en vez de repartidos entre WhatsApp, Excel y notas.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{dashboard}</code></pre>
+  </div>
+  <div class="note"><b>Considerá:</b> empezá por UNA sección (la que más te duele, casi siempre ventas) y sumá el resto cuando la uses todos los días. Si la comparte tu equipo, pedí almacenamiento compartido y no cargues datos sensibles de clientes.</div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>3. Tu propio sistema de contenido</h2>
+  <p>Analiza qué publicaciones te funcionaron y cuáles no, mira a tus competidores y te propone ideas nuevas.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{contenido}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li><b>Arrancá sin API:</b> copiá las estadísticas de cada publicación desde Instagram (o exportalas de Meta Business Suite) y pegalas. Ya sirve.</li>
+    <li><b>Con la API de Instagram:</b> los datos llegan solos, pero pide una cuenta <b>profesional</b> (empresa o creador), una app de Meta y permisos. Para eso conviene Claude Code o alguien que te ayude con la conexión.</li>
+    <li><b>Competidores por API:</b> solo se pueden ver datos básicos de otras cuentas profesionales (Business Discovery), y solo con la API con inicio de sesión de Facebook.</li>
+  </ul>
+
+  <h2>4. Un agente que revisa tus documentos</h2>
+  <p>Le das tus documentos, tus instrucciones y tu criterio, y te devuelve los resultados revisados.</p>
+  <ol class="steps">
+    <li><b>Creá un Proyecto</b> en Claude (menú Projects) con el nombre del tipo de documento.</li>
+    <li><b>Pegá este prompt en las instrucciones del proyecto</b> y completá tu criterio.</li>
+    <li><b>Subí los documentos</b> de referencia al proyecto (modelos que están bien, por ejemplo).</li>
+    <li><b>En cada chat del proyecto</b>, pasale los documentos nuevos y pedile la revisión.</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{revisor}</code></pre>
+  </div>
+  <div class="note"><b>Guardarlos en una carpeta:</b> si conectaste Google Drive u otra app a Claude, pedile que guarde el resultado en la carpeta que elijas. Si no, descargá la tabla y guardala vos. Revisá siempre los casos marcados "A REVISAR" antes de firmar o pagar.</div>
+
+  <h2>5. Una herramienta simple para tu negocio</h2>
+  <p>Un cotizador, un CRM, un sistema de seguimiento o cualquier tarea que hoy hacés a mano.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{herramienta}</code></pre>
+  </div>
+  <div class="note"><b>Considerá:</b> elegí una tarea que hagas al menos una vez por semana y que siempre siga los mismos pasos. Esas son las que más tiempo te devuelven.</div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Necesito saber programar?</b> No. Claude escribe el código; vos explicás qué querés y probás. Si algo falla, usá el botón "Try fixing with Claude".</li>
+    <li><b>¿Necesito plan pago?</b> Para crear la app, no. Para que guarde datos o se conecte a tus apps (Drive, Calendar, Slack…), sí: Pro o superior.</li>
+    <li><b>¿Dónde quedan mis datos?</b> En el almacenamiento de la app, separado por usuario si es personal. No cargues contraseñas ni datos de tarjetas.</li>
+    <li><b>¿La puede usar mi equipo?</b> Sí, compartiendo el artifact. Cada persona entra con su cuenta de Claude.</li>
+    <li><b>¿Por cuál empiezo?</b> Por la que resuelve algo que hoy te hace perder tiempo cada semana. Un proyecto terminado vale más que cinco a medias.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Activé "Cloud code execution and file creation" en Settings.</li>
+    <li>Elegí UN proyecto para este fin de semana.</li>
+    <li>Completé los corchetes del prompt con mis datos reales.</li>
+    <li>Dejé que Claude me haga preguntas antes de armarlo.</li>
+    <li>Lo probé con datos de una semana real.</li>
+    <li>No cargué contraseñas, tarjetas ni datos sensibles.</li>
+  </ul>
+</RecursoLayout>
