@@ -1,0 +1,124 @@
+---
+// Lead magnet · palabra clave ManyChat: CLAUDE (reel: "5 cosas que haría si empezara a usar Claude", 6/10/2026)
+// URL pública: /recursos/empezar-claude-5-pasos
+// Verificado en documentación oficial (6/10/2026):
+//   https://support.claude.com/en/articles/10185728 — "Instructions for Claude" en Settings (toda la cuenta);
+//     instrucciones de proyecto solo para ese proyecto; Free: hasta 5 proyectos.
+//   https://support.claude.com/en/articles/12512176 — skills: tareas repetibles, todos los planes, requieren code execution.
+//   https://academy.claude.com/tutorials/how-to-create-a-skill-with-claude-through-conversation — crear la skill conversando;
+//     Settings > Capabilities > Skills para verlas y activarlas.
+//   https://support.claude.com/en/articles/10166901 — conectores Gmail, Calendar y Drive para todos los usuarios.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const perfil = `Quiero que me conozcas antes de empezar a trabajar juntos.
+Entrevistame con UNA pregunta por vez sobre:
+1. A qué me dedico y en qué tipo de negocio o estudio.
+2. Para qué te voy a usar más seguido (estudiar, programar, crear contenido, manejar mi empresa…).
+3. Qué herramientas uso todos los días.
+4. Qué nivel tengo en los temas que te voy a consultar.
+Cuando tengas todo, escribime un texto de 8 a 12 líneas, en primera persona, para pegar en mis instrucciones de Claude.`;
+
+const instrucciones = `Sobre mí:
+[PEGÁ ACÁ EL TEXTO QUE TE ARMÓ CLAUDE]
+
+Cómo quiero que respondas:
+- Directo, en español [rioplatense / neutro].
+- Primero la respuesta, después la explicación si hace falta.
+- Si te falta un dato, preguntame antes de suponer.
+
+Qué evitar:
+- Relleno, introducciones largas y advertencias repetidas.
+- Inventar datos: si no sabés algo, decilo.
+
+Formato:
+- Listas cortas y pasos numerados.
+- Tablas cuando comparo opciones.
+- [TU FORMATO HABITUAL: largo, tono, plantillas que uso]`;
+
+const skill = `Quiero crear una skill para una tarea que repito seguido: [NOMBRE DE LA TAREA].
+Hoy la hago así: [PASO A PASO DE CÓMO LA HACÉS].
+El resultado tiene que verse así: [FORMATO O EJEMPLO].
+Haceme las preguntas que necesites y después armá la skill para que la pueda usar sin explicarte todo de nuevo.`;
+
+const sistema = `Elegí esta tarea que hago seguido: [TAREA, por ejemplo el informe semanal].
+La hago cada [FRECUENCIA] y me lleva [TIEMPO].
+Ayudame a convertirla en un sistema con Claude:
+1. Separá qué partes puede hacer Claude y cuáles tengo que hacer yo.
+2. Decime qué necesito tener listo (datos, conectores, plantilla o skill).
+3. Proponeme el paso a paso para la próxima vez, y probémoslo ahora con un caso real.`;
+---
+<RecursoLayout
+  titulo="5 cosas para configurar si empezás a usar Claude"
+  descripcion="La guía para aplicar los 5 pasos del video en tu propia cuenta de Claude: perfil, instrucciones, conectores, tu primera skill y un proceso real convertido en sistema."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="CLAUDE"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>No hace falta probar todas las funciones. Si Claude sabe quién sos, cómo trabajás y qué herramientas usás, cada respuesta mejora. Estos son los 5 pasos, en orden, para dejar tu cuenta lista.</b></div>
+
+  <h2>1. Contale quién sos y para qué lo vas a usar</h2>
+  <p>No es lo mismo usar Claude para estudiar que para manejar una empresa. Dejá que te entreviste y te arme el texto:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{perfil}</code></pre>
+  </div>
+
+  <h2>2. Configurá tus instrucciones</h2>
+  <ol class="steps">
+    <li><b>Abrí Settings:</b> tocá tus iniciales abajo a la izquierda → "Settings".</li>
+    <li><b>Buscá "Instructions for Claude"</b> (instrucciones para Claude).</li>
+    <li><b>Pegá esta plantilla</b> con el texto del paso 1 y completá lo que está entre corchetes.</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{instrucciones}</code></pre>
+  </div>
+  <div class="note"><b>Tip:</b> esto se aplica a TODAS tus charlas. Si tenés un tema puntual (un cliente, un curso), creá un Proyecto y poné ahí las instrucciones específicas.</div>
+
+  <h2>3. Conectá tus herramientas</h2>
+  <ul class="arrow">
+    <li><b>Google Drive, Gmail y Calendar:</b> están disponibles en todos los planes. Se conectan desde el menú de conectores ("Connectors") en web o escritorio.</li>
+    <li><b>Notion y otras apps:</b> buscalas en el directorio de conectores de Claude.</li>
+    <li><b>Conectá solo lo que consultás seguido.</b> Cada conector le da acceso a esa cuenta; empezá por uno.</li>
+  </ul>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>4. Creá tu primera skill</h2>
+  <p>Una skill es una tarea que repetís y que no querés volver a explicar. Se crea conversando con Claude:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{skill}</code></pre>
+  </div>
+  <div class="note"><b>Dónde quedan:</b> en <b>Settings &gt; Capabilities &gt; Skills</b> las ves y las prendés o apagás. Necesitan la ejecución de código activada.</div>
+
+  <h2>5. Elegí un proceso real y convertilo en sistema</h2>
+  <p>Una tarea que hacés seguido, hecha mejor con Claude, vale más que probar diez funciones nuevas:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{sistema}</code></pre>
+  </div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Necesito plan pago?</b> No para empezar: instrucciones, skills y los conectores de Google funcionan en todos los planes. El plan gratis tiene límites de uso y hasta 5 proyectos.</li>
+    <li><b>¿Instrucciones o skill?</b> Las instrucciones dicen cómo trabajás siempre; la skill es una tarea concreta que se repite.</li>
+    <li><b>¿Cada cuánto actualizo mis instrucciones?</b> Cuando cambia tu trabajo o cuando notás que le corregís lo mismo a Claude varias veces.</li>
+    <li><b>¿Es seguro conectar mi email?</b> Claude solo accede a la cuenta que conectás, y podés desconectarla cuando quieras.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Claude me entrevistó y tengo mi texto "sobre mí".</li>
+    <li>Pegué mis instrucciones en Settings.</li>
+    <li>Conecté la herramienta que más consulto.</li>
+    <li>Creé una skill para una tarea que repito.</li>
+    <li>Elegí un proceso real y lo probé con Claude.</li>
+  </ul>
+</RecursoLayout>
