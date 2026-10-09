@@ -35,11 +35,26 @@
     field('title','Nombre de la pieza')+'<label class="cos-field"><span>Formato</span><select name="format">'+['Reels','Historias','Carruseles'].map(x=>'<option>'+x+'</option>').join('')+'</select></label><label class="cos-field"><span>Estado</span><select name="status">'+['Idea','En análisis','Guion','Revisión','Aprobado','Programado','Publicado'].map(x=>'<option>'+x+'</option>').join('')+'</select></label>'+field('topic','Tema / carpeta')+field('scheduledAt','Fecha prevista','','date')+field('sourceUrl','Referencia original','https://...','url')+field('body','Guion o secuencia (una diapositiva por párrafo)','','textarea')+field('notes','Observaciones y ajustes','','textarea'))+
     '<div class="cos-lean-buttons"><button class="btn ghost" type="button" id="cosCancel">Cancelar</button><button class="btn" type="submit">Guardar</button></div></form></div>';
     const form=document.getElementById('cosEditor');if(item){Object.keys(item).forEach(key=>{const el=form.elements.namedItem(key);if(el&&'value'in el)el.value=item[key]??'';});}document.getElementById('cosClose').onclick=document.getElementById('cosCancel').onclick=()=>root.innerHTML='';
-    form.onsubmit=e=>{e.preventDefault();const data=Object.fromEntries(new FormData(form));if(!data.title?.trim()){alert('Ingresá un título.');return;}if(data.url&& !/^https?:\/\/.+/i.test(data.url)){alert('El enlace debe empezar con https://');return;}const list=type==='competitor'?store.competitors:store.plans;const updated={...(item||{}),...data,id:item?.id||uid(),createdAt:item?.createdAt||now(),updatedAt:now(),versions:[...(item?.versions||[]),{at:now(),data}]};if(item){list[list.findIndex(x=>x.id===id)]=updated;}else list.unshift(updated);record(item?'Edición':'Creación',type,updated.id);if(!persist()){alert('No se pudo guardar en este navegador. Exportá los datos antes de cerrar.');return;}root.innerHTML='';render();};}
+    form.onsubmit=async e=>{e.preventDefault();const data=Object.fromEntries(new FormData(form));if(!data.title?.trim()){alert('Ingresá un título.');return;}if(data.url&& !/^https?:\/\/.+/i.test(data.url)){alert('El enlace debe empezar con https://');return;}const list=type==='competitor'?store.competitors:store.plans;const updated={...(item||{}),...data,id:item?.id||uid(),createdAt:item?.createdAt||now(),updatedAt:now(),versions:[...(item?.versions||[]),{at:now(),data}]};if(item){list[list.findIndex(x=>x.id===id)]=updated;}else list.unshift(updated);try{const resp=await fetch('/api/content-os/editorial',{method:item?'PATCH':'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({...updated,kind:type,expectedRevision:item?.serverRevision})});const result=await resp.json();if(!resp.ok)throw new Error(result.error||'Error al guardar');updated.id=result.record.id;updated.serverRevision=result.record.revision;}catch(error){alert('No se guardó en el servidor: '+error.message);return;}record(item?'Edición':'Creación',type,updated.id);if(!persist()){alert('No se pudo guardar en este navegador. Exportá los datos antes de cerrar.');return;}root.innerHTML='';render();};}
   const oldBind=bindPage;bindPage=function(){oldBind();document.querySelectorAll('[data-new]').forEach(b=>b.onclick=()=>openEditor(b.dataset.new,null));document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openEditor(b.dataset.kind,b.dataset.edit));document.querySelectorAll('[data-category]').forEach(b=>b.onclick=()=>{category=b.dataset.category;render()});const f=document.getElementById('cosQuickFilter');if(f)f.oninput=()=>{term=f.value;const index=f.selectionStart;render();const next=document.getElementById('cosQuickFilter');next?.focus();next?.setSelectionRange(index,index);};const m=document.getElementById('cosMetricMonth');if(m)m.onchange=()=>{period=m.value;render();};};
   const oldRender=render;render=function(){oldRender();document.body.classList.add('cos-lean-mode');};
   // Configuración se conserva como panel secundario, no como cuarta sección.
   const settings=document.createElement('button');settings.id='cosSettings';settings.className='cos-settings';settings.textContent='⚙ Configuración y exportación';document.querySelector('.sidebar-bottom')?.prepend(settings);
   settings.onclick=()=>{const blob=new Blob([JSON.stringify({...store,exportedAt:now()},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='content-os-editorial-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),500);};
   render();
+  // Supabase is the authoritative store. Browser cache is only an offline export convenience.
+  async function refreshEditorial(){
+    try{
+      const response=await fetch('/api/content-os/editorial',{credentials:'same-origin',cache:'no-store'});
+      if(!response.ok) return;
+      const data=await response.json();
+      if(!data.ok||!Array.isArray(data.records))return;
+      const items=data.records.map(row=>({...row.payload,id:row.id,kind:row.kind,title:row.title,createdAt:row.created_at,updatedAt:row.updated_at,serverRevision:row.revision}));
+      store.competitors=items.filter(x=>x.kind==='competitor');
+      store.plans=items.filter(x=>x.kind==='plan');
+      store.history=(data.history||[]).map(x=>({at:x.created_at,action:x.event,type:x.actor,id:x.record_id}));
+      persist();render();
+    }catch(error){console.warn('Content OS editorial fetch failed',error);}
+  }
+  refreshEditorial();
 })();
