@@ -1,0 +1,150 @@
+---
+// Lead magnet · palabra clave ManyChat: LOOP (reel: "Loops", 10/10/2026)
+// URL pública: /recursos/loop-claude
+// Verificado en documentación oficial (10/10/2026):
+//   https://code.claude.com/docs/es/goal — /goal <condición>: después de cada turno un modelo aparte (el pequeño y rápido)
+//     verifica si se cumple; veredictos: aún no / cumplido / imposible. Condición hasta 4.000 caracteres; "/goal clear" la borra;
+//     el evaluador NO lee archivos ni corre comandos: juzga lo que Claude muestra en la conversación. Sirve "or stop after 20 turns".
+//   https://code.claude.com/docs/es/scheduled-tasks — /loop repite un prompt por INTERVALO de tiempo (no hasta una condición).
+//   https://platform.claude.com/cookbook/patterns-agents-evaluator-optimizer — patrón evaluador-optimizador:
+//     uno genera, otro evalúa contra criterios claros y solo devuelve feedback; se repite hasta PASS.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const definir = `Antes de hacer nada, ayudame a definir esta tarea. No la ejecutes todavía.
+Tarea: [QUÉ NECESITÁS, EN UNA FRASE]
+Para quién es: [CLIENTE, JEFE, VOS, TU AUDIENCIA]
+
+Haceme las preguntas que necesites y después escribí la ficha con 3 partes:
+1. QUÉ QUIERO EXACTAMENTE: el entregable en una frase.
+2. REQUISITOS: entre 4 y 7, cada uno verificable con sí o no (largo, formato, tono, datos que tiene que incluir, cosas prohibidas).
+3. BUEN RESULTADO: cómo se reconoce uno bueno y un ejemplo de lo que NO queremos.
+Terminá con: "Ficha lista".`;
+
+const ejecutar = `Hacé la tarea siguiendo esta ficha al pie de la letra.
+No cambies los requisitos sobre la marcha: si uno te parece mal, avisame al final, pero cumplilo igual.
+Entregá solo el resultado, sin explicaciones.
+
+[PEGÁ ACÁ LA FICHA]`;
+
+const revisar = `Sos el REVISOR. No hacés la tarea: solo la comparás contra la ficha.
+Para cada requisito respondé CUMPLE o NO CUMPLE, con el motivo en una línea.
+Después dame el veredicto:
+- PASA: si cumple TODOS los requisitos y se parece al buen resultado.
+- NO PASA: si falla aunque sea uno. En ese caso, decí exactamente qué corregir (sin reescribirlo vos).
+
+Ficha: [PEGÁ LA FICHA]
+Resultado: [PEGÁ EL RESULTADO]`;
+
+const corregir = `El revisor dijo que NO PASA. Corregí solo lo que marcó, sin tocar lo que ya cumplía,
+y volvé a entregar el resultado completo.
+
+Correcciones: [PEGÁ LO QUE DIJO EL REVISOR]`;
+
+const unPrompt = `Vamos a trabajar en loop. Tarea: [QUÉ NECESITÁS]
+
+1. DEFINIR: antes de empezar, escribí los requisitos (entre 4 y 7, verificables con sí o no) y cómo se vería un buen resultado. Mostrámelos.
+2. EJECUTAR: hacé la tarea con esos requisitos, sin cambiarlos.
+3. REVISAR: compará tu resultado contra cada requisito, uno por uno, con CUMPLE o NO CUMPLE. Sé exigente: revisalo como si lo hubiera hecho otra persona.
+4. Si alguno NO CUMPLE, corregí solo eso y volvé al paso 3.
+Repetí hasta que cumpla todos o hasta 3 vueltas. Al final mostrame la tabla de la última revisión y el resultado.`;
+
+const goal = `/goal el archivo propuesta.md cumple estos requisitos: tiene como máximo 1 página,
+incluye precio, plazos y 3 próximos pasos, está en español neutro y no menciona a otros clientes.
+Para demostrarlo, al final de cada turno mostrá la lista de requisitos con CUMPLE o NO CUMPLE.
+O frená después de 10 turnos.`;
+
+const goalCodigo = `/goal todas las pruebas de test/login pasan y npm run lint no da errores,
+sin modificar otros archivos de prueba. Mostrá la salida de npm test al final de cada turno.`;
+---
+<RecursoLayout
+  titulo="El loop: Claude trabaja, se revisa y se corrige"
+  descripcion="El flujo del video para replicar: definir, ejecutar y revisar en loop hasta que el resultado cumpla. En el chat de Claude o en Claude Code con /goal."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="LOOP"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Pedirle algo a Claude, revisarlo vos, corregirlo y volver a pedir te deja en el medio de cada cambio. Un loop divide el trabajo en 3 pasos y suma un revisor que compara el resultado con lo que definiste. Si cumple, se entrega. Si no, se vuelve a ejecutar.</b></div>
+
+  <h2>Los 3 pasos del loop</h2>
+  <ol class="steps">
+    <li><b>Definir:</b> antes de que Claude haga nada, qué querés exactamente, qué requisitos tiene que cumplir y cómo se ve un buen resultado.</li>
+    <li><b>Ejecutar:</b> Claude hace el trabajo con esos criterios y no los cambia sobre la marcha.</li>
+    <li><b>Revisar:</b> otro paso compara el resultado con los requisitos. Cumple: se entrega. No cumple: vuelve al paso 2 con lo que hay que corregir.</li>
+  </ol>
+  <div class="note"><b>La clave son los requisitos:</b> escribilos para que se puedan responder con sí o no. "Que quede lindo" no se puede revisar. "Máximo 150 palabras, con precio y un llamado a la acción" sí.</div>
+
+  <h2>Opción A: en el chat de Claude (cualquier plan)</h2>
+  <p>Usá 2 chats: uno trabaja y otro revisa. Así el revisor no defiende lo que hizo.</p>
+
+  <h3>Paso 1 · Definir (chat 1)</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{definir}</code></pre>
+  </div>
+  <h3>Paso 2 · Ejecutar (mismo chat 1)</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{ejecutar}</code></pre>
+  </div>
+  <h3>Paso 3 · Revisar (chat 2, nuevo)</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{revisar}</code></pre>
+  </div>
+  <h3>Si no pasa · Corregir (vuelve al chat 1)</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{corregir}</code></pre>
+  </div>
+  <p>Repetí revisar → corregir hasta que el revisor diga <b>PASA</b>. Si a la tercera vuelta sigue fallando, el problema suele estar en la ficha: ajustá los requisitos.</p>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Versión rápida: el loop en un solo prompt</h2>
+  <p>Para tareas cortas. Es menos estricto que con 2 chats, porque Claude se revisa a sí mismo, pero ya te saca del medio:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{unPrompt}</code></pre>
+  </div>
+
+  <h2>Opción B: en Claude Code, con /goal</h2>
+  <p>Claude Code tiene el loop incorporado. Con <b>/goal</b> escribís la condición de terminado y Claude sigue trabajando turno tras turno. Después de cada turno, <b>un modelo aparte</b> revisa si la condición se cumple: si no, Claude sigue; si sí, termina solo.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{goal}</code></pre>
+  </div>
+  <p>Si programás, la condición puede ser que pasen las pruebas:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{goalCodigo}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li><b>Ver cómo va:</b> escribí <b>/goal</b> sin nada más.</li>
+    <li><b>Cortarlo:</b> <b>/goal clear</b>.</li>
+    <li><b>El revisor no abre archivos:</b> juzga lo que Claude muestra en la conversación. Por eso la condición pide que muestre la lista de requisitos o la salida de las pruebas.</li>
+    <li><b>Ponele un límite:</b> sumá "o frená después de 10 turnos" para que no siga gastando uso.</li>
+  </ul>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Y el comando /loop de Claude Code?</b> Es otra cosa: repite un prompt cada cierto tiempo (por ejemplo, cada 5 minutos). Para "hasta que quede bien" se usa <b>/goal</b>.</li>
+    <li><b>¿Para qué tareas sirve?</b> Para las que tienen un resultado que se puede chequear: una propuesta, un mail, un informe, una planilla, un código que tiene que pasar pruebas.</li>
+    <li><b>¿Por qué el revisor en otro chat?</b> Porque si revisa el mismo chat que hizo el trabajo, tiende a darlo por bueno. Separado, compara contra la ficha y nada más.</li>
+    <li><b>¿Gasta más uso?</b> Sí, cada vuelta es otra respuesta. Por eso conviene un límite de vueltas y requisitos claros desde el principio.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Definí qué quiero, los requisitos (sí o no) y cómo se ve un buen resultado.</li>
+    <li>Claude ejecutó sin cambiar los requisitos.</li>
+    <li>El revisor comparó cada requisito, en un chat aparte.</li>
+    <li>Corregí solo lo que marcó y repetí hasta que pasó.</li>
+    <li>Puse un límite de vueltas.</li>
+  </ul>
+</RecursoLayout>
