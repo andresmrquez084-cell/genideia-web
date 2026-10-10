@@ -1,0 +1,193 @@
+---
+// Lead magnet · palabra clave ManyChat: EQUIPO (reel: "Respuestas de Claude", 3 ganchos, 9/10/2026)
+// URL pública: /recursos/equipo-agentes-decisiones
+// Verificado en documentación oficial (9/10/2026):
+//   https://code.claude.com/docs/en/sub-agents — sub-agentes en .claude/agents/<nombre>.md (frontmatter name, description,
+//     tools y model opcionales); cada uno con su propia ventana de contexto; se pueden lanzar varios en paralelo.
+//   https://code.claude.com/docs/en/agent-teams — agent teams EXPERIMENTAL (CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1);
+//     ejemplo oficial con "devil's advocate" y debate para refutar hipótesis; usan bastantes más tokens.
+//   https://github.com/karpathy/llm-council — opiniones separadas → revisión cruzada → un "Chairman" da la respuesta final.
+// Complementa /recursos/roles-agentes-ia (AGENTE): esa guía es la estructura de un rol; esta es el equipo para decidir.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const brief = `DECISIÓN: [QUÉ TENÉS QUE DECIDIR, EN UNA FRASE]
+Contexto: [TU NEGOCIO O SITUACIÓN, EN 3 O 4 LÍNEAS]
+Opciones que estoy considerando: [A / B / C]
+Datos que tengo: [NÚMEROS, PLAZOS, PRESUPUESTO]
+Lo que más me importa: [por ejemplo no perder plata, crecer rápido, no sumar trabajo]
+Plazo para decidir: [CUÁNDO]`;
+
+const riesgos = `Sos el agente de RIESGOS de un equipo que analiza una decisión.
+Tu único trabajo: encontrar las razones por las que esto puede salir mal.
+Analizá: supuestos que nadie comprobó, qué pasa si los números salen peor, de quién dependemos, qué no se puede deshacer.
+Criterios: cada riesgo con su motivo y su probabilidad (alta / media / baja). No opines sobre las oportunidades: ese no es tu rol.
+Resultado: los 5 riesgos principales, ordenados, y una señal temprana para detectar cada uno.
+
+[PEGÁ ACÁ TU FICHA DE DECISIÓN]`;
+
+const oportunidad = `Sos el agente de OPORTUNIDAD de un equipo que analiza una decisión.
+Tu único trabajo: encontrar dónde está la mayor oportunidad.
+Analizá: qué se gana si sale bien, qué se puede aprovechar que ya tengo (clientes, conocimiento, contactos), qué opción tiene más para ganar.
+Criterios: sé concreto y medible. No hables de riesgos: ese no es tu rol.
+Resultado: las 3 oportunidades más grandes, cuánto valen aproximadamente y qué tendría que pasar para capturarlas.
+
+[PEGÁ ACÁ TU FICHA DE DECISIÓN]`;
+
+const ejecucion = `Sos el agente de EJECUCIÓN de un equipo que analiza una decisión.
+Tu único trabajo: pensar exclusivamente en cómo se haría.
+Analizá: pasos, tiempo, plata, personas y herramientas que hacen falta; qué falta hoy; cuál es la versión más chica para probar.
+Criterios: pensá en los próximos 90 días con los recursos reales, no en un escenario ideal.
+Resultado: plan en pasos con plazos, lo que falta conseguir y el primer paso para esta semana.
+
+[PEGÁ ACÁ TU FICHA DE DECISIÓN]`;
+
+const critico = `Sos el agente CRÍTICO de un equipo que analiza una decisión.
+Recibís los análisis de RIESGOS, OPORTUNIDAD y EJECUCIÓN.
+Tu único trabajo: cuestionar todos sus argumentos.
+Analizá: qué afirman sin pruebas, qué se contradice entre ellos, qué dato falta y qué alternativa nadie consideró.
+Criterios: no agregues opiniones nuevas sin motivo; atacá argumentos, no personas. Si algo está bien, decilo y seguí.
+Resultado: los argumentos más débiles de cada análisis y las 3 preguntas que hay que responder antes de decidir.
+
+Ficha: [PEGÁ TU FICHA]
+Riesgos: [PEGAR]
+Oportunidad: [PEGAR]
+Ejecución: [PEGAR]`;
+
+const decisor = `Sos el agente que DECIDE. Recibís 4 análisis de la misma decisión, hechos desde posiciones distintas.
+Tu trabajo: tomar todas las perspectivas y llegar a UNA sola conclusión.
+1. Dónde están de acuerdo.
+2. Dónde no, y cuál argumento tiene más evidencia.
+3. Qué dato falta, si falta alguno, para decidir bien.
+Criterios: no promedies opiniones; pesá cada punto por lo que lo sostiene.
+Resultado:
+- Decisión: SÍ / SÍ, CON CAMBIOS / NO / TODAVÍA NO.
+- Los 3 motivos principales.
+- Condiciones o cambios antes de avanzar.
+- El próximo paso concreto y cuándo revisar la decisión.
+
+Ficha: [PEGAR]
+Riesgos: [PEGAR]
+Oportunidad: [PEGAR]
+Ejecución: [PEGAR]
+Crítica: [PEGAR]`;
+
+const claudeCode = `Tengo que tomar esta decisión: [PEGÁ TU FICHA].
+Armá un equipo de agentes para analizarla:
+1. Lanzá en paralelo 3 sub-agentes, cada uno con su propio rol y sin ver a los otros:
+   - Riesgos: por qué puede salir mal.
+   - Oportunidad: dónde está la mayor oportunidad.
+   - Ejecución: cómo se haría en los próximos 90 días.
+2. Cuando terminen, lanzá un sub-agente Crítico que reciba los 3 análisis y cuestione todos sus argumentos.
+3. Al final, vos tomás las 4 perspectivas: decime dónde coinciden, dónde no, y dame UNA sola conclusión
+   (SÍ / SÍ, CON CAMBIOS / NO / TODAVÍA NO), con los motivos y el próximo paso.
+Guardá todo en decision-[tema].md.`;
+
+const archivo = `---
+name: critico-decisiones
+description: Cuestiona los argumentos de otros análisis antes de tomar una decisión importante.
+model: opus
+---
+Sos el agente CRÍTICO de un equipo que analiza una decisión.
+Recibís análisis de otros agentes. Tu único trabajo es cuestionar sus argumentos:
+qué afirman sin pruebas, qué se contradice y qué alternativa nadie consideró.
+Resultado: los argumentos más débiles y las 3 preguntas a responder antes de decidir.`;
+---
+<RecursoLayout
+  titulo="Tu equipo de agentes para decisiones importantes"
+  descripcion="Los 5 agentes del video listos para copiar: riesgos, oportunidad, ejecución, crítica y el que decide. Cómo usarlos en el chat de Claude o en Claude Code."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="EQUIPO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Una pregunta a Claude te da una respuesta: una sola perspectiva. Para una decisión importante, armá un equipo: cada agente analiza el mismo problema desde una posición distinta y uno último saca una sola conclusión.</b></div>
+
+  <h2>Cómo funciona el equipo</h2>
+  <ol class="steps">
+    <li><b>Ronda 1, por separado:</b> Riesgos, Oportunidad y Ejecución analizan la misma ficha sin ver a los otros. Si se leen entre ellos, se contagian.</li>
+    <li><b>Ronda 2, la crítica:</b> el Crítico recibe los 3 análisis y cuestiona todos los argumentos.</li>
+    <li><b>Ronda 3, la decisión:</b> el último agente toma las 4 perspectivas, ve dónde coinciden y dónde no, y concluye.</li>
+  </ol>
+  <div class="note"><b>Usalo para decisiones que importan:</b> lanzar algo, contratar, invertir, subir precios, cambiar de proveedor. Para preguntas del día a día alcanza con una respuesta: el equipo lleva más tiempo y más uso.</div>
+
+  <h2>Paso 0: la ficha de la decisión</h2>
+  <p>Todos los agentes reciben exactamente la misma ficha. Cuanto más concreta, mejor el análisis:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{brief}</code></pre>
+  </div>
+
+  <h2>Los 5 agentes</h2>
+  <h3>1. Riesgos: qué puede salir mal</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{riesgos}</code></pre>
+  </div>
+  <h3>2. Oportunidad: dónde está lo que más gana</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{oportunidad}</code></pre>
+  </div>
+  <h3>3. Ejecución: cómo se haría</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{ejecucion}</code></pre>
+  </div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h3>4. Crítica: cuestiona a los demás</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{critico}</code></pre>
+  </div>
+  <h3>5. El que decide: una sola conclusión</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{decisor}</code></pre>
+  </div>
+
+  <h2>Opción A: en el chat de Claude (cualquier plan)</h2>
+  <ol class="steps">
+    <li><b>Un chat nuevo por agente.</b> Así ninguno ve lo que respondieron los otros.</li>
+    <li><b>Ronda 1:</b> abrí 3 chats y pegá Riesgos, Oportunidad y Ejecución, cada uno con tu ficha.</li>
+    <li><b>Ronda 2:</b> en un chat nuevo pegá el prompt del Crítico con los 3 análisis.</li>
+    <li><b>Ronda 3:</b> en otro chat nuevo pegá el prompt del que decide con todo.</li>
+  </ol>
+  <div class="note"><b>Tip:</b> si decidís seguido, creá un Proyecto "Decisiones" y subí tu ficha y estos prompts como documentos. Cada chat del proyecto arranca con el contexto cargado.</div>
+
+  <h2>Opción B: en Claude Code, con sub-agentes</h2>
+  <p>Claude Code puede lanzar varios sub-agentes en paralelo, cada uno con su propio contexto. Pegá esto en una sesión:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{claudeCode}</code></pre>
+  </div>
+  <p>Si vas a usar el equipo seguido, guardá cada rol como archivo en <b>.claude/agents/</b>. Por ejemplo, <b>.claude/agents/critico-decisiones.md</b>:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{archivo}</code></pre>
+  </div>
+  <div class="note"><b>Para usuarios avanzados:</b> Claude Code tiene además "agent teams", donde los agentes se mandan mensajes y debaten entre ellos. Es experimental: se activa con la variable <b style="word-break: break-all">CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1</b> y usa bastantes más tokens que los sub-agentes.</div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Por qué no hacer todo en un solo chat?</b> Porque cada respuesta condiciona a la siguiente. Separados, cada agente mira el problema desde su posición sin contagiarse.</li>
+    <li><b>¿Necesito Claude Code?</b> No. Con chats separados funciona en cualquier plan. Claude Code lo automatiza.</li>
+    <li><b>¿Puedo cambiar los roles?</b> Sí. Para contratar a alguien, por ejemplo: el candidato, el equipo, los costos y el crítico. Mantené siempre un crítico y uno que decida.</li>
+    <li><b>¿La conclusión es definitiva?</b> No. Es una decisión mejor pensada, pero la decidís vos. Revisá sobre todo lo que el Crítico marcó como dato faltante.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Completé la ficha con datos reales.</li>
+    <li>Riesgos, Oportunidad y Ejecución respondieron por separado.</li>
+    <li>El Crítico cuestionó los 3 análisis.</li>
+    <li>El último agente me dio una sola conclusión con motivos.</li>
+    <li>Respondí las preguntas que quedaron abiertas antes de decidir.</li>
+  </ul>
+</RecursoLayout>
