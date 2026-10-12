@@ -1,0 +1,170 @@
+---
+// Lead magnet · palabra clave ManyChat: LÍMITE (reel "Haiku 5.5 + Opus — límites", 13/10)
+// URL pública: /recursos/skill-haiku-opus
+// Datos verificados el 13/10/2026:
+// - Precio Haiku 5.5: https://www.anthropic.com/claude/haiku → USD 0,10 entrada / 0,50 salida por millón de tokens
+//   en prompts de hasta 100K tokens; arriba de 100K: 0,50 / 2,50. Haiku 4.5 costaba USD 1 / 5.
+// - Sub-agentes con `model: haiku`: https://code.claude.com/docs/en/sub-agents
+// - Skills (SKILL.md, frontmatter): https://code.claude.com/docs/en/skills
+// Supuesto marcado en la página: Anthropic no publica cuánto descuenta cada modelo del límite del plan.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const instalar = `Quiero que me instales dos archivos para ahorrar límite usando Haiku en las tareas simples.
+1) Creá ~/.claude/agents/rapido.md con exactamente este contenido:
+[PEGÁ ACÁ EL ARCHIVO 1]
+2) Creá ~/.claude/skills/clasificar-tarea/SKILL.md con exactamente este contenido:
+[PEGÁ ACÁ EL ARCHIVO 2]
+3) Agregá esta línea al final de ~/.claude/CLAUDE.md (si no existe, crealo): "Al empezar cada tarea, usá la skill clasificar-tarea."
+Cuando termines, mostrame los 3 archivos y no cambies nada más.`;
+
+const agente = `---
+name: rapido
+description: Tareas simples y bien definidas, como buscar archivos, renombrarlos, leer logs o hacer cambios pequeños. Usalo de forma proactiva para todo lo rutinario.
+model: haiku
+tools: Read, Grep, Glob, Edit, Write, Bash
+---
+
+Sos el ayudante rápido. Hacés tareas chicas y bien definidas, sin rediseñar nada.
+
+- Hacé exactamente lo que te pidieron, nada más.
+- No cambies la estructura del proyecto ni toques archivos que no te nombraron.
+- Si la tarea resulta más compleja de lo que parecía (hay que elegir un enfoque, tocar muchos archivos o no encontrás la causa de un error), frená y respondé: "ESCALAR A OPUS: <motivo en una línea>".
+- Al terminar, devolvé un resumen corto: qué hiciste, qué archivos tocaste y cualquier cosa rara que viste.`;
+
+const skill = `---
+name: clasificar-tarea
+description: Usala al empezar cualquier tarea en Claude Code. Clasifica la tarea en SIMPLE o PESADA y deriva las simples al sub-agente rapido (Haiku 5.5) para no gastar límite del modelo pesado.
+---
+
+# Clasificar antes de hacer
+
+1. Leé el pedido y clasificalo:
+   - SIMPLE: buscar archivos o texto, listar, renombrar o mover archivos, leer un log y resumir el error, cambios pequeños y ya definidos (un texto, un valor, una línea), correr un comando y contar qué pasó.
+   - PESADA: diseñar o cambiar cómo está armado un proyecto, errores que no se sabe de dónde vienen, cambios en muchos archivos, decisiones que piden criterio, y cualquier cosa con pagos, seguridad o datos de clientes.
+   - Si dudás, es PESADA.
+2. Avisá en una línea: "SIMPLE → Haiku" o "PESADA → Opus", y por qué.
+3. Si es SIMPLE: delegala al sub-agente rapido con un pedido completo y corto (qué hacer, en qué archivos y qué devolver). No le pases toda la conversación.
+4. Si es PESADA: hacela vos.
+5. Si mezcla las dos: separala. Lo simple va a rapido y lo pesado lo hacés vos.
+6. Si rapido responde "ESCALAR A OPUS", seguí vos con esa parte.
+7. Cuando rapido termine, revisá su resultado en una línea antes de seguir.`;
+
+const probar = `Buscá en este proyecto todos los archivos que mencionan "precio" y decime en qué línea está cada uno.`;
+
+const tareas = [
+  { tarea: 'Buscar archivos o una palabra en el proyecto', modelo: 'Haiku' },
+  { tarea: 'Renombrar o mover archivos', modelo: 'Haiku' },
+  { tarea: 'Leer un log y decirte cuál es el error', modelo: 'Haiku' },
+  { tarea: 'Cambiar un texto, un color o un valor', modelo: 'Haiku' },
+  { tarea: 'Corregir un error que no sabés de dónde viene', modelo: 'Opus' },
+  { tarea: 'Diseñar una función nueva o cómo se arma el proyecto', modelo: 'Opus' },
+  { tarea: 'Cambios en muchos archivos a la vez', modelo: 'Opus' },
+  { tarea: 'Pagos, seguridad o datos de clientes', modelo: 'Opus' },
+];
+---
+<RecursoLayout
+  titulo="La Skill que reparte tus tareas entre Haiku y Opus"
+  descripcion="Las tareas simples van a Haiku 5.5 y solo lo pesado pasa a Opus: con el mismo plan de Claude, rendís mucho más."
+  tipo="Skill"
+  barLabel="Skill · @andresalbornoz.ai"
+  palabraClave="LÍMITE"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Si usás Opus para todo en Claude Code, estás gastando límite en tareas que Haiku puede hacer. Esta Skill primero mira la tarea y la clasifica: lo simple se lo pasa a Haiku 5.5 y solo lo pesado queda en Opus.</b></div>
+
+  <h2>Cómo funciona</h2>
+  <div class="grid">
+    <div class="col si">
+      <h3>Haiku 5.5</h3>
+      <ul>
+        <li>Buscar archivos</li>
+        <li>Renombrarlos</li>
+        <li>Leer logs</li>
+        <li>Cambios pequeños</li>
+      </ul>
+    </div>
+    <div class="col si">
+      <h3>Opus</h3>
+      <ul>
+        <li>Diseñar</li>
+        <li>Errores difíciles</li>
+        <li>Muchos archivos</li>
+        <li>Decisiones</li>
+      </ul>
+    </div>
+  </div>
+  <p>Son dos piezas: un <b>sub-agente</b> llamado <b>rapido</b>, que trabaja con Haiku, y la <b>Skill clasificar-tarea</b>, que decide qué le pasa. Tu conversación sigue en Opus, y Opus le delega lo rutinario a rapido.</p>
+
+  <h2>Por qué ahorra tanto</h2>
+  <ul class="arrow">
+    <li><b>Haiku 5.5 cuesta 10 veces menos:</b> pasó de USD 1 a USD 0,10 por millón de tokens de entrada (y de 5 a 0,50 de salida). Es un 90 % menos.</li>
+    <li><b>Ojo con los textos largos:</b> ese precio vale para pedidos de hasta 100.000 tokens. Más arriba, Haiku cuesta 0,50 de entrada, que igual es la mitad que antes.</li>
+    <li><b>El sub-agente arranca de cero:</b> no carga toda tu conversación, solo el pedido. Por eso sus pedidos quedan cortos y baratos.</li>
+  </ul>
+  <div class="note"><b>Sobre tu plan:</b> Anthropic no publica cuánto límite descuenta cada modelo. En la práctica, los modelos más chicos consumen bastante menos, así que todo lo rutinario que pasa a Haiku casi no toca tu límite de Opus.</div>
+
+  <h2>1 · Instalala con un solo mensaje</h2>
+  <p>Abrí Claude Code y pegá este mensaje. Antes, reemplazá cada <b>[PEGÁ ACÁ…]</b> por el archivo 1 y el archivo 2 de abajo:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{instalar}</code></pre>
+  </div>
+
+  <h2>2 · Archivo 1: el sub-agente rapido</h2>
+  <p>Va en <b>~/.claude/agents/rapido.md</b>. La línea <b>model: haiku</b> es la que hace que trabaje con Haiku 5.5.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{agente}</code></pre>
+  </div>
+
+  <h2>3 · Archivo 2: la Skill que clasifica</h2>
+  <p>Va en <b>~/.claude/skills/clasificar-tarea/SKILL.md</b>. Con <b>~/.claude</b> te sirve en todos tus proyectos.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{skill}</code></pre>
+  </div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>4 · Probala</h2>
+  <ol class="steps">
+    <li>Cerrá Claude Code y volvé a abrirlo, así carga los archivos nuevos.</li>
+    <li>Escribí <b>/agents</b>: tiene que aparecer <b>rapido</b>.</li>
+    <li>Pedile una tarea simple, por ejemplo la de abajo. Tiene que avisar <b>"SIMPLE → Haiku"</b> y delegarla.</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{probar}</code></pre>
+  </div>
+
+  <h2>Qué va a cada modelo</h2>
+  <ul class="arrow">
+    {tareas.map((x) => (
+      <li><b>{x.tarea} → {x.modelo}.</b></li>
+    ))}
+  </ul>
+  <div class="note"><b>¿Dudás?</b> Que vaya a Opus. Ahorrar límite no sirve si después tenés que rehacer la tarea.</div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Haiku hace peor las cosas?</b> En tareas chicas y definidas, no se nota. Por eso la Skill solo le pasa esas. Y si rapido ve que la tarea es más difícil de lo que parecía, avisa "ESCALAR A OPUS" y la hace Opus.</li>
+    <li><b>¿Tengo que cambiar de modelo a mano?</b> No. Tu conversación sigue en Opus (<b>/model</b> para verlo). El cambio a Haiku lo hace el sub-agente solo.</li>
+    <li><b>¿Funciona con Sonnet en vez de Opus?</b> Sí. La Skill funciona igual con cualquier modelo como principal.</li>
+    <li><b>¿Sirve en el plan Pro?</b> Sí. Haiku 5.5 ya está disponible en Claude Code.</li>
+    <li><b>¿Y si no delega nunca?</b> Revisá que la línea de <b>CLAUDE.md</b> esté y nombrala en tu mensaje: "usá la skill clasificar-tarea".</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Creé el sub-agente rapido con model: haiku.</li>
+    <li>Creé la Skill clasificar-tarea.</li>
+    <li>Agregué la línea a mi CLAUDE.md.</li>
+    <li>Reinicié Claude Code y vi rapido en /agents.</li>
+    <li>Probé una tarea simple y avisó "SIMPLE → Haiku".</li>
+  </ul>
+</RecursoLayout>
