@@ -1,0 +1,119 @@
+---
+// Lead magnet · palabra clave ManyChat: CLAUDE (reel: "Claude desde 0 en 60 segundos", 12/10/2026)
+// URL pública: /recursos/claude-cada-funcion
+// Verificado en documentación oficial (12/10/2026):
+//   support.claude.com (Cowork): las tareas programadas de Cowork corren con la compu despierta y la app de escritorio abierta;
+//     si está apagada, se saltean y corren al volver. Usan los mismos conectores, skills y plugins.
+//   Plugins = paquetes que juntan skills, conectores y sub-agentes en una sola instalación.
+//   Claude Code en la web / rutinas: corren en la nube de Anthropic → siguen aunque cierres la laptop.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const preguntar = `Necesito [QUÉ QUERÉS: un resumen, una respuesta, una idea].
+Contexto: [PARA QUÉ ES Y QUIÉN LO VA A LEER].
+Formato: [5 puntos / una tabla / un mail de 120 palabras].
+Tono: [simple, formal, directo].
+Si te falta información, preguntame antes de responder.`;
+
+const delegar = `Quiero que hagas esta tarea completa, de principio a fin:
+[LA TAREA: investigar X y armar una presentación de 8 diapositivas].
+
+Usá estos archivos: [CARPETA O ARCHIVOS].
+El resultado final es: [QUÉ ARCHIVO ME ENTREGÁS Y DÓNDE LO GUARDÁS].
+Antes de empezar, mostrame el plan en 5 pasos. Después ejecutalo sin preguntarme en cada paso.`;
+
+const construir = `Quiero construir [UNA PÁGINA WEB / UNA HERRAMIENTA] para [QUÉ PROBLEMA RESUELVE].
+La va a usar: [QUIÉN].
+Tiene que poder: [3 COSAS QUE TIENE QUE HACER].
+No sé programar: explicame cada paso en simple y probalo antes de decirme que está listo.`;
+
+const skill = `Quiero convertir esta tarea en una skill para no explicártela cada vez:
+[LA TAREA QUE REPETÍS: el informe de los lunes].
+Así la hago yo: [PASOS, FORMATO, LO QUE NUNCA PUEDE FALTAR].
+Escribí la skill con su nombre, cuándo usarla y los pasos.`;
+---
+<RecursoLayout
+  titulo="Claude desde 0: qué función usar en cada caso"
+  descripcion="Las 3 cosas del video (preguntar, delegar y construir) y las herramientas que las potencian (conectores, skills y plugins), con cuándo tiene sentido cada una y un prompt para arrancar."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornozia"
+  palabraClave="CLAUDE"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Claude hace mucho más que responder preguntas. Para sacarle provecho desde cero alcanza con 3 cosas: aprender a preguntarle, delegarle tareas completas y construir con él. Después, los conectores, las skills y los plugins hacen que todo eso funcione con tu información y tu forma de trabajar.</b></div>
+
+  <h2>El mapa rápido: qué usar según lo que necesitás</h2>
+  <ul class="arrow">
+    <li><b>Querés una respuesta, un resumen o una idea</b> → <b>el chat</b> (preguntar).</li>
+    <li><b>Querés que haga un trabajo entero</b> (investigar, leer tus archivos, armar un documento) → <b>delegar</b> con Cowork.</li>
+    <li><b>Querés una página, una herramienta o un sistema</b> → <b>construir</b> con Claude Code.</li>
+    <li><b>Claude tiene que ver tu Drive, tu mail o tu Notion</b> → <b>conectores</b>.</li>
+    <li><b>Le explicás lo mismo todas las semanas</b> → <b>una skill</b>.</li>
+    <li><b>Querés todo eso armado de una vez</b> → <b>un plugin</b>.</li>
+  </ul>
+
+  <h2>1 · Preguntar: una instrucción clara</h2>
+  <p>Es lo primero y lo que más se usa: le escribís y te responde preguntas, resume información, analiza documentos, investiga un tema o trabaja con imágenes. La diferencia entre una respuesta mediocre y una buena está en la instrucción: qué querés, para qué, en qué formato.</p>
+  <p><b>Tiene sentido cuando:</b> la tarea entra en una respuesta y la vas a revisar vos.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{preguntar}</code></pre>
+  </div>
+
+  <h2>2 · Delegar: una tarea completa</h2>
+  <p>Claude ya no sirve solo para responder: le podés dar una tarea entera, que investigue, analice tus archivos y cree documentos o presentaciones sin que estés pendiente de cada paso. Eso se hace en <b>Cowork</b>, dentro de la app de escritorio de Claude (planes pagos).</p>
+  <p><b>Tiene sentido cuando:</b> la tarea tiene varios pasos y un resultado final claro (un archivo, un informe, una planilla).</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{delegar}</code></pre>
+  </div>
+  <div class="note"><b>Tareas que siguen solas:</b> en Cowork podés programar tareas (por ejemplo, todos los lunes), pero corren con la compu prendida y la app abierta; si estaba apagada, se hacen apenas la volvés a abrir. Las que siguen <b>con la laptop apagada</b> son las de Claude Code en la web y sus rutinas, porque corren en la nube.</div>
+
+  <h2>3 · Construir: Claude Code</h2>
+  <p>Para crear una página web, una herramienta, modificar un proyecto o armar sistemas más complejos está <b>Claude Code</b>. No hace falta saber programar: le explicás qué querés y él escribe, prueba y corrige el código.</p>
+  <p><b>Tiene sentido cuando:</b> lo que necesitás no existe todavía o querés algo hecho a tu medida.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{construir}</code></pre>
+  </div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Las herramientas que lo potencian</h2>
+
+  <h3>Conectores: tu información, adentro de Claude</h3>
+  <p>Permiten que Claude trabaje con lo que tenés en otras plataformas: Google Drive, Gmail, Notion, Slack y más. Se activan desde <b>Ajustes → Conectores</b>.</p>
+  <p><b>Tiene sentido cuando:</b> te encontrás copiando y pegando información de otra app al chat.</p>
+
+  <h3>Skills: tu forma de hacer una tarea, guardada</h3>
+  <p>Una skill le indica a Claude cómo querés que ejecute una tarea, y la reutilizás cada vez que la necesitás sin volver a explicarla.</p>
+  <p><b>Tiene sentido cuando:</b> repetís la misma tarea con los mismos pasos (un informe, una propuesta, un post).</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{skill}</code></pre>
+  </div>
+
+  <h3>Plugins: varias funciones en una sola instalación</h3>
+  <p>Un plugin junta skills, conectores y otras funciones en un solo paquete. Lo instalás una vez y queda todo listo para un rol o un tipo de trabajo (ventas, marketing, finanzas…).</p>
+  <p><b>Tiene sentido cuando:</b> querés arrancar con algo ya armado en lugar de configurar pieza por pieza.</p>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Necesito un plan pago?</b> Para preguntar, no: el chat funciona en el plan gratis. Cowork y Claude Code necesitan un plan pago.</li>
+    <li><b>¿Por dónde empiezo?</b> Por preguntar bien. Cuando una tarea se repite, convertila en skill; cuando tiene muchos pasos, delegala.</li>
+    <li><b>¿Claude Code es solo para programadores?</b> No. Se usa describiendo lo que querés en español; Claude escribe el código.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Hice una pregunta con contexto, formato y tono.</li>
+    <li>Delegué una tarea completa con un resultado final claro.</li>
+    <li>Probé construir algo chico con Claude Code.</li>
+    <li>Conecté la app donde tengo mi información.</li>
+    <li>Guardé como skill una tarea que repito.</li>
+  </ul>
+</RecursoLayout>
