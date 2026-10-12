@@ -10,7 +10,7 @@ interface Props {
   titulo: string;
   descripcion: string;
   tipo?: string;          // kicker, ej: "Mini-guía" · "Checklist" · "Prompt"
-  barLabel?: string;      // etiqueta de la barra superior, ej: "Guía · @andresalbornozia"
+  barLabel?: string;      // etiqueta de la barra superior, ej: "Guía · @andresalbornoz.ai"
   palabraClave?: string;  // palabra clave del DM (ManyChat), ej: "AUTOMATIZAR"
   ctaTitulo?: string;
   ctaTexto?: string;
@@ -24,7 +24,7 @@ const {
   titulo,
   descripcion,
   tipo = 'Recurso',
-  barLabel = 'Recurso · @andresalbornozia',
+  barLabel = 'Recurso · @andresalbornoz.ai',
   palabraClave,
   // CTA genérico: el que llega por contenido orgánico es audiencia B2C (no el ICP).
   // La puerta para dueños de empresa es el bloque "¿Tenés una empresa?" → landing.
