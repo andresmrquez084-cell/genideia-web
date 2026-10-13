@@ -1,0 +1,520 @@
+---
+// Lead magnet · palabra clave ManyChat: ATAJOS (carrusel "99 atajos", 13/10)
+// URL pública: /recursos/atajos-claude
+// No son comandos oficiales de Claude: son pedidos cortos que Claude entiende. Con el texto de
+// "preferencias" los aplica siempre igual. Datos = carrusel-v2/guiones/foco/atajos.py (remotion-editor).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const grupos = [
+ {
+  "name": "Tono y formato",
+  "ex": "/corto ¿Qué es una API? → te responde en una línea.",
+  "rows": [
+   [
+    "/simple",
+    "en palabras de todos los días"
+   ],
+   [
+    "/corto",
+    "la respuesta más breve posible"
+   ],
+   [
+    "/largo",
+    "completo, sin recortar nada"
+   ],
+   [
+    "/viñetas",
+    "todo en puntos cortos"
+   ],
+   [
+    "/tabla",
+    "ordenalo en una tabla"
+   ],
+   [
+    "/pasos",
+    "numerado, paso a paso"
+   ],
+   [
+    "/formal",
+    "tono profesional y prolijo"
+   ],
+   [
+    "/cercano",
+    "como si hablaras con un amigo"
+   ],
+   [
+    "/uy",
+    "en español de Uruguay"
+   ],
+   [
+    "/sinrelleno",
+    "sacá la paja, solo lo útil"
+   ],
+   [
+    "/titulos",
+    "con títulos para escanear rápido"
+   ]
+  ]
+ },
+ {
+  "name": "Rol",
+  "ex": "/contador ¿Me conviene facturar como unipersonal? → te responde como un contador.",
+  "rows": [
+   [
+    "/experto",
+    "respondé como especialista"
+   ],
+   [
+    "/profe",
+    "explicá con paciencia"
+   ],
+   [
+    "/mentor",
+    "acompañame como un mentor"
+   ],
+   [
+    "/contador",
+    "mirá los números y lo fiscal"
+   ],
+   [
+    "/abogado",
+    "señalá riesgos legales"
+   ],
+   [
+    "/vendedor",
+    "pensá como el que vende"
+   ],
+   [
+    "/cliente",
+    "ponete en el lugar del cliente"
+   ],
+   [
+    "/inversor",
+    "evaluá si pondrías plata"
+   ],
+   [
+    "/editor",
+    "corregí como un editor"
+   ],
+   [
+    "/diseñador",
+    "pensá en cómo se ve y se usa"
+   ],
+   [
+    "/ceo",
+    "decidí con mirada de dueño"
+   ]
+  ]
+ },
+ {
+  "name": "Pensar mejor",
+  "ex": "/contras Quiero abrir un local → te lista todo lo que puede salir mal.",
+  "rows": [
+   [
+    "/pensá",
+    "razoná paso a paso antes"
+   ],
+   [
+    "/contras",
+    "buscale los agujeros"
+   ],
+   [
+    "/abogadodiablo",
+    "defendé la postura opuesta"
+   ],
+   [
+    "/supuestos",
+    "decime qué estoy dando por hecho"
+   ],
+   [
+    "/raíz",
+    "encontrá la causa de fondo"
+   ],
+   [
+    "/opciones",
+    "dame 3 caminos distintos"
+   ],
+   [
+    "/comparar",
+    "uno al lado del otro"
+   ],
+   [
+    "/prosycontras",
+    "lo bueno y lo malo"
+   ],
+   [
+    "/decidí",
+    "elegí una y explicá por qué"
+   ],
+   [
+    "/peorcaso",
+    "qué pasa si todo sale mal"
+   ],
+   [
+    "/primeros",
+    "volvé a los principios básicos"
+   ]
+  ]
+ },
+ {
+  "name": "Negocio",
+  "ex": "/precio Taller de Excel online → te propone cuánto cobrar y por qué.",
+  "rows": [
+   [
+    "/pitch",
+    "la versión de 30 segundos"
+   ],
+   [
+    "/precio",
+    "cuánto cobrar y por qué"
+   ],
+   [
+    "/costos",
+    "cuánto cuesta y cuánto deja"
+   ],
+   [
+    "/mercado",
+    "quién más lo hace y cómo"
+   ],
+   [
+    "/público",
+    "describí al cliente ideal"
+   ],
+   [
+    "/objetivos",
+    "metas que se puedan medir"
+   ],
+   [
+    "/kpi",
+    "cómo sé si está funcionando"
+   ],
+   [
+    "/plan",
+    "ordenalo en el tiempo"
+   ],
+   [
+    "/negociar",
+    "los puntos para negociar"
+   ],
+   [
+    "/escalar",
+    "cómo crece sin romperse"
+   ],
+   [
+    "/riesgos",
+    "qué puede salir mal"
+   ]
+  ]
+ },
+ {
+  "name": "Escribir y contenido",
+  "ex": "/gancho un post sobre ahorrar tiempo → 5 primeras líneas que frenan el scroll.",
+  "rows": [
+   [
+    "/gancho",
+    "primera línea que frena el scroll"
+   ],
+   [
+    "/historia",
+    "contalo como una historia"
+   ],
+   [
+    "/vender",
+    "un texto que convierta"
+   ],
+   [
+    "/mail",
+    "pasalo a un mail claro"
+   ],
+   [
+    "/whatsapp",
+    "versión corta para WhatsApp"
+   ],
+   [
+    "/post",
+    "listo para Instagram"
+   ],
+   [
+    "/guion",
+    "guion de video de 60 segundos"
+   ],
+   [
+    "/titulares",
+    "10 títulos para elegir"
+   ],
+   [
+    "/reescribí",
+    "misma idea, mejor escrita"
+   ],
+   [
+    "/acortá",
+    "a la mitad sin perder nada"
+   ],
+   [
+    "/cta",
+    "cerrá con una acción clara"
+   ]
+  ]
+ },
+ {
+  "name": "Aprender",
+  "ex": "/examen después de leer un tema → te arma preguntas para practicar.",
+  "rows": [
+   [
+    "/5años",
+    "como si tuviera cinco años"
+   ],
+   [
+    "/analogía",
+    "explicalo con una comparación"
+   ],
+   [
+    "/ejemplo",
+    "dame un caso real"
+   ],
+   [
+    "/examen",
+    "preguntas para practicar"
+   ],
+   [
+    "/resumen",
+    "lo esencial en 5 líneas"
+   ],
+   [
+    "/mapa",
+    "cómo se conecta todo"
+   ],
+   [
+    "/errores",
+    "lo que todos hacen mal"
+   ],
+   [
+    "/glosario",
+    "las palabras clave explicadas"
+   ],
+   [
+    "/ruta",
+    "qué aprender y en qué orden"
+   ],
+   [
+    "/recursos",
+    "dónde seguir aprendiendo"
+   ],
+   [
+    "/repaso",
+    "tarjetas para repasar"
+   ]
+  ]
+ },
+ {
+  "name": "Organizar",
+  "ex": "/checklist mudanza de oficina → te devuelve la lista para ir tildando.",
+  "rows": [
+   [
+    "/checklist",
+    "lista para ir tildando"
+   ],
+   [
+    "/prioridad",
+    "ordenalo por importancia"
+   ],
+   [
+    "/agenda",
+    "armame el día o la semana"
+   ],
+   [
+    "/plantilla",
+    "una plantilla reutilizable"
+   ],
+   [
+    "/esquema",
+    "un esquema limpio"
+   ],
+   [
+    "/cronograma",
+    "fechas y entregas"
+   ],
+   [
+    "/delegar",
+    "qué hago yo y qué delego"
+   ],
+   [
+    "/reunión",
+    "temario y conclusiones"
+   ],
+   [
+    "/pendientes",
+    "qué quedó sin hacer"
+   ],
+   [
+    "/matriz",
+    "urgente e importante"
+   ],
+   [
+    "/rutina",
+    "convertilo en un hábito"
+   ]
+  ]
+ },
+ {
+  "name": "Código",
+  "ex": "/depurá pegás el error → te dice qué se rompe y cómo arreglarlo.",
+  "rows": [
+   [
+    "/código",
+    "código limpio que funcione"
+   ],
+   [
+    "/depurá",
+    "encontrá qué se rompe"
+   ],
+   [
+    "/explicá",
+    "qué hace este código"
+   ],
+   [
+    "/tests",
+    "pruebas para los casos borde"
+   ],
+   [
+    "/optimizá",
+    "que corra más rápido"
+   ],
+   [
+    "/seguridad",
+    "buscá agujeros de seguridad"
+   ],
+   [
+    "/comentá",
+    "comentalo para que se entienda"
+   ],
+   [
+    "/refactor",
+    "mejorá sin cambiar qué hace"
+   ],
+   [
+    "/convertí",
+    "pasalo a otro lenguaje"
+   ],
+   [
+    "/sql",
+    "armame la consulta"
+   ],
+   [
+    "/regex",
+    "la expresión regular"
+   ]
+  ]
+ },
+ {
+  "name": "Revisar y cerrar",
+  "ex": "/verificá antes de mandar un informe → te marca lo que no cierra.",
+  "rows": [
+   [
+    "/verificá",
+    "chequeá datos y cuentas"
+   ],
+   [
+    "/fuentes",
+    "de dónde sale cada dato"
+   ],
+   [
+    "/críticá",
+    "sé duro con esto"
+   ],
+   [
+    "/mejorá",
+    "subile el nivel"
+   ],
+   [
+    "/simplificá",
+    "reducilo a lo esencial"
+   ],
+   [
+    "/consistencia",
+    "que no se contradiga"
+   ],
+   [
+    "/ortografía",
+    "corregí errores y tildes"
+   ],
+   [
+    "/tono",
+    "revisá cómo suena"
+   ],
+   [
+    "/final",
+    "última pasada antes de mandar"
+   ],
+   [
+    "/siguiente",
+    "¿cuál es el próximo paso?"
+   ],
+   [
+    "/todo",
+    "aplicá todo lo anterior"
+   ]
+  ]
+ }
+];
+
+const preferencias = "Cuando un mensaje empiece con uno o más atajos con \"/\", aplicá lo que significa cada uno a mi pedido. Si combino varios, aplicalos todos. Estos son los atajos:\n\n/simple = en palabras de todos los días\n/corto = la respuesta más breve posible\n/largo = completo, sin recortar nada\n/viñetas = todo en puntos cortos\n/tabla = ordenalo en una tabla\n/pasos = numerado, paso a paso\n/formal = tono profesional y prolijo\n/cercano = como si hablaras con un amigo\n/uy = en español de Uruguay\n/sinrelleno = sacá la paja, solo lo útil\n/titulos = con títulos para escanear rápido\n/experto = respondé como especialista\n/profe = explicá con paciencia\n/mentor = acompañame como un mentor\n/contador = mirá los números y lo fiscal\n/abogado = señalá riesgos legales\n/vendedor = pensá como el que vende\n/cliente = ponete en el lugar del cliente\n/inversor = evaluá si pondrías plata\n/editor = corregí como un editor\n/diseñador = pensá en cómo se ve y se usa\n/ceo = decidí con mirada de dueño\n/pensá = razoná paso a paso antes\n/contras = buscale los agujeros\n/abogadodiablo = defendé la postura opuesta\n/supuestos = decime qué estoy dando por hecho\n/raíz = encontrá la causa de fondo\n/opciones = dame 3 caminos distintos\n/comparar = uno al lado del otro\n/prosycontras = lo bueno y lo malo\n/decidí = elegí una y explicá por qué\n/peorcaso = qué pasa si todo sale mal\n/primeros = volvé a los principios básicos\n/pitch = la versión de 30 segundos\n/precio = cuánto cobrar y por qué\n/costos = cuánto cuesta y cuánto deja\n/mercado = quién más lo hace y cómo\n/público = describí al cliente ideal\n/objetivos = metas que se puedan medir\n/kpi = cómo sé si está funcionando\n/plan = ordenalo en el tiempo\n/negociar = los puntos para negociar\n/escalar = cómo crece sin romperse\n/riesgos = qué puede salir mal\n/gancho = primera línea que frena el scroll\n/historia = contalo como una historia\n/vender = un texto que convierta\n/mail = pasalo a un mail claro\n/whatsapp = versión corta para WhatsApp\n/post = listo para Instagram\n/guion = guion de video de 60 segundos\n/titulares = 10 títulos para elegir\n/reescribí = misma idea, mejor escrita\n/acortá = a la mitad sin perder nada\n/cta = cerrá con una acción clara\n/5años = como si tuviera cinco años\n/analogía = explicalo con una comparación\n/ejemplo = dame un caso real\n/examen = preguntas para practicar\n/resumen = lo esencial en 5 líneas\n/mapa = cómo se conecta todo\n/errores = lo que todos hacen mal\n/glosario = las palabras clave explicadas\n/ruta = qué aprender y en qué orden\n/recursos = dónde seguir aprendiendo\n/repaso = tarjetas para repasar\n/checklist = lista para ir tildando\n/prioridad = ordenalo por importancia\n/agenda = armame el día o la semana\n/plantilla = una plantilla reutilizable\n/esquema = un esquema limpio\n/cronograma = fechas y entregas\n/delegar = qué hago yo y qué delego\n/reunión = temario y conclusiones\n/pendientes = qué quedó sin hacer\n/matriz = urgente e importante\n/rutina = convertilo en un hábito\n/código = código limpio que funcione\n/depurá = encontrá qué se rompe\n/explicá = qué hace este código\n/tests = pruebas para los casos borde\n/optimizá = que corra más rápido\n/seguridad = buscá agujeros de seguridad\n/comentá = comentalo para que se entienda\n/refactor = mejorá sin cambiar qué hace\n/convertí = pasalo a otro lenguaje\n/sql = armame la consulta\n/regex = la expresión regular\n/verificá = chequeá datos y cuentas\n/fuentes = de dónde sale cada dato\n/críticá = sé duro con esto\n/mejorá = subile el nivel\n/simplificá = reducilo a lo esencial\n/consistencia = que no se contradiga\n/ortografía = corregí errores y tildes\n/tono = revisá cómo suena\n/final = última pasada antes de mandar\n/siguiente = ¿cuál es el próximo paso?\n/todo = aplicá todo lo anterior";
+---
+<RecursoLayout
+  titulo="Los 99 atajos para Claude, listos para copiar"
+  descripcion="Atajos de una palabra para pedirle a Claude el tono, el rol o el formato sin escribir prompts largos. Con el texto para que los entienda siempre."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="ATAJOS"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Escribís el atajo y después tu pedido. Por ejemplo: <code>/corto ¿Qué es una API?</code> te responde en una línea. Se pueden combinar: <code>/tabla /comparar Notion o Trello</code>.</b></div>
+
+  <div class="note"><b>Antes de empezar:</b> no son comandos oficiales de Claude. Son pedidos cortos que Claude entiende porque cada palabra ya dice lo que querés. Para que los aplique siempre igual, pegá el texto del paso 1 en tus preferencias.</div>
+
+  <h2>1 · Que Claude los entienda siempre</h2>
+  <ol class="steps">
+    <li>En claude.ai, entrá a <b>Configuración</b> y buscá <b>preferencias personales</b> (o pegalo en las instrucciones de un Proyecto).</li>
+    <li>Pegá este texto y guardá.</li>
+    <li>Probalo: abrí un chat nuevo y escribí <code>/viñetas</code> antes de cualquier pregunta.</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{preferencias}</code></pre>
+  </div>
+  <div class="note"><b>Si al escribir "/" se abre un menú,</b> seguí escribiendo el atajo y tu pedido: el menú se cierra solo.</div>
+
+  {grupos.map((g, i) => (
+    <>
+      <h2>{i + 2} · {g.name} ({i * 11 + 1}–{i * 11 + 11})</h2>
+      <ul class="arrow">
+        {g.rows.map(([a, d]) => <li><b>{a}</b> — {d}</li>)}
+      </ul>
+      <div class="note"><b>Probalo:</b> {g.ex}</div>
+      {i === 3 && (
+        <div class="minicta">
+          Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+        </div>
+      )}
+    </>
+  ))}
+
+  <h2>Combinaciones que más uso</h2>
+  <ul class="arrow">
+    <li><b>/contras /peorcaso</b> antes de tomar una decisión grande.</li>
+    <li><b>/whatsapp /cercano</b> para responderle a un cliente.</li>
+    <li><b>/simple /ejemplo</b> para entender un tema nuevo.</li>
+    <li><b>/verificá /final</b> antes de mandar algo importante.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Pegué el texto en mis preferencias.</li>
+    <li>Probé un atajo en un chat nuevo.</li>
+    <li>Combiné dos atajos en un mismo pedido.</li>
+    <li>Elegí mis 5 favoritos para usar esta semana.</li>
+  </ul>
+</RecursoLayout>
