@@ -1,0 +1,159 @@
+---
+// Lead magnet · palabra clave ManyChat: APPS (carrusel "Dejá de pagar estas 5 apps", 13/10 — carrusel sin video,
+// arquetipo comentar; ref @juanbertorello.ia "5 apps que dejé de pagar").
+// URL pública: /recursos/armar-apps-con-claude
+// Verificado 13/10/2026:
+//   https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them — artifacts en todos los planes;
+//     requieren "Cloud code execution and file creation" (Settings > Capabilities); guardar datos: Pro, Max, Team y Enterprise,
+//     personal o compartido, 20 MB, solo texto; artifacts empiezan privados.
+//   https://support.claude.com/en/articles/9547008 — publicar con link (Free, Pro, Max); el que no tiene cuenta puede verlo.
+//   Precios de lista mes a mes: Linktree Pro 15 · Calendly Standard 12 · Pipedrive (entrada) 24/usuario · Asana Starter
+//   13,49/usuario · Invoice Simple Premium 19,99 (fuentes en el chat del 13/10; las páginas oficiales pueden variar).
+// Decisión: links y turnos (los ve tu cliente) = página HTML publicada gratis; turnos reservan por WhatsApp (sin servidor).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const links = `Armame mi página de links para la bio de Instagram, como un único archivo HTML listo para publicar.
+Mi negocio: [NOMBRE Y QUÉ HACÉS, en una frase].
+Botones, en este orden: [por ejemplo: Reservá una consulta, Ver trabajos, Catálogo (PDF), Escribinos por WhatsApp].
+Links de cada botón: [PEGÁ LOS LINKS]. Para WhatsApp usá https://wa.me/[TU NÚMERO CON CÓDIGO DE PAÍS, sin +].
+Colores de mi marca: [COLORES o "elegilos vos, estilo cálido y prolijo"].
+Que se vea perfecto en el celular, cargue rápido y tenga mi foto o logo arriba (te la paso).
+Al final, explicame cómo publicarlo gratis paso a paso.`;
+
+const turnos = `Armame una página para que mis clientes reserven turnos, como un único archivo HTML listo para publicar.
+Servicio: [QUÉ OFRECÉS] · duración del turno: [30 / 60 min].
+Mis horarios: [DÍAS Y HORAS, por ejemplo lunes a viernes de 9 a 12 y de 15 a 18].
+Cómo funciona: el cliente elige día y hora, pone su nombre y toca "Reservar". Eso abre WhatsApp con el mensaje listo para mandarme:
+"Hola, quiero reservar [SERVICIO] el [DÍA] a las [HORA]. Soy [NOMBRE]."
+Mi WhatsApp: [NÚMERO CON CÓDIGO DE PAÍS, sin +].
+Que no muestre domingos ni feriados y que se vea bien en el celular.
+Al final, explicame cómo publicarla gratis y cómo cambio los horarios.`;
+
+const crm = `Armame un CRM simple para mis clientes, como artifact.
+Mi negocio: [QUÉ VENDÉS Y A QUIÉN].
+Etapas de venta: [por ejemplo Contacto, Propuesta, Negociación, Cerrado, Perdido].
+De cada cliente quiero: nombre, empresa, teléfono, qué le ofrecí, monto, etapa y fecha del último contacto.
+Quiero:
+- Ver el embudo con los clientes en cada etapa y el total en juego.
+- Que me marque a quién tengo que volver a escribir (más de [X] días sin contacto).
+- Poder pegar una lista desde Excel para cargar varios de una.
+Que los datos queden guardados entre sesiones, en almacenamiento personal.
+Antes de armarlo, haceme las preguntas que necesites.`;
+
+const tablero = `Armame un tablero de proyectos estilo Trello, como artifact.
+Proyecto: [NOMBRE, por ejemplo Lanzamiento de octubre].
+Columnas: Por hacer, Haciendo, Listo.
+De cada tarea: título, responsable, fecha límite y una nota.
+Quiero mover las tarjetas entre columnas, filtrar por responsable y ver qué vence esta semana.
+Mi equipo: [NOMBRES].
+Que los datos queden guardados entre sesiones.
+Empezá con estas tareas: [LISTA DE TAREAS].`;
+
+const presupuesto = `Armame un generador de presupuestos, como artifact.
+Mi negocio: [NOMBRE, RUT si querés que figure, teléfono y mail].
+Moneda: [$U / USD]. ¿Agrego IVA? [SÍ (22 %) / NO].
+Para cada presupuesto cargo: cliente, trabajo, ítems (descripción, cantidad, precio) y validez en días.
+Quiero:
+- Que calcule subtotal, IVA y total solo.
+- Un número de presupuesto correlativo.
+- Un botón para descargarlo en PDF con mi logo (te lo paso) y otro para copiar un mensaje de WhatsApp con el resumen.
+- Que guarde los presupuestos enviados y si el cliente lo aceptó.
+Que los datos queden guardados entre sesiones, en almacenamiento personal.`;
+---
+<RecursoLayout
+  titulo="Armá con Claude las 5 apps que hoy pagás"
+  descripcion="Página de links, turnos, CRM, tablero de proyectos y presupuestos: el prompt para armar cada una y lo que tenés que saber antes."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="APPS"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Son USD 84 por mes en suscripciones (más de USD 1.000 al año). No necesitás saber programar: copiá el prompt, completá lo que está entre corchetes y Claude te arma la tuya.</b></div>
+
+  <h2>Lo que reemplazás</h2>
+  <ul class="arrow">
+    <li><b>Página de links</b> → Linktree Pro · USD 15 por mes.</li>
+    <li><b>Agenda de turnos</b> → Calendly · USD 12 por mes.</li>
+    <li><b>CRM de clientes</b> → Pipedrive · USD 24 por mes, por usuario.</li>
+    <li><b>Tablero de proyectos</b> → Asana · USD 13,49 por mes, por usuario.</li>
+    <li><b>Presupuestos en PDF</b> → Invoice Simple · USD 19,99 por mes.</li>
+  </ul>
+  <div class="note"><b>Precios de lista</b>, pagando mes a mes. Con plan anual son algo menores, y Pipedrive y Asana cobran por cada persona del equipo.</div>
+
+  <h2>Antes de empezar</h2>
+  <ul class="arrow">
+    <li><b>Activá:</b> en <b>Configuración → Capacidades</b>, "Ejecución de código y creación de archivos" (Cloud code execution and file creation).</li>
+    <li><b>Plan:</b> armar apps está en todos los planes. Para que <b>guarden datos</b> (el CRM, el tablero y los presupuestos), necesitás Pro o superior.</li>
+    <li><b>Dos tipos de app:</b> las que usás vos (CRM, tablero, presupuestos) se quedan en Claude como artifact. Las que ve tu cliente (links y turnos) se arman como página web y se publican gratis.</li>
+  </ul>
+
+  <h2>1 · Tu página de links</h2>
+  <p>La página de la bio de Instagram, con tu diseño y tus botones.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{links}</code></pre>
+  </div>
+  <ol class="steps">
+    <li>Descargá el archivo HTML que te arma Claude.</li>
+    <li>Entrá a <b>app.netlify.com/drop</b> y arrastrá el archivo. Te da un link gratis al momento.</li>
+    <li>Pegá ese link en la bio de Instagram.</li>
+  </ol>
+  <div class="note"><b>Considerá:</b> Linktree te da estadísticas de clics; esta página no. Si las necesitás, pedile a Claude que le sume Google Analytics.</div>
+
+  <h2>2 · Tu agenda de turnos</h2>
+  <p>Tu cliente elige día y hora y te llega la reserva por WhatsApp, con el mensaje listo.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{turnos}</code></pre>
+  </div>
+  <div class="note"><b>Considerá:</b> esta versión no se sincroniza con tu calendario ni manda recordatorios como Calendly. Vos confirmás cada turno por WhatsApp y lo anotás. Para la mayoría de los negocios chicos alcanza, y no pagás nada.</div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>3 · Tu CRM de clientes</h2>
+  <p>Tu embudo de ventas: quién está en cada etapa y a quién tenés que volver a escribir.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{crm}</code></pre>
+  </div>
+  <div class="note"><b>Considerá:</b> queda guardado en tu cuenta de Claude, hasta 20 MB de texto (miles de clientes). No cargues datos sensibles como números de tarjeta.</div>
+
+  <h2>4 · Tu tablero de proyectos</h2>
+  <p>Lo que hay que hacer, lo que se está haciendo y lo que ya está, con quién lo tiene.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{tablero}</code></pre>
+  </div>
+  <div class="note"><b>Considerá:</b> si lo usás solo, pedí almacenamiento personal. Para compartirlo con tu equipo, cada persona necesita su cuenta de Claude, y el almacenamiento compartido lo ve todo el que use el tablero.</div>
+
+  <h2>5 · Tus presupuestos en PDF</h2>
+  <p>Cargás el trabajo y te arma el presupuesto con tu logo, listo para mandar.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{presupuesto}</code></pre>
+  </div>
+  <div class="note"><b>Considerá:</b> esto es un presupuesto, no una factura. En Uruguay la factura tiene que ser electrónica (CFE) y salir de un sistema habilitado por DGI.</div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Necesito saber programar?</b> No. Copiás el prompt, completás lo que está entre corchetes y le pedís cambios en palabras: "poné el botón más grande", "sumá una columna".</li>
+    <li><b>¿Dónde quedan mis apps?</b> Las que se quedan en Claude, en tu lista de artifacts. Las páginas publicadas, en el link que te da Netlify.</li>
+    <li><b>¿Y si algo no funciona?</b> Describile a Claude qué pasa ("cuando toco Reservar no abre WhatsApp") y pedile que lo arregle.</li>
+    <li><b>¿Puedo cambiarlas después?</b> Sí, en el mismo chat. Si es una página publicada, volvés a arrastrar el archivo nuevo a Netlify.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Activé la ejecución de código en Capacidades.</li>
+    <li>Armé mi página de links y la puse en la bio.</li>
+    <li>Armé la página de turnos y probé una reserva por WhatsApp.</li>
+    <li>Cargué mis clientes en el CRM.</li>
+    <li>Mandé mi primer presupuesto en PDF.</li>
+    <li>Di de baja la suscripción que ya no uso.</li>
+  </ul>
+</RecursoLayout>
