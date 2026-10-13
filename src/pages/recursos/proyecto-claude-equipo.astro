@@ -1,0 +1,143 @@
+---
+// Lead magnet · palabra clave ManyChat: PROYECTO (reel "3 cosas que cambian Projects", 13/10)
+// URL pública: /recursos/proyecto-claude-equipo
+// Verificado 13/10/2026 en https://code.claude.com/docs/en/claude-projects:
+//   - Projects es de Claude Code (claude.ai/code, pestaña Code del escritorio, app del celular), beta pública en Pro y Max,
+//     con despliegue gradual; no está en Team ni Enterprise. Si no aparece en la barra lateral, hay lista de espera.
+//   - Un proyecto = una conversación que coordina; cada tarea es un "thread" (sesión en la nube) y corren en paralelo.
+//   - Todos arrancan con las instrucciones del proyecto (hasta 16.000 caracteres), la memoria y los archivos/repos.
+//   - Sirve para trabajo que no es código: se suben documentos y los resultados quedan en la pestaña Library.
+//   - Por defecto cada thread usa Opus en esfuerzo alto: gasta el límite más rápido (Project settings > General).
+// Aclaración pedida por Andrés (13/10): decir que es de Claude Code y que está en beta.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const objetivo = `Mandarle a [CLIENTE] una propuesta clara, con precio, esta semana.`;
+
+const instrucciones = `Este proyecto arma la propuesta comercial para [CLIENTE].
+Mi negocio: [QUÉ HACÉS, en una frase]. Le escribo a [TIPO DE CLIENTE] en tono [cercano / formal].
+
+Archivos del proyecto:
+- notas-reunion: lo que me pidió el cliente.
+- servicios-y-precios: lo que ofrezco y cuánto cobro.
+- propuesta-ejemplo: una propuesta mía anterior, para copiar el formato.
+
+Reglas para cada tarea:
+- Usá solo lo que está en los archivos. Si falta un dato (un precio, una fecha), decilo y frená: no lo inventes.
+- Cada tarea entrega su resultado como un archivo, con un nombre claro.
+- Respuestas cortas: qué hiciste, qué archivo dejaste y qué falta.
+- No mandes nada a nadie: yo reviso todo antes.`;
+
+const tareas = `Arrancá estas 3 tareas:
+
+1. INVESTIGAR: leé las notas de la reunión y armá un resumen de qué necesita el cliente, qué le preocupa y cuál de mis servicios le sirve. Archivo: resumen-cliente.
+
+2. ESCRIBIR: con ese resumen y mi propuesta de ejemplo, escribí la propuesta: problema, solución, entregables, plazos y precio. Archivo: propuesta-borrador.
+
+3. REVISAR: compará la propuesta con servicios-y-precios y con las notas. Marcá precios que no coinciden, promesas que no puedo cumplir y partes poco claras. Archivo: revision.
+
+Corré en paralelo lo que se pueda; lo que dependa de otra tarea, arrancalo apenas esté lo que necesita. Avisame solo cuando algo termine o esté trabado.`;
+
+const recordar = `Recordá para todo el proyecto: [UNA REGLA, por ejemplo "los precios van siempre sin IVA y en dólares"].`;
+---
+<RecursoLayout
+  titulo="Tu primer proyecto en Claude: 3 tareas trabajando como un equipo"
+  descripcion="Un ejemplo listo para copiar: un objetivo, 3 tareas (investigar, escribir y revisar) que comparten el mismo contexto y corren en paralelo."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="PROYECTO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Le das un objetivo y Claude lo divide en tareas. Cada tarea trabaja con los mismos archivos e instrucciones, y corren a la vez. Acá tenés un ejemplo completo para armar el tuyo.</b></div>
+
+  <div class="note"><b>Antes de empezar: es de Claude Code y está en beta.</b> Projects está en <b>claude.ai/code</b>, en la pestaña <b>Code</b> de la app de escritorio y en la app del celular. No es la sección Proyectos del chat común. Está en beta para los planes <b>Pro y Max</b> y se va habilitando de a poco. Si no te aparece <b>Projects</b> en la barra lateral, todavía no te llegó: podés anotarte en la lista de espera.</div>
+
+  <h2>Qué cambia</h2>
+  <ul class="arrow">
+    <li><b>Divide el objetivo en tareas:</b> le escribís lo que querés lograr y Claude arma una tarea para cada parte (por ejemplo, investigar, escribir y revisar). No tenés que abrir varios chats ni coordinarlos vos.</li>
+    <li><b>Todas usan el mismo contexto:</b> cada tarea arranca con los archivos, las instrucciones y la memoria del proyecto. No le explicás todo de nuevo cada vez.</li>
+    <li><b>Trabajan en paralelo:</b> mientras una investiga, otra ya puede ir escribiendo. Cuando volvés, en <b>Overview</b> ves qué terminó y qué está esperando tu respuesta.</li>
+  </ul>
+
+  <h2>El ejemplo: una propuesta comercial</h2>
+  <p>No hace falta saber programar: este proyecto trabaja con documentos. Un objetivo, 3 archivos y 3 tareas.</p>
+
+  <h2>1 · Creá el proyecto</h2>
+  <ol class="steps">
+    <li>Entrá a <b>claude.ai/code</b> y tocá <b>Projects → New project</b>.</li>
+    <li><b>Name:</b> "Propuesta [CLIENTE]".</li>
+    <li><b>Goal:</b> pegá el objetivo de abajo.</li>
+    <li><b>Context → Add:</b> subí tus 3 archivos: las notas de la reunión, tus servicios y precios, y una propuesta tuya anterior.</li>
+    <li>Tocá <b>Create project</b>.</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{objetivo}</code></pre>
+  </div>
+
+  <h2>2 · Escribí las instrucciones</h2>
+  <p>Es lo que lee cada tarea al arrancar. Van en <b>Project settings → Memory → Project instructions</b>.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{instrucciones}</code></pre>
+  </div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>3 · Mandale las 3 tareas</h2>
+  <p>En la conversación del proyecto, pegá esto. Claude arma una tarea para cada punto y te muestra una tarjeta por tarea.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{tareas}</code></pre>
+  </div>
+  <ol class="steps">
+    <li>Abrí cada tarjeta para ver cómo va esa tarea.</li>
+    <li>Los archivos que entregan quedan en <b>Overview → Library</b>.</li>
+    <li>Si una tarea te hace una pregunta, aparece en <b>Waiting on you</b>. Se responde adentro de esa tarea.</li>
+  </ol>
+
+  <h2>4 · Que se acuerde para la próxima</h2>
+  <p>Cuando corregís algo, pedile que lo recuerde. Queda en la memoria del proyecto y las tareas nuevas arrancan sabiéndolo.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{recordar}</code></pre>
+  </div>
+
+  <h2>Cuidá tu límite</h2>
+  <ul class="arrow">
+    <li><b>Gasta más rápido:</b> cada tarea es una sesión completa, y varias a la vez consumen el límite de tu plan antes. En Pro se nota.</li>
+    <li><b>Modelo:</b> por defecto cada tarea usa Opus con esfuerzo alto. Para tareas simples, bajalo en <b>Project settings → General</b> (Thread model y Thread effort).</li>
+    <li><b>Andá de a poco:</b> la primera vez, pedile "proponé las tareas y esperá mi ok antes de arrancarlas" y "corré como máximo dos a la vez".</li>
+  </ul>
+
+  <h2>Otros proyectos que podés armar igual</h2>
+  <ul class="arrow">
+    <li><b>Contenido del mes:</b> investigar temas, escribir los guiones y revisar el tono contra tus posteos anteriores.</li>
+    <li><b>Ordenar clientes:</b> leer las planillas de ventas, armar el resumen de cada cliente y marcar a quién volver a escribir.</li>
+    <li><b>Tu web (con GitHub):</b> una tarea por página, cada una con su cambio listo para revisar.</li>
+  </ul>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Es lo mismo que los Proyectos del chat?</b> No. Los Proyectos del chat guardan archivos e instrucciones para tus conversaciones. Este Projects es de Claude Code: además arma tareas y las corre en paralelo.</li>
+    <li><b>¿Necesito GitHub?</b> Solo si el proyecto trabaja con código. Para documentos, los subís y listo.</li>
+    <li><b>¿Puedo cerrar la compu?</b> Sí. Las tareas corren en la nube y siguen trabajando. Las ves y las seguís desde el celular.</li>
+    <li><b>¿Lo tengo en el plan Team?</b> Todavía no. Por ahora es solo Pro y Max.</li>
+  </ul>
+
+  <div class="note"><b>¿Venías por los proyectos para armar en una semana?</b> Están en <a href="/recursos/proyectos-fin-de-semana-claude">5 herramientas para armar con Claude esta semana →</a></div>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Me aparece Projects en claude.ai/code (o me anoté en la lista de espera).</li>
+    <li>Creé el proyecto con su objetivo y mis 3 archivos.</li>
+    <li>Pegué las instrucciones del proyecto.</li>
+    <li>Mandé las 3 tareas y vi las tarjetas.</li>
+    <li>Revisé los archivos en Library.</li>
+    <li>Le pedí que recuerde una regla.</li>
+  </ul>
+</RecursoLayout>
