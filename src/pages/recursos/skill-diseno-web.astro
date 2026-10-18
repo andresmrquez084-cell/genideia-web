@@ -1,0 +1,130 @@
+---
+// Lead magnet · palabra clave ManyChat: DISEÑO (reel "Páginas webs", 18/10/2026)
+// URL pública: /recursos/skill-diseno-web
+// Skills: SKILL.md con frontmatter name + description (https://code.claude.com/docs/en/skills). En Claude Code va en
+// ~/.claude/skills/<nombre>/SKILL.md; en la app de Claude se sube como .zip desde Configuración → Capacidades → Skills.
+// La skill es propia (criterio de diseño de GENIDEIA); como alternativa se nombra la skill oficial frontend-design de Anthropic.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const skill = `---
+name: diseno-web
+description: Usala cada vez que vayas a diseñar o rediseñar una página web, landing o interfaz. Le da a Claude criterio de diseño (dirección visual, tipografía, espacios, color y uso de referencias) para que el resultado no parezca una página genérica hecha por IA.
+---
+
+# Diseño web con criterio
+
+## 1. Antes de escribir código
+- Pedime referencias si no te las di: 2 o 3 páginas que me gusten. Si no tengo, proponé 3 direcciones visuales distintas y dejame elegir.
+- Definí la dirección visual en una frase (por ejemplo "editorial y sobria", "cálida y artesanal", "técnica y precisa") y respetala en todo.
+- Preguntá para quién es la página y qué tiene que hacer el visitante. El diseño sirve a eso.
+
+## 2. Tipografía
+- Máximo 2 familias: una para títulos con personalidad y una legible para el texto.
+- No uses la misma fuente genérica de siempre por defecto: elegila según la dirección visual y decí por qué.
+- Jerarquía clara: el título se lee primero, después el subtítulo, después el botón.
+
+## 3. Espacios
+- Dale aire a cada sección: el espacio también comunica.
+- Usá una escala de espacios fija (por ejemplo 8, 16, 24, 40, 64) y no inventes valores sueltos.
+- Una idea por sección. Si una sección dice tres cosas, dividila.
+
+## 4. Color
+- Partí de los colores de la marca. Un color de acento, no cinco.
+- El acento va donde querés que miren: el botón principal, una palabra clave.
+- Revisá el contraste del texto: tiene que leerse en el celular.
+
+## 5. Referencias
+- Analizá cada referencia antes de usarla: qué estructura tiene, qué tipografía, cómo usa el espacio y por qué funciona.
+- Tomá decisiones de las referencias, no las copies: misma lógica, otra ejecución.
+- Si algo de tu diseño no sale de la dirección visual ni de una referencia, preguntate por qué está.
+
+## 6. Lo que NO repetir (señales de página hecha por IA)
+- Degradés violeta o azul por defecto.
+- Tres tarjetas iguales con un ícono arriba como sección principal.
+- Títulos genéricos como "Transformá tu negocio" o "Llevá tu empresa al siguiente nivel".
+- Emojis como íconos, sombras y brillos en todo, bordes redondeados en todo.
+- La misma estructura de siempre: hero, tres tarjetas, testimonios y botón.
+
+## 7. Antes de entregar
+- Revisá la página en celular y en computadora.
+- Explicame en 3 líneas las decisiones de diseño que tomaste y de qué referencia salió cada una.`;
+
+const instalarCode = `Instalá esta skill en ~/.claude/skills/diseno-web/SKILL.md con exactamente este contenido:
+[PEGÁ ACÁ LA SKILL]
+Cuando termines, mostrame el archivo y no cambies nada más.`;
+
+const probar = `Usá la skill diseno-web. Quiero una landing para [TU NEGOCIO].
+Es para [QUIÉN LA VA A VER] y lo que tienen que hacer es [LA ACCIÓN: escribirte, reservar, comprar].
+Mis referencias: [2 O 3 LINKS DE PÁGINAS QUE TE GUSTAN].
+Colores de mi marca: [COLORES].`;
+---
+<RecursoLayout
+  titulo="La skill de diseño para que tus páginas no parezcan hechas por IA"
+  descripcion="Una skill lista para instalar en Claude: dirección visual, tipografía, espacios, color, referencias y lo que no tiene que repetir."
+  tipo="Skill"
+  barLabel="Skill · @andresalbornoz.ai"
+  palabraClave="DISEÑO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Si le pedís a Claude "una página web moderna", tiene que adivinar qué significa "moderna", y por eso todas terminan iguales: mismos fondos, mismos botones, mismas tarjetas. Con esta skill le das reglas, instrucciones y referencias, y ya sabe qué estilo seguir y qué no repetir.</b></div>
+
+  <h2>Qué hace la skill</h2>
+  <ul class="arrow">
+    <li><b>Dirección visual:</b> antes de diseñar define un estilo en una frase y lo respeta en toda la página.</li>
+    <li><b>Tipografía, espacios y color:</b> reglas concretas para elegir con criterio y no por defecto.</li>
+    <li><b>Referencias:</b> analiza tus ejemplos y toma decisiones de ellos, sin copiarlos.</li>
+    <li><b>Lo que no repetir:</b> la lista de señales que delatan una página hecha por IA.</li>
+  </ul>
+
+  <h2>La skill</h2>
+  <p>Copiala completa. Es un archivo <b>SKILL.md</b>:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{skill}</code></pre>
+  </div>
+
+  <h2>Cómo instalarla</h2>
+  <h3>En Claude Code</h3>
+  <p>Pegale esto a Claude Code y reemplazá el corchete por la skill:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{instalarCode}</code></pre>
+  </div>
+  <h3>En la app de Claude (claude.ai)</h3>
+  <ol class="steps">
+    <li>Guardá la skill en un archivo llamado <b>SKILL.md</b> dentro de una carpeta <b>diseno-web</b>.</li>
+    <li>Comprimí la carpeta en un .zip.</li>
+    <li>Andá a <b>Configuración → Capacidades → Skills</b> y subí el .zip.</li>
+  </ol>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Probala</h2>
+  <p>Completá los corchetes. Lo que más cambia el resultado son las referencias:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{probar}</code></pre>
+  </div>
+  <div class="note"><b>Tip:</b> sumá a la skill tus propias reglas. Si siempre corregís lo mismo (un color, un tipo de botón, un tono), escribilo una vez en la sección 6 y no lo vas a tener que repetir.</div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Funciona con cualquier herramienta?</b> La skill es para Claude (app o Claude Code). Las reglas sirven igual si las pegás como instrucciones en otra herramienta.</li>
+    <li><b>¿Y si no tengo referencias?</b> La skill le pide a Claude que te proponga 3 direcciones visuales para elegir.</li>
+    <li><b>¿Hay una skill oficial?</b> Sí, Anthropic tiene <b>frontend-design</b>. Esta es más corta, en español y pensada para que agregues tu propio criterio.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Instalé la skill.</li>
+    <li>Le pasé 2 o 3 referencias que me gustan.</li>
+    <li>Claude me explicó la dirección visual antes de diseñar.</li>
+    <li>La página no tiene ninguna de las señales de la sección 6.</li>
+    <li>La revisé en el celular.</li>
+  </ul>
+</RecursoLayout>
