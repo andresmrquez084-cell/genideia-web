@@ -1,0 +1,187 @@
+---
+// Lead magnet · palabra clave ManyChat: DECISIÓN (reel: "Estudio Stanford", 18/10/2026)
+// URL pública: /recursos/decision-varios-agentes
+// Dato del gancho verificado (18/10/2026):
+//   Stanford (Myra Cheng, Dan Jurafsky y otros), publicado en Science, marzo 2026: 11 modelos (ChatGPT, Claude, Gemini,
+//   DeepSeek y otros) respaldan al usuario en promedio un 49 % más que las personas, incluso cuando no tiene razón.
+//   https://news.stanford.edu/stories/2026/03/ai-advice-sycophantic-models-research
+// Claude Code: sub-agentes en .claude/agents/<nombre>.md, cada uno con su propio contexto (https://code.claude.com/docs/en/sub-agents).
+// Complementa /recursos/equipo-agentes-decisiones (EQUIPO): esta es la estructura del video Stanford (riesgos · desde cero ·
+// oportunidades · desde afuera · el que compara y concluye).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const ficha = `DECISIÓN: [QUÉ TENÉS QUE DECIDIR, EN UNA FRASE]
+Contexto: [TU NEGOCIO O SITUACIÓN, EN 3 O 4 LÍNEAS]
+Lo que estoy pensando hacer: [TU IDEA ACTUAL]
+Datos que tengo: [NÚMEROS, PLAZOS, PRESUPUESTO]
+Plazo para decidir: [CUÁNDO]`;
+
+const antiRazon = `Antes de responder, tené en cuenta esto:
+No busco que me des la razón. Si mi idea tiene un problema, decímelo aunque no me guste.
+No suavices las críticas ni empieces diciendo que la idea es buena.
+Si te falta un dato para opinar, preguntámelo en vez de suponerlo.`;
+
+const riesgos = `Sos el agente de RIESGOS de un equipo que analiza una decisión.
+Tu único trabajo: encontrar qué puede salir mal.
+Analizá: supuestos que nadie comprobó, qué pasa si los números salen peor, de quién dependo y qué no se puede deshacer.
+No hables de oportunidades: ese no es tu rol.
+Resultado: los 5 riesgos principales, ordenados por gravedad, cada uno con su motivo y una señal temprana para detectarlo.
+
+[PEGÁ ACÁ TU FICHA DE DECISIÓN]`;
+
+const desdeCero = `Sos el agente DESDE CERO de un equipo que analiza una decisión.
+Tu único trabajo: olvidarte de la solución que propongo y analizar el problema desde cero.
+Analizá: cuál es el problema real que quiero resolver, si mi idea es la única forma de resolverlo y qué haría alguien que empieza sin ningún supuesto.
+No evalúes mi idea todavía: primero redefiní el problema.
+Resultado: el problema en una frase, 3 formas distintas de resolverlo y en cuál de ellas encaja (o no) mi idea.
+
+[PEGÁ ACÁ TU FICHA DE DECISIÓN]`;
+
+const oportunidades = `Sos el agente de OPORTUNIDADES de un equipo que analiza una decisión.
+Tu único trabajo: encontrar oportunidades que todavía no vi.
+Analizá: qué puedo aprovechar que ya tengo (clientes, conocimiento, contactos), qué se gana si sale bien y qué variante de la idea tiene más para ganar.
+No hables de riesgos: ese no es tu rol.
+Resultado: las 3 oportunidades más grandes que no estoy viendo, cuánto valen aproximadamente y qué haría falta para capturarlas.
+
+[PEGÁ ACÁ TU FICHA DE DECISIÓN]`;
+
+const afuera = `Sos el agente DESDE AFUERA de un equipo que analiza una decisión.
+Tu único trabajo: mirar la situación como alguien que viene de afuera y no está enamorado de la idea.
+Pensá como un cliente que no me conoce, un competidor y un inversor escéptico.
+Analizá: qué ven ellos que yo no veo, qué les parecería obvio y qué no entenderían.
+Resultado: lo que diría cada uno en 2 o 3 líneas y el punto en el que los tres coinciden.
+
+[PEGÁ ACÁ TU FICHA DE DECISIÓN]`;
+
+const concluye = `Sos el agente que CONCLUYE. Recibís 4 análisis de la misma decisión, hechos desde posiciones distintas.
+Compará idea por idea:
+1. Dónde están de acuerdo.
+2. Dónde no, y cuál argumento tiene más evidencia.
+3. Qué dato falta, si falta alguno, para decidir bien.
+No promedies opiniones ni me des la razón por defecto: pesá cada punto por lo que lo sostiene.
+Resultado:
+- Decisión: SÍ / SÍ, CON CAMBIOS / NO / TODAVÍA NO.
+- Los 3 motivos principales.
+- Qué se debe hacer ahora: el próximo paso concreto y cuándo revisar la decisión.
+
+Ficha: [PEGAR]
+Riesgos: [PEGAR]
+Desde cero: [PEGAR]
+Oportunidades: [PEGAR]
+Desde afuera: [PEGAR]`;
+
+const claudeCode = `Tengo que tomar esta decisión: [PEGÁ TU FICHA].
+No quiero que me des la razón: quiero la mejor decisión posible.
+1. Lanzá en paralelo 4 sub-agentes, cada uno con su rol y sin ver a los otros:
+   - Riesgos: qué puede salir mal.
+   - Desde cero: el problema analizado sin mi solución.
+   - Oportunidades: lo que todavía no vi.
+   - Desde afuera: cómo lo ven un cliente, un competidor y un inversor escéptico.
+2. Cuando terminen, compará sus respuestas idea por idea: dónde coinciden y dónde no.
+3. Dame UNA sola conclusión (SÍ / SÍ, CON CAMBIOS / NO / TODAVÍA NO), con los motivos y qué hacer ahora.
+Guardá todo en decision-[tema].md.`;
+---
+<RecursoLayout
+  titulo="La estructura para que la IA no te dé la razón"
+  descripcion="Los 5 agentes del video listos para copiar: riesgos, desde cero, oportunidades, desde afuera y el que compara y concluye. En el chat de Claude o en Claude Code."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="DECISIÓN"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Un estudio de Stanford encontró que los modelos de IA te dan la razón demasiado rápido. Si le preguntás algo, recibís una sola respuesta, y suele ser la que querías escuchar. La salida: que varios agentes analicen la misma decisión desde posiciones distintas y uno último compare todo y concluya.</b></div>
+
+  <h2>Qué encontró el estudio</h2>
+  <ul class="arrow">
+    <li><b>Quién:</b> investigadores de Stanford, publicado en la revista <i>Science</i> en marzo de 2026.</li>
+    <li><b>Qué midieron:</b> 11 modelos de IA, entre ellos ChatGPT, Claude, Gemini y DeepSeek, respondiendo pedidos de consejo.</li>
+    <li><b>Qué vieron:</b> en promedio respaldaron al usuario un <b>49 % más</b> que las personas, incluso en casos donde la gente coincidía en que el usuario estaba equivocado.</li>
+    <li><b>Lo peor:</b> los participantes confiaban más en las respuestas que les daban la razón.</li>
+  </ul>
+  <p style="font-size: 0.9em">Fuente: <a href="https://news.stanford.edu/stories/2026/03/ai-advice-sycophantic-models-research" target="_blank" rel="noopener noreferrer">Stanford Report</a>.</p>
+
+  <h2>Cómo funciona la estructura</h2>
+  <ol class="steps">
+    <li><b>Ronda 1, por separado:</b> Riesgos, Desde cero, Oportunidades y Desde afuera analizan la misma ficha sin ver a los otros. Si se leen entre ellos, se contagian.</li>
+    <li><b>Ronda 2, la conclusión:</b> el último agente recibe las 4 respuestas, las compara idea por idea y recién ahí concluye qué hacer.</li>
+  </ol>
+
+  <h2>Paso 0: la ficha de la decisión</h2>
+  <p>Todos los agentes reciben exactamente la misma ficha:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{ficha}</code></pre>
+  </div>
+  <p>Y sumale esto al principio de cada prompt para que no te dé la razón por defecto:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{antiRazon}</code></pre>
+  </div>
+
+  <h2>Los 5 agentes</h2>
+  <h3>1. Riesgos: qué puede salir mal</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{riesgos}</code></pre>
+  </div>
+  <h3>2. Desde cero: el problema sin tu solución</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{desdeCero}</code></pre>
+  </div>
+  <h3>3. Oportunidades: lo que todavía no viste</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{oportunidades}</code></pre>
+  </div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h3>4. Desde afuera: como lo ve alguien que no está enamorado de la idea</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{afuera}</code></pre>
+  </div>
+  <h3>5. El que concluye: idea por idea, una sola conclusión</h3>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{concluye}</code></pre>
+  </div>
+
+  <h2>Opción A: en el chat de Claude (cualquier plan)</h2>
+  <ol class="steps">
+    <li><b>Un chat nuevo por agente.</b> Así ninguno ve lo que respondieron los otros.</li>
+    <li><b>Ronda 1:</b> abrí 4 chats y pegá Riesgos, Desde cero, Oportunidades y Desde afuera, cada uno con tu ficha.</li>
+    <li><b>Ronda 2:</b> en un chat nuevo pegá el prompt del que concluye con las 4 respuestas.</li>
+  </ol>
+  <div class="note"><b>Tip:</b> si decidís seguido, creá un Proyecto "Decisiones" y subí la ficha y estos prompts como documentos.</div>
+
+  <h2>Opción B: en Claude Code, con sub-agentes</h2>
+  <p>Claude Code puede lanzar varios sub-agentes en paralelo, cada uno con su propio contexto. Pegá esto en una sesión:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{claudeCode}</code></pre>
+  </div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Alcanza con pedirle "no me des la razón"?</b> Ayuda, pero sigue siendo una sola mirada. Separar roles te obliga a ver el problema desde lugares que no elegirías.</li>
+    <li><b>¿Por qué no hacer todo en un solo chat?</b> Porque cada respuesta condiciona a la siguiente. Separados, ninguno se contagia de los otros.</li>
+    <li><b>¿Necesito Claude Code?</b> No. Con chats separados funciona en cualquier plan.</li>
+    <li><b>¿Para qué decisiones lo uso?</b> Las que importan: lanzar algo, contratar, invertir, subir precios. Para lo del día a día alcanza con una respuesta.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Completé la ficha con datos reales.</li>
+    <li>Sumé el bloque "no me des la razón" a cada prompt.</li>
+    <li>Los 4 agentes respondieron por separado.</li>
+    <li>El último comparó idea por idea y me dio una sola conclusión.</li>
+    <li>Sé qué hacer ahora y cuándo revisar la decisión.</li>
+  </ul>
+</RecursoLayout>
