@@ -1,0 +1,110 @@
+---
+// Lead magnet · palabra clave ManyChat: TRABAJO (reel "CV", 19/10/2026)
+// URL pública: /recursos/filtro-ofertas-trabajo-claude
+// Reemplaza como destino de TRABAJO a /recursos/postulaciones-de-trabajo-con-claude (esa guía postula por vos; este video
+// dice lo contrario: filtrar primero). La vieja se mantiene online y se enlaza abajo.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const perfil = `Te paso mi currículum. Antes de buscar trabajo quiero que armes mi perfil de búsqueda:
+
+1. Mi experiencia real: años, puestos, rubros y herramientas que manejo.
+2. Los 3 a 5 puestos para los que estoy mejor preparado, con el nombre con el que suelen publicarse.
+3. Mis condiciones: [MODALIDAD: remoto / híbrido / presencial], [ZONA], [SALARIO MÍNIMO], [LO QUE NO ACEPTO].
+4. Mis "no negociables": requisitos que, si una oferta los pide y yo no los tengo, la descartan sí o sí.
+
+No inventes nada que no esté en el CV. Si algo no está claro, preguntame.
+
+Currículum:
+[ADJUNTALO O PEGALO ACÁ]`;
+const filtro = `Usá mi perfil de búsqueda para filtrar estas ofertas. Para cada una:
+
+1. Comparala con mi experiencia y mis condiciones.
+2. Dame un porcentaje de compatibilidad y una frase con el motivo.
+3. Decidí: DESCARTA (no cumple con mi experiencia o mis condiciones) o GUARDA (puede servirme).
+
+Devolveme una tabla ordenada de mayor a menor compatibilidad con: puesto, empresa, %, DESCARTA o GUARDA, motivo.
+Al final, decime cuál es la mejor y por qué.
+
+Ofertas:
+[PEGÁ EL TEXTO DE CADA AVISO, SEPARADOS POR ---]`;
+const adaptar = `Quiero postularme a esta oferta: [PEGÁ EL AVISO].
+
+Adaptá mi currículum para este puesto:
+1. Un resumen de 3 líneas pensado para este aviso.
+2. Reordená la experiencia para que lo más relevante quede primero.
+3. Reescribí mis logros con números cuando el CV los tenga.
+4. Usá las palabras clave del aviso donde correspondan.
+
+Regla: no inventes experiencia, títulos ni herramientas. Solo destacá y reordená lo que ya tengo.
+Al final, marcame qué requisitos del aviso no cumplo para que lo sepa antes de postular.`;
+---
+<RecursoLayout
+  titulo="Filtrá ofertas de trabajo con Claude antes de postularte"
+  descripcion="Los 3 prompts del video: tu perfil de búsqueda, el filtro que descarta o guarda cada oferta y la adaptación de tu CV para el puesto que vale la pena."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="TRABAJO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Postularte a cientos de trabajos te hace perder tiempo. Este sistema hace algo simple: le das tu CV a Claude, compara cada oferta con tu experiencia, descarta las que no cumplen, guarda las que sirven y, si encontrás una buena, adapta tu CV para ese puesto.</b></div>
+
+  <h2>Qué vas a tener</h2>
+  <ul class="arrow">
+    <li><b>Tu perfil de búsqueda:</b> tu experiencia real, tus puestos ideales y tus condiciones, escritos una vez.</li>
+    <li><b>Un filtro de ofertas:</b> cada aviso con su % de compatibilidad y la decisión DESCARTA o GUARDA con el motivo.</li>
+    <li><b>Tu CV adaptado:</b> para la oferta que vale la pena, sin inventar nada.</li>
+  </ul>
+
+  <h2>Antes de arrancar: un Proyecto</h2>
+  <ol class="steps">
+    <li>En Claude, creá un <b>Proyecto</b> llamado "Búsqueda de trabajo".</li>
+    <li>Subí tu currículum (PDF o Word) a los archivos del proyecto.</li>
+    <li>Usá todos los prompts dentro de ese proyecto: así Claude siempre tiene tu CV y tu perfil a mano.</li>
+  </ol>
+  <div class="note"><b>Sin plan pago:</b> funciona igual en un chat normal; adjuntá el CV en el primer mensaje y seguí en el mismo chat.</div>
+
+  <h2>Prompt 1 · Tu perfil de búsqueda</h2>
+  <p>Una sola vez. Completá los corchetes con tus condiciones:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{perfil}</code></pre>
+  </div>
+  <p>Si estás en un Proyecto, pegá la respuesta en las <b>instrucciones del proyecto</b>: queda fija para todos los chats.</p>
+
+  <h2>Prompt 2 · El filtro: descarta o guarda</h2>
+  <p>Copiá el texto de los avisos que encontraste (LinkedIn, Computrabajo, portales, webs de empresas) y pegalos juntos:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{filtro}</code></pre>
+  </div>
+  <div class="note"><b>Tip:</b> pegá el texto del aviso, no solo el link. Muchos portales piden sesión iniciada y Claude no puede leerlos.</div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Prompt 3 · Tu CV para ese puesto</h2>
+  <p>Solo para las ofertas que quedaron en GUARDA y que de verdad te interesan:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{adaptar}</code></pre>
+  </div>
+  <div class="note"><b>Importante:</b> revisá siempre el CV antes de mandarlo. Claude reordena y destaca, pero vos sos quien firma.</div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Claude busca las ofertas solo?</b> En este sistema las elegís vos y Claude las filtra. Si querés que además busque y complete formularios, mirá <a href="/recursos/postulaciones-de-trabajo-con-claude">la guía de postulaciones con Claude para Chrome</a>.</li>
+    <li><b>¿Cuántas ofertas le puedo pasar juntas?</b> Entre 5 y 10 por mensaje funciona bien. Si son más, mandalas en tandas.</li>
+    <li><b>¿Es seguro subir mi CV?</b> No incluyas documento de identidad ni datos que no pondrías en un CV público.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Creé el proyecto y subí mi CV.</li>
+    <li>Armé mi perfil de búsqueda con mis no negociables.</li>
+    <li>Filtré mi primera tanda de ofertas.</li>
+    <li>Adapté el CV solo para las que quedaron en GUARDA.</li>
+    <li>Revisé el CV antes de postular.</li>
+  </ul>
+</RecursoLayout>
