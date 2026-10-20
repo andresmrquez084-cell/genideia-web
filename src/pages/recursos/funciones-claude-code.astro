@@ -1,0 +1,92 @@
+---
+// Lead magnet · palabra clave ManyChat: FUNCIONES (carrusel "5 funciones de Claude Code", 20/10/2026)
+// URL pública: /recursos/funciones-claude-code
+// Fuente: https://code.claude.com/docs/en/skills (bundled skills). /skill-doctor pide v2.1.252+; /run-skill-generator v2.1.145+.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const batch = `/batch migrá todos los botones de src/ a la nueva librería de componentes`;
+const loop = `/loop 5m revisá si terminó el despliegue y avisame cuando esté listo`;
+const run = `/run-skill-generator`;
+const perms = `/fewer-permission-prompts`;
+const doctor = `/skill-doctor`;
+---
+<RecursoLayout
+  titulo="5 funciones de Claude Code que casi nadie usa"
+  descripcion="Cómo usar /batch, /loop, /run-skill-generator, /fewer-permission-prompts y /skill-doctor: qué hace cada una, cuándo te sirve y el comando para copiar."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="FUNCIONES"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Las 5 vienen incluidas en Claude Code: no hay que instalar nada. Se usan escribiendo <code>/</code> y el nombre. Acá tenés qué hace cada una, cuándo usarla y el comando listo para copiar.</b></div>
+
+  <div class="note"><b>Antes de arrancar:</b> actualizá Claude Code (<code>claude update</code>). Algunas funciones son nuevas y no aparecen en versiones viejas.</div>
+
+  <h2>1 · /batch — dividí un trabajo grande entre varios agentes</h2>
+  <p>Le das una tarea grande y <b>/batch</b> revisa el proyecto, la divide en partes independientes y te muestra el plan. Cuando lo aprobás, varios agentes trabajan cada parte al mismo tiempo, cada uno en su propia copia del proyecto.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{batch}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li><b>Te sirve para:</b> migraciones, renombrar en muchos archivos, aplicar el mismo cambio en todo el proyecto.</li>
+    <li><b>No te sirve para:</b> rediseños donde cada parte depende de la otra.</li>
+    <li>Necesita que el proyecto esté en un repositorio de <b>git</b>.</li>
+  </ul>
+
+  <h2>2 · /loop — que Claude repita una tarea solo</h2>
+  <p>Le das un intervalo y una tarea, y Claude la vuelve a hacer cada vez que se cumple el tiempo, <b>mientras la sesión siga abierta</b>. Si no ponés intervalo, Claude elige el ritmo.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{loop}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li><b>Te sirve para:</b> esperar un despliegue o una compilación, revisar registros de errores, controlar si algo cambió.</li>
+    <li>Si cerrás la sesión, se corta. Para algo que corra solo todos los días, usá tareas programadas.</li>
+  </ul>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>3 · /run-skill-generator — enseñale una vez cómo arrancar tu proyecto</h2>
+  <p>Claude pone en marcha tu proyecto desde cero, anota lo que funcionó (qué instalar, qué variables necesita, cómo se inicia) y lo guarda como una skill del proyecto. Después <b>/run</b> y <b>/verify</b> siguen esa receta en lugar de adivinarla cada vez.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{run}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li>Usalo <b>una vez por proyecto</b>, y de nuevo si cambia la forma de arrancarlo.</li>
+    <li>Más útil cuando tu proyecto necesita algo más que un comando: base de datos, archivo .env, varios pasos.</li>
+  </ul>
+
+  <h2>4 · /fewer-permission-prompts — dejá de aprobar lo mismo</h2>
+  <p>Revisa tus sesiones anteriores, encuentra los comandos de solo lectura que aprobás una y otra vez (ver archivos, el estado de git, correr pruebas) y los suma a una lista de permitidos del proyecto. Así deja de interrumpirte por lo mismo.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{perms}</code></pre>
+  </div>
+  <div class="note"><b>Importante:</b> leé la lista antes de aceptarla. Solo deberían entrar comandos que leen, nunca los que borran o publican.</div>
+
+  <h2>5 · /skill-doctor — revisá tus skills</h2>
+  <p>Te muestra cuánto contexto ocupa cada skill, cuáles usás y cuáles casi nunca aparecen. También lista los plugins que no usaste últimamente. Con eso decidís cuáles apagar.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{doctor}</code></pre>
+  </div>
+  <ul class="arrow">
+    <li>Corrélo en la terminal de la computadora donde trabajás.</li>
+    <li>Menos skills sin uso = más contexto libre para lo que importa.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Actualicé Claude Code.</li>
+    <li>Corrí /run-skill-generator en mi proyecto principal.</li>
+    <li>Corrí /fewer-permission-prompts y revisé la lista.</li>
+    <li>Corrí /skill-doctor y apagué lo que no uso.</li>
+    <li>Probé /loop con algo que siempre espero a mano.</li>
+    <li>Guardé /batch para el próximo cambio grande.</li>
+  </ul>
+</RecursoLayout>
