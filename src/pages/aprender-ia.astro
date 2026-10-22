@@ -10,6 +10,21 @@ const waUrl = (msg: string) => `https://wa.me/${WA}?text=${encodeURIComponent(ms
 const waDefault = waUrl('Hola Andrés, vi el video de Genideia Academy y quiero aprender a usar IA de forma práctica.');
 
 const VIDEO = '/videos/vsl-academy.mp4';
+
+// Testimonio real (Marcelo, terminó la formación 1 a 1 en octubre 2026). La cita es textual del video.
+const TESTIMONIO = {
+  nombre: 'Marcelo',
+  programa: 'Formación 1 a 1',
+  video: '/videos/testimonio-marcelo.mp4',
+  poster: '/videos/testimonio-marcelo-poster.jpg',
+  cita: 'Empecé prácticamente desde cero con Claude. Desde el día uno ya lancé mi propia app.',
+  logros: [
+    { titulo: 'De cero a su propia app', desc: 'Desde el primer encuentro construyó una app que hoy usa en su día a día.' },
+    { titulo: '8 encuentros personalizados', desc: 'Cada sesión armada sobre su caso, sin apuro si había que extenderla.' },
+    { titulo: 'Acompañamiento diario', desc: 'Comunicación por WhatsApp todos los días entre encuentro y encuentro.' },
+  ],
+};
+const waTestimonio = waUrl('Hola Andrés, vi el testimonio de Marcelo y quiero aprender a usar IA como él.');
 ---
 
 <!DOCTYPE html>
@@ -70,6 +85,34 @@ const VIDEO = '/videos/vsl-academy.mp4';
         </div>
         <div class="video-cta">
           <a href={waDefault} target="_blank" rel="noopener noreferrer" class="btn-primary" data-track-lead>Quiero agendar mi diagnóstico →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIO: prueba social después de la VSL ─────────── -->
+  <section class="testimonio-section" id="testimonio">
+    <div class="wrap">
+      <div class="testimonio-head" data-reveal>
+        <p class="eyebrow">Quién ya lo hizo</p>
+        <h2 class="section-title">Así le fue a Marcelo</h2>
+      </div>
+      <div class="testimonio-card" data-reveal>
+        <div class="testimonio-video">
+          <video controls playsinline preload="metadata" poster={TESTIMONIO.poster}>
+            <source src={TESTIMONIO.video} type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
+        </div>
+        <div class="testimonio-body">
+          <blockquote class="testimonio-cita">“{TESTIMONIO.cita}”</blockquote>
+          <p class="testimonio-autor"><strong>{TESTIMONIO.nombre}</strong> · {TESTIMONIO.programa}</p>
+          <ul class="testimonio-logros">
+            {TESTIMONIO.logros.map((l) => (
+              <li><span class="check" aria-hidden="true">✓</span><div><strong>{l.titulo}</strong><p>{l.desc}</p></div></li>
+            ))}
+          </ul>
+          <a href={waTestimonio} target="_blank" rel="noopener noreferrer" class="btn-primary" data-track-lead>Quiero empezar mi formación →</a>
         </div>
       </div>
     </div>
@@ -184,6 +227,34 @@ const VIDEO = '/videos/vsl-academy.mp4';
     .video-frame video { display:block; width:100%; aspect-ratio:16/9; background:#000; border-radius:16px; border:1px solid rgba(24,207,255,.08); }
     .video-cta { padding:18px; border-top:1px solid rgba(255,255,255,.08); display:flex; justify-content:center; }
     @media (max-width:620px) { .video-frame { padding:10px; } }
+
+    /* ── Testimonio ───────────────────────────────────────────── */
+    .testimonio-section { padding:0 0 90px; }
+    .testimonio-head { text-align:center; margin-bottom:26px; }
+    .eyebrow { margin:0 0 8px; color:var(--cyan); font-size:0.7rem; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; }
+    .section-title { margin:0; font-family:'Montserrat',sans-serif; font-weight:800; letter-spacing:-.03em; font-size:clamp(1.6rem, 3vw, 2.4rem); }
+    .testimonio-card {
+      max-width:980px; margin:0 auto; display:grid; grid-template-columns:minmax(0,320px) 1fr; gap:40px; align-items:center;
+      padding:26px; border-radius:26px; border:1px solid rgba(24,207,255,.22);
+      background:linear-gradient(180deg, rgba(6,15,29,.94), rgba(5,9,17,.96));
+      box-shadow:0 35px 120px rgba(0,0,0,.48), 0 0 48px rgba(24,207,255,.07);
+    }
+    .testimonio-video { aspect-ratio:9/16; border-radius:18px; overflow:hidden; border:1px solid rgba(24,207,255,.12); background:#000; }
+    .testimonio-video video { width:100%; height:100%; display:block; object-fit:cover; }
+    .testimonio-cita { margin:0 0 14px; font-family:'Montserrat',sans-serif; font-weight:700; font-size:clamp(1.25rem, 2.2vw, 1.75rem); line-height:1.3; letter-spacing:-.01em; }
+    .testimonio-autor { margin:0 0 24px; color:var(--muted); font-size:0.85rem; }
+    .testimonio-autor strong { color:var(--cyan); font-weight:600; }
+    .testimonio-logros { list-style:none; margin:0 0 28px; padding:0; display:grid; gap:14px; }
+    .testimonio-logros li { display:flex; gap:14px; align-items:flex-start; padding:14px 16px; border:1px solid var(--line); border-radius:14px; background:rgba(255,255,255,.02); }
+    .testimonio-logros .check { flex:0 0 26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:#0A0F1A; background:linear-gradient(135deg,#15d6ff,#1787ff); }
+    .testimonio-logros strong { font-family:'Montserrat',sans-serif; font-size:0.95rem; }
+    .testimonio-logros p { margin:3px 0 0; color:var(--muted); font-size:0.85rem; line-height:1.5; }
+    @media (max-width:800px) {
+      .testimonio-card { grid-template-columns:1fr; gap:26px; padding:16px; }
+      .testimonio-video { max-width:320px; width:100%; margin:0 auto; }
+      .testimonio-body .btn-primary { width:100%; white-space:normal; text-align:center; }
+      .testimonio-section { padding-bottom:110px; }
+    }
 
     /* ── Footer ───────────────────────────────────────────────── */
     .site-footer {
