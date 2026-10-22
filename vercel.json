@@ -21,10 +21,10 @@
       "has": [
         {
           "type": "host",
-          "value": "tadeo.genideiacompany.com"
+          "value": "presentacion.genideiacompany.com"
         }
       ],
-      "destination": "/tadeo",
+      "destination": "/presentacion",
       "permanent": false
     },
     {
