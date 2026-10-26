@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plan de estudio · Rodrigo Pereira · Genideia Academy</title>
+<meta name="description" content="Plan de estudio personalizado de Rodrigo Pereira en Genideia Academy.">
+<style>
+:root{--bg:#06111d;--panel:#0b1b2a;--panel2:#0f2437;--line:#24415b;--text:#eef7ff;--muted:#9fb2c5;--cyan:#55d5ff;--green:#91f0c1;--white:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top,#0b2237 0,#06111d 45%,#040b12 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+a{color:inherit}
+.wrap{width:min(1080px,calc(100% - 32px));margin:auto}
+.hero{padding:72px 0 42px}
+.badge{display:inline-flex;padding:7px 11px;border:1px solid #2f536d;border-radius:999px;color:#bfeeff;background:#0a1a28;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(40px,7vw,78px);line-height:.98;margin:20px 0 18px;letter-spacing:-.045em}
+.hero p{max-width:780px;font-size:19px;color:var(--muted)}
+.goal{margin:30px 0;padding:22px;border:1px solid #2b4963;background:linear-gradient(135deg,#0d2032,#091725);border-radius:18px;font-size:18px}
+.goal b{color:var(--cyan)}
+.section{padding:32px 0}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}
+.section h2{font-size:30px;letter-spacing:-.03em;margin:0}
+.section p.sub{color:var(--muted);max-width:660px;margin:8px 0 0}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{border:1px solid var(--line);background:linear-gradient(145deg,rgba(15,36,55,.96),rgba(7,20,32,.96));border-radius:18px;padding:22px}
+.num{font-size:12px;font-weight:900;color:var(--cyan);letter-spacing:.12em}
+.card h3{font-size:22px;margin:8px 0 10px}
+.card p{color:var(--muted);margin:0 0 16px}
+.card .label{font-size:12px;color:#81a0b8;text-transform:uppercase;letter-spacing:.08em;font-weight:800;margin-top:16px}
+.card ul{margin:8px 0 0;padding-left:20px;color:#dceaf5}
+.card li{margin:6px 0}
+.result{border-left:3px solid var(--green);padding-left:13px;color:#dffcef!important}
+.resource{margin-top:18px;display:inline-flex;text-decoration:none;border:1px solid #31516e;padding:9px 12px;border-radius:10px;color:#c9efff;font-size:13px;font-weight:800}
+.resource:hover{border-color:var(--cyan)}
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:20px}
+.flow span{padding:12px 8px;text-align:center;border:1px solid var(--line);border-radius:12px;background:#0a1b2a;color:#dff5ff;font-size:12px;font-weight:800}
+.requirements{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.req{border:1px solid var(--line);border-radius:16px;padding:18px;background:#091827}
+.req b{display:block;margin-bottom:5px}
+.req span{color:var(--muted);font-size:14px}
+.note{padding:22px;border:1px solid #2b4963;border-radius:18px;background:#0a1a29;color:#d9e8f4}
+.cta{margin:34px 0 80px;padding:32px;border:1px solid #2f536d;border-radius:22px;background:linear-gradient(135deg,#0d2438,#081523);text-align:center}
+.cta h2{font-size:32px;margin:0 0 10px}
+.cta p{color:var(--muted);max-width:700px;margin:0 auto}
+.footer{padding:25px 0 50px;color:#6f8499;font-size:13px;text-align:center}
+@media(max-width:760px){.grid,.requirements{grid-template-columns:1fr}.flow{grid-template-columns:repeat(2,1fr)}.hero{padding-top:44px}.section-head{display:block}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="hero">
+<span class="badge">Genideia Academy · Plan personalizado</span>
+<h1>Rodrigo Pereira</h1>
+<p>Un recorrido práctico para aprender a usar inteligencia artificial dentro de tu trabajo real. La meta no es estudiar herramientas por separado: es construir soluciones que te ahorren tiempo, acumulen conocimiento y te permitan dedicar más energía a las personas y a las decisiones importantes.</p>
+<div class="goal"><b>Objetivo final:</b> construir una primera versión de tu propia secretaria interna de IA: un sistema que pueda investigar, ordenar, analizar y preparar información para que vos mantengas el control y la relación humana con clientes y equipo.</div>
+<div class="flow">
+<span>Necesidad real</span><span>Construir</span><span>Probar</span><span>Entender</span><span>Documentar</span><span>Reutilizar</span>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head"><div><h2>Antes de empezar</h2><p class="sub">La primera clase arranca preparando el entorno para poder trabajar directamente sobre casos reales.</p></div></div>
+<div class="requirements">
+<div class="req"><b>Computadora</b><span>La vamos a usar para trabajar con archivos, herramientas y procesos reales.</span></div>
+<div class="req"><b>Claude</b><span>Va a ser una de las herramientas principales del recorrido y la vamos a configurar desde el comienzo.</span></div>
+<div class="req"><b>ChatGPT</b><span>También lo vamos a utilizar como herramienta complementaria, especialmente cuando su contexto o capacidades sean útiles para una tarea.</span></div>
+<div class="req"><b>Archivos reales</b><span>Catálogos, listas, planillas, ejemplos y datos que podamos usar para trabajar sobre situaciones reales.</span></div>
+<div class="req"><b>Casos reales</b><span>Las clases se construyen alrededor de problemas que ya aparecen en tu día a día.</span></div>
+<div class="req"><b>Carpeta de recursos</b><span>Vas a tener prompts, plantillas, auditorías y recursos para reutilizar lo trabajado fuera de clase.</span></div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head"><div><h2>Plan de estudio</h2><p class="sub">Ocho etapas. Cada una termina con una capacidad concreta que debería quedar funcionando en tu trabajo.</p></div></div>
+<div class="grid">
+
+<article class="card">
+<div class="num">MÓDULO 01</div><h3>Entorno y mapa del trabajo</h3>
+<p>Preparamos Claude, ChatGPT y la estructura de archivos. Después identificamos las tareas que más tiempo consumen y dónde tiene más sentido aplicar IA primero.</p>
+<div class="label">Vamos a ver</div>
+<ul><li>Cómo organizar el entorno de trabajo.</li><li>Qué información necesita una IA para ayudarte bien.</li><li>Cómo mapear tareas, fuentes y decisiones.</li><li>Cómo elegir qué proceso conviene mejorar primero.</li></ul>
+<div class="label">Resultado</div><p class="result">Vas a salir con tu entorno preparado, tus procesos principales identificados y un primer caso real elegido para construir.</p>
+<a class="resource" href="/alumnos/rodrigo/modulo-01-entorno-y-mapa.md" target="_blank">Recursos del módulo ↗</a>
+</article>
+
+<article class="card">
+<div class="num">MÓDULO 02</div><h3>Resolver una tarea real con IA</h3>
+<p>Tomamos un problema concreto de tu trabajo y lo resolvemos completo usando IA, sin perder control sobre la información ni la calidad de la respuesta.</p>
+<div class="label">Vamos a ver</div>
+<ul><li>Cómo darle información suficiente.</li><li>Cómo evitar respuestas inventadas.</li><li>Cómo trabajar con fuentes y datos.</li><li>Cómo revisar y corregir antes de usar una respuesta.</li></ul>
+<div class="label">Resultado</div><p class="result">Vas a poder resolver una tarea real de principio a fin y entender qué parte hace la IA y qué parte necesitás validar vos.</p>
+<a class="resource" href="/alumnos/rodrigo/modulo-02-primera-tarea-asistida.md" target="_blank">Recursos del módulo ↗</a>
+</article>
+
+<article class="card">
+<div class="num">MÓDULO 03</div><h3>Memoria del negocio</h3>
+<p>Empezamos a convertir lo que hoy vive en tu cabeza, chats, catálogos y archivos en conocimiento reutilizable.</p>
+<div class="label">Vamos a ver</div>
+<ul><li>Cómo separar contexto por empresa y tarea.</li><li>Cómo guardar equivalencias y aprendizajes.</li><li>Cómo registrar fuente, fecha y nivel de confianza.</li><li>Cómo evitar que la información se mezcle o quede vieja.</li></ul>
+<div class="label">Resultado</div><p class="result">La IA va a poder reutilizar información que ya validaste sin que tengas que volver a explicarla desde cero.</p>
+<a class="resource" href="/alumnos/rodrigo/modulo-03-memoria-del-negocio.md" target="_blank">Recursos del módulo ↗</a>
+</article>
+
+<article class="card">
+<div class="num">MÓDULO 04</div><h3>Investigación técnica y repuestos</h3>
+<p>Construimos un método para buscar aplicaciones, códigos, medidas y equivalencias entre varias fuentes sin recorrer todo manualmente.</p>
+<div class="label">Vamos a ver</div>
+<ul><li>Cómo priorizar catálogos y fuentes.</li><li>Cómo comparar equivalencias correctamente.</li><li>Cómo detectar información contradictoria.</li><li>Cómo medir tiempo manual vs. tiempo con IA.</li></ul>
+<div class="label">Resultado</div><p class="result">Vas a tener un flujo repetible para investigar repuestos más rápido manteniendo trazabilidad y revisión humana.</p>
+<a class="resource" href="/alumnos/rodrigo/modulo-04-investigacion-tecnica.md" target="_blank">Recursos del módulo ↗</a>
+</article>
+
+<article class="card">
+<div class="num">MÓDULO 05</div><h3>Clientes, ventas y preparación de giras</h3>
+<p>Usamos información comercial para llegar mejor preparado a una conversación, una visita o una oportunidad.</p>
+<div class="label">Vamos a ver</div>
+<ul><li>Cómo trabajar con exportaciones de ventas.</li><li>Cómo analizar el historial de un cliente.</li><li>Cómo detectar productos u oportunidades.</li><li>Cómo preparar fichas antes de una gira.</li></ul>
+<div class="label">Resultado</div><p class="result">Antes de visitar o contactar a un cliente, vas a poder llegar con un resumen útil de qué pasó y qué tendría sentido conversar.</p>
+<a class="resource" href="/alumnos/rodrigo/modulo-05-clientes-y-giras.md" target="_blank">Recursos del módulo ↗</a>
+</article>
+
+<article class="card">
+<div class="num">MÓDULO 06</div><h3>Precios, compras e importaciones</h3>
+<p>Aplicamos IA al análisis de proformas, costos, stock y consumo para preparar decisiones con información más ordenada.</p>
+<div class="label">Vamos a ver</div>
+<ul><li>Cómo comparar proformas.</li><li>Cómo detectar subas, bajas y valores atípicos.</li><li>Cómo analizar stock y consumo.</li><li>Cómo construir escenarios antes de una compra.</li></ul>
+<div class="label">Resultado</div><p class="result">Vas a poder recibir un análisis trazable de una compra o importación y entender exactamente de dónde sale cada recomendación.</p>
+<a class="resource" href="/alumnos/rodrigo/modulo-06-precios-compras-importaciones.md" target="_blank">Recursos del módulo ↗</a>
+</article>
+
+<article class="card">
+<div class="num">MÓDULO 07</div><h3>Skills, procesos y automatizaciones</h3>
+<p>Cuando una tarea ya funciona, aprendemos a guardarla y conectarla para no reconstruirla cada vez.</p>
+<div class="label">Vamos a ver</div>
+<ul><li>Qué tareas vale la pena convertir en Skill.</li><li>Cómo representar un proceso de varios pasos.</li><li>Qué decisiones puede tomar una IA.</li><li>Qué conviene automatizar y qué no.</li></ul>
+<div class="label">Resultado</div><p class="result">Vas a poder convertir tareas repetidas en capacidades reutilizables y entender cómo volver a hacer lo mismo con otro proceso.</p>
+<a class="resource" href="/alumnos/rodrigo/modulo-07-skills-procesos-automatizaciones.md" target="_blank">Recursos del módulo ↗</a>
+</article>
+
+<article class="card">
+<div class="num">MÓDULO 08</div><h3>Integración: tu secretaria interna</h3>
+<p>Integramos lo que haya demostrado funcionar para convertirlo en un sistema de trabajo que puedas usar vos y, más adelante, compartir con tu equipo.</p>
+<div class="label">Vamos a ver</div>
+<ul><li>Cómo unir conocimiento, datos y procesos.</li><li>Cómo definir capacidades y usuarios.</li><li>Cómo mantener control humano en decisiones sensibles.</li><li>Cómo medir si realmente te está ahorrando tiempo.</li></ul>
+<div class="label">Resultado</div><p class="result">Vas a terminar con una primera versión operativa de tu secretaria interna y un plan de 30 días para usarla, medirla y mejorarla.</p>
+<a class="resource" href="/alumnos/rodrigo/modulo-08-secretaria-interna.md" target="_blank">Recursos del módulo ↗</a>
+</article>
+
+</div>
+</section>
+
+<section class="section">
+<div class="section-head"><div><h2>Cómo funcionan las clases</h2><p class="sub">No vamos a avanzar solo porque “tocaba” un tema. Cada etapa se valida con uso real.</p></div></div>
+<div class="note">
+<strong>Inicio de cada clase:</strong> revisamos qué hiciste, qué resultado obtuviste, dónde te trabaste y qué intentaste. Primero resolvemos eso. Después incorporamos el siguiente concepto o construimos la siguiente capacidad sobre un caso real.
+<br><br>
+<strong>Importante:</strong> Claude es una herramienta central del recorrido, pero no la única. También vamos a usar ChatGPT y otras herramientas cuando tengan más sentido para una tarea específica. La meta es que aprendas a elegir y combinar herramientas, no depender de una sola.
+</div>
+</section>
+
+<section class="cta">
+<h2>Qué deberías poder hacer al terminar</h2>
+<p>Identificar una necesidad real, darle a la IA el contexto correcto, construir una solución, comprobarla, guardar lo aprendido, reutilizarlo y automatizar solo cuando el proceso ya funciona. El objetivo es que la IA te quite trabajo de atrás para que vos puedas dedicar más tiempo a las personas.</p>
+</section>
+</main>
+<div class="footer">Genideia Academy · Plan personalizado</div>
+</body>
+</html>
