@@ -28,6 +28,17 @@
       "permanent": false
     },
     {
+      "source": "/:rubro((?!presentacion$)[a-z-]+)",
+      "has": [
+        {
+          "type": "host",
+          "value": "presentacion.genideiacompany.com"
+        }
+      ],
+      "destination": "/presentacion/:rubro",
+      "permanent": false
+    },
+    {
       "source": "/",
       "has": [
         {
