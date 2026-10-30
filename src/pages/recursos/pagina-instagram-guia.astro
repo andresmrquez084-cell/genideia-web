@@ -1,0 +1,58 @@
+---
+// Lead magnet · palabra clave ManyChat: PÁGINA (reel: "Arranco una página de Instagram", 30/10/2026)
+// URL pública: /recursos/pagina-instagram-guia
+// Los 5 estilos y sus temas son los que se nombran en el reel (acuarela, crayones, pixel, grabado japonés,
+// ciudad en miniatura). Qué tema le queda a cada estilo es un borrador: revisar antes de publicar.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const prompt = `Quiero arrancar una página de Instagram con videos en el estilo [ESTILO] sobre el tema [TEMA].
+Armame el primer mes: 30 ideas de video, una por día, y para cada una dame:
+- título de hasta 8 palabras
+- guion de hasta 40 palabras
+- la idea visual de cada escena
+- el gancho de los primeros 2 segundos
+Mantené siempre el mismo estilo y el mismo tema, así la gente sabe de qué es la página.
+Ordená las ideas de la más simple a la más elaborada.`;
+---
+<RecursoLayout
+  titulo="Arrancá tu página de Instagram: los estilos y el primer mes"
+  descripcion="Cinco estilos de video que podés repetir todos los días, para qué tema sirve cada uno y el prompt para que Claude te arme el primer mes de ideas."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="PÁGINA"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Una página no se hace con un video suelto. Se hace con un estilo y un tema que repetís todos los días. Lo que la hace crecer es la constancia, no el primer video.</b></div>
+
+  <h2>Los 5 estilos</h2>
+  <ul class="arrow">
+    <li><b>Acuarela</b> — historias tranquilas y viajes.</li>
+    <li><b>Dibujo con crayones</b> — cuentos para chicos. Los padres los comparten.</li>
+    <li><b>Videojuego pixelado</b> — resúmenes y temas de gaming.</li>
+    <li><b>Grabado japonés</b> — historia y mitos.</li>
+    <li><b>Ciudad en miniatura</b> — videos satisfactorios.</li>
+  </ul>
+  <div class="note"><b>Regla:</b> elegí uno que puedas repetir 30 días. Si no encaja con tu tema, cambiá el tema, no el estilo cada día: nadie va a saber de qué es tu página.</div>
+
+  <h2>El prompt para el primer mes</h2>
+  <p>Abrí un chat nuevo en Claude, pegá esto y reemplazá <b>[ESTILO]</b> y <b>[TEMA]</b>:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{prompt}</code></pre>
+  </div>
+
+  <h2>Cómo usarlo</h2>
+  <ol class="steps">
+    <li><b>Elegí el estilo.</b> Uno de los 5, el que puedas sostener.</li>
+    <li><b>Completá el tema.</b> Cuanto más concreto, mejores ideas.</li>
+    <li><b>Pedí el mes.</b> Cada día, tomás la idea del día y la grabás o la armás.</li>
+  </ol>
+  <p>Si el primer mes no te convence, pedile otra vez con lo que no te gustó: "Estas ideas son muy largas, hacelas de 20 palabras."</p>
+
+  <div class="minicta">
+    La clase completa, de usar Claude a construir tu primer sistema, es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+</RecursoLayout>

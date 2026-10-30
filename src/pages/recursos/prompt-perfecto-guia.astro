@@ -1,0 +1,78 @@
+---
+// Lead magnet · palabra clave ManyChat: GUÍA (reel: "El prompt perfecto no existe", 30/10/2026)
+// URL pública: /recursos/prompt-perfecto-guia
+// OJO: GUIA ya es la palabra de /recursos/guia-pro-claude. Decidir a cuál apunta ManyChat antes de publicar.
+// Los 10 pedidos son un borrador: el reel nombra "las diez primeras cosas para pedirle a Claude" sin listarlas.
+// Los 3 pasos del final del reel son los que van en la guía tal cual.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const pedidos = [
+  { titulo: 'Ordenar una idea antes de decidir', texto: `Tengo esta idea: [IDEA].
+Preguntame lo que me falte saber, de a una, antes de darme una respuesta.` },
+  { titulo: 'Preparar una reunión', texto: `Tengo una reunión con [EMPRESA] en diez minutos.
+Te paso su web. Decime quién es, qué problema tiene y tres preguntas para hacerle.` },
+  { titulo: 'Escribir un mail difícil', texto: `Este es el mail que estoy por mandar: [MAIL].
+Reescribilo firme y amable. Dejá el próximo paso claro.` },
+  { titulo: 'Revisar un precio', texto: `Vendo [PRODUCTO] a [PRECIO].
+Me cuesta [COSTOS] y me lleva [HORAS] hacerlo.
+Decime si gano plata y a cuánto tendría que vender para ganar lo que quiero.` },
+  { titulo: 'Convertir notas en tareas', texto: `Estas son mis notas de la reunión: [NOTAS].
+Armá una lista de tareas con responsable y fecha. Si falta algún dato, preguntámelo.` },
+  { titulo: 'Armar la semana', texto: `Esta semana tengo que [TAREAS].
+Ordenalas por día, poniendo primero lo que tiene fecha límite.` },
+  { titulo: 'Corregir un texto sin perder tu voz', texto: `Corregí este texto: [TEXTO].
+Solo arreglá errores y frases confusas. Mantené mi tono y no lo hagas más formal.` },
+  { titulo: 'Preparar una presentación', texto: `Tengo que presentar [TEMA] a [PÚBLICO] en [TIEMPO].
+Armá 5 slides: título y dos ideas por slide, y una frase para decir en cada uno.` },
+  { titulo: 'Entender un tema', texto: `Explicame [TEMA] como si yo no supiera nada.
+Empezá por qué sirve, después cómo funciona y al final dame un ejemplo con mi caso: [CASO].` },
+  { titulo: 'Revisar un presupuesto', texto: `Este es el presupuesto que me pasaron: [PRESUPUESTO].
+Marcame lo que no está claro, lo que falta y lo que conviene preguntar antes de aceptar.
+No reemplaza a un abogado o un contador: si hay plata en juego, confirmalo con uno.` },
+];
+
+const tresPasos = `Antes de darme la respuesta, preguntame lo que te falte, de a una.
+Dame el resultado en el formato que voy a usar: [FORMATO].
+Si no me gusta, decime qué no te gustó y corregilo sin empezar de cero.`;
+---
+<RecursoLayout
+  titulo="El prompt perfecto no existe: la guía de 10 pedidos"
+  descripcion="No hace falta un prompt perfecto. Tres pasos que sirven para cualquier cosa que le pidas a Claude, y 10 pedidos listos para copiar con el texto exacto."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="GUÍA"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>El prompt perfecto no existe. Lo que sí sirve son tres pasos que funcionan para cualquier cosa que le pidas.</b></div>
+
+  <h2>Los 3 pasos</h2>
+  <ol class="steps">
+    <li><b>Dejá que te pregunte.</b> Las preguntas las hace Claude, y vos solo contestás.</li>
+    <li><b>Pedí el formato en el que lo vas a usar.</b> Por WhatsApp, en una tabla, en cuatro líneas.</li>
+    <li><b>Decí qué no te gustó.</b> Eso también es un prompt, y te devuelve algo mejor.</li>
+  </ol>
+  <p>Estos tres pasos van en cualquier pedido. Este es el texto para copiar:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{tresPasos}</code></pre>
+  </div>
+
+  <h2>Los 10 pedidos</h2>
+  <p>Reemplazá lo que está entre corchetes y pegalo en un chat nuevo.</p>
+  {pedidos.map((p, i) => (
+    <>
+      <h3>{i + 1}. {p.titulo}</h3>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{p.texto}</code></pre>
+      </div>
+    </>
+  ))}
+
+  <div class="minicta">
+    La clase completa, de usar Claude a construir tu primer sistema, es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+</RecursoLayout>
