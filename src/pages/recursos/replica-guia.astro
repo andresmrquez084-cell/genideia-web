@@ -1,0 +1,72 @@
+---
+// Lead magnet · palabra clave ManyChat: RÉPLICA (reel: "Esa app que pagás, clonada", 31/10/2026)
+// URL pública: /recursos/replica-guia
+// Repo verificado (31/10): github.com/Jakeschincariol/replica-skill · público, MIT, 11 skills.
+// Los pasos de instalación salen de su README. Copia la función de la app, nunca su código ni su logo.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const enlaceReplica = 'https://github.com/Jakeschincariol/replica-skill';
+const biblioteca = 'https://andres.genideiacompany.com/recursos';
+
+const instalar = `${enlaceReplica}
+
+install skill`;
+
+const mejorar = `/replica-entrepreneur
+Analizá la app [NOMBRE DE LA APP] con sus reseñas públicas (App Store, Google Play, G2, Reddit).
+Dame las 3 quejas más repetidas, con cuántas veces aparecen y una cita de cada una.
+Después proponé cómo resolver esas 3 quejas en mi versión. No copies código ni logos.`;
+---
+<RecursoLayout
+  titulo="Réplica: tu versión de cualquier app, sin copiar su código"
+  descripcion="11 skills gratis para Claude que analizan una app que pagás, la replican por función y le arreglan las quejas de sus usuarios. El enlace y el paso a paso para instalarlas."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="RÉPLICA"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>La app que pagás todos los meses puede tener una versión mejor, hecha a tu medida. Lo que se copia es cómo funciona, no su código ni su logo.</b></div>
+
+  <h2>Cómo instalarla</h2>
+  <ol class="steps">
+    <li><b>Copiá el enlace</b> y pegalo en Claude, seguido de "install skill".</li>
+    <li><b>Esperá</b> a que Claude confirme la instalación. No pide cuenta ni clave de API.</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{instalar}</code></pre>
+  </div>
+
+  <h2>Qué hace cada una</h2>
+  <ul class="arrow">
+    <li><b>/replica-recon:</b> analiza la app: pantallas, flujos y componentes.</li>
+    <li><b>/replica-architect:</b> planifica el stack, la base de datos y la API.</li>
+    <li><b>/replica-design:</b> arma el sistema de diseño: colores, tipografía, espacios.</li>
+    <li><b>/replica-build:</b> construye la app pantalla por pantalla.</li>
+    <li><b>/replica-backend:</b> login, base de datos, pagos e integraciones.</li>
+    <li><b>/replica-test:</b> prueba cada flujo y reporta los errores.</li>
+    <li><b>/replica-diff:</b> compara tu versión con la original y da un puntaje.</li>
+    <li><b>/replica-entrepreneur:</b> lee las quejas reales de los usuarios y propone las mejoras.</li>
+    <li><b>/replica-brand:</b> le pone nombre, paleta y voz propia.</li>
+    <li><b>/replica-launch:</b> landing page, precios y ficha para la tienda.</li>
+    <li><b>/replica-deploy:</b> la publica en tu dominio.</li>
+  </ul>
+
+  <h2>Tu primera prueba</h2>
+  <p>Empezá por la emprendedora: te dice qué odian los usuarios de la app. Reemplazá <b>[NOMBRE DE LA APP]</b>:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{mejorar}</code></pre>
+  </div>
+
+  <div class="note"><b>Regla:</b> copiá la función, no el código ni el logo. Tu versión tiene que tener tu nombre y tu marca.</div>
+
+  <h2>Más recursos gratis</h2>
+  <p>Además de Réplica, tenés la biblioteca de recursos gratuitos de IA: <a href={biblioteca}>{biblioteca}</a></p>
+
+  <div class="minicta">
+    La clase completa, de usar Claude a construir tu primer sistema, es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+</RecursoLayout>
