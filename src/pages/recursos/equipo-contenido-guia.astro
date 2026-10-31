@@ -1,0 +1,68 @@
+---
+// Lead magnet · palabra clave ManyChat: EQUIPO (reel: "Mi canal necesita un equipo", 30/10/2026)
+// URL pública: /recursos/equipo-contenido-guia. EQUIPO también apunta a /recursos/equipo-agentes-decisiones: diferenciar internamente.
+// Las 5 skills son un borrador a partir del guion: revisar antes de publicar.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const skills = [
+  { nombre: 'El guionista', hace: 'Le das una idea y te devuelve cinco ganchos.', prompt: `Sos mi guionista. Te doy una idea de video.
+Devolveme cinco ganchos de los primeros 3 segundos, cada uno en una línea.
+Idea: [IDEA]` },
+  { nombre: 'El editor', hace: 'Marca los silencios y las tomas repetidas, con el minuto exacto.', prompt: `Sos mi editor. Te paso la transcripción de un video con los tiempos.
+Marcá los silencios de más de 1 segundo y las frases repetidas, con el minuto exacto de cada una.
+Transcripción: [PEGÁ ACÁ]` },
+  { nombre: 'El analista', hace: 'Te dice en qué segundo se fue la gente de tu video.', prompt: `Sos mi analista. Te paso la curva de retención de mi video, segundo a segundo.
+Decime en qué segundos cae más la audiencia y qué se dice o se muestra en esos momentos.
+Datos: [PEGÁ ACÁ]` },
+  { nombre: 'El de los cortos', hace: 'Saca los reels que tenías escondidos en el video largo.', prompt: `Sos mi editor de cortos. Te paso la transcripción de un video largo.
+Proponé tres cortos de 30 a 45 segundos. Para cada uno: en qué minuto empieza, en qué termina y el gancho.
+Transcripción: [PEGÁ ACÁ]` },
+  { nombre: 'El cazador', hace: 'Busca videos de tu tema que rindieron mucho más de lo normal.', prompt: `Sos mi investigador de contenido. Tema de mi canal: [TEMA].
+Listá los formatos de video que se repiten en los que rindieron mucho más que el promedio, y por qué creés que funcionan.
+Después proponé una versión propia de cada uno para mi canal.` },
+];
+
+const instalar = `Quiero armar un equipo de cinco skills para mi canal. Para cada una, escribí el SKILL.md con: nombre, qué hace, cuándo usarla y el procedimiento paso a paso.
+Skills: guionista, editor, analista, cortos y cazador.`;
+---
+<RecursoLayout
+  titulo="Las 5 skills de tu equipo de contenido"
+  descripcion="Un guionista, un editor, un analista, un editor de cortos y un cazador de ideas, armados como skills de Claude. Vos grabás, ellas hacen el resto."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="EQUIPO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Si hacés contenido solo, escribir, editar y analizar te come el tiempo que deberías usar para grabar. Estas cinco skills hacen cada parte, y se instalan en Claude en un minuto.</b></div>
+
+  <h2>Las cinco</h2>
+  <ul class="arrow">
+    {skills.map((s) => <li><b>{s.nombre}</b> — {s.hace}</li>)}
+  </ul>
+
+  {skills.map((s) => (
+    <>
+      <h3>{s.nombre}</h3>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{s.prompt}</code></pre>
+      </div>
+    </>
+  ))}
+
+  <h2>Cómo instalarlas</h2>
+  <p>Pegá esto en Claude para que te arme el SKILL.md de cada una, y guardalas en tu espacio de trabajo:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{instalar}</code></pre>
+  </div>
+
+  <div class="note"><b>El cazador no publica nada.</b> Te muestra qué funcionó, y el botón lo apretás vos.</div>
+
+  <div class="minicta">
+    La clase completa, de usar Claude a construir tu primer sistema, es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+</RecursoLayout>

@@ -1,0 +1,60 @@
+---
+// Lead magnet · palabra clave ManyChat: BÚSQUEDA (reel: "Me postulé a 200 trabajos", 30/10/2026)
+// URL pública: /recursos/busqueda-trabajo-guia
+// El operador site: y las comillas son de Google. La tarea diaria depende del plan de Claude (tareas programadas):
+// si no la tiene, el prompt se pega cada mañana.
+// Las búsquedas de ejemplo usan placeholders: no son portales ni empresas reales.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const busquedas = `site:[PAGINA-DE-EMPLEO-DE-LA-EMPRESA] "[PUESTO]"
+site:[PORTAL-DE-EMPLEO] "[PUESTO]" "[CIUDAD]"
+site:[EMPRESA].com/trabaja-con-nosotros "[PUESTO]"`;
+
+const prompt = `Cada mañana, buscá en Google estas búsquedas y sacá los resultados de esta semana:
+[PEGÁ ACÁ LAS BÚSQUEDAS]
+Para cada resultado decime empresa, puesto y fecha de publicación. Si no podés confirmar la fecha, decímelo.
+Leé mi currículum: [PEGÁ ACÁ O ADJUNTÁ TU CV].
+Descartá los puestos que no encajan con mi perfil y decime por qué.
+Para los que sí encajan, escribí una postulación para cada empresa, de hasta 150 palabras, con datos de la empresa.`;
+---
+<RecursoLayout
+  titulo="Búsquedas exactas para encontrar trabajo antes que los demás"
+  descripcion="Las empresas publican primero en su propia página. Estas búsquedas de Google te muestran los puestos de esta semana, y el prompt que te los filtra y te deja cada postulación lista."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="BÚSQUEDA"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Si mandás currículums y nadie responde, el problema puede ser el momento. Llegás tarde: los avisos de LinkedIn llegan después que los de la propia empresa.</b></div>
+
+  <h2>Cómo buscar</h2>
+  <ol class="steps">
+    <li><b>Abrí Google.</b> No LinkedIn: ahí los resultados son los mismos para todos.</li>
+    <li><b>Usá <code>site:</code>.</b> Limita la búsqueda a una página, por ejemplo la de empleo de una empresa.</li>
+    <li><b>Poné el puesto entre comillas.</b> Así busca la frase exacta.</li>
+    <li><b>Filtrá por fecha.</b> En Herramientas, elegí la última semana.</li>
+  </ol>
+
+  <h2>Las búsquedas</h2>
+  <p>Reemplazá lo que está entre corchetes. Una línea por búsqueda:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{busquedas}</code></pre>
+  </div>
+
+  <h2>El prompt para correrlas cada mañana</h2>
+  <p>Pegalo en Claude, reemplazá los corchetes y, si tu plan tiene tareas programadas, programalo para las 8:00. Si no, pegalo cada mañana:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{prompt}</code></pre>
+  </div>
+
+  <div class="note"><b>Antes de postularte:</b> revisá cada aviso en la página de la empresa. Si Claude no puede confirmar la fecha, no lo des por bueno.</div>
+
+  <div class="minicta">
+    La clase completa, de usar Claude a construir tu primer sistema, es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+</RecursoLayout>
