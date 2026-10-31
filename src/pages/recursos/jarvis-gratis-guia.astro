@@ -1,0 +1,77 @@
+---
+// Lead magnet · palabra clave ManyChat: JARVIS (reel: "Tu Jarvis gratis", 31/10/2026)
+// URL pública: /recursos/jarvis-gratis-guia
+// Repo verificado (31/10): github.com/open-jarvis/OpenJarvis · público, Apache 2.0, proyecto de Stanford.
+// Instalación oficial según su README: un script (curl ... | bash) que instala uv, el entorno Python y Ollama.
+// El reel dice "pegá el enlace en Claude Code": es una forma de decirlo, no el método oficial. La guía muestra el oficial.
+// Biblioteca = Catálogo de recursos (Google Doc, compartido con cualquiera con el enlace).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const biblioteca = 'https://docs.google.com/document/d/1a3hze3j_NUeDKzMBQRtg4zWwTDlCs1l2xemB8LIgIrs/edit';
+
+const instalar = `curl -fsSL https://open-jarvis.github.io/OpenJarvis/install.sh | bash`;
+
+const arrancar = `jarvis`;
+
+const primerPedido = `Mañana quiero empezar el día con un resumen de mis correos y mi calendario.
+Decime los 3 correos que importan y a quién llevo días sin contestarle.
+No envíes nada: solo mostrame el resumen.`;
+---
+<RecursoLayout
+  titulo="Jarvis gratis: tu asistente personal instalado en tu compu"
+  descripcion="Instalá OpenJarvis, el asistente de código abierto de Stanford que vive en tu compu. Paso a paso, qué necesitás y un primer pedido para probarlo."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="JARVIS"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Tony Stark gastó mil millones en su Jarvis. OpenJarvis es de código abierto y corre en tu compu, sin suscripción. Lo que sí necesitás es espacio en el disco y un rato para instalarlo.</b></div>
+
+  <h2>Qué necesitás</h2>
+  <ul class="check">
+    <li>Una compu con Mac, Linux, Windows (con WSL2) o la app de escritorio.</li>
+    <li>Espacio libre en el disco para el modelo local (el instalador lo descarga).</li>
+    <li>Unos 3 minutos con buena conexión, más la descarga de los modelos.</li>
+  </ul>
+
+  <h2>Cómo instalarlo</h2>
+  <ol class="steps">
+    <li><b>Abrí la terminal</b> de tu compu.</li>
+    <li><b>Pegá el comando</b> y esperá a que termine. Instala uv, el entorno de Python y Ollama.</li>
+    <li><b>Escribí <code>jarvis</code></b> para empezar a chatear.</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{instalar}</code></pre>
+  </div>
+  <div class="note"><b>Antes de ejecutarlo:</b> el comando baja un script desde internet. Abrí el enlace en el navegador y leélo, o descargalo y revisalo antes de correrlo.</div>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{arrancar}</code></pre>
+  </div>
+
+  <h2>Tu primer pedido</h2>
+  <p>Cuando esté andando, probá este pedido. Pedile solo que lea y resuma: no le pidas que envíe ni borre nada.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{primerPedido}</code></pre>
+  </div>
+
+  <h2>Qué tiene que pasar después</h2>
+  <ul class="arrow">
+    <li>El asistente responde en tu compu, no en la nube.</li>
+    <li>Conectar tu correo y tu calendario es un paso aparte, que hacés vos y con tus permisos.</li>
+    <li>Si algo no funciona, <code>jarvis doctor</code> muestra el estado de la instalación.</li>
+  </ul>
+
+  <div class="note"><b>Regla:</b> dale acceso a lo mínimo que necesite. Un asistente que puede leer tu correo también puede equivocarse con él.</div>
+
+  <h2>Más recursos gratis</h2>
+  <p>Además de Jarvis, tenés la biblioteca de recursos gratuitos de IA, en el Catálogo de recursos: <a href={biblioteca} target="_blank" rel="noopener noreferrer">abrir el catálogo →</a></p>
+
+  <div class="minicta">
+    La clase completa, de usar Claude a construir tu primer sistema, es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+</RecursoLayout>
