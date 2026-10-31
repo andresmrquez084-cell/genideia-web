@@ -20,4 +20,12 @@ export const PRESENTACIONES: Presentacion[] = [
     poster: '/videos/presentacion/distribuidora-poster.jpg',
     vertical: true,
   },
+  {
+    slug: 'taller',
+    rubro: 'talleres mecánicos',
+    pregunta: '¿Cómo puedo ayudar a tu taller?',
+    video: '/videos/presentacion/taller.mp4',
+    poster: '/videos/presentacion/taller-poster.jpg',
+    vertical: true,
+  },
 ];
