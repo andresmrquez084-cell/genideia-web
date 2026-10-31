@@ -2,71 +2,80 @@
 // Lead magnet · palabra clave ManyChat: JARVIS (reel: "Tu Jarvis gratis", 31/10/2026)
 // URL pública: /recursos/jarvis-gratis-guia
 // Repo verificado (31/10): github.com/open-jarvis/OpenJarvis · público, Apache 2.0, proyecto de Stanford.
-// Instalación oficial según su README: un script (curl ... | bash) que instala uv, el entorno Python y Ollama.
-// El reel dice "pegá el enlace en Claude Code": es una forma de decirlo, no el método oficial. La guía muestra el oficial.
+// Los 3 pasos del reel: instalar, elegir cómo te habla, conectar correo y calendario.
+// Comandos del README: `jarvis init --preset morning-digest-mac`, `jarvis connect gdrive`, `jarvis digest --fresh`.
+// El reel dice "pegá el enlace en Claude Code": el README NO documenta ese método; la instalación oficial es el script.
 // Biblioteca = Catálogo de recursos (Google Doc, compartido con cualquiera con el enlace).
 import RecursoLayout from '../../layouts/RecursoLayout.astro';
 
 const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const repo = 'https://github.com/open-jarvis/OpenJarvis';
 const biblioteca = 'https://docs.google.com/document/d/1a3hze3j_NUeDKzMBQRtg4zWwTDlCs1l2xemB8LIgIrs/edit';
 
 const instalar = `curl -fsSL https://open-jarvis.github.io/OpenJarvis/install.sh | bash`;
 
-const arrancar = `jarvis`;
+const preset = `jarvis init --preset morning-digest-mac --force`;
 
-const primerPedido = `Mañana quiero empezar el día con un resumen de mis correos y mi calendario.
-Decime los 3 correos que importan y a quién llevo días sin contestarle.
-No envíes nada: solo mostrame el resumen.`;
+const conectar = `jarvis connect gdrive`;
+
+const probar = `jarvis digest --fresh`;
 ---
 <RecursoLayout
-  titulo="Jarvis gratis: tu asistente personal instalado en tu compu"
-  descripcion="Instalá OpenJarvis, el asistente de código abierto de Stanford que vive en tu compu. Paso a paso, qué necesitás y un primer pedido para probarlo."
+  titulo="Jarvis gratis: tu resumen del día instalado en tu compu"
+  descripcion="OpenJarvis, el asistente de código abierto de Stanford. Lo instalás, le conectás tu correo y tu calendario, y te deja un resumen hablado de lo que importa."
   tipo="Guía"
   barLabel="Guía · @andresalbornoz.ai"
   palabraClave="JARVIS"
   masterclass={true}
   mclassUrl={grupo}
 >
-  <div class="lead"><b>Tony Stark gastó mil millones en su Jarvis. OpenJarvis es de código abierto y corre en tu compu, sin suscripción. Lo que sí necesitás es espacio en el disco y un rato para instalarlo.</b></div>
+  <div class="lead"><b>Tony Stark gastó mil millones en su Jarvis. El tuyo es gratis y de código abierto. Lo instalás, le conectás tu correo y tu calendario, y cada mañana te cuenta qué importa.</b></div>
 
-  <h2>Qué necesitás</h2>
-  <ul class="check">
-    <li>Una compu con Mac, Linux, Windows (con WSL2) o la app de escritorio.</li>
-    <li>Espacio libre en el disco para el modelo local (el instalador lo descarga).</li>
-    <li>Unos 3 minutos con buena conexión, más la descarga de los modelos.</li>
-  </ul>
+  <h2>El enlace</h2>
+  <p>Repo oficial, público y con licencia Apache 2.0: <a href={repo} target="_blank" rel="noopener noreferrer">{repo}</a></p>
 
-  <h2>Cómo instalarlo</h2>
+  <h2>Paso 1: instalarlo</h2>
   <ol class="steps">
-    <li><b>Abrí la terminal</b> de tu compu.</li>
-    <li><b>Pegá el comando</b> y esperá a que termine. Instala uv, el entorno de Python y Ollama.</li>
-    <li><b>Escribí <code>jarvis</code></b> para empezar a chatear.</li>
+    <li><b>Abrí la terminal</b> de tu compu. Funciona en Mac, Linux y Windows con WSL2.</li>
+    <li><b>Pegá el comando.</b> Instala uv, el entorno de Python y Ollama, y baja un modelo para correr en tu compu.</li>
+    <li><b>Esperá unos minutos.</b> Después, <code>jarvis</code> arranca el chat.</li>
   </ol>
   <div class="codewrap">
     <button class="copy">Copiar</button>
     <pre class="code"><code>{instalar}</code></pre>
   </div>
-  <div class="note"><b>Antes de ejecutarlo:</b> el comando baja un script desde internet. Abrí el enlace en el navegador y leélo, o descargalo y revisalo antes de correrlo.</div>
+  <div class="note"><b>Antes de ejecutarlo:</b> el comando baja un script desde internet. Abrí el enlace en el navegador y leélo antes de correrlo.</div>
+
+  <h2>Paso 2: que te hable</h2>
+  <p>El preset del resumen de la mañana te deja el briefing en audio, con voz:</p>
   <div class="codewrap">
     <button class="copy">Copiar</button>
-    <pre class="code"><code>{arrancar}</code></pre>
+    <pre class="code"><code>{preset}</code></pre>
   </div>
+  <p>Si tu compu es Linux, cambiá <code>morning-digest-mac</code> por <code>morning-digest-linux</code>.</p>
 
-  <h2>Tu primer pedido</h2>
-  <p>Cuando esté andando, probá este pedido. Pedile solo que lea y resuma: no le pidas que envíe ni borre nada.</p>
+  <h2>Paso 3: conectar tu correo y tu calendario</h2>
+  <p>Con un solo permiso de Google (OAuth) se conectan Gmail, Calendar y Tasks. Lo autorizás vos, en tu navegador:</p>
   <div class="codewrap">
     <button class="copy">Copiar</button>
-    <pre class="code"><code>{primerPedido}</code></pre>
+    <pre class="code"><code>{conectar}</code></pre>
   </div>
 
-  <h2>Qué tiene que pasar después</h2>
+  <h2>Probá tu primer resumen</h2>
+  <p>Genera el briefing ahora mismo, sin esperar a la mañana:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{probar}</code></pre>
+  </div>
+
+  <h2>Qué te da</h2>
   <ul class="arrow">
-    <li>El asistente responde en tu compu, no en la nube.</li>
-    <li>Conectar tu correo y tu calendario es un paso aparte, que hacés vos y con tus permisos.</li>
-    <li>Si algo no funciona, <code>jarvis doctor</code> muestra el estado de la instalación.</li>
+    <li>Un resumen diario de tu correo y tu calendario, hablado.</li>
+    <li>Corre en tu compu. No hay suscripción: el software es gratis.</li>
+    <li>Si algo no anda, <code>jarvis doctor</code> muestra el estado de la instalación.</li>
   </ul>
 
-  <div class="note"><b>Regla:</b> dale acceso a lo mínimo que necesite. Un asistente que puede leer tu correo también puede equivocarse con él.</div>
+  <div class="note"><b>Regla:</b> conectá solo lo que necesitás. Un asistente que lee tu correo también puede equivocarse con lo que lee.</div>
 
   <h2>Más recursos gratis</h2>
   <p>Además de Jarvis, tenés la biblioteca de recursos gratuitos de IA, en el Catálogo de recursos: <a href={biblioteca} target="_blank" rel="noopener noreferrer">abrir el catálogo →</a></p>
