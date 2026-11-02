@@ -1,0 +1,32 @@
+Creá un comercial animado de 24 segundos para Spotify, como un único archivo HTML que se abra en el navegador y se reproduzca solo, en loop. Tiene que parecer una publicidad de producto de primer nivel.
+
+FORMATO
+- Un solo archivo .html con todo adentro (HTML, CSS y JS). Three.js desde CDN con importmap: "three": https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js y "three/addons/": https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/
+- 16:9, pantalla completa, sin barras de scroll ni controles.
+- Todo el movimiento depende de un solo reloj: t = segundos desde el inicio (performance.now). Cada plano se calcula a partir de t, así el video siempre se ve igual.
+- 60 fps fluidos, easing suave en todo. Todo se mueve al pulso de 128 bpm, aunque no haya sonido.
+
+ESTÉTICA
+- Fondo negro profundo #0A0A0A con niebla oscura. Sobre eso brilla el verde Spotify #1ED760, con acentos de rosa #F573A0, violeta #9B5CFF y amarillo #FFD43B (los colores de las portadas). Blanco #FFFFFF para textos de interfaz.
+- Post-procesado: bloom (UnrealBloomPass) fuerte para que el verde y los acentos brillen como neón, viñeta y un poco de grano.
+- Los objetos son GRANDES: ocupan entre el 60 y el 80 % del cuadro. Nada de cosas chicas flotando en un espacio vacío.
+- Cámara siempre viajando: dolly, vuelos rasantes, atravesar objetos. Entre planos, transiciones con movimiento (zoom que atraviesa, barrido rápido con desenfoque), nunca un corte seco ni un frame vacío.
+- Casi sin texto de narración: la historia la cuenta la imagen. Solo hay texto dentro de las interfaces y en el cierre.
+- La interfaz de Spotify recreada en 3D: reproductor oscuro con portada cuadrada, barra de progreso verde, botón play circular verde; lista de canciones; tarjetas de playlist con portadas de colores. Nombres de canciones y artistas inventados.
+- El logo: círculo verde con tres arcos negros curvos, en 3D, con brillo.
+
+PLANOS (ritmo rápido: un plano nuevo cada ~2 s)
+1. 0–1,5 s · Gancho: desde negro, una onda de sonido verde explota hacia la cámara y el destello llena el cuadro.
+2. 1,5–3,5 s · Un botón play verde enorme; un dedo de luz lo presiona y del botón sale una onda expansiva.
+3. 3,5–5,5 s · La onda se convierte en un ecualizador gigante: cientos de barras verdes que suben y bajan al pulso; la cámara vuela rasante entre ellas.
+4. 5,5–7,5 s · Las barras se estiran y forman una ciudad de rascacielos de neón que laten con la música.
+5. 7,5–9,5 s · De las ventanas de la ciudad salen portadas de discos de colores que giran en un carrusel 3D alrededor de la cámara.
+6. 9,5–11,5 s · Una portada se agranda y se abre el reproductor de Spotify: portada, nombre de la canción, barra de progreso avanzando.
+7. 11,5–13 s · La letra de la canción aparece línea por línea, grande, con la línea activa resaltada en blanco y las demás en gris.
+8. 13–14,5 s · Una playlist "Para tu lunes" se arma sola: las canciones caen y se ordenan en la lista.
+9. 14,5–16 s · Unos auriculares 3D giran en primer plano, con ondas de color que salen de cada lado.
+10. 16–18 s · Un vinilo enorme gira; la cámara baja hasta el surco y lo recorre como si fuera una ruta de luz.
+11. 18–20 s · Un mosaico de portadas de todos los colores se arma como pared gigante y la cámara se aleja rápido.
+12. 20–24 s · Todo converge en el logo, que late con el último golpe y queda brillando al centro. Debajo, chico: "Tu vida tiene banda sonora." Fundido a negro y vuelve a empezar.
+
+Dame solo el archivo HTML completo, listo para copiar y abrir.
