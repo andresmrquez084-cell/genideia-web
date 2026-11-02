@@ -1,0 +1,32 @@
+Creá un comercial animado de 24 segundos para Claude, el asistente de IA de Anthropic, como un único archivo HTML que se abra en el navegador y se reproduzca solo, en loop. Tiene que parecer una publicidad de producto de primer nivel.
+
+FORMATO
+- Un solo archivo .html con todo adentro (HTML, CSS y JS). Three.js desde CDN con importmap: "three": https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js y "three/addons/": https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/
+- 16:9, pantalla completa, sin barras de scroll ni controles.
+- Todo el movimiento depende de un solo reloj: t = segundos desde el inicio (performance.now). Cada plano se calcula a partir de t, así el video siempre se ve igual.
+- 60 fps fluidos, easing suave en todo.
+
+ESTÉTICA
+- Fondo oscuro: carbón #141413 con niebla oscura. Sobre eso brilla la terracota #D97757, con crema #F4F1EA para las interfaces y gris piedra #B0AEA5 para detalles.
+- Post-procesado: bloom (UnrealBloomPass) para que la terracota brille, viñeta suave y un poco de grano.
+- Los objetos son GRANDES: ocupan entre el 60 y el 80 % del cuadro. Nada de cosas chicas flotando en un espacio vacío.
+- Cámara siempre viajando: dolly, vuelos rasantes, atravesar objetos. Entre planos, transiciones con movimiento (zoom que atraviesa, barrido rápido con desenfoque), nunca un corte seco ni un frame vacío.
+- Casi sin texto de narración: la historia la cuenta la imagen. Solo hay texto dentro de las interfaces y en el cierre.
+- La interfaz de Claude recreada en 3D: caja de chat redondeada crema con "¿En qué puedo ayudarte?", respuesta que se escribe en vivo palabra por palabra, panel lateral de artifacts (código a la izquierda, vista previa a la derecha) y terminal de Claude Code (fondo negro, prompt ">", tildes verdes).
+- El símbolo de Claude: una chispa/asterisco de rayos irregulares en terracota, en 3D (rayos extruidos desde el centro), con brillo.
+
+PLANOS (ritmo rápido: un plano nuevo cada ~2 s)
+1. 0–1,5 s · Gancho: desde negro, la chispa explota hacia la cámara, los rayos giran y un destello llena el cuadro.
+2. 1,5–3,5 s · La caja de chat de Claude, enorme. Se tipea "tengo una idea pero no sé por dónde…".
+3. 3,5–5,5 s · La cámara atraviesa la caja; las palabras escritas salen volando en 3D hacia la cámara.
+4. 5,5–7,5 s · Las palabras orbitan desordenadas alrededor de la chispa, en el espacio oscuro.
+5. 7,5–9,5 s · La chispa late; las palabras se alinean y se convierten en una respuesta que se escribe en vivo en un panel crema.
+6. 9,5–11,5 s · Del piso oscuro emerge una ciudad de bloques crema y terracota en grilla; la cámara vuela rasante entre los edificios.
+7. 11,5–13 s · Un edificio se abre como una tarjeta: un mail que se escribe solo y el botón "Enviar" se presiona.
+8. 13–14,5 s · Una planilla: las celdas se llenan solas y un gráfico de barras crece.
+9. 14,5–16 s · Una web: los bloques caen desde arriba y arman una landing completa.
+10. 16–18 s · El panel de artifacts: el código se escribe a la izquierda y la vista previa cambia en vivo a la derecha.
+11. 18–20 s · La terminal de Claude Code: comandos que corren, un diff con líneas verdes y rojas y una cascada de tildes verdes; la cámara la atraviesa.
+12. 20–24 s · Todo converge en la chispa, que gira y queda brillando al centro. Aparece "Claude" grande al lado y debajo, chico: "Lo que tenías en la cabeza, hecho." Fundido a negro y vuelve a empezar.
+
+Dame solo el archivo HTML completo, listo para copiar y abrir.

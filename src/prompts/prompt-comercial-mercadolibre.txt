@@ -1,0 +1,32 @@
+Creá un comercial animado de 24 segundos para Mercado Libre, como un único archivo HTML que se abra en el navegador y se reproduzca solo, en loop. Tiene que parecer una publicidad de producto de primer nivel.
+
+FORMATO
+- Un solo archivo .html con todo adentro (HTML, CSS y JS). Three.js desde CDN con importmap: "three": https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js y "three/addons/": https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/
+- 16:9, pantalla completa, sin barras de scroll ni controles.
+- Todo el movimiento depende de un solo reloj: t = segundos desde el inicio (performance.now). Cada plano se calcula a partir de t, así el video siempre se ve igual.
+- 60 fps fluidos, easing suave en todo.
+
+ESTÉTICA
+- Mundo luminoso y alegre: fondo amarillo Mercado Libre #FFE600, con azul #2D3277 y celeste #3483FA para la interfaz, blanco #FFFFFF para tarjetas y verde #00A650 para "Envío gratis" y confirmaciones.
+- Luz de día cálida, sombras suaves y marcadas, colores saturados. Post-procesado: viñeta suave y un bloom leve en los brillos.
+- Los objetos son GRANDES: ocupan entre el 60 y el 80 % del cuadro. Nada de cosas chicas flotando en un espacio vacío.
+- Cámara siempre viajando: dolly, vuelos rasantes, atravesar objetos. Entre planos, transiciones con movimiento (zoom que atraviesa, barrido rápido con desenfoque), nunca un corte seco ni un frame vacío.
+- Casi sin texto de narración: la historia la cuenta la imagen. Solo hay texto dentro de las interfaces y en el cierre.
+- La interfaz de Mercado Libre recreada en 3D: barra de búsqueda blanca sobre franja amarilla, tarjetas de producto blancas con foto, precio y "Envío gratis" en verde, botón azul "Comprar ahora", carrito. Productos y precios inventados.
+- Las cajas de envío: cajas de cartón con cinta amarilla, en 3D.
+
+PLANOS (ritmo rápido: un plano nuevo cada ~2 s)
+1. 0–1,5 s · Gancho: una caja de cartón cae del cielo hacia la cámara, golpea el piso, rebota y se abre con una explosión de confeti amarillo y azul.
+2. 1,5–3,5 s · La barra de búsqueda, enorme. Se tipea "zapatillas para correr" y se presiona la lupa.
+3. 3,5–5,5 s · Las tarjetas de producto salen disparadas de la barra y forman una grilla 3D infinita; la cámara vuela por encima.
+4. 5,5–7,5 s · La cámara se frena en una tarjeta: unas zapatillas 3D salen de la foto y giran en el aire.
+5. 7,5–9,5 s · Se presiona "Comprar ahora": un tilde verde gigante aparece con un destello y la pantalla confirma la compra.
+6. 9,5–11,5 s · Las zapatillas entran en una caja que se cierra sola con cinta amarilla.
+7. 11,5–13 s · La caja sube a una cinta transportadora en un centro de distribución lleno de cajas que corren en todas direcciones.
+8. 13–14,5 s · La caja sale volando por un portón y aterriza en una camioneta.
+9. 14,5–16 s · Vista aérea de una ciudad de bloques: la camioneta recorre una ruta celeste que se dibuja en el mapa.
+10. 16–18 s · Un seguimiento de envío se completa: "Preparando", "En camino", "Llegó", con cada paso marcándose en verde.
+11. 18–20 s · La caja aparece en la puerta de una casa; la puerta se abre y la caja se abre con luz saliendo de adentro.
+12. 20–24 s · Todo se ordena en la franja amarilla con el logo de Mercado Libre al centro: dos manos que se dan un apretón dentro de un óvalo, al lado de "mercado libre". Debajo, chico: "Lo que buscás, llega." Fundido y vuelve a empezar.
+
+Dame solo el archivo HTML completo, listo para copiar y abrir.

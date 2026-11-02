@@ -1,0 +1,7 @@
+Usá el prompt que te pego abajo como referencia de edición. Es un comercial animado que ya funciona y tiene el formato que quiero reutilizar: mismo ritmo de planos, misma cámara en movimiento, mismas transiciones, misma paleta por capas y misma estructura de gancho, desarrollo y cierre.
+
+[PEGÁ AQUÍ EL PROMPT ORIGINAL]
+
+Aplicá esa misma edición para [PRODUCTO, MARCA O TEMA]. Cambiá solo el contenido: la marca, los colores, el objeto central, los planos y la frase final. Mantené todo lo demás igual.
+
+Dame solo el archivo HTML completo, listo para copiar y abrir.

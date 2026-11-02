@@ -1,0 +1,75 @@
+---
+// Lead magnet · palabra clave ManyChat: PROMPT (mismo texto que los otros 2 comerciales).
+// Cada reel tiene su propio flujo en ManyChat (disparador por publicación específica),
+// así que esta página va atada SOLO al post del comercial de Spotify.
+// URL pública: /recursos/prompt-comercial-spotify
+// Prompt: src/prompts/prompt-comercial-spotify.txt
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+import promptText from '../../prompts/prompt-comercial-spotify.txt?raw';
+import formatoText from '../../prompts/formato-comercial-plantilla.txt?raw';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const biblioteca = 'https://docs.google.com/document/d/1a3hze3j_NUeDKzMBQRtg4zWwTDlCs1l2xemB8LIgIrs/edit';
+---
+<RecursoLayout
+  titulo="Comercial animado de Spotify"
+  descripcion="El prompt exacto para generar con Claude un comercial animado de 24 segundos, en un solo archivo HTML que se reproduce solo en el navegador."
+  tipo="Prompt"
+  barLabel="Prompt · @andresalbornoz.ai"
+  palabraClave="PROMPT"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <p>Este es el mismo prompt que usé para generar el comercial que viste. Pegándolo en Claude obtenés un <b>único archivo HTML</b> con el comercial completo, que se reproduce solo y en loop.</p>
+  <div class="lead"><b>No necesitás programar: el prompt pide el código entero y vos solo lo abrís en el navegador.</b></div>
+
+  <h2>Cómo usarlo (3 pasos)</h2>
+  <ol class="steps">
+    <li><b>Abrí Claude</b> y elegí Opus, que es el modelo con el que lo hice.</li>
+    <li><b>Pegá el prompt de abajo</b> y enviálo tal cual, sin cambiarle nada.</li>
+    <li><b>Copiá el HTML</b> que te devuelve en un archivo llamado <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">comercial.html</code> y abrilo con doble clic. Se ejecuta en el navegador (Chrome, Edge o Safari).</li>
+  </ol>
+
+  <div class="note"><b>Importante:</b> el comercial carga Three.js desde internet, así que la compu tiene que estar conectada.</div>
+
+  <h2>El prompt</h2>
+  <p>Tocá "Copiar" y pegalo en Claude:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptText}</code></pre>
+  </div>
+
+  <h2>Si no se ve bien</h2>
+  <ul class="arrow">
+    <li>Abrí la consola del navegador (<code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">Cmd + Opción + J</code> en Mac) y copiá el error.</li>
+    <li>Pegalo en Claude con esta frase: <b>"Hay un error al abrir el HTML. Corregilo y devolveme el archivo completo."</b></li>
+    <li>Si el comercial corre lento, pedile que baje la calidad del bloom o la cantidad de partículas.</li>
+  </ul>
+
+  <h2>Para tener en cuenta</h2>
+  <p>Es un ejercicio de práctica para aprender a pedirle a Claude una pieza visual completa. Los nombres, la interfaz, las marcas y los productos son ilustrativos: no uses el resultado como publicidad oficial de Spotify.</p>
+
+  <h2>Quedate con el formato</h2>
+  <p>Este comercial no es solo un video: es una forma de editar. Estas son las piezas que lo hacen funcionar, y sirven para cualquier tema:</p>
+  <ul class="arrow">
+    <li><b>Un solo archivo que corre solo:</b> todo el movimiento sale de un reloj, así se ve igual cada vez.</li>
+    <li><b>Objetos grandes:</b> el protagonista ocupa entre el 60 y el 80 % del cuadro.</li>
+    <li><b>Cámara en movimiento:</b> nunca se queda quieta y las transiciones son con movimiento, no cortes secos.</li>
+    <li><b>Ritmo de planos:</b> un plano nuevo cada 2 segundos, con gancho al principio y cierre al final.</li>
+    <li><b>Poco texto:</b> la imagen cuenta la historia; el texto aparece solo en las interfaces y en el cierre.</li>
+    <li><b>Paleta de marca:</b> un fondo oscuro, un color principal que brilla y uno de apoyo.</li>
+  </ul>
+
+  <h2>Usá el mismo formato para otras cosas</h2>
+  <p>Copiá el prompt de arriba y pegalo en la plantilla de abajo. Así Claude usa tu comercial como referencia y aplica la misma edición a otro producto, marca o tema:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{formatoText}</code></pre>
+  </div>
+  <div class="note"><b>Cómo usarla:</b> reemplazá [PEGÁ AQUÍ EL PROMPT ORIGINAL] por el prompt de arriba y [PRODUCTO, MARCA O TEMA] por lo que quieras comunicar.</div>
+  <div class="note"><b>Ejemplo:</b> Por ejemplo: un comercial de un podcast o de un curso, con el micrófono como elemento central, el ecualizador como gancho y el nombre del programa como frase final.</div>
+
+  <div class="minicta">
+    ¿Querés más prompts como este? La biblioteca de recursos gratuitos está acá: <a href={biblioteca} target="_blank" rel="noopener noreferrer">abrir el catálogo →</a>
+  </div>
+</RecursoLayout>
