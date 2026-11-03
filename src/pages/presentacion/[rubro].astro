@@ -1,6 +1,7 @@
 ---
 // Presentación adaptada a un rubro: misma landing, con la pregunta y el video de ese rubro.
 import PresentacionLanding from '../../components/PresentacionLanding.astro';
+import PresentacionRecorrido from '../../components/PresentacionRecorrido.astro';
 import { PRESENTACIONES, type Presentacion } from '../../data/presentaciones';
 
 export function getStaticPaths() {
@@ -10,6 +11,16 @@ export function getStaticPaths() {
 const { p } = Astro.props as { p: Presentacion };
 ---
 
+{p.recorrido ? (
+  <PresentacionRecorrido
+    pregunta={p.pregunta}
+    rubro={p.rubro}
+    recorrido={p.recorrido}
+    titulo={`${p.pregunta} — GENIDEIA Company`}
+    descripcion={`Una presentación breve y cuatro ejemplos concretos de cómo simplificar tareas en ${p.rubro}.`}
+    waTexto="Hola Andrés, vi la presentación para talleres y me gustaría conversar sobre algunas tareas que podríamos simplificar en mi negocio."
+  />
+) : (
 <PresentacionLanding
   pregunta={p.pregunta}
   video={p.video}
@@ -19,3 +30,4 @@ const { p } = Astro.props as { p: Presentacion };
   descripcion={`Te cuento en un minuto cómo GENIDEIA puede ayudar a ${p.rubro}.`}
   waTexto={`Hola Andrés, vi tu presentación para ${p.rubro} y quiero contarte:`}
 />
+)}
