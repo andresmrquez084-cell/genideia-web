@@ -1,0 +1,315 @@
+---
+// Recorrido comercial de 5 videos: presentación → 4 soluciones → contacto.
+// Se usa desde /presentacion/<rubro> cuando el rubro define `recorrido` (src/data/presentaciones.ts).
+// Videos y textos se editan en esos datos; acá solo está la estructura, la navegación y la medición.
+import Loader from '../transitions/Loader.astro';
+import '../transitions/transitions.css';
+import '../styles/global.css';
+import type { Recorrido } from '../data/presentaciones';
+
+interface Props {
+  pregunta: string;
+  rubro: string;
+  recorrido: Recorrido;
+  titulo: string;
+  descripcion: string;
+  waTexto: string;
+}
+const { pregunta, rubro, recorrido, titulo, descripcion, waTexto } = Astro.props;
+
+// WhatsApp configurado en la landing original (mismo número). No se cambia.
+const waUrl = 'https://wa.me/59892302941?text=' + encodeURIComponent(waTexto);
+const perfiles = [
+  { nombre: 'Andrés Albornoz', rol: 'Fundador', handle: '@andresalbornoz.ai', url: 'https://instagram.com/andresalbornoz.ai', foto: '/img/andres.jpg' },
+  { nombre: 'GENIDEIA Company', rol: 'Sistemas y automatización', handle: '@genideiacompany.ai', url: 'https://www.instagram.com/genideiacompany.ai', foto: '/img/logo-genideia.png' },
+];
+
+const { presentacion, soluciones } = recorrido;
+const pasos = [presentacion, ...soluciones];
+const mmss = (s: number) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
+const totalSeg = pasos.reduce((a, p) => a + p.duracion, 0);
+
+// Destino opcional de los eventos (vacío = no se envía nada a ningún servidor). Ver bloque <script>.
+const TRACK_URL = import.meta.env.PUBLIC_TRACK_URL ?? '';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{titulo}</title>
+  <meta name="description" content={descripcion} />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta property="og:title" content={titulo} />
+  <meta property="og:description" content={descripcion} />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://genideiacompany.com/og-genideia.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href={presentacion.poster} />
+  <script>import '../transitions/reveal.js';</script>
+</head>
+<body>
+  <Loader logoSrc="/img/logo-nav.png" />
+
+  <header class="top">
+    <nav class="top-row">
+      <a href="/" class="brand">GENIDEIA <span>Company</span></a>
+      <a href={waUrl} target="_blank" rel="noopener noreferrer" class="btn-wa-sm" data-wa="header">WhatsApp</a>
+    </nav>
+    <!-- Progreso del recorrido: 5 videos + contacto. Discreto; cada punto lleva a su sección. -->
+    <ol class="progress" aria-label="Progreso del recorrido">
+      {pasos.map((p, i) => (
+        <li><a href={`#paso-${i}`} data-dot={i} aria-label={`${i === 0 ? 'Presentación' : 'Solución ' + i}: ${p.titulo}`}><span></span></a></li>
+      ))}
+      <li><a href="#contacto" data-dot={pasos.length} aria-label="Contacto"><span></span></a></li>
+    </ol>
+  </header>
+
+  <main>
+    <!-- 1 · Presentación -->
+    <section id="paso-0" class="sec hero" data-paso="0">
+      <p class="eyebrow">Recorrido de {pasos.length} videos cortos · {mmss(totalSeg)}</p>
+      <h1>{pregunta}</h1>
+      <p class="lead">Empezá con esta introducción de menos de un minuto. Después, {soluciones.length} ejemplos concretos.</p>
+
+      <ol class="ruta" aria-label="Qué vas a ver">
+        <li class="on"><b>1</b><span>Presentación</span></li>
+        <li><b>2–{pasos.length}</b><span>{soluciones.length} soluciones</span></li>
+        <li><b>→</b><span>Conversar</span></li>
+      </ol>
+
+      <div class="player" data-player="0">
+        <video controls playsinline preload="metadata" poster={presentacion.poster} data-video="0" aria-label={presentacion.titulo}>
+          <source src={presentacion.video} type="video/mp4" />
+        </video>
+        <div class="fin" data-fin="0" hidden>
+          <p class="fin-txt">Ahora conocé las {soluciones.length} soluciones que preparamos para talleres.</p>
+          <button type="button" class="btn-main" data-ir="paso-1" data-continuar="presentacion">Ver primera solución <i>↓</i></button>
+          <button type="button" class="btn-ghost" data-replay="0">Volver a ver</button>
+        </div>
+      </div>
+      <a href="#paso-1" class="saltar" data-ir="paso-1" data-continuar="presentacion-link">Ir a las soluciones <i>↓</i></a>
+    </section>
+
+    <!-- 2 · Soluciones -->
+    <div class="sol-head" data-reveal>
+      <p class="eyebrow">Soluciones</p>
+      <h2>{soluciones.length} situaciones concretas de un taller</h2>
+    </div>
+
+    {soluciones.map((s, k) => {
+      const i = k + 1;
+      const ultimo = i === soluciones.length;
+      const sig = soluciones[k + 1];
+      return (
+        <section id={`paso-${i}`} class="sec sol" data-paso={i}>
+          <p class="badge">Solución {i} de {soluciones.length} · {mmss(s.duracion)}</p>
+          <h3>{s.titulo}</h3>
+          {s.problema && <p class="problema">{s.problema}</p>}
+          <div class="player" data-player={i}>
+            <video controls playsinline preload="none" poster={s.poster} data-video={i} aria-label={s.titulo}>
+              <source src={s.video} type="video/mp4" />
+            </video>
+            <div class="fin" data-fin={i} hidden>
+              {ultimo ? (
+                <>
+                  <p class="fin-txt">Ya conociste cuatro maneras de simplificar tareas en un taller.<br /><strong>¿Cuál tendría más sentido para tu negocio?</strong></p>
+                  <a href={waUrl} target="_blank" rel="noopener noreferrer" class="btn-main" data-wa="fin-ultimo" data-continuar="conversar">Conversemos sobre mi taller</a>
+                </>
+              ) : (
+                <>
+                  <p class="fin-txt">{s.siguiente}</p>
+                  <button type="button" class="btn-main" data-ir={`paso-${i + 1}`} data-continuar={`solucion-${i}`}>Ver siguiente solución <i>↓</i></button>
+                </>
+              )}
+              <button type="button" class="btn-ghost" data-replay={i}>Volver a ver</button>
+            </div>
+          </div>
+          {sig ? (
+            <a href={`#paso-${i + 1}`} class="saltar" data-ir={`paso-${i + 1}`} data-continuar={`solucion-${i}-link`}>Siguiente: {sig.titulo} <i>↓</i></a>
+          ) : (
+            <a href="#contacto" class="saltar" data-ir="contacto" data-continuar={`solucion-${i}-link`}>Ir a conversar <i>↓</i></a>
+          )}
+        </section>
+      );
+    })}
+
+    <!-- 3 · Contacto -->
+    <section id="contacto" class="sec contacto" data-paso={pasos.length}>
+      <h2>¿Identificaste alguna tarea que podríamos simplificar en tu {rubro === 'talleres mecánicos' ? 'taller' : 'negocio'}?</h2>
+      <p class="lead">Contame cómo trabajan y vemos juntos si existe una solución que realmente valga la pena implementar.</p>
+      <a href={waUrl} target="_blank" rel="noopener noreferrer" class="btn-main btn-big" data-wa="contacto">Hablar con Andrés por WhatsApp</a>
+      <p class="nota">Sin compromiso. Respondo personalmente.</p>
+
+      <div class="perfiles">
+        {perfiles.map((p) => (
+          <a href={p.url} target="_blank" rel="noopener noreferrer" class="perfil" data-ig={p.handle}>
+            <span class="foto"><img src={p.foto} alt={p.nombre} loading="lazy" /></span>
+            <span class="pdat"><b>{p.nombre}</b><em>{p.rol}</em><u>Instagram {p.handle}</u></span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <script define:vars={{ TRACK_URL, RUBRO: rubro, PASOS: pasos.map((p) => p.id) }}>
+    // ── Medición (sin herramientas nuevas) ─────────────────────────────────────────
+    // Origen de la visita: ?origen=referido | directo (cualquier otro valor se guarda tal cual, en minúsculas).
+    // Cada evento se emite a: window.fbq (si el Pixel de Meta está instalado, como en /empresa), window.dataLayer (si existe)
+    // y, solo si hay TRACK_URL configurada (PUBLIC_TRACK_URL), a ese endpoint con sendBeacon. Si no hay ninguno, no sale nada.
+    // Con ?debug=1 los eventos también se ven en la consola.
+    const qs = new URLSearchParams(location.search);
+    let origen = (qs.get('origen') || '').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 30);
+    try { if (origen) sessionStorage.setItem('origen', origen); else origen = sessionStorage.getItem('origen') || 'sin_origen'; } catch (e) { origen = origen || 'sin_origen'; }
+    const debug = qs.get('debug') === '1';
+    const track = (evento, extra = {}) => {
+      const data = { evento, origen, rubro: RUBRO, ruta: location.pathname, ...extra };
+      try { if (window.fbq) window.fbq('trackCustom', evento, data); } catch (e) {}
+      try { if (window.dataLayer) window.dataLayer.push({ event: evento, ...data }); } catch (e) {}
+      try { if (TRACK_URL && navigator.sendBeacon) navigator.sendBeacon(TRACK_URL, JSON.stringify(data)); } catch (e) {}
+      if (debug) console.log('[track]', data);
+    };
+    track('pagina_vista', { referrer: document.referrer ? new URL(document.referrer).hostname : '' });
+
+    const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+    const videos = $$('[data-video]');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const started = new Set();
+
+    // ── Reproductores ──────────────────────────────────────────────────────────────
+    videos.forEach((v) => {
+      const i = +v.dataset.video;
+      const fin = document.querySelector(`[data-fin="${i}"]`);
+      const hideFin = () => { if (fin) fin.hidden = true; };
+      v.addEventListener('play', () => {
+        hideFin();
+        videos.forEach((o) => { if (o !== v && !o.paused) o.pause(); });  // uno solo a la vez
+        if (!started.has(i)) { started.add(i); track('video_inicio', { video: PASOS[i], paso: i }); }
+      });
+      v.addEventListener('seeking', () => { if (v.currentTime < v.duration - 0.5) hideFin(); });
+      v.addEventListener('ended', () => {
+        track('video_fin', { video: PASOS[i], paso: i });
+        if (document.fullscreenElement) document.exitFullscreen?.();
+        if (fin) fin.hidden = false;
+        const next = videos[i + 1];
+        if (next) { next.preload = 'auto'; next.load(); }   // deja el siguiente listo, sin reproducirlo
+      });
+    });
+    $$('[data-replay]').forEach((b) => b.addEventListener('click', () => {
+      const v = videos[+b.dataset.replay]; if (!v) return;
+      v.currentTime = 0; v.play();
+    }));
+
+    // ── Navegación entre videos ────────────────────────────────────────────────────
+    const ir = (id) => {
+      const el = document.getElementById(id); if (!el) return;
+      el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      const m = /^paso-(\d+)$/.exec(id);
+      if (m) {
+        const v = videos[+m[1]];
+        if (v) { v.preload = 'auto'; v.load(); }            // preparado, no se reproduce solo
+        const btn = v && v.closest('.player');
+        if (btn) setTimeout(() => v.focus({ preventScroll: true }), reduce ? 0 : 700);
+      }
+    };
+    $$('[data-ir]').forEach((el) => el.addEventListener('click', (e) => {
+      e.preventDefault();
+      track('continuar_click', { desde: el.dataset.continuar || '', hacia: el.dataset.ir });
+      ir(el.dataset.ir);
+    }));
+    $$('.progress a').forEach((a) => a.addEventListener('click', (e) => {
+      e.preventDefault(); const id = a.getAttribute('href').slice(1);
+      track('continuar_click', { desde: 'progreso', hacia: id }); ir(id);
+    }));
+
+    // ── Contacto ───────────────────────────────────────────────────────────────────
+    $$('[data-wa]').forEach((a) => a.addEventListener('click', () => track('whatsapp_click', { ubicacion: a.dataset.wa })));
+    $$('[data-ig]').forEach((a) => a.addEventListener('click', () => track('instagram_click', { perfil: a.dataset.ig })));
+
+    // ── Progreso visual ────────────────────────────────────────────────────────────
+    const dots = $$('[data-dot]');
+    const secs = $$('[data-paso]');
+    const mark = (n) => dots.forEach((d) => {
+      const k = +d.dataset.dot; d.parentElement.classList.toggle('done', k < n); d.parentElement.classList.toggle('now', k === n);
+      if (k === n) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current');
+    });
+    mark(0);
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => {
+        const vis = es.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (vis) mark(+vis.target.dataset.paso);
+      }, { rootMargin: '-35% 0px -45% 0px', threshold: [0, 0.2, 0.5, 1] });
+      secs.forEach((s) => io.observe(s));
+    }
+  </script>
+
+  <style is:global>
+    :root { --bg:#07080D; --txt:#F2F4F7; --mut:#B8BEC7; --cy:#00C8FF; --bl:#007BFF; }
+    body { margin:0; background:#07080D radial-gradient(ellipse 90% 55% at 50% -8%, rgba(0,200,255,0.10), transparent 62%) no-repeat fixed; color:var(--txt); font-family:'Poppins',sans-serif; -webkit-font-smoothing:antialiased; }
+    .top { position:sticky; top:0; z-index:50; background:rgba(10,10,10,0.92); border-bottom:1px solid rgba(255,255,255,0.07); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+    .top-row { max-width:64rem; margin:0 auto; padding:.7rem 1.25rem .35rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .brand { font-family:'Montserrat',sans-serif; font-size:1.02rem; font-weight:600; color:var(--txt); letter-spacing:.5px; text-decoration:none; }
+    .brand span { font-weight:500; color:var(--mut); }
+    .btn-wa-sm { background:linear-gradient(135deg,var(--cy),var(--bl)); color:#0A0F1A; font-weight:600; font-size:.78rem; padding:.5rem 1rem; border-radius:.5rem; text-decoration:none; }
+    .progress { list-style:none; margin:0 auto; padding:0 1.25rem .6rem; max-width:64rem; display:flex; gap:.4rem; }
+    .progress li { flex:1; }
+    .progress a { display:flex; align-items:center; height:22px; }
+    .progress span { display:block; width:100%; height:4px; border-radius:2px; background:rgba(255,255,255,.14); transition:background .3s, transform .3s; }
+    .progress .done span { background:rgba(0,200,255,.55); }
+    .progress .now span { background:var(--cy); transform:scaleY(1.5); }
+    main { max-width:44rem; margin:0 auto; padding:0 1.25rem 4rem; text-align:center; }
+    .sec { padding-top:2.6rem; scroll-margin-top:84px; }
+    .hero { padding-top:1.6rem; }
+    .hero h1 { font-size:clamp(1.7rem,5.4vw,3rem); margin-bottom:.6rem; }
+    .hero .lead { font-size:.95rem; margin-bottom:1rem; }
+    .eyebrow { color:var(--cy); font-size:.68rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin:0 0 .8rem; }
+    h1 { font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.08; letter-spacing:-1px; font-size:clamp(2rem,6vw,3.3rem); margin:0 0 .9rem; }
+    h2 { font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.15; letter-spacing:-.5px; font-size:clamp(1.5rem,4.6vw,2.2rem); margin:0 0 .9rem; }
+    h3 { font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.2; font-size:clamp(1.3rem,4.2vw,1.8rem); margin:.3rem 0 .6rem; }
+    .lead { color:var(--mut); font-weight:300; line-height:1.55; margin:0 auto 1.5rem; max-width:34rem; }
+    .ruta { list-style:none; display:flex; flex-wrap:wrap; gap:.4rem; justify-content:center; margin:0 0 1.1rem; padding:0; font-size:.72rem; }
+    .ruta li { display:flex; align-items:center; gap:.4rem; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:999px; padding:.28rem .7rem .28rem .3rem; color:var(--mut); }
+    .ruta li b { display:inline-flex; white-space:nowrap; min-width:1.25rem; padding:0 .25rem; box-sizing:border-box; height:1.25rem; align-items:center; justify-content:center; border-radius:50%; background:rgba(0,200,255,.15); color:var(--cy); font-size:.68rem; }
+    .ruta li.on { border-color:rgba(0,200,255,.45); color:var(--txt); }
+    .ruta li span { max-width:11rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .player { position:relative; aspect-ratio:9/16; width:min(100%, calc(78svh * 9 / 16), 400px); margin:0 auto; border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,.22); background:#0b0d12; }
+    .player video { width:100%; height:100%; display:block; object-fit:cover; background:#0b0d12; }
+    .player video:focus-visible { outline:2px solid var(--cy); outline-offset:-2px; }
+    .fin { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.8rem; padding:1.4rem; text-align:center; background:linear-gradient(180deg,rgba(7,8,13,.82),rgba(7,8,13,.94)); animation:finIn .45s ease both; }
+    .fin[hidden] { display:none; }
+    .fin-txt { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.08rem; line-height:1.35; margin:0 0 .4rem; }
+    .fin-txt strong { color:var(--cy); font-weight:700; }
+    @keyframes finIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+    .btn-main { display:inline-block; border:0; cursor:pointer; font:inherit; background:linear-gradient(135deg,var(--cy),var(--bl)); color:#0A0F1A; font-weight:600; padding:.85rem 1.5rem; border-radius:.6rem; text-decoration:none; }
+    .btn-main:hover { opacity:.92; }
+    .btn-main i, .saltar i { font-style:normal; margin-left:.25rem; }
+    .btn-big { padding:1rem 2.1rem; font-size:1.02rem; }
+    .btn-ghost { border:0; background:none; color:var(--mut); font:inherit; font-size:.82rem; cursor:pointer; text-decoration:underline; padding:.3rem; }
+    .saltar { display:inline-block; margin-top:1rem; color:var(--cy); font-size:.84rem; font-weight:500; text-decoration:none; padding:.4rem .6rem; }
+    .saltar:hover { text-decoration:underline; }
+    .sol-head { padding-top:3.2rem; }
+    .sol { border-top:1px solid rgba(255,255,255,.06); margin-top:2.6rem; }
+    .badge { display:inline-block; font-size:.7rem; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--cy); background:rgba(0,200,255,.1); border:1px solid rgba(0,200,255,.25); padding:.25rem .8rem; border-radius:999px; margin:0; }
+    .problema { color:var(--mut); font-weight:300; line-height:1.5; margin:0 auto 1.3rem; max-width:30rem; }
+    .contacto { border-top:1px solid rgba(255,255,255,.06); margin-top:3rem; padding-top:3.2rem; }
+    .nota { color:var(--mut); font-size:.78rem; font-weight:300; margin:.9rem 0 0; }
+    .perfiles { display:grid; gap:1rem; margin-top:2.6rem; text-align:left; }
+    @media (min-width:640px) { .perfiles { grid-template-columns:1fr 1fr; } }
+    .perfil { display:flex; align-items:center; gap:1rem; background:#111; border:1px solid rgba(255,255,255,.07); border-radius:.8rem; padding:1rem 1.2rem; text-decoration:none; color:inherit; }
+    .perfil .foto { flex:none; width:54px; height:54px; border-radius:50%; overflow:hidden; background:#0B1324; border:1px solid rgba(255,255,255,.08); }
+    .perfil img { width:100%; height:100%; object-fit:cover; }
+    .pdat { display:flex; flex-direction:column; min-width:0; line-height:1.3; }
+    .pdat b { font-family:'Montserrat',sans-serif; font-weight:600; }
+    .pdat em { font-style:normal; color:var(--mut); font-size:.72rem; font-weight:300; }
+    .pdat u { text-decoration:none; color:var(--cy); font-size:.82rem; font-weight:300; }
+    @media (max-width:600px) { .hero .lead { display:none; } .ruta { flex-wrap:nowrap; gap:.3rem; font-size:.68rem; } .ruta li { padding-right:.55rem; white-space:nowrap; } }
+    @media (prefers-reduced-motion:reduce) { .fin { animation:none; } .progress span { transition:none; } }
+  </style>
+</body>
+</html>
