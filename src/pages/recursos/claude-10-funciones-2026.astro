@@ -1,0 +1,146 @@
+---
+// Lead magnet · palabra clave ManyChat: FUNCIONES (reel nuevo: "10 funciones que deberías usar si pagás Claude", nov 2026)
+// URL pública: /recursos/claude-10-funciones-2026
+// Reemplaza el contenido de claude-10-funciones.astro para el reel nuevo. Ese archivo queda para el reel viejo.
+// Como el reel viejo y el nuevo usan FUNCIONES, cada post tiene su propio flujo en ManyChat (disparador por publicación específica).
+// Verificado (3/11): Claude Duet = vista previa de investigación con lista de espera, solo EE. UU., planes pagos.
+//                   Plugins en Cowork = paquetes de skills, comandos y conectores. Dashboards = conectás tus datos y los convierte en paneles.
+// Computer Use y Research: no re-verificados, siguen la descripción del reel.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const promptTarea = `Necesito que resuelvas esta tarea completa, no que me des una sola respuesta.
+
+Tarea:
+- [describí el resultado final que querés, ej: "un reporte semanal de ventas listo para enviar al equipo"]
+
+Contexto:
+- [de dónde sale la info, qué formato tiene, quién lo va a leer]
+
+Pasos que espero que hagas:
+1. [paso 1]
+2. [paso 2]
+3. [paso 3]
+
+Antes de empezar, hacéme las preguntas que necesites para no asumir nada.`;
+
+const promptResearch = `Investigá este tema con varias búsquedas, no con una sola:
+- Tema: [tema]
+- Para qué lo voy a usar: [decisión o uso]
+
+Quiero que:
+1. Hagas una búsqueda inicial y después sigas las preguntas que surjan de los resultados.
+2. Me devuelvas un resumen con los puntos clave.
+3. Me pases la lista de fuentes con link, indicando cuál respalda cada dato.
+4. Marques lo que no pudiste confirmar.`;
+---
+<RecursoLayout
+  titulo="Las 10 funciones de Claude que deberías usar si pagás"
+  descripcion="Guía actualizada: qué hace cada función de Claude en 2026, cuándo usarla y cómo estrenarla hoy. Incluye Plugins, Chrome, Computer Use, Dashboards y Claude Duet."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="FUNCIONES"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Si pagás Claude y lo usás solo como chat, estás aprovechando una parte. Estas 10 funciones ya están disponibles en tu plan, y la mayoría se activa en pocos pasos.</b></div>
+
+  <div class="alert"><b>Ojo:</b> esta guía es para <b>hacer</b>, no para leer y cerrar. Abrí Claude en otra ventana y estrená al menos 3 funciones mientras la leés. Guardala en PDF con el botón de arriba y andá tildando el checklist del final.</div>
+
+  <h2>1 · Dale una tarea completa</h2>
+  <p>En vez de hacerle una pregunta, describile el <b>resultado final</b>. Claude investiga, trabaja con archivos y te devuelve algo terminado.</p>
+  <ul class="arrow">
+    <li>Describí el resultado, no el primer paso.</li>
+    <li>Pedile que te haga preguntas antes de arrancar, así no asume.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptTarea}</code></pre>
+  </div>
+
+  <h2>2 · Projects</h2>
+  <p>Guardás <b>archivos, instrucciones y contexto</b> en un mismo lugar. No tenés que volver a explicar todo cada vez que entrás.</p>
+  <ul class="arrow">
+    <li>Creá un proyecto para cada tema en el que trabajás seguido.</li>
+    <li>Cargá los archivos que siempre necesita.</li>
+    <li>En las instrucciones escribí quién sos, qué querés y cómo tiene que responder.</li>
+  </ul>
+
+  <h2>3 · Plugins</h2>
+  <p>Un plugin <b>agrupa skills, comandos y conectores</b> para un trabajo concreto. Así instalás una forma de trabajar ya armada, sin configurar cada parte por separado.</p>
+  <ul class="arrow">
+    <li>Elegí un plugin del trabajo que más repetís (ventas, marketing, finanzas, etc.).</li>
+    <li>Revisá qué skills y conectores trae antes de instalarlo.</li>
+    <li>Cuando tengas tres o cuatro skills útiles, armá tu propio plugin.</li>
+  </ul>
+
+  <h2>4 · Programá las tareas que se repiten</h2>
+  <p>Si una tarea se repite todas las semanas, dejala <b>agendada</b>. Por ejemplo: todos los lunes Claude investiga, arma un reporte y lo deja listo.</p>
+  <ul class="arrow">
+    <li>Escribí qué tiene que hacer y con qué frecuencia (día y hora).</li>
+    <li>Revisá el primer resultado y ajustá las instrucciones una vez.</li>
+  </ul>
+
+  <h2>5 · Research</h2>
+  <p>Claude no hace una sola búsqueda: hace varias, <b>sigue las preguntas que surgen</b> y te devuelve todo con sus fuentes.</p>
+  <ul class="arrow">
+    <li>Planteá el tema y para qué lo vas a usar.</li>
+    <li>Pedí la lista de fuentes con link y revisá 2 o 3 antes de dar el dato por bueno.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptResearch}</code></pre>
+  </div>
+
+  <h2>6 · Connectors</h2>
+  <p>Te conectás con tus herramientas, como <b>Google Drive, Slack o Microsoft 365</b>, para buscar información o ejecutar acciones sin copiar y pegar entre apps.</p>
+  <ul class="arrow">
+    <li>Conectá primero la herramienta que más usás.</li>
+    <li>Probá con: "buscá en mi Drive el documento X y resumímelo".</li>
+  </ul>
+
+  <h2>7 · Claude in Chrome</h2>
+  <p>Claude ve la <b>página que tenés abierta</b>, navega, hace clic y completa tareas con tu sesión. Se instala como extensión de Chrome y se abre en un panel lateral.</p>
+  <ul class="arrow">
+    <li>Instalá la extensión desde la Chrome Web Store.</li>
+    <li>Usala para tareas en una web: completar un formulario, buscar en un sitio, revisar una página.</li>
+    <li>Revisá cada acción sensible (enviar, pagar, borrar) antes de que se ejecute.</li>
+  </ul>
+
+  <h2>8 · Computer Use</h2>
+  <p>Claude interactúa con <b>programas instalados en tu computadora</b>, como lo harías vos.</p>
+  <ul class="arrow">
+    <li>Pedile algo concreto dentro de una app: ordenar una carpeta, cargar datos en una planilla, exportar un archivo.</li>
+    <li>Empezá con tareas chicas y reversibles.</li>
+  </ul>
+
+  <h2>9 · Dashboards</h2>
+  <p>Conectás tus datos y <b>preguntás en lenguaje normal</b>. Claude los convierte en gráficos y métricas que podés compartir.</p>
+  <ul class="arrow">
+    <li>Conectá la fuente de datos (una planilla o un conector).</li>
+    <li>Pedí el panel con las métricas que te importan y después pedí cambios de a uno.</li>
+  </ul>
+
+  <h2>10 · Claude Duet</h2>
+  <p>Es una <b>app aparte</b> donde Claude trabaja de forma proactiva: revisa tu correo y calendario, avisa de lo urgente y sigue avanzando tareas aunque no estés.</p>
+  <div class="note"><b>Estado actual:</b> está en vista previa de investigación con lista de espera. Hoy solo está disponible en EE. UU. y para planes pagos. Si te interesa, anotate en la lista de espera y seguí las novedades.</div>
+
+  <div class="minicta">
+    Esto es parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Checklist: estrená las 10</h2>
+  <ul class="check">
+    <li>Hice una <b>tarea completa</b> y no una pregunta suelta.</li>
+    <li>Creé un <b>proyecto</b> con archivos e instrucciones.</li>
+    <li>Revisé un <b>plugin</b> y sus skills y conectores.</li>
+    <li>Dejé una <b>tarea programada</b> corriendo sola.</li>
+    <li>Pedí una <b>investigación con fuentes</b>.</li>
+    <li>Conecté <b>una herramienta</b> (Drive, Slack o Microsoft 365).</li>
+    <li>Probé <b>Claude in Chrome</b> en una web.</li>
+    <li>Probé <b>Computer Use</b> en una tarea chica.</li>
+    <li>Armé un <b>panel</b> con mis datos.</li>
+    <li>Me anoté en la lista de espera de <b>Claude Duet</b>.</li>
+  </ul>
+</RecursoLayout>
