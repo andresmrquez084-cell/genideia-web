@@ -1,0 +1,129 @@
+---
+// Lead magnet · palabra clave ManyChat: PROYECTO (reel "5 proyectos personales este finde", 11/11/2026)
+// PROYECTO se reasigna a esta guía (antes: /recursos/proyecto-claude-equipo y /recursos/proyectos-fin-de-semana-claude,
+// que quedan linkeadas abajo para los posts viejos).
+// URL pública: /recursos/proyectos-personales-claude
+// Los prompts son de arranque: piden a Claude que pregunte antes de construir. Sin datos técnicos que verificar
+// salvo conectores (Gmail, Google Calendar, Notion existen como conectores de Claude).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const jarvis = `Quiero armar mi asistente personal. Ya conecté [Gmail / Google Calendar / Notion].
+Cada mañana quiero que:
+1. Leas mis correos sin leer y me digas cuáles necesitan respuesta hoy.
+2. Mires mi calendario y me avises si hay huecos o choques.
+3. Revises mis tareas pendientes y me propongas un orden para el día.
+Antes de armarlo, haceme las preguntas que necesites sobre cómo trabajo.`;
+
+const panel = `Armame un panel personal (una página web simple) para seguir:
+- Hábitos: [ej. ejercicio, lectura, agua]
+- Tareas y proyectos: [cuáles]
+- Finanzas: ingresos y gastos del mes
+- Una métrica que quiero medir: [cuál]
+Quiero cargar los datos a mano en segundos y ver gráficos semanales.
+Preguntame lo que necesites antes de empezar y explicame cómo lo abro.`;
+
+const cerebro = `Quiero un segundo cerebro para mis proyectos.
+Voy a guardar notas, ideas, documentos y contexto de cada proyecto.
+1. Proponeme cómo organizarlo (carpetas, nombres, etiquetas).
+2. Cuando te pregunte algo, buscá en todo lo guardado y decime de qué archivo sale la respuesta.
+3. Si cambio de idea, actualizá la nota en vez de crear otra.
+Empezá preguntándome qué proyectos tengo.`;
+
+const contenido = `Quiero un agente de contenido para [MI TEMA].
+Mis referentes: [cuentas o personas].
+Temas que quiero profundizar: [lista].
+Fuentes que podés usar: [sitios, newsletters, YouTube].
+Cada semana:
+1. Buscá noticias y novedades de esas fuentes.
+2. Proponeme 5 ideas de contenido con el ángulo de cada una.
+3. Escribí el borrador de la que elija, en mi tono: [describí tu tono o pegá un posteo tuyo].`;
+
+const equipo = `Quiero trabajar con un equipo de agentes para [OBJETIVO, ej. lanzar mi web].
+Vos sos el agente principal: dividí el trabajo y asignalo a subagentes especializados.
+- Uno investiga: [qué necesita averiguar].
+- Otro construye: [qué tiene que crear].
+- Otro revisa: compara el resultado con lo que pedí y marca errores.
+Al final, juntá todo y entregame una sola versión ordenada.
+Antes de arrancar, mostrame el plan y esperá mi ok.`;
+---
+<RecursoLayout
+  titulo="5 proyectos para construir con Claude este fin de semana"
+  descripcion="Tu propio Jarvis, un panel personal, un segundo cerebro, un agente de contenido y un equipo de agentes: qué es cada uno, qué necesitás y el prompt para arrancar."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="PROYECTO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Se aprende más armando uno de estos que mirando horas de tutoriales. Elegí uno, copiá su prompt y dejá que Claude te haga las preguntas. Van del más simple al más avanzado.</b></div>
+
+  <h2>Antes de empezar</h2>
+  <ul class="arrow">
+    <li><b>Un proyecto por vez:</b> terminá uno antes de pasar al siguiente.</li>
+    <li><b>Dejá que te pregunte:</b> todos los prompts le piden a Claude que te haga preguntas primero. Contestalas con detalle: ahí está la diferencia.</li>
+    <li><b>Dónde:</b> los 1 a 4 funcionan en la app de Claude (con un Proyecto para guardar todo). El 5 rinde más en Claude Code.</li>
+  </ul>
+
+  <h2>1 · Tu propio Jarvis</h2>
+  <p>Un asistente conectado a tu correo, tu calendario y tus tareas, que te organiza el día.</p>
+  <p><b>Qué necesitás:</b> conectar Gmail, Google Calendar o Notion en <b>Ajustes → Conectores</b> de Claude.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{jarvis}</code></pre>
+  </div>
+  <div class="note">¿Querés la versión con voz, que te habla? Está en <a href="/recursos/jarvis-gratis-guia">la guía de Jarvis →</a></div>
+
+  <h2>2 · Un panel personal</h2>
+  <p>Un dashboard con tus hábitos, tareas, proyectos, finanzas y cualquier métrica que quieras medir.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{panel}</code></pre>
+  </div>
+
+  <h2>3 · Un segundo cerebro</h2>
+  <p>Una biblioteca con todo sobre tus proyectos, a la que le preguntás cualquier detalle y que se mantiene al día.</p>
+  <p><b>Qué necesitás:</b> un Proyecto en Claude donde subir tus notas y documentos.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{cerebro}</code></pre>
+  </div>
+
+  <div class="minicta">
+    Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>4 · Un agente de contenido</h2>
+  <p>Le das tus referentes, tus temas y tus fuentes. Te trae ideas, detecta noticias y te prepara borradores.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{contenido}</code></pre>
+  </div>
+
+  <h2>5 · Un equipo de agentes (avanzado)</h2>
+  <p>En vez de ir tarea por tarea, un agente principal reparte el trabajo: uno investiga, otro construye, otro revisa, y el principal ordena todo al final.</p>
+  <p><b>Qué necesitás:</b> Claude Code, que puede lanzar subagentes.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{equipo}</code></pre>
+  </div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Necesito saber programar?</b> No para los primeros cuatro. Para el quinto ayuda, pero Claude Code te guía.</li>
+    <li><b>¿Alcanza con el plan gratis?</b> Para probar, sí. Los conectores y el trabajo largo rinden mucho más con Pro.</li>
+    <li><b>¿Cuál hago primero?</b> El que resuelva algo que hoy hacés a mano todas las semanas.</li>
+  </ul>
+
+  <div class="note"><b>¿Venías por otra guía de PROYECTO?</b> Están acá: <a href="/recursos/proyecto-claude-equipo">tu primer proyecto con 3 tareas →</a> y <a href="/recursos/proyectos-fin-de-semana-claude">5 herramientas para armar esta semana →</a></div>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Elegí un proyecto.</li>
+    <li>Conecté lo que necesita (si aplica).</li>
+    <li>Pegué el prompt y contesté sus preguntas.</li>
+    <li>Lo usé una semana y le pedí ajustes.</li>
+    <li>Pasé al siguiente.</li>
+  </ul>
+</RecursoLayout>
