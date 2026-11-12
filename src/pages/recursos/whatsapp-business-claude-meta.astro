@@ -1,0 +1,151 @@
+---
+// Lead magnet · palabra clave ManyChat: AGENTE (reel "WhatsApp oficial con Claude", 11/11/2026)
+// AGENTE se reasigna a esta guía (antes: /recursos/roles-agentes-ia, que queda linkeada abajo).
+// URL pública: /recursos/whatsapp-business-claude-meta
+// Verificado 11/11/2026:
+//   - https://developers.facebook.com/documentation/mcp/whatsapp-business-tools-mcp (act. 29/10/2026):
+//     servidor "WhatsApp Business Tools", endpoint https://mcp.facebook.com/whatsapp_business_tools, OAuth con cuenta
+//     de desarrollador de Meta, beta con despliegue gradual. Clientes: Claude Code, Claude Desktop, ChatGPT, Codex.
+//     Requisitos: admin del negocio, app con WhatsApp de la que seas admin, términos de Cloud API aceptados.
+//     Herramientas whatsapp_biz_*: negocios, cuentas, números, verificar/registrar, plantillas, enviar, webhooks, pagos.
+//     Texto libre solo dentro de la ventana de 24 h; si no, plantilla aprobada.
+//   - https://github.com/facebook/agentic-tools (10/11/2026): plugin devtools + skill /whatsapp-business-integration;
+//     el plugin NO trae el MCP de WhatsApp, se agrega aparte.
+// El video dice "Claude"; el MCP es para Claude Code / Claude Desktop (no el chat web).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const mcp = `claude mcp add --transport http whatsapp_business_tools https://mcp.facebook.com/whatsapp_business_tools`;
+const plugin1 = `claude plugin marketplace add facebook/agentic-tools`;
+const plugin2 = `claude plugin install devtools@facebook`;
+
+const verificar = `Listá los negocios que administro en WhatsApp y las cuentas de WhatsApp de cada uno.`;
+
+const configurar = `Quiero dejar listo WhatsApp Business para mi negocio [NOMBRE DEL NEGOCIO].
+Número: [+598 ...]. Nombre que se va a ver: [NOMBRE VISIBLE].
+
+Hacelo paso a paso y frená para confirmar conmigo antes de cada cambio:
+1. Revisá que el negocio y la app tengan todo lo necesario. Si falta algo, decime qué y dónde se arregla.
+2. Agregá el número a la cuenta de WhatsApp.
+3. Mandá el código de verificación por SMS. Yo te paso el código cuando llegue.
+4. Verificá y registrá el número para usarlo con la API oficial.
+5. Al final, mostrame un resumen de lo que quedó configurado y lo que falta.`;
+
+const webhooks = `Configurá los webhooks de WhatsApp para que mi sistema reciba los mensajes.
+URL de mi servidor: [https://tu-servidor.com/webhook]
+Token de verificación: [UNA PALABRA SECRETA QUE ELIJAS]
+Después suscribí mi cuenta de WhatsApp a esos webhooks y decime cómo pruebo que llegan.`;
+
+const plantilla = `Creá una plantilla de WhatsApp para [PARA QUÉ: confirmar un turno / avisar que un pedido salió].
+Idioma: español. Tono: [cercano / formal]. Que tenga una variable para el nombre del cliente.
+Mostrame el texto antes de crearla y decime en qué categoría conviene.`;
+
+const prueba = `Mandá la plantilla [NOMBRE DE LA PLANTILLA] a mi número personal [+598 ...] desde el número del negocio, como prueba.`;
+---
+<RecursoLayout
+  titulo="WhatsApp Business oficial con Claude: de cero al primer mensaje"
+  descripcion="Cómo conectar Claude con las herramientas oficiales de Meta para configurar WhatsApp Business: el número, la verificación, los webhooks, una plantilla y el primer mensaje."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="AGENTE"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Meta publicó un servidor oficial para que un agente como Claude configure WhatsApp Business por vos. Vos le pedís lo que querés y él hace los pasos técnicos. Acá tenés el repositorio, la instalación y los pedidos listos para copiar.</b></div>
+
+  <div class="note"><b>Antes de empezar: está en beta.</b> Meta lo está habilitando de a poco, así que puede que todavía no te funcione aunque lo instales. Funciona en <b>Claude Code</b> y en la app de escritorio de Claude, no en el chat web. Es para <b>configurar y probar</b>: no lee las conversaciones de tus clientes ni sirve para envíos masivos.</div>
+
+  <h2>Qué necesitás</h2>
+  <ul class="check">
+    <li>Una cuenta de desarrollador de Meta (developers.facebook.com).</li>
+    <li>Ser administrador del negocio en Meta Business.</li>
+    <li>Una app de Meta con WhatsApp de la que seas administrador. Si no la tenés, el plugin de abajo te ayuda a crearla.</li>
+    <li>Aceptar los términos de la API de WhatsApp Business (Cloud API).</li>
+    <li>Un número que pueda recibir un SMS o una llamada. Si ya está en la app de WhatsApp, lee la pregunta de abajo antes.</li>
+  </ul>
+
+  <h2>1 · Conectá Claude con Meta</h2>
+  <p>En la terminal, con Claude Code instalado, agregá el servidor oficial de WhatsApp:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{mcp}</code></pre>
+  </div>
+  <ol class="steps">
+    <li>Abrí Claude Code y escribí <b>/mcp</b>.</li>
+    <li>Elegí <b>whatsapp_business_tools</b> y tocá autenticar.</li>
+    <li>Iniciá sesión con tu cuenta de Meta y elegí qué negocios puede usar Claude. Solo va a poder tocar esos.</li>
+  </ol>
+
+  <h2>2 · El repositorio de Meta (opcional, recomendado)</h2>
+  <p>El repositorio oficial <b>facebook/agentic-tools</b> trae una skill que te guía de la app al primer mensaje (<b>/whatsapp-business-integration</b>). Se instala así:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{plugin1}</code></pre>
+  </div>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{plugin2}</code></pre>
+  </div>
+  <p>Después, en <b>/mcp</b>, autenticá también <b>devtools</b>. Ojo: este plugin no incluye el servidor de WhatsApp, por eso lo agregaste en el paso 1.</p>
+
+  <h2>3 · Probá que funcione</h2>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{verificar}</code></pre>
+  </div>
+  <p>Si te devuelve tus negocios, está conectado. Si te da un error de permisos, el mensaje dice qué falta y dónde se arregla.</p>
+
+  <h2>4 · Pedile que configure tu número</h2>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{configurar}</code></pre>
+  </div>
+  <p>Cuando Meta te mande el código por SMS, se lo pasás a Claude. Esa es la única parte que hacés vos.</p>
+
+  <div class="minicta">
+    ¿Querés ver cómo armamos agentes que atienden por WhatsApp? La clase es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>5 · Webhooks: que tu sistema reciba los mensajes</h2>
+  <p>Necesitás un servidor que reciba los mensajes (por ejemplo, un flujo de n8n con un nodo Webhook). Con esa URL:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{webhooks}</code></pre>
+  </div>
+
+  <h2>6 · Tu primera plantilla</h2>
+  <p>Para escribirle a alguien que no te habló en las últimas 24 horas, WhatsApp exige una plantilla aprobada.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{plantilla}</code></pre>
+  </div>
+
+  <h2>7 · El primer mensaje</h2>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{prueba}</code></pre>
+  </div>
+  <p>Claude te muestra a quién lo va a mandar y te pide confirmación antes de enviarlo.</p>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Me pueden bloquear el número?</b> Este es el camino oficial de Meta, no un "puente" con WhatsApp Web. Los puentes no oficiales sí pueden hacer que te bloqueen el número.</li>
+    <li><b>¿Puedo usar el número que ya tengo en la app de WhatsApp?</b> Un número registrado en la API deja de funcionar en la app común. Si es tu número de siempre, pensalo dos veces o usá uno nuevo.</li>
+    <li><b>¿Cuánto cuesta?</b> El servidor es gratis. Meta cobra los mensajes de plantilla según el país y el tipo de mensaje. Las respuestas dentro de las 24 horas no tienen ese costo.</li>
+    <li><b>¿Claude va a responderle solo a mis clientes?</b> No. Esto configura la cuenta. Para que alguien responda, necesitás tu sistema (un bot o un flujo de n8n) conectado a los webhooks.</li>
+    <li><b>No me aparecen las herramientas.</b> Está en beta y Meta lo libera de a poco. Probá de nuevo en unos días.</li>
+  </ul>
+
+  <div class="note"><b>¿Venías por los roles de agentes?</b> Están en <a href="/recursos/roles-agentes-ia">Un rol para cada agente →</a></div>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Agregué el servidor de WhatsApp e inicié sesión con Meta.</li>
+    <li>Claude me listó mis negocios.</li>
+    <li>Número agregado, verificado con el código y registrado.</li>
+    <li>Webhooks apuntando a mi servidor.</li>
+    <li>Una plantilla creada.</li>
+    <li>Mandé el primer mensaje de prueba.</li>
+  </ul>
+</RecursoLayout>
