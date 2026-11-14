@@ -1,5 +1,5 @@
 ---
-// Lead magnet · palabra clave ManyChat: CÓDIGO (reel: "5 códigos de ChatGPT que casi nadie usa")
+// Lead magnet · palabra clave ManyChat: CÓDIGO, aplicada por post (reels "5 códigos de ChatGPT que casi nadie usa" y "10 códigos trampa para ChatGPT")
 // URL pública: /recursos/codigos-chatgpt
 import RecursoLayout from '../../layouts/RecursoLayout.astro';
 
@@ -45,10 +45,34 @@ resultado. Después, si hace falta, una frase de cierre.`;
 const fix = `Corregí la ortografía, la gramática y la claridad de este
 texto, sin cambiar mi tono ni mi intención. Devolvémelo listo para
 usar y, aparte, una línea con los cambios más importantes que hiciste.`;
+// 14/11/2026: suma los 10 códigos del reel "10 códigos trampa para ChatGPT" (CTA CÓDIGO en la descripción del post).
+// Los anteriores quedan abajo como "10 más".
+const trampa = [
+  ['/truth', 'Que te diga lo que piensa de verdad', `Desactivá la cortesía. No suavices nada ni me felicites: decime lo que realmente pensás,
+con los problemas que ves y cómo los arreglarías.`, 'quiero renunciar para lanzar mi agencia.'],
+  ['/human', 'Como una persona real', `Respondé como lo haría una persona con experiencia hablándome en confianza:
+directo, con tu opinión, sin listas ni tono de manual.`, '¿cómo subo mis precios sin perder clientes?'],
+  ['/nofluff', 'Sin una gota de relleno', `Respondé en la mitad de palabras que usarías normalmente. Sin introducción,
+sin repetir mi pregunta y sin resumen final. Solo lo útil.`, 'qué tengo que saber antes de abrir una SRL.'],
+  ['/devil', 'Que ataque tu idea', `Hacé de abogado del diablo. No estés de acuerdo conmigo: atacá esta idea desde
+todos los ángulos (riesgos, costos, competencia, qué pasa si falla) y decime el plan B.`, 'voy a lanzar una app de recetas.'],
+  ['/odds', 'El porcentaje real de que salga bien', `Estimá qué probabilidad hay de que esto salga bien, en porcentaje. Explicame
+en qué te basás, qué factores la suben y cuáles la bajan. Si no hay datos, decímelo.`, '¿funcionará mi lanzamiento en marzo?'],
+  ['/decode', 'Lo que esconde la letra chica', `Te pego un contrato o términos de uso. Decime qué esconde: obligaciones,
+renovaciones automáticas, costos, penalidades y qué derechos cedo. En lenguaje simple.`, '[pegás los términos].'],
+  ['/simulate', 'Tu decisión a 5 años', `Simulá esta decisión a 5 años. Mostrame 3 futuros posibles uno al lado del otro
+(bueno, intermedio, malo), con qué tendría que pasar en cada uno.`, 'mudarme a otro país.'],
+  ['/genius', 'Que piense más antes de responder', `Antes de responder, pensá el problema paso a paso y desde varios ángulos.
+Revisá tu propia respuesta buscando errores y recién ahí dame la versión final.`, '¿en qué invierto USD 1.000 para mi negocio?'],
+  ['/shrink', 'Por qué hacés lo que hacés', `Haceme preguntas, de a una, para entender por qué me dedico realmente a lo que
+hago: qué me motiva, qué me frena y qué valoro. Al final, dame tu conclusión.`, 'trabajo en marketing hace 6 años.'],
+  ['/rewire', 'Tu rutina ideal', `Con todo lo que sabés de mí, armá la rutina diaria con la que me conviene vivir:
+horarios, trabajo profundo, pausas y hábitos. Explicame por qué cada parte.`, 'quiero rendir más sin quemarme.'],
+];
 ---
 <RecursoLayout
-  titulo="Los 10 códigos de ChatGPT"
-  descripcion="10 atajos que le pegás adelante de tu pregunta para cambiar cómo te responde ChatGPT: más humano, más simple, más profundo, más honesto, con varias opciones, y 5 más para el día a día."
+  titulo="Los 20 códigos de ChatGPT"
+  descripcion="20 atajos que le pegás adelante de tu pregunta para cambiar cómo te responde ChatGPT: los 10 códigos trampa del video y 10 más para el día a día."
   tipo="Plantilla"
   barLabel="Plantilla · @andresalbornoz.ai"
   palabraClave="CÓDIGO"
@@ -61,7 +85,18 @@ usar y, aparte, una línea con los cambios más importantes que hiciste.`;
   <h2>Cómo se usan</h2>
   <p>Cada código es un texto corto que va <b>al principio del mensaje</b>, seguido de tu pregunta normal. Ejemplo: <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/L10 explicame qué es una API</code>. Abajo tenés el código y el texto completo que representa — podés pegar el texto entero, o guardarlo como prompt rápido en ChatGPT (menú <b>/</b> → guardar prompt) para invocarlo con el atajo. Los primeros 5 son los del video; después hay 5 más para el día a día.</p>
 
-  <h2 style="color:var(--cy)">Los 5 del video</h2>
+  <h2 style="color:var(--cy)">Los 10 del video "códigos trampa"</h2>
+  <div class="note">ChatGPT no trae estos códigos incorporados: lo que hace el trabajo es el texto. Copialo y pegalo antes de tu pregunta, o guardalo como se explica al final.</div>
+  {trampa.map(([c, t, txt, ej], i) => (
+    <>
+      <h2>{i + 1} · <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">{c}</code> — {t}</h2>
+      <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{txt}</code></pre></div>
+      <div class="note"><b>Ejemplo:</b> <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">{c}</code> {ej}</div>
+    </>
+  ))}
+
+  <h2 style="color:var(--cy)">10 más</h2>
+  <h2 style="color:var(--cy)">Los 5 del video anterior</h2>
 
   <h2>1 · <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">/human</code> — que suene a persona</h2>
   <p>Para cuando la respuesta te viene acartonada, con viñetas y tono de folleto. Ideal para redactar mensajes a clientes, mails o textos que va a leer alguien.</p>
