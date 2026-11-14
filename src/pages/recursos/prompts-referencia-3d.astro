@@ -1,0 +1,109 @@
+// Lead magnet · palabra clave ManyChat: PROMPT
+// URL pública: /recursos/prompts-referencia-3d
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const promptsRef = [
+  `Creá un juego 3D para navegador con three.js, en un solo archivo HTML y sin assets externos. Ambientación: un paisaje inspirado en [una pintura famosa o una idea tuya]. El jugador maneja [un vehículo o personaje] por ese paisaje, con una cámara en tercera persona que lo sigue. Estética: cielo y texturas con la pincelada de la obra, y luces cálidas en las ventanas. Controles: flechas o WASD. Pantalla de inicio con título y un botón para entrar. Código ordenado y comentado. Antes de entregarlo, revisá que corra sin errores.`,
+  `Usando three.js, creá una película 3D explicativa de unos 45 segundos dentro de una página web, sobre [la idea que quieras explicar]. Estructura: un gancho visual en los primeros 5 segundos, desarrollo paso a paso con la cámara acercándose, y un cierre con una frase corta. Textos breves en pantalla, movimiento de cámara suave y sonido generado por código. Sin assets externos. Con botón de play y de reinicio.`,
+  `Diseñá un kit de pantallas de una app de [tipo de app] en HTML y CSS: inicio, lista, detalle, pago y confirmación. Primero definí el sistema: una paleta corta con un solo color de acento, tipografía, espaciados y bordes redondeados. Usá componentes consistentes y mostrá sus estados: activo, vacío y error. Estilo limpio y moderno. Presentá todas las pantallas en una grilla, en una sola página.`,
+  `Con este plano 2D de [tipo de espacio], construí un recorrido 3D con three.js. Te paso las medidas y los ambientes: [describí o adjuntá el plano]. Modelá paredes, aberturas y mobiliario básico, con materiales y luz natural. Cámara en primera persona con WASD y mouse, y un minimapa con el plano en una esquina. Sin assets externos.`,
+  `Creá una animación 3D con three.js de [una figura de papel] doblándose paso a paso. Mostrá en una esquina el esquema con los pliegues, y que cada doblez se vea en su lugar, con sombras suaves. El papel con una textura sutil sobre un fondo liso. Controles para ir al paso siguiente o anterior, y para cambiar la velocidad.`,
+  `Escribí un script de Blender en Python que modele y renderice [un objeto: un auto, una botella, un reloj]. Modelado procedural con proporciones realistas y materiales PBR: pintura metálica, vidrio, caucho. Iluminación de estudio con reflejos suaves y una cámara con movimiento orbital lento de 8 segundos. Render a 1080p. Explicame paso a paso cómo ejecutarlo.`
+];
+---
+<RecursoLayout
+  titulo="Los 6 prompts de referencia para crear en 3D"
+  descripcion="Seis puntos de partida para crear en 3D con Claude Fable 5.2. Cada uno está inspirado en una obra real: lo que construyas va a ser tuyo."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="PROMPT"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Estos 6 prompts son el punto de partida, no el resultado final. Cada uno está inspirado en una obra real hecha con Claude Fable 5.2: lo que construyas va a ser tuyo.</b></div>
+  <div class="alert"><b>Ojo:</b> esta guía es para <b>hacer</b>, no para mirar y cerrar. Abrí Claude en otra ventana y probá al menos 2 prompts mientras leés. Guardala en PDF (botón de arriba) y andá tildando el checklist del final.</div>
+  <h2>1 · Un juego dentro de un cuadro</h2>
+  <p>Un juego 3D para navegador donde te movés por una pintura. Sirve para ver cómo se arma una escena completa en un solo archivo.</p>
+  <ul class="arrow">
+    <li>Reemplazá lo que está entre [corchetes] por tu ambientación y tu personaje.</li>
+    <li>Probá el juego en el navegador antes de pedir cambios.</li>
+    <li>Pedí cambios de a uno: &quot;ahora sumá un objetivo&quot;.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptsRef[0]}</code></pre>
+  </div>
+  <p class="fuente">Obra de referencia: @ebbyamir · Starry Nightrider</p>
+  <h2>2 · Una película 3D que explica una idea</h2>
+  <p>Una película corta en 3D, dentro de una web, que explica una idea paso a paso con la cámara acercándose.</p>
+  <ul class="arrow">
+    <li>Elegí una idea de tu rubro: un proceso, un error común o un dato.</li>
+    <li>Cambiá el tono: más científico, más lúdico o más minimalista.</li>
+    <li>Pedí una versión vertical 9:16 para reels.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptsRef[1]}</code></pre>
+  </div>
+  <p class="fuente">Obra de referencia: @anxuanng · La paradoja de Zenón</p>
+  <h2>3 · El diseño de una app completa</h2>
+  <p>Un kit de pantallas de una app en HTML y CSS, con sistema de diseño y estados, todo en una sola página.</p>
+  <ul class="arrow">
+    <li>Poné los colores y la tipografía de tu marca.</li>
+    <li>Pedí una versión oscura y otra clara.</li>
+    <li>Sumá una pantalla más, como el perfil o los ajustes.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptsRef[2]}</code></pre>
+  </div>
+  <p class="fuente">Obra de referencia: @dominikmartn · It can actually design</p>
+  <h2>4 · De un plano a un recorrido 3D</h2>
+  <p>Convertís un plano 2D en un espacio 3D por el que podés caminar, con minimapa.</p>
+  <ul class="arrow">
+    <li>Probá con tu casa, tu local o un proyecto de un cliente.</li>
+    <li>Pedí un cambio de materiales: madera, mármol, hormigón.</li>
+    <li>Sumá un botón para pasar de día a noche.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptsRef[3]}</code></pre>
+  </div>
+  <p class="fuente">Obra de referencia: @everestchris6 · Planos 2D a recorrido 3D</p>
+  <h2>5 · Origami que se dobla paso a paso</h2>
+  <p>Una figura de papel en 3D que se pliega paso a paso, con el esquema de pliegues en una esquina.</p>
+  <ul class="arrow">
+    <li>Elegí otra figura: grulla, barco, flor.</li>
+    <li>Cambiá el papel: estampado, de color o de periódico.</li>
+    <li>Pedí que cada paso tenga un texto corto de explicación.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptsRef[4]}</code></pre>
+  </div>
+  <p class="fuente">Obra de referencia: @ryoma_nakajima · Origami</p>
+  <h2>6 · Un objeto que parece una foto</h2>
+  <p>Un script de Blender que modela y renderiza un objeto con materiales realistas e iluminación de estudio.</p>
+  <ul class="arrow">
+    <li>Cambiá el objeto por un producto tuyo o de un cliente.</li>
+    <li>Pedí otro fondo: estudio blanco, piso de hormigón, exterior.</li>
+    <li>Probá otra luz: atardecer, neón, luz de ventana.</li>
+  </ul>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{promptsRef[5]}</code></pre>
+  </div>
+  <p class="fuente">Obra de referencia: @xikhar · Bugatti en Blender</p>
+  <div class="minicta">Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a></div>
+  <h2>Checklist: estrená los 6</h2>
+  <ul class="check">
+    <li>Probé el prompt 1 y reemplacé los [corchetes] por mi idea.</li>
+    <li>Probé el prompt 2 y lo ajusté a mi rubro.</li>
+    <li>Probé el prompt 3 con los colores de mi marca.</li>
+    <li>Probé el prompt 4 con un espacio real.</li>
+    <li>Probé el prompt 5 con otra figura.</li>
+    <li>Probé el prompt 6 con un objeto mío.</li>
+    <li>Le pedí a Claude al menos un cambio concreto en cada resultado.</li>
+  </ul>
+</RecursoLayout>
