@@ -1,0 +1,99 @@
+---
+// Lead magnet · palabra clave ManyChat: CÓDIGO (reel "10 códigos para usar Claude mucho mejor", 14/11/2026)
+// CÓDIGO se reasigna a esta guía (antes: /recursos/codigos-chatgpt, que queda linkeada abajo).
+// URL pública: /recursos/codigos-claude
+// Los códigos son atajos: Claude no los trae incorporados. Lo que funciona es el texto completo de cada uno.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const directo = `Respondé solo lo necesario. Sin introducción, sin repetir mi pregunta,
+sin resumen al final y sin relleno. Si alcanza con una frase, una frase.`;
+
+const natural = `Escribí de forma natural, como lo diría una persona hablando.
+Evitá frases típicas de IA ("en el mundo actual", "es importante destacar",
+"en resumen"), las listas innecesarias y el tono de folleto. Frases cortas.`;
+
+const critico = `No me des la razón. Buscá los errores, las contradicciones y los puntos
+débiles de esta idea. Decime qué podría salir mal y qué tendría que
+resolver antes de avanzar. Sé directo, aunque no sea lo que quiero escuchar.`;
+
+const simple = `Explicame esto como si nunca hubiera escuchado del tema. Sin jerga,
+con una analogía de la vida cotidiana y un ejemplo concreto.
+Al final, resumilo en una sola frase.`;
+
+const compara = `Te paso varias opciones. Compará cada una en ventajas, riesgos y
+consecuencias a mediano plazo. Mostralo en una tabla y, recién al final,
+recomendame una y explicame por qué.`;
+
+const letrachica = `Te pego un contrato / documento. Explicame qué significa realmente,
+en lenguaje simple: qué me obliga a hacer, qué pasa si quiero salir,
+qué costos o renovaciones hay y qué cláusula debería mirar con cuidado.`;
+
+const escenarios = `Tengo que decidir esto: [TU DECISIÓN].
+Armá 3 escenarios posibles (bueno, intermedio y malo). Para cada uno decime
+qué tendría que pasar, qué consecuencias tendría y qué señales me avisarían
+de que estoy yendo hacia ese escenario.`;
+
+const experto = `Antes de responder, decime qué conocimientos y qué datos necesitás
+para resolver bien este problema. Si te falta algo, preguntámelo.
+Después construí una respuesta profunda, como lo haría un experto del área.`;
+
+const mejora = `No lo rehagas. Te paso algo que ya hice: encontrá los errores, las
+oportunidades y las cosas para mejorar. Marcá cada punto con el cambio
+concreto que harías y por qué, respetando lo que ya funciona.`;
+
+const proceso = `Esta es una tarea que repito seguido: [DESCRIBILA].
+Convertila en un proceso paso a paso que pueda volver a usar:
+qué necesito antes de empezar, los pasos en orden, y una plantilla
+para la próxima vez.`;
+
+const lista = [
+  ['/directo', 'Solo lo necesario', directo, 'explicame qué es una API.'],
+  ['/natural', 'Que suene humano', natural, 'escribime un mensaje para un cliente que no me paga.'],
+  ['/critico', 'Que busque los puntos débiles', critico, 'quiero lanzar un curso sin validarlo antes.'],
+  ['/simple', 'Explicado desde cero', simple, 'qué es el interés compuesto.'],
+  ['/compara', 'Compará antes de recomendar', compara, 'contratar un empleado, una agencia o automatizar.'],
+  ['/letrachica', 'Lo que dice de verdad', letrachica, '[pegás el contrato].'],
+  ['/escenarios', 'Qué podría pasar', escenarios, 'dejar mi trabajo para emprender.'],
+  ['/experto', 'Primero lo que necesita saber', experto, 'cómo fijo el precio de mi servicio.'],
+  ['/mejora', 'No lo rehace: lo mejora', mejora, '[pegás tu texto, propuesta o código].'],
+  ['/proceso', 'Tu tarea, convertida en proceso', proceso, 'armar el reporte semanal de ventas.'],
+];
+const code = "font-family:'JetBrains Mono',monospace;color:var(--cy)";
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+---
+<RecursoLayout
+  titulo="Los 10 códigos para usar Claude mucho mejor"
+  descripcion="El texto completo de cada código del video, listo para copiar y pegar antes de tu prompt: directo, natural, crítico, simple, compara, letra chica, escenarios, experto, mejora y proceso."
+  tipo="Plantilla"
+  barLabel="Plantilla · @andresalbornoz.ai"
+  palabraClave="CÓDIGO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Claude no trae estos códigos incorporados: el código es el nombre corto, y lo que hace el trabajo es el texto completo. Copiá el texto, pegalo antes de tu pregunta y listo.</b></div>
+
+  <h2>Cómo se usan</h2>
+  <ol class="steps">
+    <li>Copiá el texto del código que quieras.</li>
+    <li>Pegalo al principio de tu mensaje.</li>
+    <li>Abajo escribí tu pregunta normal.</li>
+  </ol>
+  <div class="note"><b>Para no copiarlo cada vez:</b> si usás uno siempre (por ejemplo <code style={code}>/directo</code>), pegalo en las <b>instrucciones de un Proyecto</b> de Claude y se aplica a todas las charlas de ese proyecto.</div>
+
+  {lista.map(([c, t, txt, ej], i) => (
+    <>
+      <h2>{i + 1} · <code style={code}>{c}</code> — {t}</h2>
+      <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{txt}</code></pre></div>
+      <div class="note"><b>Ejemplo:</b> <code style={code}>{c}</code> {ej}</div>
+    </>
+  ))}
+
+  <div class="note"><b>¿Venías por los códigos de ChatGPT?</b> Están acá: <a href="/recursos/codigos-chatgpt">los 10 códigos de ChatGPT →</a></div>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Elegí los 2 o 3 códigos que más voy a usar.</li>
+    <li>Los probé con una pregunta real.</li>
+    <li>Guardé el que más uso en las instrucciones de un Proyecto.</li>
+  </ul>
+</RecursoLayout>
