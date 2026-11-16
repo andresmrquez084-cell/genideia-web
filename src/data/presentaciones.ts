@@ -27,6 +27,27 @@ export type Recorrido = {
   soluciones: PasoRecorrido[];
 };
 
+// Textos de la página. Los que no se pasan toman el valor del recorrido de talleres.
+export type TextosRecorrido = {
+  eyebrow?: string;          // se le agrega " · N videos cortos · m:ss"
+  lead?: string;
+  rutaSoluciones?: string;   // chip "2–5 · 4 soluciones"
+  rutaFin?: string;          // chip "→ Conversar"
+  finPresentacion?: string;
+  btnPresentacion?: string;
+  saltarPresentacion?: string;
+  solEyebrow?: string;
+  solTitulo?: string;
+  badge?: string;            // "Solución" → "Solución 1 de 4"
+  siguienteBtn?: string;
+  finUltimo?: string;        // admite <strong>
+  btnUltimo?: string;
+  contactoTitulo?: string;
+  contactoLead?: string;
+  contactoBtn?: string;
+  nota?: string;
+};
+
 export const PRESENTACIONES: Presentacion[] = [
   {
     slug: 'distribuidora',
