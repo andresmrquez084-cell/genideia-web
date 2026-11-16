@@ -15,17 +15,19 @@ import RecursoLayout from '../../layouts/RecursoLayout.astro';
   <ul class="arrow">
     <li><b>CLAUDE.md</b> — le enseña a Claude quién sos y cómo querés que te hable.</li>
     <li><b>contexto/</b> — quién es tu negocio y sus reglas fijas de comportamiento.</li>
+    <li><b>memoria/</b> — lo que Claude recuerda entre conversaciones: un índice (MEMORY.md) y una idea por archivo, con ejemplos en el formato actual.</li>
     <li><b>planes/</b> — iniciativas en curso, una por archivo.</li>
     <li><b>referencia/</b> — dónde vive cada cosa (fotos, métricas, contactos).</li>
     <li><b>.claude/skills/</b> — 5 capacidades ya armadas: landing-page-pro, automation-forge, whatsapp-baileys, mvp-blueprint y saas-starter-kit.</li>
+    <li><b>INDICE.md</b> — mapa de todas las carpetas, para ubicarte rápido.</li>
   </ul>
-  <div class="note"><b>Ojo:</b> el contenido de <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">contexto/</code>, <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">planes/</code> y <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">referencia/</code> es un ejemplo inventado (un negocio ficticio) — es la plantilla, no el contenido. Lo reemplazás por el tuyo.</div>
+  <div class="note"><b>Ojo:</b> el contenido de <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">contexto/</code>, <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">planes/</code>, <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">referencia/</code> y <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">memoria/</code> es un ejemplo inventado (un negocio ficticio) — es la plantilla, no el contenido. Lo reemplazás por el tuyo.</div>
 
   <h2>Cómo usarla (3 pasos)</h2>
   <ol class="steps">
     <li><b>Instalá Claude Code</b> — en la terminal: <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">curl -fsSL https://claude.ai/install.sh | bash</code> (necesitás una cuenta con plan pago).</li>
     <li><b>Descomprimí la carpeta</b> y abrila como tu espacio de trabajo en Claude Code.</li>
-    <li><b>Editá <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">CLAUDE.md</code></b> con tu info real, y pedile directamente: "armame una landing para [tu producto]" o "ayudame a automatizar [tu proceso repetitivo]" — las skills se activan solas.</li>
+    <li><b>Editá <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">CLAUDE.md</code></b> con tu info real y borrá lo de ejemplo de <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">memoria/</code>, y pedile directamente: "armame una landing para [tu producto]" o "ayudame a automatizar [tu proceso repetitivo]" — las skills se activan solas.</li>
   </ol>
 
   <div class="codewrap" style="text-align:center">
@@ -33,5 +35,5 @@ import RecursoLayout from '../../layouts/RecursoLayout.astro';
   </div>
 
   <h2>Por qué funciona</h2>
-  <p>No es magia ni un truco de prompt: es el mismo método que uso yo todos los días. El contexto en carpetas, las skills que se activan solas según la tarea, y la memoria que queda escrita — así Claude no arranca de cero cada vez que le pedís algo.</p>
+  <p>No es magia ni un truco de prompt: es el mismo método que uso yo todos los días. El contexto en carpetas, las skills que se activan solas según la tarea, y la memoria que queda escrita en <code style="font-family:'JetBrains Mono',monospace;color:var(--cy)">memoria/</code> — así Claude no arranca de cero cada vez que le pedís algo.</p>
 </RecursoLayout>
