@@ -25,34 +25,34 @@ export const PROPUESTAS: Propuesta[] = [
     waTexto: 'Hola Andrés, vimos la propuesta para AVL y queremos coordinar el diagnóstico.',
     // Para cambiar un video: reemplazar el archivo en public/videos/propuesta/avl/ y ajustar `duracion`.
     recorrido: {
-      presentacion: { id: 'presentacion', titulo: 'Presentación', video: `${V}/01-presentacion.mp4`, poster: `${V}/01-presentacion-poster.jpg`, duracion: 70 },
+      presentacion: { id: 'presentacion', titulo: 'Presentación', video: `${V}/01-presentacion.mp4`, poster: `${V}/01-presentacion-poster.jpg`, duracion: 63.9 },
       soluciones: [
         {
           id: 'correo',
           titulo: 'Fase 1 · Correo y pendientes',
           problema: 'Una parte importante del tiempo de los socios se va en gestionar correos y perseguir pendientes.',
-          video: `${V}/02-correo.mp4`, poster: `${V}/02-correo-poster.jpg`, duracion: 75.6,
+          video: `${V}/02-correo.mp4`, poster: `${V}/02-correo-poster.jpg`, duracion: 69,
           siguiente: 'Ya vieron cómo ordenar el correo y los pendientes. Ahora, la facturación y las comisiones.',
         },
         {
           id: 'facturacion',
           titulo: 'Fase 2 · Facturación y comisiones',
           problema: 'Más de 200 facturas y unas 40 horas de socios por mes en cálculos manuales.',
-          video: `${V}/03-facturacion.mp4`, poster: `${V}/03-facturacion-poster.jpg`, duracion: 80.6,
+          video: `${V}/03-facturacion.mp4`, poster: `${V}/03-facturacion-poster.jpg`, duracion: 73.5,
           siguiente: 'Ya vieron la facturación y las comisiones. Ahora, el camino de una propuesta hasta el cliente operativo.',
         },
         {
           id: 'altas',
           titulo: 'Fase 3 · Propuestas, contratos y altas',
           problema: 'Los mismos datos se piden y se copian varias veces hasta que un cliente nuevo empieza a trabajar.',
-          video: `${V}/04-altas.mp4`, poster: `${V}/04-altas-poster.jpg`, duracion: 67.2,
+          video: `${V}/04-altas.mp4`, poster: `${V}/04-altas-poster.jpg`, duracion: 61.3,
           siguiente: 'Ya vieron cómo ordenar las altas. Por último, cobranzas, trámites y tributario, y el primer paso.',
         },
         {
           id: 'cobranzas',
           titulo: 'Fase 4 · Cobranzas, trámites y tributario',
           problema: 'Los procesos con más urgencias dependen hoy de un seguimiento manual.',
-          video: `${V}/05-cobranzas.mp4`, poster: `${V}/05-cobranzas-poster.jpg`, duracion: 120.7,
+          video: `${V}/05-cobranzas.mp4`, poster: `${V}/05-cobranzas-poster.jpg`, duracion: 108.1,
         },
       ],
     },
