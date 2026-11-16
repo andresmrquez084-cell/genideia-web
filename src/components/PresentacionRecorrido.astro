@@ -1,11 +1,13 @@
 ---
 // Recorrido comercial de 5 videos: presentación → 4 soluciones → contacto.
 // Se usa desde /presentacion/<rubro> cuando el rubro define `recorrido` (src/data/presentaciones.ts).
+// También se usa desde /propuesta/<cliente> (src/data/propuestas.ts) con `textos` propios: una propuesta comercial
+// le habla a un cliente puntual. Sin `textos`, quedan los del recorrido de talleres.
 // Videos y textos se editan en esos datos; acá solo está la estructura, la navegación y la medición.
 import Loader from '../transitions/Loader.astro';
 import '../transitions/transitions.css';
 import '../styles/global.css';
-import type { Recorrido } from '../data/presentaciones';
+import type { Recorrido, TextosRecorrido } from '../data/presentaciones';
 
 interface Props {
   pregunta: string;
@@ -14,8 +16,10 @@ interface Props {
   titulo: string;
   descripcion: string;
   waTexto: string;
+  textos?: TextosRecorrido;
+  ogImagen?: string;
 }
-const { pregunta, rubro, recorrido, titulo, descripcion, waTexto } = Astro.props;
+const { pregunta, rubro, recorrido, titulo, descripcion, waTexto, textos = {}, ogImagen } = Astro.props;
 
 // WhatsApp configurado en la landing original (mismo número). No se cambia.
 const waUrl = 'https://wa.me/59892302941?text=' + encodeURIComponent(waTexto);
@@ -28,6 +32,27 @@ const { presentacion, soluciones } = recorrido;
 const pasos = [presentacion, ...soluciones];
 const mmss = (s: number) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
 const totalSeg = pasos.reduce((a, p) => a + p.duracion, 0);
+const n = soluciones.length;
+const T = {
+  eyebrow: '',
+  lead: `Empezá con esta introducción de menos de un minuto. Después, ${n} ejemplos concretos.`,
+  rutaSoluciones: `${n} soluciones`,
+  rutaFin: 'Conversar',
+  finPresentacion: `Ahora conocé las ${n} soluciones que preparamos para talleres.`,
+  btnPresentacion: 'Ver primera solución',
+  saltarPresentacion: 'Ir a las soluciones',
+  solEyebrow: 'Soluciones',
+  solTitulo: `${n} situaciones concretas de un taller`,
+  badge: 'Solución',
+  siguienteBtn: 'Ver siguiente solución',
+  finUltimo: 'Ya conociste cuatro maneras de simplificar tareas en un taller.<br /><strong>¿Cuál tendría más sentido para tu negocio?</strong>',
+  btnUltimo: 'Conversemos sobre mi taller',
+  contactoTitulo: `¿Identificaste alguna tarea que podríamos simplificar en tu ${rubro === 'talleres mecánicos' ? 'taller' : 'negocio'}?`,
+  contactoLead: 'Contame cómo trabajan y vemos juntos si existe una solución que realmente valga la pena implementar.',
+  contactoBtn: 'Hablar con Andrés por WhatsApp',
+  nota: 'Sin compromiso. Respondo personalmente.',
+  ...textos,
+};
 
 // Destino opcional de los eventos (vacío = no se envía nada a ningún servidor). Ver bloque <script>.
 const TRACK_URL = import.meta.env.PUBLIC_TRACK_URL ?? '';
@@ -44,7 +69,7 @@ const TRACK_URL = import.meta.env.PUBLIC_TRACK_URL ?? '';
   <meta property="og:title" content={titulo} />
   <meta property="og:description" content={descripcion} />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://genideiacompany.com/og-genideia.png" />
+  <meta property="og:image" content={ogImagen ?? "https://genideiacompany.com/og-genideia.png"} />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -74,14 +99,14 @@ const TRACK_URL = import.meta.env.PUBLIC_TRACK_URL ?? '';
   <main>
     <!-- 1 · Presentación -->
     <section id="paso-0" class="sec hero" data-paso="0">
-      <p class="eyebrow">Recorrido de {pasos.length} videos cortos · {mmss(totalSeg)}</p>
+      <p class="eyebrow">{T.eyebrow ? `${T.eyebrow} · ${pasos.length} videos cortos` : `Recorrido de ${pasos.length} videos cortos`} · {mmss(totalSeg)}</p>
       <h1>{pregunta}</h1>
-      <p class="lead">Empezá con esta introducción de menos de un minuto. Después, {soluciones.length} ejemplos concretos.</p>
+      <p class="lead">{T.lead}</p>
 
       <ol class="ruta" aria-label="Qué vas a ver">
         <li class="on"><b>1</b><span>Presentación</span></li>
-        <li><b>2–{pasos.length}</b><span>{soluciones.length} soluciones</span></li>
-        <li><b>→</b><span>Conversar</span></li>
+        <li><b>2–{pasos.length}</b><span>{T.rutaSoluciones}</span></li>
+        <li><b>→</b><span>{T.rutaFin}</span></li>
       </ol>
 
       <div class="player" data-player="0">
@@ -89,18 +114,18 @@ const TRACK_URL = import.meta.env.PUBLIC_TRACK_URL ?? '';
           <source src={presentacion.video} type="video/mp4" />
         </video>
         <div class="fin" data-fin="0" hidden>
-          <p class="fin-txt">Ahora conocé las {soluciones.length} soluciones que preparamos para talleres.</p>
-          <button type="button" class="btn-main" data-ir="paso-1" data-continuar="presentacion">Ver primera solución <i>↓</i></button>
+          <p class="fin-txt">{T.finPresentacion}</p>
+          <button type="button" class="btn-main" data-ir="paso-1" data-continuar="presentacion">{T.btnPresentacion} <i>↓</i></button>
           <button type="button" class="btn-ghost" data-replay="0">Volver a ver</button>
         </div>
       </div>
-      <a href="#paso-1" class="saltar" data-ir="paso-1" data-continuar="presentacion-link">Ir a las soluciones <i>↓</i></a>
+      <a href="#paso-1" class="saltar" data-ir="paso-1" data-continuar="presentacion-link">{T.saltarPresentacion} <i>↓</i></a>
     </section>
 
     <!-- 2 · Soluciones -->
     <div class="sol-head" data-reveal>
-      <p class="eyebrow">Soluciones</p>
-      <h2>{soluciones.length} situaciones concretas de un taller</h2>
+      <p class="eyebrow">{T.solEyebrow}</p>
+      <h2>{T.solTitulo}</h2>
     </div>
 
     {soluciones.map((s, k) => {
@@ -109,7 +134,7 @@ const TRACK_URL = import.meta.env.PUBLIC_TRACK_URL ?? '';
       const sig = soluciones[k + 1];
       return (
         <section id={`paso-${i}`} class="sec sol" data-paso={i}>
-          <p class="badge">Solución {i} de {soluciones.length} · {mmss(s.duracion)}</p>
+          <p class="badge">{T.badge} {i} de {soluciones.length} · {mmss(s.duracion)}</p>
           <h3>{s.titulo}</h3>
           {s.problema && <p class="problema">{s.problema}</p>}
           <div class="player" data-player={i}>
@@ -119,13 +144,13 @@ const TRACK_URL = import.meta.env.PUBLIC_TRACK_URL ?? '';
             <div class="fin" data-fin={i} hidden>
               {ultimo ? (
                 <>
-                  <p class="fin-txt">Ya conociste cuatro maneras de simplificar tareas en un taller.<br /><strong>¿Cuál tendría más sentido para tu negocio?</strong></p>
-                  <a href={waUrl} target="_blank" rel="noopener noreferrer" class="btn-main" data-wa="fin-ultimo" data-continuar="conversar">Conversemos sobre mi taller</a>
+                  <p class="fin-txt" set:html={T.finUltimo} />
+                  <a href={waUrl} target="_blank" rel="noopener noreferrer" class="btn-main" data-wa="fin-ultimo" data-continuar="conversar">{T.btnUltimo}</a>
                 </>
               ) : (
                 <>
                   <p class="fin-txt">{s.siguiente}</p>
-                  <button type="button" class="btn-main" data-ir={`paso-${i + 1}`} data-continuar={`solucion-${i}`}>Ver siguiente solución <i>↓</i></button>
+                  <button type="button" class="btn-main" data-ir={`paso-${i + 1}`} data-continuar={`solucion-${i}`}>{T.siguienteBtn} <i>↓</i></button>
                 </>
               )}
               <button type="button" class="btn-ghost" data-replay={i}>Volver a ver</button>
@@ -142,10 +167,10 @@ const TRACK_URL = import.meta.env.PUBLIC_TRACK_URL ?? '';
 
     <!-- 3 · Contacto -->
     <section id="contacto" class="sec contacto" data-paso={pasos.length}>
-      <h2>¿Identificaste alguna tarea que podríamos simplificar en tu {rubro === 'talleres mecánicos' ? 'taller' : 'negocio'}?</h2>
-      <p class="lead">Contame cómo trabajan y vemos juntos si existe una solución que realmente valga la pena implementar.</p>
-      <a href={waUrl} target="_blank" rel="noopener noreferrer" class="btn-main btn-big" data-wa="contacto">Hablar con Andrés por WhatsApp</a>
-      <p class="nota">Sin compromiso. Respondo personalmente.</p>
+      <h2>{T.contactoTitulo}</h2>
+      <p class="lead">{T.contactoLead}</p>
+      <a href={waUrl} target="_blank" rel="noopener noreferrer" class="btn-main btn-big" data-wa="contacto">{T.contactoBtn}</a>
+      <p class="nota">{T.nota}</p>
 
       <div class="perfiles">
         {perfiles.map((p) => (

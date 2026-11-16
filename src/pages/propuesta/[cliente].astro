@@ -1,0 +1,21 @@
+---
+// Propuesta comercial en video para un cliente puntual: mismo recorrido que /presentacion/taller, con textos propios.
+import PresentacionRecorrido from '../../components/PresentacionRecorrido.astro';
+import { PROPUESTAS, type Propuesta } from '../../data/propuestas';
+
+export function getStaticPaths() {
+  return PROPUESTAS.map((p) => ({ params: { cliente: p.slug }, props: { p } }));
+}
+
+const { p } = Astro.props as { p: Propuesta };
+---
+
+<PresentacionRecorrido
+  pregunta={p.titulo}
+  rubro={p.cliente}
+  recorrido={p.recorrido}
+  titulo={`Propuesta para ${p.cliente} — GENIDEIA Company`}
+  descripcion={p.descripcion}
+  waTexto={p.waTexto}
+  textos={p.textos}
+/>
