@@ -1,0 +1,79 @@
+---
+// Lead magnet del carrusel "15 secciones web que venden solas" (palabra clave ManyChat: WEB)
+// URL pública: /recursos/prompts-secciones-web
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const base = `Hacelo en un solo archivo HTML con Tailwind por CDN y JavaScript simple, sin otras librerías. Usá los colores [COLORES DE TU MARCA]. Que se vea bien en celular y en computadora, y que la animación quede en loop suave. Antes de entregarlo, revisá que no haya errores ni textos cortados.`;
+const prompts = [
+  `Hacé la sección principal (hero) de una web para [TU NEGOCIO]. Fondo oscuro, un título grande "Webs que ___" donde la última palabra cambia cada 1,2 s entre [PALABRA 1], [PALABRA 2] y [PALABRA 3] con un deslizamiento hacia arriba, dentro de una pastilla de color [COLOR]. Debajo una frase corta y un botón principal. ${base}`,
+  `Hacé una sección de prueba social para [TU NEGOCIO]: a la izquierda un celular donde aparecen notificaciones de pedidos nuevos una tras otra (nombre, barrio y monto), y a la derecha dos tarjetas con el total vendido hoy y la cantidad de pedidos, con números que suben y un gráfico de línea que se dibuja. ${base}`,
+  `Hacé una demo animada de [TU PRODUCTO] dentro de una ventana de navegador: un panel con barra lateral y tarjetas de proyectos, y un cursor que se mueve solo, hace clic en "+ Nuevo", aparece una tarjeta nueva y después recorre la actividad reciente. Que quede en loop. ${base}`,
+  `Hacé una sección de resultados para [TU NEGOCIO] con: un anillo que se llena hasta [PORCENTAJE], un monto que cuenta hasta [MONTO], una calificación con estrellas que se encienden y un gráfico de línea que se dibuja de izquierda a derecha. ${base}`,
+  `Hacé una sección "Confían en nosotros" con dos filas de logos de [TUS CLIENTES] que se desplazan en sentidos opuestos sin cortes, con bordes que se desvanecen a los costados y una frase debajo con la cantidad de clientes. ${base}`,
+  `Hacé una ventana de chat donde un cliente pregunta [PREGUNTA FRECUENTE], aparecen tres puntitos de "escribiendo" y el asistente responde letra por letra con [RESPUESTA]. Al final aparecen botones de respuesta rápida. ${base}`,
+  `Hacé un botón flotante verde de chat en la esquina de una web de [TU NEGOCIO] que late suave; al tocarlo se abre una ventanita de chat con el nombre del negocio, un mensaje que se escribe solo "[MENSAJE]" y se envía con los dos tildes. ${base}`,
+  `Hacé un calendario semanal de turnos para [TU NEGOCIO] (lunes a sábado, de [HORA] a [HORA]) donde los horarios se van reservando de a uno, un cursor elige un horario libre y aparece un aviso "Turno confirmado" con el día y la hora. ${base}`,
+  `Hacé una sección de testimonios para [TU NEGOCIO] como un mazo de tarjetas apiladas: la de arriba se va hacia un costado cada 1,6 s y la siguiente pasa al frente. Cada tarjeta con estrellas, la frase, el nombre y el rubro. ${base}`,
+  `Hacé un comparador antes/después: la web vieja de [CLIENTE] a la izquierda y la nueva a la derecha, con una línea vertical que se desliza sola de un lado al otro mostrando cada versión, y una etiqueta con el resultado [RESULTADO]. ${base}`,
+  `Hacé una grilla tipo bento de 6 tarjetas con las funciones de [TU PRODUCTO] ([FUNCIÓN 1], [FUNCIÓN 2]…) que entran volando desde distintos lados y encajan en su lugar, cada una con un detalle animado (un interruptor, unas barras, un número). ${base}`,
+  `Hacé una sección de precios con 3 planes de [TU NEGOCIO] y un selector Mensual/Anual que cambia solo; los montos cuentan hasta el precio nuevo, aparece una etiqueta "-20 %" y el plan del medio se destaca como "Más elegido". ${base}`,
+  `Hacé una tabla comparativa entre "[COMPETENCIA]" y "[TU NEGOCIO]" con 5 filas de ventajas; la columna tuya está resaltada en oscuro y los tildes aparecen de a uno, fila por fila, mientras la otra columna queda con cruces grises. ${base}`,
+  `Hacé una sección de preguntas frecuentes de [TU NEGOCIO] como acordeón: 4 preguntas que se abren de a una con la respuesta deslizándose y la flecha girando. Usá estas preguntas: [PREGUNTAS]. ${base}`,
+  `Hacé un formulario de contacto para [TU NEGOCIO] donde los campos (nombre, WhatsApp, rubro) se completan solos, el botón se aprieta, gira un indicador de carga y aparece un tilde con "¡Listo! Te escribimos hoy". ${base}`
+];
+const secciones = [
+  ["Titular que cambia", "Un inicio que le habla a cada tipo de cliente."],
+  ["Pedidos en vivo", "Prueba social en una tienda o servicio."],
+  ["Cursor fantasma", "Demos del producto sin grabar la pantalla."],
+  ["Números que suben", "Una sección de resultados que se gana la confianza."],
+  ["Logos en cinta", "La fila de \"confían en nosotros\" debajo del inicio."],
+  ["Chat que responde", "Mostrar qué hace tu asistente con IA."],
+  ["Burbuja que vende", "Llevar las visitas directo a WhatsApp."],
+  ["Agenda que se llena", "Peluquerías, consultorios, estudios y clases."],
+  ["Mazo de reseñas", "Testimonios sin la grilla aburrida."],
+  ["Antes y después", "Casos de éxito y portfolio de rediseños."],
+  ["Bento que encaja", "Una sección de funciones que no es una lista."],
+  ["Precios que cambian", "La tabla de precios con descuento anual."],
+  ["Tabla que gana", "La comparación justo antes del precio."],
+  ["Dudas resueltas", "Las preguntas frecuentes antes del contacto."],
+  ["Formulario que cierra", "El cierre de la web que convierte la visita en cliente."]
+];
+---
+<RecursoLayout
+  titulo="Los 15 prompts para secciones web que venden solas"
+  descripcion="Un prompt por sección —titular, pedidos en vivo, demo, resultados, logos, chat con IA, WhatsApp, turnos, reseñas, antes y después, funciones, precios, comparación, preguntas y contacto— para armarlas con Claude."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="WEB"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Son las 15 secciones del carrusel. Cada prompt arma una sección animada en un solo archivo HTML: la abrís en el navegador y la pegás en tu web.</b></div>
+  <div class="alert"><b>Cómo usarlos:</b> copiá un prompt, reemplazá lo que está entre [corchetes] por los datos de tu negocio y pegalo en Claude. Si querés una web completa, pedí varias secciones juntas en el mismo archivo.</div>
+  {prompts.map((p, i) => (
+    <Fragment>
+      <h2>{i + 1} · {secciones[i][0]}</h2>
+      <p>{secciones[i][1]}</p>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{p}</code></pre>
+      </div>
+    </Fragment>
+  ))}
+  <h2>Para armar la web completa</h2>
+  <ul class="arrow">
+    <li>Orden que funciona: titular → logos → funciones → resultados → reseñas → precios → preguntas → contacto.</li>
+    <li>Pedí un cambio por vez: &quot;más lento&quot;, &quot;con mis colores&quot;, &quot;textos de mi rubro&quot;.</li>
+    <li>Reemplazá los datos de ejemplo por los tuyos reales antes de publicar.</li>
+  </ul>
+  <div class="minicta">Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a></div>
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Elegí las secciones que necesita mi web.</li>
+    <li>Reemplacé los [corchetes] por los datos de mi negocio.</li>
+    <li>Abrí cada HTML en el navegador y funcionó en el celular.</li>
+    <li>Le pedí a Claude al menos un ajuste concreto.</li>
+    <li>Junté las secciones en una sola página y la publiqué.</li>
+  </ul>
+</RecursoLayout>
