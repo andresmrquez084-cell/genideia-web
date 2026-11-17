@@ -1,0 +1,69 @@
+---
+// Lead magnet del reel "El mismo gato, en 9 estilos con Claude" (variante b3, palabra clave ManyChat: GATO)
+// URL pública: /recursos/prompts-gato-9-estilos
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const escena = `La escena: un gato naranja sentado sobre una mesa de madera, al lado de un vaso de agua y una pila de libros. El gato mira a cámara moviendo la cola, mira el vaso y lo empuja con la pata tres veces, de a poquito. El vaso se cae al piso, se rompe en pedacitos y se forma un charco. El gato vuelve a mirar a cámara, parpadea y aparece un cartelito que dice "¡Ups!".`;
+const base = `Usá three.js en un solo archivo HTML, sin assets externos. Formato vertical 1080×1920. Animación de 5 segundos en loop, con un botón de play y uno de reinicio. La cámara gira apenas alrededor de la escena. Antes de entregarlo, revisá que corra sin errores.`;
+const prompts = [
+  `${escena} Estilo pizarrón de clase: fondo verde con manchas de tiza borrada, todo dibujado solo con líneas blancas de tiza que aparecen de a poco, como si alguien las trazara. Un color de tiza naranja para lo importante. ${base}`,
+  `${escena} Estilo trazo de luz: fondo negro, la escena dibujada solo con sus bordes en líneas doradas que brillan (bloom suave), sin rellenos. Las líneas se encienden de a una al empezar. ${base}`,
+  `${escena} Estilo retro de PlayStation 2: modelos de pocos polígonos con sombreado plano, colores un poco saturados y la imagen pixelada (render a baja resolución y escalado sin suavizar). Movimiento a 20 cuadros por segundo. ${base}`,
+  `${escena} Estilo cómic: sombreado de historieta en 3 tonos, contornos negros gruesos alrededor de cada objeto, fondo amarillo con puntos de trama. Al momento clave aparece un globo "¡CRASH!" con rebote cuando el vaso se rompe. ${base}`,
+  `${escena} Estilo ilustración vectorial plana: colores lisos sin luces ni sombras, paleta pastel con un color de acento, cámara ortográfica. Parece una ilustración de una web, pero se mueve. ${base}`,
+  `${escena} Estilo línea mínima: fondo blanco, todo dibujado solo con líneas negras finas, sin rellenos, salvo un único elemento en color de acento. Las líneas se dibujan solas al empezar. Cámara ortográfica. ${base}`,
+  `${escena} Estilo plastilina (stop motion): formas redondeadas y blandas, materiales mate como arcilla, luz cálida con sombras suaves. Movimiento a 12 cuadros por segundo con un temblor leve en cada cuadro, como animación cuadro a cuadro. ${base}`,
+  `${escena} Estilo Lego: todo armado con ladrillos de plástico brillante con encastres arriba, el gato también armado con ladrillos, piso de base verde con puntos. Colores primarios. Movimiento a 15 cuadros por segundo. ${base}`,
+  `${escena} Estilo holograma: fondo azul muy oscuro, la escena en líneas celestes que brillan y titilan, rellenos casi transparentes, líneas de barrido que suben y un anillo de luz en el piso como proyector. ${base}`
+];
+const estilos = [
+  ['Pizarrón', 'Para explicar como en clase: cercano y didáctico.'],
+  ['Trazo de luz', 'Impacta desde el primer segundo: ideal para ganchos y portadas.'],
+  ['Retro PS2', 'Nostalgia de videojuego: llama la atención en el feed.'],
+  ['Cómic', 'Para contar algo con humor y energía.'],
+  ['Vectorial plano', 'Limpio y profesional: queda bien en webs y presentaciones.'],
+  ['Línea mínima', 'Elegante y simple: para marcas sobrias.'],
+  ['Arcilla', 'Cálido y artesanal: transmite cercanía.'],
+  ['Lego', 'Lúdico y reconocible: para contenido liviano.'],
+  ['Holograma', 'Futurista: para hablar de tecnología e IA.']
+];
+---
+<RecursoLayout
+  titulo="Los 9 prompts del gato en 9 estilos"
+  descripcion="Un prompt por estilo —pizarrón, trazo de luz, retro PS2, cómic, vectorial plano, línea mínima, arcilla, Lego y holograma— para animar al gato que tira el vaso con Claude, en un solo archivo."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="GATO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Son los 9 prompts del reel: el mismo gato tirando el vaso, en 9 estilos distintos. Cada uno te da un solo archivo HTML: lo abrís en el navegador y listo, sin instalar nada.</b></div>
+  <div class="alert"><b>Cómo usarlos:</b> copiá un prompt y pegalo en Claude tal cual. ¿Querés tu propia escena? Cambiá solo la primera parte (&quot;La escena: …&quot;) y dejá igual el resto: así los 9 estilos muestran la misma historia. Para un reel, abrilo a pantalla completa y grabá la pantalla.</div>
+  {prompts.map((p, i) => (
+    <Fragment>
+      <h2>{i + 1} · {estilos[i][0]}</h2>
+      <p>{estilos[i][1]}</p>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{p}</code></pre>
+      </div>
+    </Fragment>
+  ))}
+  <h2>Para ajustar el resultado</h2>
+  <ul class="arrow">
+    <li>Pedí un cambio por vez: &quot;más lento&quot;, &quot;los colores de mi marca&quot;, &quot;que el gato sea negro&quot;.</li>
+    <li>Si un estilo no se nota, pedile que lo exagere: &quot;más pixelado&quot;, &quot;contornos más gruesos&quot;.</li>
+    <li>Si algo se ve cortado, pedile que revise que nada se salga de la pantalla.</li>
+  </ul>
+  <div class="minicta">Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a></div>
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Probé el prompt del gato tal cual.</li>
+    <li>Lo probé en al menos 3 estilos.</li>
+    <li>Cambié la escena por una mía.</li>
+    <li>Abrí el HTML en el navegador y funcionó.</li>
+    <li>Le pedí a Claude al menos un cambio concreto.</li>
+    <li>Grabé la pantalla y lo usé en un post.</li>
+  </ul>
+</RecursoLayout>
