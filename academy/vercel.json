@@ -1,0 +1,42 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/plan-rodrigo",
+      "destination": "https://genideiacompany.com/academy/alumnos/rodrigo",
+      "permanent": true
+    },
+    {
+      "source": "/plan-mauro",
+      "destination": "https://genideiacompany.com/academy/alumnos/mauro",
+      "permanent": true
+    },
+    {
+      "source": "/alumnos/:slug/:file*",
+      "destination": "https://genideiacompany.com/academy/alumnos/:slug",
+      "permanent": false
+    },
+    {
+      "source": "/alumnos/:slug",
+      "destination": "https://genideiacompany.com/academy/alumnos/:slug",
+      "permanent": false
+    },
+    {
+      "source": "/:path(.*\\.md)",
+      "destination": "/",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ]
+}
