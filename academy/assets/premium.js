@@ -127,6 +127,29 @@
       '<div class="ac-win" id="acHeroWin"></div>' +
     '</div>');
 
+  // seguimiento vivo: quién está activo, qué está cursando y qué viene después
+  inicio.insertAdjacentHTML('afterbegin', '<div class="ac-follow" id="acFollow" aria-label="Seguimiento de alumnos"></div>');
+  function renderFollow() {
+    var root = $('#acFollow'); if (!root) return;
+    var ordered = data.students.slice().sort(function (a, b) {
+      var rank = function (s) { var n = norm(s.status); return n === 'now' ? 0 : n === 'todo' ? 1 : 2; };
+      return rank(a) - rank(b);
+    }).slice(0, 3);
+    root.innerHTML = ordered.map(function (s) {
+      var j = journey(s), cur = j.find(function (x) { return x.st === 'now'; }) || j.find(function (x) { return x.st === 'todo'; }) || j[j.length - 1];
+      var done = j.filter(function (x) { return x.st === 'done'; }).length;
+      var state = norm(s.status);
+      var label = state === 'done' ? 'Recorrido finalizado' : state === 'now' ? 'Seguimiento activo' : 'Próximo a comenzar';
+      var meta = cur ? ('M' + pad(cur.m.id) + ' · ' + cur.m.title) : (done + ' módulos completados');
+      return '<button class="ac-follow-card ' + (state === 'now' ? 'is-now' : state === 'done' ? 'is-done' : '') + '" data-sid="' + esc(s.id) + '">' +
+        av(s) + '<span class="ac-follow-main"><small>' + label + '</small><b>' + esc(s.name) + '</b><span>' + esc(meta) + '</span></span><span class="ac-follow-go" aria-hidden="true">→</span></button>';
+    }).join('');
+    $('.ac-follow-card', root).forEach(function (b) {
+      b.addEventListener('click', function () { showView('alumnos'); openStudentDetail(b.dataset.sid); });
+      if (fine) b.addEventListener('pointermove', function (e) { var r = b.getBoundingClientRect(); b.style.setProperty('--mx', (e.clientX-r.left)+'px'); b.style.setProperty('--my', (e.clientY-r.top)+'px'); });
+    });
+  }
+
   // título que aparece palabra por palabra
   function splitTitle(h) {
     if (h.dataset.split) return; h.dataset.split = 1;
@@ -419,6 +442,7 @@
   }
   function refresh() {
     live();
+    renderFollow();
     trackWin(heroWin, heroWin.dataset.sid && studentById(heroWin.dataset.sid) ? heroWin.dataset.sid : firstActive(), heroOpts);
     chips(); if ($('#view-pizarra').classList.contains('active')) board();
     issueFilter(); enhance();
