@@ -1,0 +1,248 @@
+---
+// Lead magnet · palabra clave ManyChat: 6.2 (carrusel "Llegó GPT-6.2", 18/11/2026)
+// URL pública: /recursos/astra-o-sol
+// Datos verificados en el anuncio oficial https://openai.com/index/introducing-gpt-6-2-astra-sol/ (17/11/2026)
+// y en la cobertura de SiliconANGLE / VentureBeat / 9to5Mac del mismo día: roles de cada modelo, planes,
+// precios de la API (≤272K tokens de entrada) y FrontierCode 2.0.
+// Regla de Andrés (18/11): el lead magnet sobre-entrega → selector interactivo, calculadora, 12 prompts, flujo combinado.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const tareas = [
+  { tarea: 'Un informe o una investigación larga', modelo: 'Astra', por: 'Tiene que investigar, armar y revisar sin perder el hilo.' },
+  { tarea: 'Presentaciones con tu plantilla', modelo: 'Astra', por: 'Copia diseño, colores y tamaño de letra desde una captura.' },
+  { tarea: 'Cambios en un proyecto de código existente', modelo: 'Astra', por: 'OpenAI lo destaca para hacer y probar cambios en Codex.' },
+  { tarea: 'Webs, juegos o diseños 3D', modelo: 'Astra', por: 'Es donde más mejoró el resultado visual.' },
+  { tarea: 'Mails, resúmenes y textos del día a día', modelo: 'Sol', por: 'Escribe claro y natural, y responde más rápido.' },
+  { tarea: 'Tareas de varios pasos bien definidas', modelo: 'Sol', por: 'Encadena pasos sin necesitar el modelo más caro.' },
+  { tarea: 'Código del día a día', modelo: 'Sol', por: 'En FrontierCode 2.0 quedó a medio punto de Astra.' },
+  { tarea: 'Automatizaciones con mucho volumen', modelo: 'Sol', por: 'Cuesta cuatro veces menos por token en la API.' },
+];
+
+// Biblioteca: 12 prompts listos, 6 para cada modelo
+const biblioteca = [
+  ['Astra', 'Presentación con tu plantilla', `Te adjunto una captura de una placa de mi presentación. Usala como plantilla: copiá la grilla, los colores, las tipografías y los tamaños de letra exactos.
+Armá [CANTIDAD] placas nuevas sobre [TEMA], una idea por placa, con un título corto y como máximo 3 renglones de texto.
+Antes de entregar, compará cada placa con la captura y corregí lo que no coincida.`],
+  ['Astra', 'Informe largo con revisión', `Necesito un informe sobre [TEMA] para [QUIÉN LO VA A LEER].
+1. Investigá y listá las fuentes que vas a usar.
+2. Armá el informe: resumen de 5 líneas arriba, después el detalle con datos y al final 3 recomendaciones concretas.
+3. Revisalo como si fueras un editor exigente: números que no cierran, afirmaciones sin fuente, partes que sobran. Corregí todo y entregame la versión final.`],
+  ['Astra', 'Cambio en un proyecto de código', `En este proyecto quiero [CAMBIO QUE QUERÉS].
+Antes de tocar nada, leé los archivos que afecta y explicame en 5 puntos cómo lo vas a hacer.
+Hacé el cambio, escribí o actualizá las pruebas, corrélas y decime qué pasó. Si algo te bloquea (un archivo que falta, un permiso), avisame en vez de seguir.`],
+  ['Astra', 'Landing que se vea profesional', `Armá una landing en un solo archivo HTML para [TU NEGOCIO], que vende [PRODUCTO/SERVICIO] a [CLIENTE IDEAL].
+Elegí un diseño con personalidad que tenga que ver con el rubro, no una plantilla genérica. Secciones: inicio con una promesa clara, beneficios, prueba social, preguntas frecuentes y un botón a WhatsApp.
+Que funcione bien en celular. Antes de entregar, revisala en ancho de celular y corregí lo que se corte.`],
+  ['Astra', 'Abogado del diablo', `Te paso un documento: [PEGÁ TU PROPUESTA, CONTRATO O PLAN].
+Revisalo como lo haría la otra parte buscando debilidades: qué promesas son difíciles de cumplir, qué cede de más, qué falta definir y qué pregunta incómoda me pueden hacer.
+Ordená los puntos del más grave al menos grave y proponé cómo reescribir cada uno.`],
+  ['Astra', 'Juego o experiencia 3D', `Hacé un [JUEGO / EXPERIENCIA 3D] en un solo archivo HTML con three.js sobre [IDEA].
+Que se pueda jugar o recorrer con el mouse y en celular con el dedo. Cuidá la estética: una paleta de 3 o 4 colores, luces suaves y una cámara que se mueva con intención.
+Antes de entregar, revisá que corra sin errores y que no haya nada fuera de pantalla.`],
+  ['Sol', 'Mail que se entiende a la primera', `Escribí un mail para [DESTINATARIO] sobre [TEMA].
+Objetivo: que [LO QUE QUERÉS QUE HAGA]. Tono: cercano y directo, sin vueltas. Máximo 120 palabras, un asunto de menos de 8 palabras y una sola pregunta al final.`],
+  ['Sol', 'Resumen de una reunión', `Te paso las notas o la transcripción de una reunión: [PEGALAS ACÁ].
+Devolveme: 1) qué se decidió, 2) tareas con responsable y fecha, 3) temas que quedaron abiertos. Todo en viñetas cortas, sin repetir.`],
+  ['Sol', 'Comparar opciones en varios pasos', `Buscá 3 opciones de [PRODUCTO O SERVICIO] para [TU CIUDAD O PAÍS].
+Comparalas en una tabla: precio, tiempo de entrega, condiciones y una opinión real de clientes. Decime cuál elegirías y por qué, en dos líneas.`],
+  ['Sol', 'Planilla a partir de un desorden', `Te paso datos desordenados: [PEGÁ LISTA, CHAT O NOTAS].
+Ordenalos en una tabla con las columnas [COLUMNAS QUE QUERÉS]. Marcá las filas donde falte información y decime qué falta.`],
+  ['Sol', 'Respuesta a un cliente enojado', `Un cliente me escribió esto: [PEGÁ EL MENSAJE].
+Escribí una respuesta que reconozca el problema sin culparlo, explique qué vamos a hacer y cuándo, y cierre con una acción concreta. Máximo 80 palabras, tono humano.`],
+  ['Sol', 'Post para redes en tu voz', `Te paso 3 posts míos que funcionaron: [PEGALOS].
+Analizá cómo escribo (largo de frases, palabras que uso, cómo arranco y cómo cierro) y escribí un post nuevo sobre [TEMA] con ese mismo estilo. Dame 3 opciones de primera línea.`],
+];
+
+const flujoSol = `Paso 1 (con GPT-6.2 Sol):
+Armá un primer borrador de [LO QUE NECESITÁS]. No lo pulas: quiero la estructura completa y todas las ideas, rápido.`;
+const flujoAstra = `Paso 2 (cambiá a GPT-6.2 Astra en la misma conversación):
+Revisá el borrador de arriba como un experto en [TEMA]. Corregí errores, completá lo que falta, ajustá el tono para [QUIÉN LO VA A LEER] y entregame la versión final lista para usar.`;
+
+const selector = `Antes de empezar, clasificá esta tarea.
+Decime si es DIFÍCIL (trabajo largo, mucha precisión, hay que investigar, construir y revisar) o DEL DÍA A DÍA (el resultado está claro y conviene ir rápido).
+Si es difícil, recomendame GPT-6.2 Astra; si es del día a día, GPT-6.2 Sol.
+Explicámelo en una línea y después preguntame si seguimos.
+La tarea es: [DESCRIBÍ TU TAREA ACÁ]`;
+---
+<RecursoLayout
+  titulo="Astra o Sol: cuál usar para cada tarea"
+  descripcion="Todo GPT-6.2 en una página: un selector que te dice qué modelo usar, una calculadora de costos, 12 prompts listos y el flujo para pagar menos sin perder calidad."
+  tipo="Guía completa"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="6.2"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>OpenAI lanzó GPT-6.2 Astra y GPT-6.2 Sol el 17 de noviembre. No son lo mismo con distinto precio: cada uno tiene su rol. Acá no tenés solo el resumen: tenés un selector que te dice cuál usar en 10 segundos, una calculadora de costos, 12 prompts listos para copiar y el truco para pagar menos sin perder calidad.</b></div>
+
+  <div class="toc">
+    <b>En esta guía</b>
+    <a href="#selector">1 · El selector: ¿Astra o Sol?</a>
+    <a href="#regla">2 · La regla y qué trae GPT-6.2</a>
+    <a href="#tareas">3 · Cuál usar para cada tarea</a>
+    <a href="#biblioteca">4 · 12 prompts listos</a>
+    <a href="#flujo">5 · El truco: Sol arma, Astra revisa</a>
+    <a href="#calculadora">6 · Calculadora de costos de la API</a>
+    <a href="#errores">7 · Errores que te hacen gastar de más</a>
+  </div>
+
+  <h2 id="selector">1 · El selector: ¿Astra o Sol?</h2>
+  <p>Respondé 4 preguntas sobre tu tarea y te digo qué modelo usar.</p>
+  <div class="tool" id="sel">
+    <div class="q" data-w="2"><span>¿Es un trabajo largo, que te llevaría más de una hora?</span><div class="yn"><button type="button" data-v="1">Sí</button><button type="button" data-v="0">No</button></div></div>
+    <div class="q" data-w="2"><span>¿Tiene que respetar un formato exacto (plantilla, marca, código existente)?</span><div class="yn"><button type="button" data-v="1">Sí</button><button type="button" data-v="0">No</button></div></div>
+    <div class="q" data-w="1"><span>¿Un error te costaría caro (un cliente, plata, un contrato)?</span><div class="yn"><button type="button" data-v="1">Sí</button><button type="button" data-v="0">No</button></div></div>
+    <div class="q" data-w="-2"><span>¿La vas a repetir muchas veces o en una automatización?</span><div class="yn"><button type="button" data-v="1">Sí</button><button type="button" data-v="0">No</button></div></div>
+    <div class="res" id="selres">Respondé las 4 preguntas para ver la recomendación.</div>
+  </div>
+  <p>¿Preferís que ChatGPT lo decida solo? Pegá esto al principio de la conversación:</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{selector}</code></pre></div>
+
+  <h2 id="regla">2 · La regla en una línea</h2>
+  <div class="grid">
+    <div class="col si">
+      <h3>GPT-6.2 Astra</h3>
+      <ul>
+        <li>Trabajo largo y complejo</li>
+        <li>Mucha precisión</li>
+        <li>Investigar, construir y revisar</li>
+        <li>Webs, código y 3D</li>
+      </ul>
+    </div>
+    <div class="col si">
+      <h3>GPT-6.2 Sol</h3>
+      <ul>
+        <li>Tareas del día a día</li>
+        <li>Importa la velocidad</li>
+        <li>Importa el costo</li>
+        <li>Varios pasos bien definidos</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sub">Qué trae GPT-6.2</h3>
+  <ul class="arrow">
+    <li><b>Astra respeta tu plantilla:</b> le pasás una placa o una captura y copia el diseño, los colores y hasta el tamaño de letra.</li>
+    <li><b>Mejor código y mejores webs:</b> código más limpio y frontends que se ven y funcionan mejor, sobre todo en webs, juegos y diseño 3D.</li>
+    <li><b>Sol, casi igual por mucho menos:</b> en FrontierCode 2.0 (una prueba de código) quedó a medio punto de Astra por la quinta parte del costo.</li>
+    <li><b>Los dos gastan menos:</b> llegan a mejores resultados usando menos tokens, así que rendís más con el mismo plan.</li>
+    <li><b>Dónde:</b> ChatGPT Work y Codex en los planes Plus, Pro, Enterprise y Edu (en Enterprise y Edu lo activa el administrador), y en la API como <code>gpt-6.2-astra</code> y <code>gpt-6.2-sol</code>.</li>
+  </ul>
+
+  <h2 id="tareas">3 · Cuál usar para cada tarea</h2>
+  <ul class="arrow">
+    {tareas.map((x) => (
+      <li><b>{x.tarea} → {x.modelo}.</b> {x.por}</li>
+    ))}
+  </ul>
+
+  <h2 id="biblioteca">4 · 12 prompts listos</h2>
+  <p>Seis para Astra y seis para Sol. Cambiá lo que está entre [corchetes] y pegalo.</p>
+  <div class="filt" id="filt"><button type="button" data-f="todos" class="on">Todos</button><button type="button" data-f="Astra">Astra</button><button type="button" data-f="Sol">Sol</button></div>
+  {biblioteca.map((b, i) => (
+    <div class="pr" data-m={b[0]}>
+      <h3 class="sub"><span class={b[0] == 'Astra' ? 'tag a' : 'tag s'}>{b[0]}</span> {i + 1}. {b[1]}</h3>
+      <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{b[2]}</code></pre></div>
+    </div>
+  ))}
+
+  <h2 id="flujo">5 · El truco: Sol arma, Astra revisa</h2>
+  <p>Para documentos largos no hace falta que Astra haga todo. Que Sol arme el borrador rápido y barato, y que Astra lo revise y lo deje impecable. Pagás el modelo caro solo en la parte donde más rinde.</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{flujoSol}</code></pre></div>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{flujoAstra}</code></pre></div>
+
+  <h2 id="calculadora">6 · Calculadora de costos de la API</h2>
+  <p>Si usás los modelos por API (por ejemplo, en una automatización), calculá cuánto te sale por mes con cada uno. Precios estándar por millón de tokens: Sol $2 de entrada y $10 de salida; Astra $8 de entrada y $40 de salida.</p>
+  <div class="tool" id="calc">
+    <label>Tareas por mes<input type="number" id="cn" value="1000" min="0" /></label>
+    <label>Tokens de entrada por tarea<input type="number" id="ci" value="3000" min="0" /></label>
+    <label>Tokens de salida por tarea<input type="number" id="co" value="800" min="0" /></label>
+    <div class="out"><div><span>Con Sol</span><b id="rs">—</b></div><div><span>Con Astra</span><b id="ra">—</b></div></div>
+    <div class="res" id="rd"></div>
+  </div>
+  <div class="note"><b>Referencia:</b> mil tokens son unas 750 palabras. Un mail con contexto ronda los 1.500 tokens de entrada; un informe largo puede pasar los 20.000. Precios para pedidos de hasta 272 mil tokens de entrada.</div>
+
+  <h2 id="errores">7 · Errores que te hacen gastar de más</h2>
+  <ul class="arrow">
+    <li class="no"><b>Usar Astra para todo.</b> Para un mail o un resumen no vas a notar la diferencia, y gastás cuatro veces más.</li>
+    <li class="no"><b>Pedirle a Astra que &quot;haga una presentación linda&quot;.</b> Su fuerte es copiar tu plantilla: pasale una captura y aprovechalo.</li>
+    <li class="no"><b>No pedir revisión.</b> Astra está pensado para investigar, construir y revisar. Si no le pedís el paso de revisión, te perdés la mitad.</li>
+    <li class="no"><b>Quedarte con Sol cuando se traba.</b> Si da vueltas o el resultado no alcanza, pasá esa parte a Astra en vez de insistir.</li>
+  </ul>
+
+  <div class="minicta">¿Querés aprender a usar la IA en tu trabajo, paso a paso? La clase completa es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a></div>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Pasé una tarea mía por el selector.</li>
+    <li>Probé la misma tarea con Sol y con Astra.</li>
+    <li>Guardé los 3 prompts que más voy a usar.</li>
+    <li>Probé el flujo &quot;Sol arma, Astra revisa&quot; en un documento real.</li>
+    <li>Si uso la API, calculé cuánto me ahorro con Sol.</li>
+  </ul>
+</RecursoLayout>
+
+<style>
+  pre.code{padding-top:46px}
+  .toc{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:22px 0;font-size:14px}
+  .toc b{color:var(--ink);margin-bottom:4px}
+  .toc a{color:var(--cy);text-decoration:none}
+  h3.sub{font-size:16px;color:var(--ink);margin:22px 0 4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;border-radius:6px;padding:3px 8px;text-transform:uppercase}
+  .tag.a{background:var(--cy);color:#06121d}.tag.s{background:var(--amber);color:#fff}
+  .tool{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0;display:flex;flex-direction:column;gap:12px}
+  .q{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--dim);font-size:14.5px;line-height:1.4}
+  .yn{display:flex;gap:6px;flex:none}
+  .yn button,.filt button{background:transparent;color:var(--dim);border:1px solid var(--line);padding:7px 14px}
+  .yn button.on,.filt button.on{background:var(--cy);color:#06121d;border-color:var(--cy)}
+  .res{border-top:1px solid var(--line);padding-top:12px;color:var(--ink);font-size:15px;line-height:1.5}
+  .res b{color:var(--cy)}
+  .filt{display:flex;gap:8px;margin:10px 0}
+  label{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--dim);font-size:14px}
+  input{width:120px;background:#060b14;border:1px solid var(--line);border-radius:8px;color:var(--ink);padding:8px 10px;font-family:'JetBrains Mono',monospace;font-size:14px;text-align:right}
+  .out{display:flex;gap:12px}
+  .out div{flex:1;background:#060b14;border:1px solid var(--line);border-radius:10px;padding:12px}
+  .out span{display:block;color:var(--faint);font-size:12px}
+  .out b{font-size:22px;color:var(--ink)}
+  @media (max-width:480px){.q{flex-direction:column;align-items:flex-start}}
+  @media print{.yn,.filt,.toc{display:none}}
+</style>
+
+<script>
+  // Selector: suma pesos de las respuestas "Sí" (positivo → Astra, negativo → Sol)
+  const qs = [...document.querySelectorAll('#sel .q')];
+  const res = document.getElementById('selres');
+  const ans: (number | null)[] = qs.map(() => null);
+  qs.forEach((q, i) => q.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => {
+    ans[i] = Number(b.dataset.v);
+    q.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b));
+    if (ans.some((a) => a === null) || !res) return;
+    const score = ans.reduce((s, a, j) => s + (a ? Number(qs[j].dataset.w) : 0), 0);
+    if (score >= 2) res.innerHTML = '<b>Usá GPT-6.2 Astra.</b> Es un trabajo que pide precisión y revisión: ahí se nota la diferencia. Mirá los prompts 1 a 6.';
+    else if (score <= 0) res.innerHTML = '<b>Usá GPT-6.2 Sol.</b> Es rápido, cuesta la cuarta parte y para esta tarea te alcanza. Mirá los prompts 7 a 12.';
+    else res.innerHTML = '<b>Empezá con Sol y revisá con Astra.</b> Te conviene el flujo combinado del punto 5: pagás el modelo caro solo en la revisión.';
+  })));
+
+  // Filtro de la biblioteca
+  document.querySelectorAll<HTMLButtonElement>('#filt button').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('#filt button').forEach((x) => x.classList.toggle('on', x === b));
+    document.querySelectorAll<HTMLElement>('.pr').forEach((p) => { p.style.display = b.dataset.f === 'todos' || p.dataset.m === b.dataset.f ? '' : 'none'; });
+  }));
+
+  // Calculadora de costos (precios por millón de tokens, ≤272K de entrada)
+  const P = { sol: [2, 10], astra: [8, 40] };
+  const usd = (n: number) => 'US$ ' + n.toLocaleString('es-UY', { maximumFractionDigits: n < 10 ? 2 : 0 });
+  const calc = () => {
+    const v = (id: string) => Math.max(0, Number((document.getElementById(id) as HTMLInputElement).value) || 0);
+    const n = v('cn'), i = v('ci'), o = v('co');
+    const c = (p: number[]) => n * (i * p[0] + o * p[1]) / 1e6;
+    const s = c(P.sol), a = c(P.astra);
+    document.getElementById('rs')!.textContent = usd(s) + ' / mes';
+    document.getElementById('ra')!.textContent = usd(a) + ' / mes';
+    document.getElementById('rd')!.innerHTML = a > 0 ? `Con Sol te ahorrás <b>${usd(a - s)} por mes</b> (${usd((a - s) * 12)} por año). Si la calidad de Sol te alcanza, esa es la diferencia.` : '';
+  };
+  ['cn', 'ci', 'co'].forEach((id) => document.getElementById(id)?.addEventListener('input', calc));
+  calc();
+</script>

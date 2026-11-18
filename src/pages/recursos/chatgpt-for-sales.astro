@@ -1,0 +1,230 @@
+---
+// Lead magnet · palabra clave ManyChat: VENTAS (carrusel "ChatGPT for Sales", 18/11/2026)
+// URL pública: /recursos/chatgpt-for-sales
+// Datos verificados en el anuncio oficial https://openai.com/index/introducing-chatgpt-for-sales/ (17/11/2026):
+// plugin de ventas, +30 plugins de partners, casos de uso y cómo activarlo. Empresas de los ejemplos: inventadas.
+// Regla de Andrés (18/11): el lead magnet sobre-entrega → generador de prompts, asistente de ventas listo,
+// rutina semanal, plantillas y modo sin CRM.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+// [nombre, qué hace (según OpenAI), prompt, qué te devuelve]
+const funciones = [
+  ['Habla con tu CRM', 'Trae el contexto de la cuenta desde Salesforce, HubSpot, Close o monday CRM para preparar llamadas y planear el próximo paso.',
+   `Revisá en el CRM la cuenta de [EMPRESA].
+Devolveme:
+1. Estado en una línea (etapa, valor, última interacción).
+2. Lo que prometimos y todavía no cumplimos.
+3. Lo que pidió el cliente y no le respondimos.
+4. El próximo paso concreto, con fecha sugerida.
+Si falta un dato en el CRM, marcámelo en vez de inventarlo.`,
+   'Una ficha de 4 bloques que leés en 30 segundos antes de llamar.'],
+  ['Investiga la empresa', 'Combina señales de Apollo, Clay o Common Room con la búsqueda web de ChatGPT para entender qué está cambiando en una cuenta.',
+   `Investigá a [EMPRESA] ([SITIO WEB]) en la web y con los plugins que tenga conectados (Apollo, Clay).
+Buscá cambios de los últimos 90 días: contrataciones, sucursales nuevas, lanzamientos, inversión, cambios de gerencia.
+Para cada señal: qué pasó, fuente y por qué podría necesitar [TU PRODUCTO] ahora.
+Cerrá con el mejor motivo para escribirle hoy y un primer mensaje de 3 líneas basado en ese motivo.`,
+   'Una lista de señales con fuente y un primer mensaje que no suena a plantilla.'],
+  ['Prioriza tus cuentas', 'Arma una lista priorizada a partir del CRM y de la investigación de prospectos, explica por qué entra cada cuenta y qué información falta.',
+   `Con los datos del CRM, armá una tabla con mis 10 cuentas con más chances de cerrar este mes.
+Columnas: cuenta, valor, etapa, motivo para priorizarla, riesgo principal y dato que falta.
+Ordenala de mayor a menor chance y decime en qué 3 me concentro esta semana.`,
+   'Tu plan de la semana: 3 cuentas en las que enfocarte y por qué.'],
+  ['Te prepara la reunión', 'Antes de una reunión, un briefing con el historial de la cuenta, las llamadas anteriores y las prioridades del cliente.',
+   `Tengo una reunión con [CLIENTE] de [EMPRESA] el [DÍA Y HORA].
+Armame un briefing de una página:
+- Quién es y qué le importa.
+- Historial: llamadas, propuestas y objeciones anteriores.
+- 5 preguntas para descubrir lo que todavía no sé.
+- Las 2 objeciones más probables y cómo responderlas.
+- El objetivo de la reunión en una frase.`,
+   'Una hoja que te deja entrar a la reunión sabiendo más que la otra parte.'],
+  ['Notas a seguimiento', 'Usa las notas de la llamada (Meetings, Gong, Otter.ai o Granola) para captar los próximos pasos y redactar el seguimiento.',
+   `Con las notas de la llamada de hoy con [CLIENTE]:
+1. Redactá el mail de seguimiento: agradecimiento en una línea, lo que acordamos en viñetas, próximos pasos con responsable y fecha, y una sola pregunta al final.
+2. Prepará la actualización del CRM (etapa, próximo paso, fecha) para que la revise antes de guardarla.
+Tono: cercano y profesional, máximo 150 palabras.`,
+   'El mail listo para mandar y el CRM actualizado, sin escribir una línea.'],
+  ['Ventas en riesgo', 'Usa el historial del CRM y las conversaciones con el cliente para entender qué está trabando un negocio.',
+   `Revisá mi pipeline y encontrá los negocios en riesgo: sin respuesta hace más de 7 días, propuesta vencida, la otra parte cambió de interlocutor o se corrió la fecha de cierre.
+Para cada uno: por qué está en riesgo, qué haría hoy para destrabarlo y el mensaje exacto que mandaría.`,
+   'Una lista de rescate: qué venta se está cayendo y qué mandarle hoy.'],
+  ['+30 herramientas', 'Plugins nuevos y mejorados de las herramientas que los equipos comerciales ya usan: Apollo, Clay, Gong, Salesloft, Outreach, Docusign, Canva, Gamma y más.',
+   `Estas son las herramientas que usa mi equipo de ventas: [LISTA DE HERRAMIENTAS].
+Proponé 3 flujos que conecten varias de ellas dentro de ChatGPT: uno para prospectar, uno para preparar reuniones y uno para cerrar.
+Para cada flujo: pasos en orden, qué plugin usa cada paso y cuánto tiempo nos ahorraría por semana.`,
+   'Tres flujos armados con lo que tu equipo ya paga.'],
+  ['Presupuesto y firma', 'Cuando el cliente está listo, prepara presupuestos y acuerdos con Docusign, Ironclad, PandaDoc o ServiceNow CPQ.',
+   `Con lo que acordamos en la llamada con [CLIENTE], prepará el presupuesto: productos o servicios, cantidades, precio, condiciones de pago y vigencia.
+Revisá que coincida con lo que hablamos y marcá cualquier diferencia.
+Después dejá el acuerdo listo para enviar a firmar por [DOCUSIGN / PANDADOC].`,
+   'El presupuesto revisado y el acuerdo listo para firmar el mismo día del sí.'],
+];
+
+const asistente = `Sos mi asistente de ventas. Trabajás para [TU EMPRESA], que vende [PRODUCTO O SERVICIO] a [CLIENTE IDEAL].
+
+Lo que tenés que saber de nosotros:
+- Precio y planes: [PRECIOS]
+- Por qué nos eligen: [3 DIFERENCIALES]
+- Objeciones más comunes: [OBJECIONES] y cómo las respondemos: [RESPUESTAS]
+- Tono: cercano, directo, sin palabras de vendedor. En español de [PAÍS].
+
+Cómo trabajás:
+1. Antes de escribir a alguien, buscás un motivo concreto (algo que cambió en su empresa).
+2. Todo mensaje tiene una sola pregunta y una sola acción.
+3. Nunca inventás datos: si falta algo, me lo preguntás.
+4. Después de cada llamada, me proponés el seguimiento y la actualización del CRM para que yo la revise.
+5. Cada lunes, si te lo pido, me armás la lista de cuentas prioritarias de la semana.`;
+
+const semana = [
+  ['Lunes', 'Plan de la semana', 'Prompt 3: las 10 cuentas con más chances y en qué 3 te concentrás.'],
+  ['Martes', 'Prospección', 'Prompt 2 con 5 empresas nuevas: señales y primer mensaje para cada una.'],
+  ['Miércoles', 'Reuniones', 'Prompt 4 antes de cada reunión; prompt 5 al salir.'],
+  ['Jueves', 'Rescate', 'Prompt 6: los negocios trabados y el mensaje para cada uno.'],
+  ['Viernes', 'Cierres', 'Prompt 8 para los que dijeron que sí; prompt 1 para dejar el CRM al día.'],
+];
+
+const plantillas = [
+  ['Primer contacto con motivo', `Hola [NOMBRE], vi que [SEÑAL: abrieron una sucursal / están contratando / lanzaron X]. Felicitaciones.
+Cuando pasa eso, muchas empresas como [EMPRESA] se encuentran con [PROBLEMA]. Nosotros ayudamos a [RESULTADO] con [PRODUCTO].
+¿Te sirve que te muestre en 15 minutos cómo lo hicimos con [CLIENTE PARECIDO]?`],
+  ['Seguimiento después de la reunión', `Hola [NOMBRE], gracias por el tiempo de hoy.
+Lo que acordamos:
+- [ACUERDO 1]
+- [ACUERDO 2]
+Próximo paso: [ACCIÓN] el [FECHA], a cargo de [RESPONSABLE].
+¿Hay algo que quieras sumar antes de eso?`],
+  ['Reactivar una venta trabada', `Hola [NOMBRE], te escribo por [PROPUESTA]. Me imagino que estás con mil cosas.
+Para no hacerte perder tiempo: ¿seguimos, lo pausamos para [MES] o lo cerramos por ahora? Cualquiera de las tres respuestas me sirve.`],
+];
+
+const sinCrm = `Te paso mi lista de clientes y prospectos (copiada de una planilla o del WhatsApp): [PEGALA ACÁ].
+Ordenala como si fuera un CRM: una fila por empresa con contacto, etapa (nuevo, propuesta, negociación, cierre), valor estimado, última interacción y próximo paso.
+Marcá en rojo los que no tienen próximo paso y decime a cuáles escribirle hoy.`;
+---
+<RecursoLayout
+  titulo="ChatGPT for Sales: las 8 funciones, sus prompts y tu asistente de ventas"
+  descripcion="Las 8 funciones del carrusel con un prompt profesional para cada una, un generador de prompts, tu asistente de ventas listo para pegar, una rutina semanal, 3 plantillas de mensajes y cómo usarlo aunque no tengas CRM."
+  tipo="Kit completo"
+  barLabel="Kit · @andresalbornoz.ai"
+  palabraClave="VENTAS"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>OpenAI lanzó ChatGPT for Sales el 17 de noviembre. Ya no es solo &quot;escribime un mensaje de ventas&quot;: investiga al prospecto, te prepara la reunión, arma el seguimiento y te ayuda a cerrar. Te prometí las 8 funciones con sus prompts. Acá tenés eso y bastante más: un generador de prompts, tu asistente de ventas armado, la rutina de la semana y las plantillas que más cierran.</b></div>
+
+  <div class="toc">
+    <b>En este kit</b>
+    <a href="#generador">1 · Generador: tu prompt en 10 segundos</a>
+    <a href="#funciones">2 · Las 8 funciones con su prompt</a>
+    <a href="#asistente">3 · Tu asistente de ventas, listo para pegar</a>
+    <a href="#semana">4 · La semana de un vendedor con ChatGPT</a>
+    <a href="#plantillas">5 · 3 plantillas de mensajes que cierran</a>
+    <a href="#sincrm">6 · ¿No tenés CRM? Usalo igual</a>
+    <a href="#activar">7 · Cómo activarlo</a>
+  </div>
+
+  <h2 id="generador">1 · Generador: tu prompt en 10 segundos</h2>
+  <p>Elegí qué querés hacer, completá los datos y copiá el prompt ya armado.</p>
+  <div class="tool">
+    <label>Qué querés hacer
+      <select id="gf">{funciones.map((f, i) => <option value={i}>{i + 1}. {f[0]}</option>)}</select>
+    </label>
+    <label>Empresa o cliente<input id="ge" placeholder="Ej.: Ceibo Hoteles" /></label>
+    <label>Tu producto o servicio<input id="gp" placeholder="Ej.: un sistema de reservas" /></label>
+    <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code id="gout"></code></pre></div>
+  </div>
+
+  <h2 id="funciones">2 · Las 8 funciones con su prompt</h2>
+  <div class="alert"><b>Cómo usarlos:</b> cambiá lo que está entre [corchetes]. Rinden más con el plugin de ventas instalado y tu CRM conectado; sin eso, ChatGPT trabaja con lo que le pegues en el chat (mirá el punto 6).</div>
+  {funciones.map((f, i) => (
+    <Fragment>
+      <h3 class="sub"><span class="n">{i + 1}</span>{f[0]}</h3>
+      <p>{f[1]}</p>
+      <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code data-tpl>{f[2]}</code></pre></div>
+      <p class="gets"><b>Qué te devuelve:</b> {f[3]}</p>
+    </Fragment>
+  ))}
+
+  <h2 id="asistente">3 · Tu asistente de ventas, listo para pegar</h2>
+  <p>Creá un proyecto en ChatGPT (por ejemplo, &quot;Ventas&quot;) y pegá esto en sus instrucciones. Lo completás una vez y desde ahí cada conversación ya sabe quién sos, qué vendés y cómo escribís.</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{asistente}</code></pre></div>
+
+  <h2 id="semana">4 · La semana de un vendedor con ChatGPT</h2>
+  <p>Una rutina de 15 minutos por día usando los prompts de arriba:</p>
+  <div class="week">
+    {semana.map((d) => (
+      <div><b>{d[0]}</b><span class="t">{d[1]}</span><span>{d[2]}</span></div>
+    ))}
+  </div>
+
+  <h2 id="plantillas">5 · 3 plantillas de mensajes que cierran</h2>
+  <p>Para mandar por mail o WhatsApp. Pedile a ChatGPT que las adapte a cada cliente con lo que sabe de él.</p>
+  {plantillas.map((p) => (
+    <Fragment>
+      <h3 class="sub">{p[0]}</h3>
+      <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{p[1]}</code></pre></div>
+    </Fragment>
+  ))}
+
+  <h2 id="sincrm">6 · ¿No tenés CRM? Usalo igual</h2>
+  <p>Muchas PyMEs venden con una planilla o directamente desde el WhatsApp. Con este prompt, ChatGPT te arma el pipeline a partir de lo que tengas, y después podés usar todos los prompts de arriba sobre esa tabla.</p>
+  <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{sinCrm}</code></pre></div>
+
+  <h2 id="activar">7 · Cómo activarlo</h2>
+  <ol class="steps">
+    <li><b>Instalá el plugin de ventas</b> desde la sección de plugins de ChatGPT.</li>
+    <li><b>Si tu equipo usa ChatGPT Business o Enterprise:</b> el administrador entra a la consola de administración, elige el espacio de trabajo y en <b>Plugins</b> habilita el de ventas y los de las herramientas que usan (puede dejarlos instalados por defecto para todo el equipo).</li>
+    <li><b>Conectá tus cuentas</b> (CRM, Gong, Docusign…) cuando ChatGPT te lo pida.</li>
+  </ol>
+  <div class="note"><b>Ojo:</b> los plugins y las funciones disponibles cambian según el plan, la región y la configuración del espacio de trabajo.</div>
+
+  <div class="minicta">¿Querés aprender a usar la IA en tu trabajo, paso a paso? La clase completa es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a></div>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Armé mi asistente de ventas en un proyecto.</li>
+    <li>Instalé el plugin y conecté mi CRM (o armé el pipeline con el punto 6).</li>
+    <li>Usé el briefing antes de una reunión real.</li>
+    <li>Mandé un seguimiento armado con las notas de una llamada.</li>
+    <li>Revisé mi pipeline buscando ventas en riesgo.</li>
+    <li>Seguí la rutina una semana completa.</li>
+  </ul>
+</RecursoLayout>
+
+<style>
+  pre.code{padding-top:46px}
+  .toc{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:22px 0;font-size:14px}
+  .toc b{color:var(--ink);margin-bottom:4px}
+  .toc a{color:var(--cy);text-decoration:none}
+  h3.sub{font-size:17px;color:var(--ink);margin:26px 0 4px;display:flex;align-items:center;gap:10px}
+  .n{font-family:'JetBrains Mono',monospace;font-size:12px;width:26px;height:26px;border-radius:7px;border:1px solid var(--cy);color:var(--cy);display:inline-flex;align-items:center;justify-content:center;flex:none}
+  .gets{font-size:13.5px;color:var(--dim)}
+  .gets b{color:var(--amber)}
+  .tool{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0;display:flex;flex-direction:column;gap:12px}
+  label{display:flex;flex-direction:column;gap:6px;color:var(--dim);font-size:13.5px}
+  input,select{background:#060b14;border:1px solid var(--line);border-radius:8px;color:var(--ink);padding:10px 12px;font-family:inherit;font-size:14.5px}
+  .week{display:flex;flex-direction:column;gap:8px;margin:14px 0}
+  .week div{display:grid;grid-template-columns:90px 1fr;gap:2px 14px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--dim)}
+  .week b{color:var(--cy);grid-row:span 2}
+  .week .t{color:var(--ink);font-weight:600}
+  @media print{.tool{display:none}}
+</style>
+
+<script>
+  // Generador: toma el prompt de la función elegida y reemplaza empresa/cliente y producto
+  const tpls = [...document.querySelectorAll<HTMLElement>('code[data-tpl]')].map((c) => c.innerText);
+  const out = document.getElementById('gout');
+  const val = (id: string) => (document.getElementById(id) as HTMLInputElement | HTMLSelectElement).value.trim();
+  const render = () => {
+    if (!out) return;
+    const e = val('ge'), p = val('gp');
+    let t = tpls[Number(val('gf'))] ?? '';
+    if (e) t = t.replace(/\[(EMPRESA|CLIENTE)\]/g, e);
+    if (p) t = t.replace(/\[TU PRODUCTO\]/g, p);
+    out.textContent = t;
+  };
+  ['gf', 'ge', 'gp'].forEach((id) => document.getElementById(id)?.addEventListener('input', render));
+  render();
+</script>
