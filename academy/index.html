@@ -28,6 +28,10 @@ button,input,textarea,select{font:inherit}.top{height:78px;padding:0 3.4vw;displ
 @media(max-width:1050px){.cards,.module-grid{grid-template-columns:repeat(2,1fr)}.student-grid{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}}
 @media(max-width:700px){.cards,.module-grid,.student-grid,.grid3,.form-grid{grid-template-columns:1fr}.top{height:auto;padding-top:12px;padding-bottom:12px;align-items:flex-start}.top-actions{flex-wrap:wrap;justify-content:flex-end}.page-head,.detail-head{flex-direction:column;align-items:flex-start}.kv{grid-template-columns:1fr}.shell{padding-left:18px;padding-right:18px}}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Poppins:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/premium.css">
 </head>
 <body>
 <header class="top">
@@ -306,5 +310,6 @@ function closeModal(){document.getElementById('modalBackdrop').classList.remove(
 function exportData(){const blob=new Blob([JSON.stringify({version:2,exportedAt:new Date().toISOString(),data:data,moduleOverrides:MODULES.map(m=>({id:m.id,presentation:m.presentation,resources:m.resources,task:m.task}))},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='genideia-academy-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 loadModuleOverrides();renderAll();
 </script>
+<script src="assets/premium.js"></script>
 </body>
 </html>
