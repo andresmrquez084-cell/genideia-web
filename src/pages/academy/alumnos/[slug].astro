@@ -1,0 +1,107 @@
+---
+import '../../../../src/styles/global.css';
+import plans from '../../../../academy/data/public-plans.json';
+
+export function getStaticPaths() {
+  return plans.students.map((student) => ({
+    params: { slug: student.slug },
+    props: { student }
+  }));
+}
+
+const { student } = Astro.props;
+const completed = student.modules.filter((m) => m.state === 'Completado').length;
+const inProgress = student.modules.find((m) => m.state === 'En curso');
+const progress = Math.round((completed / student.modules.length) * 100);
+const canonical = `https://genideiacompany.com/academy/alumnos/${student.slug}`;
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{student.name} · Plan de estudio · Genideia Academy</title>
+  <meta name="description" content={student.intro} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+<main class="plan-shell">
+  <header class="topbar">
+    <a class="brand" href="/academy/1a1"><span>GENIDEIA</span><small>ACADEMY</small></a>
+    <div class="status">{student.status}</div>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">GENIDEIA ACADEMY · {student.eyebrow}</p>
+    <h1>{student.name}</h1>
+    <p class="intro">{student.intro}</p>
+    <div class="goal"><strong>Objetivo del recorrido</strong><p>{student.objective}</p></div>
+    <div class="method">
+      {student.method.map((step, index) => <span><b>{String(index + 1).padStart(2,'0')}</b>{step}</span>)}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div><p class="eyebrow">APLICACIÓN</p><h2>Proyectos que guían las clases</h2></div>
+      <p>Los conceptos se aprenden sobre necesidades reales, no como funciones aisladas.</p>
+    </div>
+    <div class="projects">
+      {student.projects.map((project) => <article><h3>{project.title}</h3><p>{project.description}</p></article>)}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div><p class="eyebrow">RECORRIDO</p><h2>Plan de estudio</h2></div>
+      <p>{completed} de {student.modules.length} módulos completados{inProgress ? ` · Módulo ${inProgress.id} en curso` : ''}</p>
+    </div>
+    <div class="progress"><span style={`width:${progress}%`}></span></div>
+
+    <div class="modules">
+      {student.modules.map((module) => (
+        <article class:list={['module', module.state === 'Completado' && 'done', module.state === 'En curso' && 'active']}>
+          <div class="module-top">
+            <span>MÓDULO {String(module.id).padStart(2,'0')}</span>
+            <b>{module.state}</b>
+          </div>
+          <h3>{module.title}</h3>
+          <p>{module.objective}</p>
+          <ul>{module.topics.map((topic) => <li>{topic}</li>)}</ul>
+          <div class="result"><strong>Resultado</strong><p>{module.result}</p></div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="closing">
+    <p class="eyebrow">METODOLOGÍA</p>
+    <h2>Avanzar cuando funciona, no solamente cuando se explicó.</h2>
+    <p>{student.closing}</p>
+  </section>
+</main>
+<footer>Genideia Academy · Plan personalizado · {student.name}</footer>
+</body>
+</html>
+
+<style>
+:global(body){margin:0;background:#06101d;color:#f3f7fb;font-family:Poppins,system-ui,sans-serif}
+.plan-shell{width:min(1120px,calc(100% - 34px));margin:auto}
+.topbar{min-height:74px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(158,178,199,.18)}
+.brand{text-decoration:none;color:#fff;font-family:Montserrat,sans-serif;font-weight:800;letter-spacing:.09em}.brand span{display:block}.brand small{color:#55d5ff;font-size:11px;letter-spacing:.17em}
+.status{border:1px solid #31516d;background:#0d2032;color:#bfeeff;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.hero{padding:72px 0 46px}.eyebrow{color:#55d5ff;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin:0 0 10px}
+h1,h2,h3{font-family:Montserrat,sans-serif}h1{font-size:clamp(45px,8vw,82px);line-height:.96;letter-spacing:-.045em;margin:0 0 22px}.intro{font-size:19px;line-height:1.65;color:#a9b8c8;max-width:900px}
+.goal{margin-top:30px;padding:22px 24px;border:1px solid #274762;border-radius:18px;background:linear-gradient(135deg,#0d2133,#091622)}.goal strong{color:#70ddff}.goal p{margin:8px 0 0;color:#dceaf5;line-height:1.65}
+.method{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin-top:20px}.method span{padding:13px 11px;border:1px solid #25425b;border-radius:12px;background:#091a28;font-size:12px;font-weight:700}.method b{display:block;color:#55d5ff;font-size:10px;margin-bottom:3px}
+.section{padding:38px 0}.section-head{display:flex;justify-content:space-between;gap:30px;align-items:end}.section-head h2{margin:0;font-size:31px;letter-spacing:-.03em}.section-head>p{color:#91a5b9;max-width:440px;text-align:right;margin:0}
+.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}.projects article,.module{border:1px solid #23415a;border-radius:18px;background:linear-gradient(145deg,#0c1f30,#081521);padding:21px}.projects h3{margin:0 0 8px;font-size:18px}.projects p,.module>p{margin:0;color:#98aabd;line-height:1.6;font-size:14px}
+.progress{height:7px;background:#10243a;border-radius:999px;overflow:hidden;margin:18px 0 20px}.progress span{display:block;height:100%;background:linear-gradient(90deg,#35bde9,#7fe5ff)}
+.modules{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.module{position:relative}.module.done{border-color:#315c42}.module.active{border-color:#4ebce4;box-shadow:0 0 0 1px rgba(78,188,228,.15)}.module-top{display:flex;justify-content:space-between;gap:12px;font-size:10px;font-weight:900;letter-spacing:.1em;color:#65d4ff}.module-top b{color:#9aabbc}.module.done .module-top b{color:#91f0c1}.module.active .module-top b{color:#77ddff}.module h3{font-size:21px;margin:10px 0}.module ul{padding-left:19px;color:#c5d2de;font-size:13px;line-height:1.65}.result{border-top:1px solid #203b53;margin-top:16px;padding-top:14px}.result strong{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#91f0c1}.result p{margin:4px 0 0;color:#d8e5ef;font-size:13px;line-height:1.55}
+.closing{margin:34px 0 50px;padding:28px;border:1px solid #28506a;border-radius:20px;background:#0a1d2d}.closing h2{margin:0 0 10px;font-size:27px}.closing>p:last-child{color:#a8b8c8;line-height:1.7;margin-bottom:0}footer{text-align:center;padding:0 0 45px;color:#71879a;font-size:12px}
+@media(max-width:820px){.method{grid-template-columns:repeat(2,1fr)}.projects,.modules{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.section-head>p{text-align:left}.hero{padding-top:50px}}
+</style>
