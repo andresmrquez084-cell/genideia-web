@@ -128,7 +128,7 @@
     '</div>');
 
   // seguimiento vivo: quién está activo, qué está cursando y qué viene después
-  inicio.insertAdjacentHTML('afterbegin', '<div class="ac-follow" id="acFollow" aria-label="Seguimiento de alumnos"></div>');
+  $('.ac-hero', inicio).insertAdjacentHTML('afterend', '<div class="ac-follow" id="acFollow" aria-label="Seguimiento de alumnos"></div>');
   function renderFollow() {
     var root = $('#acFollow'); if (!root) return;
     var ordered = data.students.slice().sort(function (a, b) {
