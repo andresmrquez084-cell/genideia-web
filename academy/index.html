@@ -53,7 +53,7 @@ button,input,textarea,select{font:inherit}.top{height:78px;padding:0 3.4vw;displ
   </div>
   <div class="grid2">
     <div class="panel"><div class="section-title"><div><h2>Actividad reciente</h2><p>Últimas sesiones y tareas</p></div></div><div class="list" id="recentSessions"></div></div>
-    <div class="panel"><div class="section-title"><div><h2>Principio del sistema</h2><p>Una sola fuente de orden</p></div></div><div class="note">Academy no replica presentaciones ni carpetas. Cada sesión registra qué pasó, qué se pidió, qué hizo el alumno, dónde se trabó y cómo se resolvió. Eso permite convertir cada dificultad en conocimiento reutilizable.</div></div>
+    <div class="panel"><div class="section-title"><div><h2>Principio del sistema</h2><p>Una sola fuente de orden</p></div></div><div class="note">Academy centraliza el contexto, el recorrido y el estado de cada alumno. Los planes compartibles se generan desde la misma estructura del alumno y se publican bajo genideiacompany.com/academy/alumnos/{nombre}. No hace falta diseñar una página nueva por cada alta.</div></div>
   </div>
 </section>
 
@@ -105,7 +105,7 @@ const CUSTOM_PLANS={
 rodrigo:{
   title:'Secretaria interna de IA',
   objective:'Construir un sistema de trabajo que acumule conocimiento operativo, investigue, analice y prepare información para que Rodrigo pueda dedicar más tiempo a clientes, relaciones y decisiones humanas.',
-  overview:'https://drive.google.com/file/d/15Bc01-4vhvYMsFKPalzEKuEzQSTbg20Y/view?usp=drivesdk',
+  overview:'https://genideiacompany.com/academy/alumnos/rodrigo',
   context:'https://drive.google.com/file/d/1ztU-CrQLA-g6k_3kFGYSancXgaVRf7i6/view?usp=drivesdk',
   guide:'https://drive.google.com/file/d/1pMI3MOd92XSSxlrQWUFfc7R1dXKGvEgT/view?usp=drivesdk',
   resourcesFolder:'https://drive.google.com/drive/folders/1_oyZrFgNq4FCOUU82TkE4Y3RhHLw6nZ5?usp=sharing',
@@ -123,7 +123,7 @@ rodrigo:{
 mauro:{
   title:'IA aplicada a proyectos reales',
   objective:'Convertir el uso actual de Claude en una forma de trabajo ordenada para construir y automatizar proyectos reales: Tele Remate/canal, máquinas expendedoras y producción de contenido, sin perder control técnico ni operativo.',
-  overview:'/academy/plan-mauro.html',
+  overview:'https://genideiacompany.com/academy/alumnos/mauro',
   context:'/academy/alumnos/mauro/contexto.md',
   guide:'',
   resourcesFolder:'',
@@ -239,7 +239,7 @@ function openStudentDetail(id){
   const s=studentById(id);if(!s)return;const sessions=sessionsForStudent(id);const d=document.getElementById('student-detail');const plan=planForStudent(id);const mods=modulesForStudent(id);
   document.getElementById('students-list').style.display='none';d.classList.add('active');
   const moduleRows=mods.map(m=>{const sess=sessions.find(x=>x.moduleId===m.id);const action=sess?'onclick="openSessionDetail(\''+sess.id+'\')"':(m.resources?'onclick="window.open(\''+m.resources+'\',\'_blank\')"':'');const state=plan?(m.state||'Pendiente'):(sess?sess.status:'Pendiente');return '<div class="row" '+action+'><div><h4>M'+String(m.id).padStart(2,'0')+' · '+escapeHtml(m.title)+'</h4><p>'+(sess?escapeHtml(sess.date)+' · '+escapeHtml(m.objective||''):escapeHtml(m.objective||'Sin sesión registrada'))+'</p></div><div class="row-right">'+pill(state)+(m.resources?'<a class="linkbtn" href="'+escapeHtml(m.resources)+'" target="_blank" onclick="event.stopPropagation()">Recursos ↗</a>':'')+'</div></div>'}).join('');
-  const planLinks=plan?'<div class="resource-links"><a class="linkbtn primary" href="'+escapeHtml(plan.overview)+'" target="_blank">Plan completo ↗</a><a class="linkbtn" href="'+escapeHtml(plan.context)+'" target="_blank">Contexto ↗</a>'+(plan.guide?'<a class="linkbtn" href="'+escapeHtml(plan.guide)+'" target="_blank">Guía de uso ↗</a>':'')+(plan.resourcesFolder?'<a class="linkbtn" href="'+escapeHtml(plan.resourcesFolder)+'" target="_blank">Carpeta de recursos ↗</a>':'')+'</div>':'';
+  const planLinks=plan?'<div class="resource-links"><a class="linkbtn primary" href="'+escapeHtml(plan.overview)+'" target="_blank">Plan compartible ↗</a><a class="linkbtn" href="'+escapeHtml(plan.context)+'" target="_blank">Contexto ↗</a>'+(plan.guide?'<a class="linkbtn" href="'+escapeHtml(plan.guide)+'" target="_blank">Guía de uso ↗</a>':'')+(plan.resourcesFolder?'<a class="linkbtn" href="'+escapeHtml(plan.resourcesFolder)+'" target="_blank">Carpeta de recursos ↗</a>':'')+'</div>':'';
   const planBlock=plan?'<div class="note" style="margin-top:14px"><b>'+escapeHtml(plan.title)+'</b><br>'+escapeHtml(plan.objective)+'</div>':'';
   d.innerHTML='<button class="back" onclick="backStudents()">← Volver a alumnos</button><div class="detail-head"><div><div class="eyebrow">Alumno</div><h2>'+escapeHtml(s.name)+'</h2><p class="lead">'+escapeHtml(s.notes||'')+'</p>'+planLinks+planBlock+'</div><div class="detail-actions"><button class="btn" onclick="openStudentModal(\''+s.id+'\')">Editar</button><button class="btn primary" onclick="openSessionModal(\''+s.id+'\')">＋ Nueva sesión</button></div></div><div class="grid2"><div class="panel"><div class="section-title"><h2>'+(plan?'Plan personalizado':'Progreso')+'</h2></div><div class="list">'+moduleRows+'</div></div><div class="panel"><div class="section-title"><h2>Resumen</h2></div><div class="kv"><b>Estado</b><span>'+escapeHtml(s.status)+'</span></div><div class="kv"><b>Módulo actual</b><span>'+escapeHtml(s.currentModule)+'</span></div><div class="kv"><b>Sesiones</b><span>'+sessions.length+'</span></div><div class="kv"><b>Notas</b><span>'+nl(s.notes||'—')+'</span></div></div></div>'
 }
