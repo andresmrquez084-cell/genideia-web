@@ -20,6 +20,8 @@ const total = mods.length;
 const completed = mods.filter((m) => m.k === 'done').length;
 const current = mods.find((m) => m.k === 'now');
 const next = current || mods.find((m) => m.k === 'todo');
+const focusMod = current || next || mods[0];
+const focusLabel = current ? 'En curso ahora' : completed === total ? 'Recorrido completado' : 'Tu próximo paso';
 const progress = Math.round((completed / total) * 100);
 const started = completed > 0 || !!current;
 const canonical = `https://genideiacompany.com/academy/alumnos/${student.slug}`;
@@ -63,7 +65,7 @@ const ring = 2 * Math.PI * 52;
 <header class="top">
   <a class="brand" href="/academy/1a1"><img src="/academy/assets/academy-logo.svg" alt="" width="38" height="38" /><span><b>GENIDEIA <em>ACADEMY</em></b><small>Plan personalizado</small></span></a>
   <nav class="links" aria-label="Secciones">
-    <a href="#recorrido">Recorrido</a><a href="#proyectos">Proyectos</a><a href="#plan">Plan de estudio</a>
+    <a href="#ahora">Ahora</a><a href="#recorrido">Recorrido</a><a href="#proyectos">Proyectos</a><a href="#plan">Plan de estudio</a>
   </nav>
   <span class:list={['status', `s-${stateKey(student.status === 'En curso' ? 'En curso' : student.status === 'Finalizado' ? 'Completado' : 'Pendiente')}`]}>{student.status}</span>
   <span class="prog" aria-hidden="true"><i></i></span>
@@ -108,6 +110,24 @@ const ring = 2 * Math.PI * 52;
       </div>
     </aside>
   </section>
+
+  <!-- foco actual -->
+  {focusMod && (
+    <section class="now-sec rv" id="ahora">
+      <div class="now-rail" aria-hidden="true"><span></span></div>
+      <div class="now-copy">
+        <p class="eyebrow">{focusLabel}</p>
+        <div class="now-title"><span class="now-num">M{pad(focusMod.id)}</span><h2>{focusMod.title}</h2></div>
+        <p>{focusMod.objective}</p>
+        <div class="now-chips">{focusMod.topics.slice(0, 4).map((topic) => <span>{topic}</span>)}</div>
+      </div>
+      <div class="now-result">
+        <small class="mono">Resultado que buscamos</small>
+        <p>{focusMod.result}</p>
+        <span>El plan se ajusta a lo que pase en clase y en el uso real.</span>
+      </div>
+    </section>
+  )}
 
   <!-- objetivo y metodología -->
   <section class="sec goal-sec">
@@ -312,6 +332,18 @@ const ring = 2 * Math.PI * 52;
       var c = e.target.closest && e.target.closest('.spot'); if (c) { var r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px'); }
     }, { passive: true });
     function loop() { hx += (tx - hx) * .14; hy += (ty - hy) * .14; halo.style.transform = 'translate(' + hx + 'px,' + hy + 'px)'; raf = Math.abs(tx - hx) + Math.abs(ty - hy) > .5 ? requestAnimationFrame(loop) : 0; }
+  }
+
+  // navegación viva: la barra superior refleja la sección que se está viendo
+  var navLinks = $('.links a');
+  if ('IntersectionObserver' in window && navLinks.length) {
+    var sections = navLinks.map(function (a) { return $(a.getAttribute('href')); }).filter(Boolean);
+    var sio = new IntersectionObserver(function (entries) {
+      var best = entries.filter(function (e) { return e.isIntersecting; }).sort(function (a,b) { return b.intersectionRatio-a.intersectionRatio; })[0];
+      if (!best) return;
+      navLinks.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + best.target.id); });
+    }, { rootMargin: '-24% 0px -58% 0px', threshold: [0,.15,.35,.6] });
+    sections.forEach(function (s) { sio.observe(s); });
   }
 })();
 </script>
@@ -579,4 +611,61 @@ html{scroll-behavior:smooth;overflow-x:clip}
   .pp *,.pp *::before,.pp *::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
   .pj .rv,.pj .w>span{opacity:1;transform:none}
 }
+
+/* V2 — más profundidad, cercanía y lectura del seguimiento */
+.pp::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.17;
+  background-image:linear-gradient(rgba(0,200,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,.04) 1px,transparent 1px);
+  background-size:78px 78px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.5),transparent 78%);
+}
+.top{
+  top:12px;width:min(1160px,calc(100% - 24px));margin:12px auto 0;padding:8px 12px;min-height:62px;
+  border:1px solid rgba(0,200,255,.14);border-radius:999px;box-shadow:0 18px 55px rgba(0,0,0,.35),0 0 34px rgba(0,200,255,.035);
+}
+.top::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.045),transparent 35%)}
+.top>*{position:relative;z-index:1}
+.links a{position:relative}
+.links a.on{color:#fff;background:rgba(0,200,255,.1);box-shadow:inset 0 0 0 1px rgba(0,200,255,.22)}
+
+.now-sec{
+  position:relative;display:grid;grid-template-columns:6px minmax(0,1.35fr) minmax(280px,.75fr);gap:26px;
+  padding:26px 28px;margin:10px 0 18px;border-radius:24px;
+  background:linear-gradient(145deg,rgba(0,123,255,.10),rgba(255,255,255,.025)),rgba(13,24,40,.62);
+  border:1px solid rgba(0,200,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 30px 70px -42px rgba(0,120,255,.65);
+  overflow:hidden;
+}
+.now-sec::before{
+  content:"";position:absolute;right:-110px;top:-150px;width:360px;height:360px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(0,200,255,.13),transparent 68%);
+}
+.now-rail{position:relative;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden}
+.now-rail span{position:absolute;left:0;right:0;top:0;height:42%;border-radius:inherit;background:linear-gradient(180deg,var(--s),var(--p));box-shadow:0 0 18px rgba(0,200,255,.65);animation:nowPulse 3.8s ease-in-out infinite alternate}
+@keyframes nowPulse{to{height:78%}}
+.now-copy,.now-result{position:relative;z-index:1}
+.now-title{display:flex;align-items:baseline;gap:12px;margin-bottom:9px}
+.now-num{font-family:var(--mono);font-size:11px;color:var(--sl);padding:5px 9px;border-radius:999px;background:rgba(0,200,255,.09);box-shadow:inset 0 0 0 1px rgba(0,200,255,.25)}
+.now-title h2{font-size:clamp(24px,3vw,34px);line-height:1.05}
+.now-copy>p:not(.eyebrow){margin:0;color:var(--tx2);font-size:14.5px;line-height:1.65;max-width:680px}
+.now-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.now-chips span{font-size:11.5px;color:var(--tx2);padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.045);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.now-result{align-self:stretch;padding:16px 17px;border-radius:17px;background:linear-gradient(135deg,rgba(75,227,154,.075),rgba(75,227,154,.02));box-shadow:inset 0 0 0 1px rgba(75,227,154,.2)}
+.now-result .mono{color:var(--ok)}
+.now-result p{margin:7px 0 10px;color:var(--tx);font-size:14px;line-height:1.55}
+.now-result>span{display:block;color:var(--tx3);font-size:11.5px;line-height:1.5}
+
+.win{transform:translateZ(0);transition:box-shadow .4s var(--ease),border-color .4s}
+.win:hover{border-color:rgba(0,200,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 58px 135px -42px rgba(0,100,255,.68)}
+.node.s-now{animation:nd .5s var(--ease) both,pulse 2.2s 1s infinite,floatNode 4.2s 1.2s ease-in-out infinite}
+@keyframes floatNode{0%,100%{margin-top:0}50%{margin-top:-4px}}
+.mod.s-now::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(110deg,transparent 28%,rgba(255,255,255,.04) 44%,transparent 58%);transform:translateX(-100%);animation:currentSweep 6s ease-in-out infinite}
+@keyframes currentSweep{0%,35%{transform:translateX(-100%);opacity:0}50%{opacity:1}72%,100%{transform:translateX(100%);opacity:0}}
+
+@media(max-width:900px){
+  .now-sec{grid-template-columns:5px 1fr}.now-result{grid-column:2}
+}
+@media(max-width:640px){
+  .top{top:8px;width:calc(100% - 16px);margin-top:8px;border-radius:20px}.status{display:none}
+  .now-sec{padding:20px 18px;gap:16px}.now-title{align-items:flex-start;flex-direction:column;gap:7px}
+}
+@media (prefers-reduced-motion:reduce){.now-rail span,.node.s-now,.mod.s-now::after{animation:none!important}}
 </style>
