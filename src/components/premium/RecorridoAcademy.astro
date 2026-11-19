@@ -1,0 +1,82 @@
+---
+// Mapa del recorrido de Genideia Academy (8 módulos) que avanza solo, igual que en /academy.
+// Alumno de ejemplo: no muestra datos de ningún alumno real.
+const MODULOS = [
+  ['Diagnóstico y preparación', 'Tu punto de partida, objetivos y casos reales.'],
+  ['Conversar bien con IA', 'Instrucciones claras, revisión y mejora en ciclos.'],
+  ['Contexto reutilizable', 'Que la IA te conozca sin explicar todo de nuevo.'],
+  ['Investigar y verificar', 'Fuentes, comparativas y conclusiones trazables.'],
+  ['Materiales reutilizables', 'Skills para repetir lo que ya funciona.'],
+  ['Procesos de varios pasos', 'Flujos, decisiones y agentes responsables.'],
+  ['Construir una solución', 'Un primer prototipo funcional sobre un caso real.'],
+  ['Integración final', 'Todo junto en un sistema que podés sostener.'],
+];
+const pad = (n: number) => String(n).padStart(2, '0');
+const W = 1000, H = 250;
+const pts = MODULOS.map((_, i) => [60 + i * (880 / 7), 125 + Math.sin(i * 1.05 + 0.5) * 70]);
+const pathD = pts.reduce((d, p, i) => i === 0 ? `M${p[0]},${p[1]}` : `${d} C${(pts[i - 1][0] + p[0]) / 2},${pts[i - 1][1]} ${(pts[i - 1][0] + p[0]) / 2},${p[1]} ${p[0]},${p[1]}`, '');
+---
+<div class="ra" data-ra>
+  <div class="ra-top"><i></i><i></i><i></i><span>recorrido de ejemplo</span><b class="ra-live"><span></span>en curso</b></div>
+  <div class="ra-body">
+    <div class="ra-who"><div><b>Alumno de ejemplo</b><small>Plan personalizado · 8 módulos</small></div><div class="ra-pct"><b data-pct>0</b><small>% completo</small></div></div>
+    <div class="ra-track">
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="raG" x1="0" x2="1"><stop offset="0" stop-color="#4BE39A" /><stop offset=".6" stop-color="#00C8FF" /><stop offset="1" stop-color="#007BFF" /></linearGradient></defs>
+        <path class="bg" d={pathD} /><path class="fg" data-fg d={pathD} />
+      </svg>
+      {MODULOS.map((m, i) => <span class="ra-node" data-t={m[0]} data-d={m[1]} style={`left:${pts[i][0] / W * 100}%;top:${pts[i][1] / H * 100}%`}>{pad(i + 1)}</span>)}
+    </div>
+    <div class="ra-now"><span class="ra-n" data-n>01</span><div><b data-tt>{MODULOS[0][0]}</b><small data-dd>{MODULOS[0][1]}</small></div></div>
+  </div>
+</div>
+
+<style>
+  .ra{--s:#00C8FF;--sl:#BFEFFF;--ok:#4BE39A;--tx:#F2F4F7;--tx2:#B8BEC7;--tx3:#7E8796;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--display:"Montserrat","Poppins",system-ui,sans-serif;--ease:cubic-bezier(.2,.7,.2,1);
+    position:relative;color:var(--tx);border-radius:26px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015)),rgba(11,19,32,.72);border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 50px 120px -40px rgba(0,90,255,.6);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);text-align:left}
+  .ra::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:linear-gradient(140deg,rgba(0,200,255,.55),transparent 35%,transparent 65%,rgba(0,123,255,.45));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+  .ra-top{display:flex;align-items:center;gap:7px;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.07)}
+  .ra-top>i{width:10px;height:10px;border-radius:50%}.ra-top>i:nth-child(1){background:#FF6B7A88}.ra-top>i:nth-child(2){background:#FFB84D88}.ra-top>i:nth-child(3){background:#4BE39A88}
+  .ra-top>span{margin-left:8px;font-family:var(--mono);font-size:11px;color:var(--tx3)}
+  .ra-live{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-weight:400;font-size:11px;color:var(--ok)}
+  .ra-live span{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:raping 2s infinite}
+  @keyframes raping{0%{box-shadow:0 0 0 0 rgba(75,227,154,.55)}80%,100%{box-shadow:0 0 0 9px rgba(75,227,154,0)}}
+  .ra-body{padding:18px}
+  .ra-who{display:flex;justify-content:space-between;align-items:center;margin:0 4px}
+  .ra-who b{font-family:var(--display);font-size:17px}.ra-who small{display:block;font-family:var(--mono);font-size:11px;color:var(--tx3)}
+  .ra-pct{white-space:nowrap}.ra-pct b{font-family:var(--display);font-size:30px;letter-spacing:-.04em;color:var(--sl)}.ra-pct small{display:inline;margin-left:3px}
+  .ra-track{position:relative;aspect-ratio:1000/250;margin:8px 0}
+  .ra-track svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  .ra-track .bg{fill:none;stroke:rgba(255,255,255,.12);stroke-width:2;stroke-dasharray:2 7}
+  .ra-track .fg{fill:none;stroke:url(#raG);stroke-width:3.5;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(0,200,255,.7));transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)}
+  .ra-node{position:absolute;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:10px;color:var(--tx3);background:#0E1626;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.16);transition:all .5s var(--ease);cursor:default}
+  .ra-node.done{background:radial-gradient(circle at 35% 30%,#7DFFC0,#1FB673);color:#04210F;box-shadow:0 0 16px -2px rgba(75,227,154,.75)}
+  .ra-node.now{background:radial-gradient(circle at 35% 30%,#8FEBFF,#007BFF);color:#fff;transform:translate(-50%,-50%) scale(1.18);box-shadow:0 0 26px rgba(0,200,255,.85)}
+  .ra-now{display:flex;gap:14px;align-items:center;margin-top:12px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.035);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)}
+  .ra-now.sw>div{animation:rasw .45s var(--ease)}@keyframes rasw{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .ra-n{font-family:var(--display);font-weight:700;font-size:32px;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(0,200,255,.65);line-height:1}
+  .ra-now b{display:block;font-family:var(--display);font-size:15px}.ra-now small{display:block;font-size:12.5px;color:var(--tx2)}
+  @media(max-width:640px){.ra-node{width:26px;height:26px;font-size:9px}.ra-body{padding:14px 12px}}
+</style>
+
+<script is:inline>
+(function(){
+  document.querySelectorAll('[data-ra]').forEach(function(root){
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var nodes=[].slice.call(root.querySelectorAll('.ra-node')),fg=root.querySelector('[data-fg]'),box=root.querySelector('.ra-now');
+    var T=root.querySelector('[data-tt]'),D=root.querySelector('[data-dd]'),N=root.querySelector('[data-n]'),P=root.querySelector('[data-pct]');
+    var L=fg.getTotalLength(),step=0,timer=0,vis=true;fg.style.strokeDasharray=L;
+    function show(k){
+      nodes.forEach(function(n,i){n.className='ra-node'+(i<k?' done':i===k?' now':'')});
+      fg.style.strokeDashoffset=L*(1-k/(nodes.length-1));
+      N.textContent=String(k+1).padStart(2,'0');T.textContent=nodes[k].dataset.t;D.textContent=nodes[k].dataset.d;
+      P.textContent=Math.round(k/nodes.length*100);box.classList.remove('sw');void box.offsetWidth;box.classList.add('sw');
+    }
+    show(0);
+    if(reduce){show(3);return}
+    timer=setInterval(function(){if(!vis||document.hidden)return;step=(step+1)%(nodes.length+1);show(Math.min(step,nodes.length-1))},1700);
+    if('IntersectionObserver' in window)new IntersectionObserver(function(e){vis=e[0].isIntersecting}).observe(root);
+    nodes.forEach(function(n,i){n.addEventListener('mouseenter',function(){clearInterval(timer);show(i)})});
+  });
+})();
+</script>

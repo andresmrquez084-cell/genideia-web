@@ -1,163 +1,27 @@
 ---
-// Links directos a las páginas reales — nada de contenido duplicado/copiado acá,
-// cada uno lleva de punta a punta a su página (pedido explícito de Andrés, 17/09).
-// URLs exactas que pasó Andrés (mismo repo, /empresa se sirve tanto en genideiacompany.com
-// como en el subdominio andres.genideiacompany.com — usamos la que él especificó).
+// Barra superior del sitio en formato premium (pill de vidrio, igual que la Academy).
+// Cada link lleva directo a su página real, sin contenido duplicado (pedido de Andrés, 17/09).
 const navLinks = [
   { href: '/nosotros', label: 'Nosotros' },
-  { href: 'https://andres.genideiacompany.com/empresa', label: 'Agendá tu diagnóstico' },
   { href: 'https://genideiacompany.com/experiencia/', label: 'Nuestra experiencia' },
-  { href: '/aprender-ia', label: 'Genideia Academy' },
+  { href: '/academy', label: 'Genideia Academy' },
+  { href: 'https://andres.genideiacompany.com/empresa', label: 'Agendá tu diagnóstico' },
 ];
+const here = Astro.url.pathname.replace(/\/$/, '');
 ---
 
-<header
-  style="background:rgba(10,10,10,0.92); border-bottom:1px solid rgba(255,255,255,0.07);"
-  class="sticky top-0 z-50 backdrop-blur"
->
-  <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
-
-    <!-- Logo oficial de la marca: isotipo GII (anillo + glow) -->
-    <a href="/" class="flex items-center gap-2.5 flex-shrink-0">
-      <img src="/img/logo-nav.png" width="40" height="40" alt="GENIDEIA Company" style="flex-shrink:0; border-radius:10px;" />
-      <span class="flex flex-col leading-none">
-        <span style="font-family:'Montserrat',sans-serif; font-size:1.15rem; font-weight:700; color:#F2F4F7; letter-spacing:1.5px;">GENIDEIA <span style="font-weight:500; color:#B8BEC7;">Company</span></span>
-        <span style="color:#00C8FF; font-size:0.5rem; letter-spacing:1.5px; font-weight:500; margin-top:2px;" class="uppercase hidden sm:block">Sistemas y automatización para empresas</span>
-      </span>
-    </a>
-
-    <!-- Desktop: links -->
-    <ul class="hidden lg:flex items-center gap-6 text-sm flex-1 justify-center">
-      {navLinks.map(link => (
-        <li>
-          <a
-            href={link.href}
-            style="color:#B8BEC7; font-weight:300; font-size:0.82rem; letter-spacing:0.2px;"
-            class="hover:text-[#00C8FF] transition-colors whitespace-nowrap"
-          >
-            {link.label}
-          </a>
-        </li>
-      ))}
-    </ul>
-
-    <!-- Desktop: redes + CTA -->
-    <div class="hidden lg:flex items-center gap-3 flex-shrink-0">
-      <div class="flex items-center gap-1.5">
-        <a href="https://www.instagram.com/genideiacompany.ai" target="_blank" rel="noopener noreferrer"
-          style="color:#B8BEC7;" class="hover:text-[#00C8FF] transition-colors p-1.5" aria-label="Instagram">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-            <rect x="2" y="2" width="20" height="20" rx="5"/>
-            <circle cx="12" cy="12" r="4"/>
-            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-          </svg>
-        </a>
-        <a href="mailto:andres@genideiacompany.com"
-          style="color:#B8BEC7;" class="hover:text-[#00C8FF] transition-colors p-1.5" aria-label="Email">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <path d="m22 7-10 7L2 7"/>
-          </svg>
-        </a>
-      </div>
-
-      <div style="width:1px; height:18px; background:rgba(255,255,255,0.1);"></div>
-
-      <a
-        href="https://wa.me/59892302941"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="background:#00C8FF; color:#0A0F1A; font-weight:600; font-size:0.78rem; letter-spacing:0.3px;"
-        class="px-4 py-2 rounded-lg hover:opacity-90 transition-opacity whitespace-nowrap"
-      >
-        Hablemos
-      </a>
-    </div>
-
-    <!-- Mobile: CTA + hamburger -->
-    <div class="flex lg:hidden items-center gap-3">
-      <a
-        href="https://wa.me/59892302941"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="background:#00C8FF; color:#0A0F1A; font-weight:600; font-size:0.78rem;"
-        class="px-3.5 py-2 rounded-lg hover:opacity-90 transition-opacity"
-      >
-        Hablemos
-      </a>
-      <button
-        id="nav-toggle"
-        class="flex flex-col justify-center gap-[5px] w-8 h-8 p-1"
-        aria-label="Abrir menú"
-        aria-expanded="false"
-      >
-        <span class="ham-line"></span>
-        <span class="ham-line"></span>
-        <span class="ham-line"></span>
-      </button>
-    </div>
+<header class="px-top">
+  <a class="px-brand" href="/">
+    <img src="/img/symbol-gii.png" alt="" width="38" height="38" />
+    <span><b>GENIDEIA <em>COMPANY</em></b><small>Sistemas y automatización</small></span>
+  </a>
+  <nav class="px-links" aria-label="Secciones">
+    {navLinks.map((l) => <a href={l.href} aria-current={here && l.href === here ? 'page' : undefined}>{l.label}</a>)}
   </nav>
-
-  <!-- Mobile menu -->
-  <div
-    id="nav-mobile"
-    style="border-top:1px solid rgba(255,255,255,0.07); background:rgba(10,10,10,0.98);"
-    class="lg:hidden hidden"
-  >
-    <div class="max-w-6xl mx-auto px-6 py-5">
-      <ul class="flex flex-col gap-1 mb-6">
-        {navLinks.map(link => (
-          <li>
-            <a
-              href={link.href}
-              style="color:#B8BEC7; font-weight:300; font-size:1rem;"
-              class="nav-mobile-link block py-2.5 hover:text-[#00C8FF] transition-colors"
-            >
-              {link.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-      <div style="border-top:1px solid rgba(255,255,255,0.07);" class="pt-5 flex items-center gap-4">
-        <a href="https://www.instagram.com/genideiacompany.ai" target="_blank" rel="noopener noreferrer"
-          style="color:#B8BEC7;" class="hover:text-[#00C8FF] transition-colors" aria-label="Instagram">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-            <rect x="2" y="2" width="20" height="20" rx="5"/>
-            <circle cx="12" cy="12" r="4"/>
-            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-          </svg>
-        </a>
-        <a href="mailto:andres@genideiacompany.com"
-          style="color:#B8BEC7;" class="hover:text-[#00C8FF] transition-colors" aria-label="Email">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <path d="m22 7-10 7L2 7"/>
-          </svg>
-        </a>
-        <span style="color:rgba(160,160,160,0.4); font-size:0.75rem; font-weight:300;">
-          andres@genideiacompany.com
-        </span>
-      </div>
-    </div>
-  </div>
+  <a class="px-btn p sm" href="https://wa.me/59892302941" target="_blank" rel="noopener noreferrer">Hablemos</a>
+  <button class="px-burger" id="px-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="px-menu"><span></span><span></span><span></span></button>
 </header>
-
-<script>
-  const toggle = document.getElementById('nav-toggle');
-  const menu   = document.getElementById('nav-mobile');
-
-  toggle?.addEventListener('click', () => {
-    const isOpen = !menu?.classList.contains('hidden');
-    menu?.classList.toggle('hidden', isOpen);
-    toggle.classList.toggle('is-open', !isOpen);
-    toggle.setAttribute('aria-expanded', String(!isOpen));
-  });
-
-  menu?.querySelectorAll('.nav-mobile-link').forEach(a => {
-    a.addEventListener('click', () => {
-      menu.classList.add('hidden');
-      toggle?.classList.remove('is-open');
-      toggle?.setAttribute('aria-expanded', 'false');
-    });
-  });
-</script>
+<nav class="px-menu" id="px-menu" aria-label="Menú">
+  {navLinks.map((l) => <a href={l.href}>{l.label}</a>)}
+  <a href="https://www.instagram.com/genideiacompany.ai" target="_blank" rel="noopener noreferrer">Instagram · @genideiacompany.ai</a>
+</nav>

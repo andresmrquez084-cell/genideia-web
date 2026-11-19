@@ -5,6 +5,7 @@
 import Loader from '../transitions/Loader.astro';
 import '../transitions/transitions.css';
 import '../styles/global.css';
+import '../styles/premium.css';
 
 interface Props {
   pregunta: string;
@@ -39,6 +40,7 @@ const perfiles = [
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script is:inline>document.documentElement.classList.add('pxj')</script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{titulo}</title>
@@ -53,29 +55,28 @@ const perfiles = [
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Poppins:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <meta name="theme-color" content="#0A0F1A" />
   <script>import '../transitions/reveal.js';</script>
 </head>
-<body style="background:#07080D radial-gradient(ellipse 90% 55% at 50% -8%, rgba(0,200,255,0.10), transparent 62%) no-repeat fixed; color:#F2F4F7; font-family:'Poppins',sans-serif; -webkit-font-smoothing:antialiased;">
+<body class="px">
+  <div class="px-amb" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+  <div class="px-grain" aria-hidden="true"></div>
   <Loader logoSrc="/img/logo-nav.png" />
 
-  <header style="background:rgba(10,10,10,0.92); border-bottom:1px solid rgba(255,255,255,0.07);" class="sticky top-0 z-50 backdrop-blur">
-    <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
-      <a href="/" style="font-family:'Montserrat',sans-serif; font-size:1.05rem; font-weight:600; color:#F2F4F7; letter-spacing:0.5px;">
-        GENIDEIA <span style="font-weight:500; color:#B8BEC7;">Company</span>
-      </a>
-      <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600; font-size:0.78rem;" class="px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">WhatsApp</a>
-    </nav>
+  <header class="px-top">
+    <a class="px-brand" href="/"><img src="/img/symbol-gii.png" alt="" width="38" height="38" /><span><b>GENIDEIA <em>COMPANY</em></b><small>Sistemas y automatización</small></span></a>
+    <a class="px-btn p sm" style="margin-left:auto" href={waUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a>
   </header>
 
   <main class="max-w-3xl mx-auto px-6 pt-16 pb-20 text-center">
-    <p class="text-xs font-medium mb-6 uppercase" style="color:#00C8FF; letter-spacing:3px;">Presentación</p>
-    <h1 style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.05; letter-spacing:-1.2px; font-size:clamp(2.2rem, 6vw, 3.8rem);" class="mb-10">
+    <p class="px-eb">Presentación</p>
+    <h1 class="px-split" style="font-weight:700; line-height:1.05; letter-spacing:-.04em; font-size:clamp(2.2rem, 6vw, 3.8rem); margin:0 0 2.5rem;">
       {pregunta}
     </h1>
 
     <!-- Video de presentación (animación con la voz de Andrés; 16:9 o vertical 9:16) -->
-    <div data-reveal style={`${vertical ? 'aspect-ratio:9/16; max-width:min(380px, 100%); margin:0 auto;' : 'aspect-ratio:16/9;'} border-radius:14px; overflow:hidden; border:1px solid rgba(0,200,255,0.2); background:#121314;`}>
+    <div data-reveal style={`${vertical ? 'aspect-ratio:9/16; max-width:min(380px, 100%); margin:0 auto;' : 'aspect-ratio:16/9;'} border-radius:26px; overflow:hidden; border:1px solid rgba(255,255,255,.1); background:#0B1324; box-shadow:0 50px 120px -40px rgba(0,90,255,.6);`}>
       <video controls playsinline preload="metadata" poster={poster} style="width:100%; height:100%; display:block; object-fit:cover;">
         <source src={video} type="video/mp4" />
       </video>
@@ -83,14 +84,14 @@ const perfiles = [
 
     <div class="grid sm:grid-cols-2 gap-5 mt-14 text-left" data-reveal>
       {perfiles.map((p) => (
-        <a href={p.url} target="_blank" rel="noopener noreferrer" class="card-hover rounded-xl p-6 flex items-center gap-5" style="background:#111111; border:1px solid rgba(255,255,255,0.07);">
+        <a href={p.url} target="_blank" rel="noopener noreferrer" class="px-card px-spot flex items-center gap-5" style="padding:22px">
           <div style="flex-shrink:0; width:64px; height:64px; border-radius:50%; overflow:hidden; background:#0B1324; border:1px solid rgba(255,255,255,0.08);" class="flex items-center justify-center">
             <img src={p.foto} alt={p.nombre} style="width:100%; height:100%; object-fit:cover;" />
           </div>
           <div class="min-w-0">
             <p style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7;" class="leading-tight">{p.nombre}</p>
             <p style="color:#B8BEC7; font-size:0.7rem; font-weight:300;" class="mt-1">{p.rol}</p>
-            <p style="color:#00C8FF; font-size:0.85rem; font-weight:300;" class="mt-1">Instagram {p.handle}</p>
+            <p style="color:#BFEFFF; font-family:'JetBrains Mono',monospace; font-size:0.75rem;" class="mt-1">Instagram {p.handle}</p>
           </div>
         </a>
       ))}
@@ -98,10 +99,11 @@ const perfiles = [
 
     <div class="mt-12" data-reveal>
       <p style="color:#B8BEC7; font-weight:300;" class="mb-5">Contáctame y coordinamos una reunión para detectar dónde se podría ahorrar tiempo en tu negocio.</p>
-      <a href={waUrl} target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-9 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block">
+      <a href={waUrl} target="_blank" rel="noopener noreferrer" class="px-btn p">
         WhatsApp · +598 92 302 941
       </a>
     </div>
   </main>
+  <script>import '../scripts/premium.js';</script>
 </body>
 </html>

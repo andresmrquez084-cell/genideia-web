@@ -38,7 +38,10 @@ const pathD = (p) => p.reduce((d, pt, i) => {
 }, '');
 let reach = -1;
 for (let i = 0; i < mods.length && mods[i].k !== 'todo'; i++) reach = i;
-const selected = Math.max(0, mods.findIndex((m) => m === next));
+// Si terminó todo, el recorrido llega hasta el último módulo.
+const selected = completed === total ? total - 1 : Math.max(0, mods.findIndex((m) => m === next));
+const NUM = ['Cero', 'Un', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete', 'Ocho', 'Nueve', 'Diez', 'Once', 'Doce'];
+const modsLabel = `${NUM[total] ?? total} ${total === 1 ? 'módulo' : 'módulos'}`;
 const ring = 2 * Math.PI * 52;
 ---
 <!doctype html>
@@ -146,7 +149,7 @@ const ring = 2 * Math.PI * 52;
   <!-- recorrido interactivo -->
   <section class="sec" id="recorrido">
     <div class="head">
-      <div><p class="eyebrow">Tu recorrido</p><h2 class="split">Ocho módulos, un paso a la vez.</h2></div>
+      <div><p class="eyebrow">Tu recorrido</p><h2 class="split">{modsLabel}, un paso a la vez.</h2></div>
       <p class="side">Tocá cada módulo para ver qué se trabaja y qué resultado se busca.</p>
     </div>
     <div class="win rv">
@@ -154,14 +157,21 @@ const ring = 2 * Math.PI * 52;
         <div class="legend"><span class="l-done">Completado</span><span class="l-now">En curso</span><span class="l-todo">Pendiente</span></div>
       </div>
       <div class="win-body">
+        <div class="who">
+          <div><b>{student.name}</b><small class="mono">Plan personalizado · {total} módulos</small></div>
+          <div class="who-r">
+            <span class:list={['live', completed === total ? 'fin' : started ? 'run' : 'wait']}><i></i>{completed === total ? 'completado' : started ? 'en curso' : 'por arrancar'}</span>
+            <div class="pct"><b id="tPct">{progress}</b><small class="mono">% completo</small></div>
+          </div>
+        </div>
         <div class="track">
           <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true">
             <defs><linearGradient id="tg" x1="0" x2="1"><stop offset="0" stop-color="#4BE39A" /><stop offset=".6" stop-color="#00C8FF" /><stop offset="1" stop-color="#007BFF" /></linearGradient></defs>
             <path class="t-bg" d={pathD(pts)} />
-            {reach > 0 && <path class="t-fg" d={pathD(pts.slice(0, reach + 1))} />}
+            {reach > 0 && <path class="t-fg" d={pathD(pts)} data-reach={reach / Math.max(1, total - 1)} />}
           </svg>
           {mods.map((m, i) => (
-            <button class:list={['node', `s-${m.k}`, i === selected && 'sel']} data-i={i} style={`left:${pts[i][0] / W * 100}%;top:${pts[i][1] / H * 100}%;animation-delay:${0.15 + i * 0.08}s`} aria-label={`Módulo ${pad(m.id)}: ${m.title}, ${m.state}`}>
+            <button class:list={['node', `s-${m.k}`, i === selected && 'sel']} data-i={i} data-k={m.k} style={`left:${pts[i][0] / W * 100}%;top:${pts[i][1] / H * 100}%;animation-delay:${0.15 + i * 0.08}s`} aria-label={`Módulo ${pad(m.id)}: ${m.title}, ${m.state}`}>
               {m.k === 'done' ? '✓' : pad(m.id)}<em>M{pad(m.id)}</em>
             </button>
           ))}
@@ -293,16 +303,44 @@ const ring = 2 * Math.PI * 52;
   } else { d.documentElement.classList.remove('pj'); ringIn(); drawTrack(); }
 
   // pista del recorrido
-  var fg = $('.t-fg'), drawn = false;
-  if (fg && !reduce) { var L = fg.getTotalLength(); fg.style.strokeDasharray = L; fg.style.strokeDashoffset = L; }
-  function drawTrack() { if (drawn || !fg) return; drawn = true; fg.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(.4,0,.2,1)'; fg.style.strokeDashoffset = 0; }
+  // El recorrido avanza solo, módulo por módulo, hasta donde está el alumno de verdad.
+  // Se repite mientras la ventana está a la vista; si el alumno toca un módulo, se detiene.
+  var fg = $('.t-fg'), nodes = $$('.node'), pctEl = $('#tPct'), winEl = $('.win');
+  var NT = nodes.length, target = Math.max(0, nodes.findIndex(function (n) { return n.classList.contains('sel'); }));
+  var reachF = fg ? Number(fg.dataset.reach) : 0, L = fg ? fg.getTotalLength() : 0;
+  var played = false, stopped = false, visible = true, timers = [];
+  var finalPct = pctEl ? pctEl.textContent : '0';
+  if (fg) { fg.style.strokeDasharray = L; fg.style.strokeDashoffset = reduce ? L * (1 - reachF) : L; }
+  function doneUpTo(k) { var c = 0; for (var i = 0; i <= k && i < NT; i++) if (nodes[i].dataset.k === 'done') c++; return c; }
+  function frame(k) {
+    nodes.forEach(function (n, i) { n.classList.toggle('wait', i > k); });
+    if (fg) { var f = NT > 1 ? Math.min(Math.max(k, 0) / (NT - 1), reachF) : reachF; fg.style.strokeDashoffset = L * (1 - f); }
+    if (pctEl) pctEl.textContent = Math.round(doneUpTo(k) / NT * 100);
+    if (k >= 0) pick(k);
+  }
+  function play() {
+    if (stopped || !visible || d.hidden) return;
+    timers.forEach(clearTimeout); timers = [];
+    if (fg) fg.style.transition = 'stroke-dashoffset .6s cubic-bezier(.4,0,.2,1)';
+    frame(-1);
+    for (var k = 0; k <= target; k++) (function (k) { timers.push(setTimeout(function () { if (!stopped) frame(k); }, 350 + k * 650)); })(k);
+    timers.push(setTimeout(play, 350 + target * 650 + 6500));
+  }
+  function drawTrack() { if (played) return; played = true; var tr = $('.track'); if (tr) tr.classList.add('ready'); if (reduce) { frame(target); return; } play(); }
+  function stopAuto() {
+    if (stopped) return; stopped = true; timers.forEach(clearTimeout);
+    nodes.forEach(function (n) { n.classList.toggle('wait', false); });
+    if (fg) fg.style.strokeDashoffset = L * (1 - reachF);
+    if (pctEl) pctEl.textContent = finalPct;
+  }
+  if (winEl && 'IntersectionObserver' in window) new IntersectionObserver(function (e) { var was = visible; visible = e[0].isIntersecting; if (visible && !was && played && !stopped) play(); }).observe(winEl);
   function pick(i) {
     $$('.node').forEach(function (n) { n.classList.toggle('sel', Number(n.dataset.i) === i); });
     $$('.focus').forEach(function (f) { f.classList.toggle('on', Number(f.dataset.f) === i); });
   }
   $$('.node').forEach(function (n) {
-    n.addEventListener('click', function () { pick(Number(n.dataset.i)); });
-    if (fine) n.addEventListener('mouseenter', function () { pick(Number(n.dataset.i)); });
+    n.addEventListener('click', function () { stopAuto(); pick(Number(n.dataset.i)); });
+    if (fine) n.addEventListener('mouseenter', function () { stopAuto(); pick(Number(n.dataset.i)); });
   });
 
   // módulos desplegables y filtros
@@ -694,7 +732,8 @@ html{scroll-behavior:smooth;overflow-x:clip}
 
 /* Interaction safety */
 .intro-x{pointer-events:none!important}
-.brand,.links a,.btn,.node,.filters button,.mod-h{
+.node{z-index:5;pointer-events:auto!important}
+.brand,.links a,.btn,.filters button,.mod-h{
   position:relative;
   z-index:5;
   pointer-events:auto!important;
@@ -706,6 +745,25 @@ html{scroll-behavior:smooth;overflow-x:clip}
 #ahora,#recorrido,#proyectos,#plan{scroll-margin-top:100px}
 
 .logout{font-size:12px;color:var(--tx3);text-decoration:none;padding:7px 10px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.09)}.logout:hover{color:#fff;background:rgba(255,255,255,.05)}
+
+/* cabecera viva del recorrido (mismo formato que la página de la Academy) */
+.who{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:0 4px 6px}
+.who b{display:block;font-family:var(--display);font-size:18px}.who small{display:block;font-size:11px;color:var(--tx3)}
+.who-r{display:flex;align-items:center;gap:18px}
+.live{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--tx3)}
+.live i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.live.run{color:var(--ok)}.live.run i{animation:lping 2s infinite}
+.live.fin{color:var(--ok)}.live.wait{color:var(--sl)}
+@keyframes lping{0%{box-shadow:0 0 0 0 rgba(75,227,154,.55)}80%,100%{box-shadow:0 0 0 9px rgba(75,227,154,0)}}
+.pct{white-space:nowrap}.pct b{display:inline;font-family:var(--display);font-size:32px;letter-spacing:-.04em;color:var(--sl)}.pct small{display:inline;margin-left:4px}
+.node.wait{background:#0E1626!important;color:var(--tx3)!important;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.16)!important;animation:none!important}
+.node.wait em{color:var(--tx3)!important}
+/* después de la primera entrada, los nodos cambian de estado sin volver a aparecer desde cero */
+.track.ready .node{animation:none;opacity:1}
+.track.ready .node.s-now:not(.wait){animation:pulse 2.2s infinite}
+.focus.on .f-main,.focus.on .f-res{animation:fsw .45s var(--ease)}
+@keyframes fsw{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(max-width:560px){.who{flex-direction:column;align-items:flex-start}.pct b{font-size:26px}}
 
 /* Ajuste del mapa de recorrido: separar visualmente el camino del panel de detalle */
 .track{
