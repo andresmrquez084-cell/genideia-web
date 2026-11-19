@@ -1,5 +1,5 @@
 (() => {
-  const API = 'https://dbwuubabafzsinaokawe.supabase.co/functions/v1/academy-enrollment';
+  const API = 'https://tsktonjqpwdkfmxgknnq.supabase.co/functions/v1/academy-enrollment';
   // TODO: cuando Andrés genere el link de Payoneer para USD 300, agregarlo acá y
   // restaurar el bloque que lo inyecta en #pago .payment-grid (el anterior apuntaba
   // a un cobro fijo de USD 799 y ya no sirve).

@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { DIFERENCIALES } from '../data/soluciones';
+import Cinta from '../components/premium/Cinta.astro';
+import AntesDespues from '../components/premium/AntesDespues.astro';
 
 const socios = [
   {
@@ -14,114 +16,91 @@ const socios = [
     foto: '/img/andres.jpg',
   },
 ];
+
+const bloques = [
+  ['Somos', 'Andrés, fundador de GENIDEIA, trabajando desde Montevideo, Uruguay con empresas de Latinoamérica y todo el mundo.'],
+  ['Te ofrecemos', 'Sistemas a medida de tu operación: seguimiento comercial, gestión de personal, paneles internos, logística, automatización de tareas repetitivas. Construimos alrededor de cómo funciona tu empresa hoy.'],
+  ['Cómo empezar', 'Un diagnóstico gratis para ver dónde se pierde tiempo. Si hay algo para construir, te lo cotizamos y lo hacemos.'],
+];
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 
 <BaseLayout
-  title="Nosotros — GENIDEIA Company"
+  title="Nosotros · GENIDEIA Company"
   description="GENIDEIA diseña sistemas alrededor de cómo funciona cada empresa. Consultoría operativa, no agencia."
   path="/nosotros"
 >
-  <section class="max-w-3xl mx-auto px-6 pt-24 pb-16 text-center">
-    <p class="hero-animate text-xs font-medium mb-8 uppercase" data-delay="1" style="color:#00C8FF; letter-spacing:3px;">Quiénes somos</p>
-
-    <div class="text-left mx-auto" style="max-width:600px;" data-reveal data-delay="3">
-      <div class="space-y-6">
-        <div>
-          <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-2">Somos</p>
-          <p style="color:#F2F4F7; font-weight:300;" class="text-lg leading-relaxed">
-            Andrés, fundador de GENIDEIA, trabajando desde Montevideo, Uruguay con empresas de Latinoamérica y todo el mundo.
-          </p>
-        </div>
-        <div>
-          <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-2">Te ofrecemos</p>
-          <p style="color:#F2F4F7; font-weight:300;" class="text-lg leading-relaxed">
-            Sistemas a medida de tu operación: seguimiento comercial, gestión de personal, paneles
-            internos, logística, automatización de tareas repetitivas. Construimos alrededor de
-            cómo funciona tu empresa hoy.
-          </p>
-        </div>
-        <div>
-          <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-2">Cómo empezar</p>
-          <p style="color:#F2F4F7; font-weight:300;" class="text-lg leading-relaxed">
-            Un diagnóstico gratis para ver dónde se pierde tiempo. Si hay algo para construir,
-            te lo cotizamos y lo hacemos.
-          </p>
-        </div>
+  <div class="px-shell">
+    <section class="ns-hero">
+      <div>
+        <p class="px-eb">Quiénes somos</p>
+        <h1 class="px-split">Sistemas pensados <em>desde tu operación.</em></h1>
+        <p class="px-lead px-rv">Consultoría operativa, no agencia. Primero entendemos cómo trabaja tu empresa y después construimos lo que hace falta.</p>
       </div>
-    </div>
-  </section>
-
-  <section class="max-w-3xl mx-auto px-6 pb-16">
-    <div class="grid sm:grid-cols-2 gap-5" data-reveal>
       {socios.map((s) => (
-        <div class="card-hover rounded-xl p-6 flex items-center gap-5" style="background:#111111; border:1px solid rgba(255,255,255,0.07);">
-          <div style="flex-shrink:0; width:72px; height:90px; border-radius:0.5rem; overflow:hidden; background:#0B1324; border:1px solid rgba(255,255,255,0.08);" class="flex items-center justify-center">
-            <img src={s.foto} alt={s.nombre} style="width:100%; height:100%; object-fit:cover;" />
-          </div>
-          <div class="min-w-0">
-            <h3 style="font-family:'Montserrat',sans-serif; font-weight:600; color:#F2F4F7; font-size:1.15rem;" class="leading-tight">{s.nombre}</h3>
-            <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:1px; font-weight:500;" class="uppercase mt-1 mb-2">{s.rol}</p>
-            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
-              <a href={s.ig} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">{s.handle}</a>
-              {s.wsp && <a href={s.wsp} target="_blank" rel="noopener noreferrer" style="color:#00C8FF;" class="font-light hover:opacity-70 transition-opacity">WhatsApp</a>}
+        <article class="px-card px-spot px-rv ns-socio">
+          <img src={s.foto} alt={s.nombre} width="120" height="150" />
+          <div>
+            <span class="px-tag">Fundador</span>
+            <h3>{s.nombre}</h3>
+            <p class="px-k">{s.rol}</p>
+            <p>{s.desc}</p>
+            <div class="ns-links">
+              <a href={s.ig} target="_blank" rel="noopener noreferrer">{s.handle}</a>
+              <a href={s.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href={s.wsp} target="_blank" rel="noopener noreferrer">WhatsApp</a>
             </div>
           </div>
-        </div>
+        </article>
       ))}
-    </div>
-  </section>
-
-  <section style="background:#0B1324; border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);" class="py-16">
-    <div class="max-w-3xl mx-auto px-6">
-      <p style="color:#00C8FF; font-size:0.7rem; letter-spacing:3px; font-weight:500;" class="uppercase mb-8 text-center" data-reveal>Qué nos diferencia</p>
-      <div class="grid sm:grid-cols-2 gap-8">
-        <div data-reveal>
-          <p style="color:rgba(160,160,160,0.5); font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">Lo que no hacemos</p>
-          <ul class="space-y-3">
-            {DIFERENCIALES.no.map((item) => (
-              <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-2.5">
-                <span style="color:rgba(160,160,160,0.6); flex-shrink:0;">—</span>
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div data-reveal data-delay="1">
-          <p style="color:#00C8FF; font-size:0.65rem; letter-spacing:2px; font-weight:500;" class="uppercase mb-4">Cómo trabajamos</p>
-          <ul class="space-y-3">
-            {DIFERENCIALES.si.map((item) => (
-              <li style="color:#B8BEC7; font-weight:300;" class="text-sm flex items-start gap-2.5">
-                <span style="color:#00C8FF; flex-shrink:0;">→</span>
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
+    </section>
+  </div>
+  <Cinta />
+  <div class="px-shell">
+    <section class="px-sec">
+      <div class="px-grid c3">
+        {bloques.map((b, i) => (
+          <article class="px-card px-spot px-rv" data-n={pad(i + 1)} style={`transition-delay:${i * 0.07}s`}>
+            <span class="px-k">{b[0]}</span>
+            <p class="ns-txt">{b[1]}</p>
+          </article>
+        ))}
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="max-w-2xl mx-auto px-6 py-20 text-center" data-reveal>
-    <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.5px; font-size:clamp(1.8rem, 4vw, 2.6rem);" class="mb-6">
-      ¿Tiene sentido trabajar juntos?
-    </h2>
-    <a href="/empresa" style="background:linear-gradient(135deg,#00C8FF,#007BFF); color:#0A0F1A; font-weight:600;" class="px-9 py-3.5 rounded-lg hover:opacity-90 transition-opacity inline-block text-base">
-      Agendá tu auditoría →
-    </a>
-  </section>
+    <section class="px-sec">
+      <div class="px-head"><div><p class="px-eb">Qué nos diferencia</p><h2 class="px-split">Primero el problema, <em>después la tecnología.</em></h2></div></div>
+      <div class="px-grid c2">
+        <article class="px-card px-rv">
+          <span class="px-k">Lo que no hacemos</span>
+          <ul class="px-list no">{DIFERENCIALES.no.map((item) => <li>{item}</li>)}</ul>
+        </article>
+        <article class="px-card feat px-rv" style="transition-delay:.08s">
+          <span class="px-k">Cómo trabajamos</span>
+          <ul class="px-list">{DIFERENCIALES.si.map((item) => <li>{item}</li>)}</ul>
+        </article>
+      </div>
+    </section>
+
+    <AntesDespues titulo="Así cambia el día a día cuando el proceso es un sistema." />
+
+    <section class="px-card px-close px-spot px-rv">
+      <div><p class="px-eb">El siguiente paso</p><h2>¿Tiene sentido trabajar juntos?</h2><p>Coordinamos un diagnóstico y lo vemos sobre tu caso.</p></div>
+      <a class="px-btn p" href="/empresa">Agendá tu auditoría</a>
+    </section>
+  </div>
 </BaseLayout>
 
-<script>
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
-  );
-  document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
-</script>
+<style>
+  .ns-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:44px;align-items:center;padding:80px 0 30px}
+  .ns-hero h1{font-size:clamp(40px,5.6vw,70px);line-height:1.02;letter-spacing:-.045em;font-weight:700;margin:0 0 22px}
+  .ns-socio{display:grid;grid-template-columns:120px minmax(0,1fr);gap:22px;align-items:center;padding:24px}
+  .ns-socio img{width:120px;height:150px;object-fit:cover;border-radius:18px;border:1px solid rgba(0,200,255,.3);box-shadow:0 20px 50px -24px rgba(0,120,255,.8)}
+  .ns-socio h3{font-size:22px;margin:12px 0 2px}
+  .ns-socio .px-k{margin:0 0 10px}
+  .ns-links{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:14px}
+  .ns-links a{font-family:var(--mono);font-size:12px;color:var(--sl);text-decoration:none}.ns-links a:hover{color:var(--s)}
+  .ns-txt{margin-top:12px!important;font-size:16px!important;color:var(--tx)!important;line-height:1.7!important}
+  @media(max-width:980px){.ns-hero{grid-template-columns:minmax(0,1fr);padding-top:56px}}
+  @media(max-width:520px){.ns-socio{grid-template-columns:minmax(0,1fr)}.ns-socio img{width:100%;height:240px}}
+</style>

@@ -1,0 +1,6 @@
+# Configuración mínima para desplegar funciones con la CLI.
+project_id = "genideia-web"
+
+[functions.academy-enrollment]
+# La llama el formulario público de inscripción, sin sesión de usuario.
+verify_jwt = false

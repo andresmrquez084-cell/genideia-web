@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import DemoSistema from '../components/premium/DemoSistema.astro';
+import AntesDespues from '../components/premium/AntesDespues.astro';
+import Cinta from '../components/premium/Cinta.astro';
 
-// Home = presentación breve + 4 tarjetas que llevan DIRECTO a la página real
-// correspondiente (nada de contenido copiado/recreado acá — pedido explícito
-// de Andrés, 17/09). Mismos destinos que Nav.astro.
+// Home = presentación breve + tarjetas que llevan DIRECTO a la página real
+// (nada de contenido copiado acá, pedido de Andrés 17/09). Mismos destinos que Nav.astro.
 const destinos = [
   {
     eyebrow: 'Quiénes somos',
@@ -11,151 +13,151 @@ const destinos = [
     desc: 'Cómo pensamos GENIDEIA, quién está detrás y qué nos diferencia.',
     href: '/nosotros',
     cta: 'Conocer al equipo',
-    color: '#00C8FF',
-    glow: 'rgba(0,200,255,.16)',
-    primary: false,
     icon: 'M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM4.5 20.5a7.5 7.5 0 0 1 15 0',
   },
   {
     eyebrow: 'El siguiente paso',
     titulo: 'Agendá tu diagnóstico',
-    desc: 'Mirá el video, los ejemplos por rubro, y coordiná tu diagnóstico con Andrés.',
-    href: 'https://andres.genideiacompany.com/empresa',
+    desc: 'Mirá el video, los ejemplos por rubro y coordiná tu diagnóstico con Andrés.',
+    href: '/empresa',
     cta: 'Ver el video y agendar',
-    color: '#007BFF',
-    glow: 'rgba(0,123,255,.22)',
-    primary: true,
+    feat: true,
     icon: 'M8 2v4M16 2v4M3.5 9h17M5 4.5h14A1.5 1.5 0 0 1 20.5 6v14a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 20V6A1.5 1.5 0 0 1 5 4.5Z M9 13.5l2 2 4-4.5',
   },
   {
     eyebrow: 'Lo que ya construimos',
     titulo: 'Nuestra experiencia',
-    desc: 'Sistemas reales, diagnósticos y proyectos — el portfolio completo.',
-    href: 'https://genideiacompany.com/experiencia/',
+    desc: 'Sistemas reales, diagnósticos y proyectos: el portfolio completo.',
+    href: '/experiencia/',
     cta: 'Ver el portfolio',
-    color: '#34D399',
-    glow: 'rgba(52,211,153,.16)',
-    primary: false,
     icon: 'M4 19.5V6a1.5 1.5 0 0 1 1.5-1.5H15l5 5v9.5A1.5 1.5 0 0 1 18.5 20.5h-13A1.5 1.5 0 0 1 4 19.5ZM14.5 4.5V9a1 1 0 0 0 1 1h4.5',
   },
   {
-    eyebrow: 'Formación 1 a 1',
+    eyebrow: 'Formación aplicada',
     titulo: 'Genideia Academy',
     desc: 'Aprendé a usar IA de forma práctica, aplicada a tu trabajo o tu proyecto real.',
-    href: '/aprender-ia',
+    href: '/academy',
     cta: 'Conocer la Academy',
-    color: '#A78BFA',
-    glow: 'rgba(167,139,250,.16)',
-    primary: false,
     icon: 'M4 10 12 6 20 10 12 14 4 10Z M6 11.5V16.5C6 16.5 8.5 18.5 12 18.5C15.5 18.5 18 16.5 18 16.5V11.5 M20 10V15',
   },
 ];
+
+const pasos = [
+  ['Diagnóstico', 'Entendemos cómo funciona tu operación hoy y dónde se pierde tiempo o dinero.'],
+  ['Diseño', 'Armamos el sistema alrededor de tu proceso real, no de un software genérico.'],
+  ['Construcción', 'Automatizaciones, paneles e integraciones que funcionan desde el primer día.'],
+  ['Seguimiento', 'Medimos el resultado y ajustamos con vos mientras el sistema trabaja.'],
+];
+const pad = (n: number) => String(n).padStart(2, '0');
+const external = (h: string) => h.startsWith('http');
 ---
 
 <BaseLayout
-  title="GENIDEIA Company — Sistemas y automatización para empresas"
+  title="GENIDEIA Company · Sistemas y automatización para empresas"
   description="Diseñamos automatizaciones y sistemas a medida para reducir tareas manuales, ordenar procesos y mejorar el seguimiento operativo de tu empresa."
   path="/"
 >
+  <div class="px-shell">
+    <section class="hm-hero">
+      <div>
+        <p class="px-eb">Automatización · Sistemas · Procesos</p>
+        <h1 class="px-split">Convertimos procesos <em>en sistemas.</em></h1>
+        <p class="px-lead px-rv">Diseñamos automatizaciones y soluciones a medida para reducir tareas manuales, ordenar operaciones y mejorar el seguimiento dentro de tu empresa.</p>
+        <div class="px-cta px-rv">
+          <a class="px-btn p" href="/empresa">Agendá tu diagnóstico</a>
+          <a class="px-btn g" href="/experiencia/">Ver lo que construimos</a>
+        </div>
+      </div>
 
-  <!-- ── INTRO BREVE ────────────────────────────────────────── -->
-  <section class="max-w-3xl mx-auto px-6 pt-24 pb-14 text-center">
-    <p class="hero-animate text-xs font-medium mb-5 uppercase" data-delay="1" style="color:#00C8FF; letter-spacing:3px;">
-      Automatización · Sistemas · Procesos
-    </p>
-    <h1 class="hero-animate mb-5" data-delay="2" style="font-family:'Montserrat',sans-serif; font-weight:700; line-height:1.05; letter-spacing:-1.3px; font-size:clamp(2.3rem, 5.2vw, 3.6rem);">
-      Convertimos procesos <span style="color:#B8BEC7; font-weight:300; font-style:italic;">en sistemas.</span>
-    </h1>
-    <p class="hero-animate mx-auto leading-relaxed max-w-xl text-lg" data-delay="3" style="color:#B8BEC7; font-weight:300;">
-      Diseñamos automatizaciones y soluciones a medida para reducir tareas manuales, ordenar operaciones y mejorar el seguimiento dentro de tu empresa.
-    </p>
-  </section>
-
-  <!-- ── 3 DESTINOS ─────────────────────────────────────────── -->
-  <section class="max-w-5xl mx-auto px-6 pb-24">
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {destinos.map((d, i) => (
-        <a
-          href={d.href}
-          target={d.href.startsWith('http') ? '_blank' : undefined}
-          rel={d.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-          class:list={["dest-card card-hover rounded-xl p-7 flex flex-col", d.primary && "dest-card-primary"]}
-          style={`--dest-color:${d.color}; --dest-glow:${d.glow};`}
-          data-reveal
-          data-delay={String(i + 1)}
-        >
-          <div class="dest-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d={d.icon} />
-            </svg>
+      <div class="px-win px-rv" aria-label="Ejemplo de panel de operación">
+        <div class="px-win-top"><i></i><i></i><i></i><span>panel de operación</span><b class="px-live"><span></span>en vivo</b></div>
+        <div class="px-win-body">
+          <div class="px-tabs" aria-hidden="true"><b class="on">Hoy</b><b>Pedidos</b><b>Clientes</b><b>Reportes</b></div>
+          <div class="px-metrics">
+            <div><small>tareas automáticas</small><b id="hmA">0</b><em>sin intervención</em></div>
+            <div><small>horas ahorradas</small><b id="hmH">0</b><em>esta semana</em></div>
+            <div><small>respuesta</small><b id="hmR">0s</b><em>promedio</em></div>
           </div>
-          <p style={`color:${d.color}; letter-spacing:2px;`} class="text-xs font-medium uppercase mb-3">{d.eyebrow}</p>
-          <h2 style="font-family:'Montserrat',sans-serif; font-weight:700; color:#F2F4F7; font-size:1.4rem;" class="mb-3">
-            {d.titulo}
-          </h2>
-          <p style="color:#B8BEC7; font-weight:300;" class="text-sm leading-relaxed mb-6 flex-1">
-            {d.desc}
-          </p>
-          <span style={`color:${d.color};`} class="text-sm font-medium">
-            {d.cta} →
-          </span>
-        </a>
-      ))}
-    </div>
-  </section>
+          <div class="px-rows" id="hmRows"></div>
+          <p class="px-note">Datos de ejemplo</p>
+        </div>
+      </div>
+    </section>
+  </div>
 
-  <style>
-    .dest-card {
-      position: relative;
-      overflow: hidden;
-      background: #111111;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-top: 2px solid var(--dest-color);
-    }
-    .dest-card::before {
-      content: '';
-      position: absolute;
-      inset: -40% -40% auto auto;
-      width: 220px;
-      height: 220px;
-      border-radius: 999px;
-      background: radial-gradient(circle, var(--dest-glow), transparent 70%);
-      pointer-events: none;
-    }
-    .dest-card-primary {
-      background: linear-gradient(160deg, rgba(0,123,255,0.14), #111111 55%);
-      border-color: rgba(0,123,255,0.35);
-      box-shadow: 0 0 0 1px rgba(0,123,255,0.12), 0 20px 60px rgba(0,123,255,0.08);
-    }
-    .dest-icon {
-      position: relative;
-      z-index: 1;
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border-radius: 10px;
-      color: var(--dest-color);
-      background: color-mix(in srgb, var(--dest-color) 12%, transparent);
-      border: 1px solid color-mix(in srgb, var(--dest-color) 35%, transparent);
-      margin-bottom: 22px;
-    }
-    .dest-icon svg { width: 22px; height: 22px; }
-  </style>
+  <Cinta />
 
+  <div class="px-shell">
+    <section class="px-sec" id="destinos">
+      <div class="px-head"><div><p class="px-eb">Por dónde seguir</p><h2 class="px-split">Todo lo que hacemos, <em>en un lugar.</em></h2></div><p class="px-side">Cada tarjeta lleva directo a su página.</p></div>
+      <div class="px-grid c4">
+        {destinos.map((d, i) => (
+          <a class:list={['px-card', 'px-spot', 'px-rv', 'hm-dest', d.feat && 'feat']} href={d.href} target={external(d.href) ? '_blank' : undefined} rel={external(d.href) ? 'noopener noreferrer' : undefined} style={`transition-delay:${i * 0.07}s`}>
+            <span class="px-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d={d.icon} /></svg></span>
+            <p class="px-k hm-k">{d.eyebrow}</p>
+            <h3>{d.titulo}</h3>
+            <p>{d.desc}</p>
+            <span class="px-go">{d.cta} <i>→</i></span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <DemoSistema />
+
+    <section class="px-sec" id="como">
+      <div class="px-head"><div><p class="px-eb">Cómo trabajamos</p><h2 class="px-split">Cuatro pasos, siempre <em>sobre tu operación.</em></h2></div></div>
+      <div class="px-grid c4">
+        {pasos.map((p, i) => (
+          <article class="px-card px-spot px-rv" data-n={pad(i + 1)} style={`transition-delay:${i * 0.07}s`}>
+            <span class="px-k">{pad(i + 1)}</span>
+            <h3>{p[0]}</h3>
+            <p>{p[1]}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <AntesDespues />
+
+    <section class="px-card px-close px-spot px-rv">
+      <div><p class="px-eb">El siguiente paso</p><h2>¿Dónde se pierde tiempo en tu empresa?</h2><p>Un diagnóstico gratis para verlo. Si hay algo para construir, te lo cotizamos y lo hacemos.</p></div>
+      <a class="px-btn p" href="/empresa">Agendá tu diagnóstico</a>
+    </section>
+  </div>
 </BaseLayout>
 
-<script>
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
-  );
-  document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+<style>
+  .hm-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:44px;align-items:center;padding:80px 0 40px}
+  .hm-hero h1{font-size:clamp(42px,6vw,76px);line-height:1;letter-spacing:-.045em;font-weight:700;margin:0 0 22px}
+  .hm-dest{display:flex;flex-direction:column}
+  .hm-dest .px-ico{margin-bottom:20px}
+  .hm-k{margin:0}
+  .hm-dest .px-go{margin-top:auto;padding-top:18px}
+  @media(max-width:980px){.hm-hero{grid-template-columns:minmax(0,1fr);padding-top:56px}}
+  @media(max-width:640px){.hm-hero h1{font-size:clamp(38px,11vw,52px)}}
+</style>
+
+<script is:inline>
+(function(){
+  // Panel de ejemplo que se completa solo, como si el sistema estuviera trabajando.
+  var rows=document.getElementById('hmRows');if(!rows)return;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var EV=[
+    ['MR','Pedido confirmado por WhatsApp','Distribuidora · 2 min','ok','listo'],
+    ['LS','Turno agendado y recordatorio enviado','Clínica · 4 min','ok','listo'],
+    ['CP','Factura generada y enviada','Taller · 6 min','run','enviando'],
+    ['AV','Lead nuevo asignado a ventas','Inmobiliaria · 9 min','wait','pendiente'],
+    ['JG','Stock actualizado en el panel','Comercio · 11 min','ok','listo'],
+    ['RT','Reporte semanal armado','Gerencia · 14 min','run','armando'],
+  ];
+  var A=document.getElementById('hmA'),H=document.getElementById('hmH'),R=document.getElementById('hmR');
+  var k=0,a=128,h=31,vis=true,win=rows.closest('.px-win');
+  function row(e){var el=document.createElement('div');el.className='px-row';el.innerHTML='<span class="av"></span><div><b></b><small></small></div><span class="px-st"></span>';el.children[0].textContent=e[0];el.querySelector('b').textContent=e[1];el.querySelector('small').textContent=e[2];var s=el.children[2];s.className='px-st '+e[3];s.textContent=e[4];return el}
+  function tick(){if(!vis||document.hidden)return;var e=EV[k%EV.length];k++;rows.insertBefore(row(e),rows.firstChild);while(rows.children.length>4)rows.removeChild(rows.lastChild);a+=3+Math.round(Math.random()*4);h+=1;A.textContent=a;H.textContent=h;R.textContent=(8+Math.round(Math.random()*5))+'s'}
+  for(var i=0;i<4;i++)tick();
+  if(reduce)return;
+  setInterval(tick,2200);
+  if('IntersectionObserver' in window&&win)new IntersectionObserver(function(e){vis=e[0].isIntersecting}).observe(win);
+})();
 </script>

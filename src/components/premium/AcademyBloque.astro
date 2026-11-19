@@ -1,0 +1,68 @@
+---
+// Bloque de Genideia Academy para landings: recorrido animado, cómo funciona y programas.
+// Mismos textos que /academy (no se inventan datos nuevos).
+import RecorridoAcademy from './RecorridoAcademy.astro';
+const PASOS = [
+  ['Diagnóstico', 'El primer módulo entiende tu situación, tu objetivo y dónde conviene empezar.'],
+  ['Plan personalizado', 'Los módulos se adaptan a tus proyectos y tareas, no a un temario genérico.'],
+  ['Clases aplicadas', 'Cada clase combina la herramienta con un caso tuyo y termina en algo que funciona.'],
+  ['Seguimiento', 'Tu portal muestra el plan, el módulo en curso y tu avance.'],
+];
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<section class="ab">
+  <div class="ab-grid">
+    <div>
+      <p class="ab-eb">Cómo es el recorrido</p>
+      <h2>Ocho módulos que <em>avanzan con vos.</em></h2>
+      <p class="ab-lead">Avanzás cuando funciona, no solamente cuando se explicó. Cada alumno tiene su portal con el plan y el avance de cada módulo.</p>
+      <ol class="ab-steps">
+        {PASOS.map((p, i) => <li style={`--d:${i * 0.08}s`}><span>{pad(i + 1)}</span><div><b>{p[0]}</b><p>{p[1]}</p></div></li>)}
+      </ol>
+    </div>
+    <RecorridoAcademy />
+  </div>
+
+  <div class="ab-progs">
+    <a class="ab-prog feat" href="/academy/1a1">
+      <span class="ab-tag">Individual</span>
+      <h3>Acompañamiento 1:1</h3>
+      <ul><li>8 módulos híbridos</li><li>Hasta 2 módulos por semana</li><li>Diagnóstico inicial y plan personalizado</li></ul>
+      <span class="ab-go">Ver el programa <i>→</i></span>
+    </a>
+    <a class="ab-prog" href="/academy/grupal">
+      <span class="ab-tag">Grupal</span>
+      <h3>Programa grupal de IA aplicada</h3>
+      <ul><li>4 semanas</li><li>8 clases, 2 por semana</li><li>90 minutos por sesión</li></ul>
+      <span class="ab-go">Ver el programa <i>→</i></span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .ab{--s:#00C8FF;--p:#007BFF;--sl:#BFEFFF;--tx:#F2F4F7;--tx2:#B8BEC7;--tx3:#7E8796;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--display:"Montserrat","Poppins",system-ui,sans-serif;--ease:cubic-bezier(.2,.7,.2,1);color:var(--tx);padding:30px 0 70px;text-align:left}
+  .ab-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:44px;align-items:center}
+  .ab-eb{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--sl);margin:0 0 14px;text-transform:none;font-weight:400}
+  .ab-eb::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--s);box-shadow:0 0 10px var(--s)}
+  .ab h2{margin:0 0 14px;font-family:var(--display);font-weight:700;font-size:clamp(28px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em}
+  .ab h2 em{font-style:normal;background:linear-gradient(90deg,#5FB4FF,var(--s) 60%,#9FF0FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .ab-lead{margin:0;color:var(--tx2);line-height:1.7}
+  .ab-steps{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:10px}
+  .ab-steps li{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.03);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);transition:box-shadow .3s,transform .3s var(--ease)}
+  .ab-steps li:hover{transform:translateX(4px);box-shadow:inset 0 0 0 1px rgba(0,200,255,.35)}
+  .ab-steps span{flex:none;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:#fff;background:linear-gradient(135deg,var(--p),var(--s));box-shadow:0 8px 20px -8px rgba(0,160,255,.9)}
+  .ab-steps b{font-family:var(--display);font-size:15px}
+  .ab-steps p{margin:2px 0 0;color:var(--tx2);font-size:13.5px;line-height:1.55}
+  .ab-progs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:40px}
+  .ab-prog{display:flex;flex-direction:column;padding:28px;border-radius:24px;color:inherit;text-decoration:none;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015)),rgba(13,24,40,.55);border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 30px 70px -40px rgba(0,0,0,.85);transition:transform .35s var(--ease),border-color .3s,box-shadow .35s}
+  .ab-prog:hover{transform:translateY(-5px);border-color:rgba(0,200,255,.45);box-shadow:0 40px 80px -36px rgba(0,120,255,.7)}
+  .ab-prog.feat{background:linear-gradient(145deg,rgba(0,123,255,.16),rgba(255,255,255,.02)),rgba(13,24,40,.6);border-color:rgba(0,200,255,.24)}
+  .ab-tag{align-self:flex-start;font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:999px;color:var(--sl);background:rgba(0,200,255,.1);box-shadow:inset 0 0 0 1px rgba(0,200,255,.3)}
+  .ab-prog h3{margin:16px 0 10px;font-family:var(--display);font-size:24px;line-height:1.15;letter-spacing:-.03em}
+  .ab-prog ul{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:8px}
+  .ab-prog li{display:flex;gap:10px;align-items:center;font-size:14px}
+  .ab-prog li::before{content:"";width:16px;height:16px;flex:none;border-radius:50%;background:radial-gradient(circle,var(--s) 0 3px,rgba(0,200,255,.16) 4px)}
+  .ab-go{margin-top:auto;display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--sl)}
+  .ab-go i{font-style:normal;transition:transform .3s var(--ease)}.ab-prog:hover .ab-go i{transform:translateX(5px)}
+  @media(max-width:900px){.ab-grid,.ab-progs{grid-template-columns:minmax(0,1fr)}}
+</style>

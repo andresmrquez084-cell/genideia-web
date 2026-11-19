@@ -1,0 +1,26 @@
+---
+// Cinta en movimiento con rubros o herramientas. Se pausa al pasar el mouse.
+interface Props { items?: string[]; label?: string }
+const {
+  items = ['Distribuidoras', 'Clínicas', 'Talleres', 'Inmobiliarias', 'Comercios', 'Estudios jurídicos', 'Logística', 'Restaurantes', 'Centros de estética', 'Transporte'],
+  label = 'Rubros con los que trabajamos',
+} = Astro.props;
+---
+<div class="ci" aria-label={label}>
+  <div class="ci-track">
+    {[0, 1].map((rep) => (
+      <ul aria-hidden={rep === 1 ? 'true' : undefined}>{items.map((t) => <li>{t}</li>)}</ul>
+    ))}
+  </div>
+</div>
+<style>
+  .ci{position:relative;overflow:hidden;padding:18px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);-webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+  .ci-track{display:flex;width:max-content;animation:ciMove 38s linear infinite}
+  .ci:hover .ci-track{animation-play-state:paused}
+  .ci ul{display:flex;gap:44px;margin:0;padding:0 22px;list-style:none}
+  .ci li{display:inline-flex;align-items:center;gap:14px;font-family:"Montserrat","Poppins",system-ui,sans-serif;font-weight:600;font-size:clamp(18px,2.2vw,26px);letter-spacing:-.02em;color:transparent;-webkit-text-stroke:1px rgba(191,239,255,.45);white-space:nowrap;transition:color .3s}
+  .ci li:hover{color:#BFEFFF}
+  .ci li::before{content:"";width:8px;height:8px;border-radius:50%;background:#00C8FF;box-shadow:0 0 12px #00C8FF}
+  @keyframes ciMove{to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){.ci-track{animation:none}}
+</style>

@@ -1,0 +1,132 @@
+---
+// Biblioteca de recursos: junta todas las guías de /recursos en una sola entrada desde la web.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const raw = import.meta.glob('./*.astro', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const attr = (src: string, name: string) => {
+  const m = src.match(new RegExp(`${name}="([^"]*)"`)) || src.match(new RegExp(`${name}=\\{['\`]([^'\`]*)['\`]\\}`));
+  return m ? m[1] : '';
+};
+// Temas: se deducen del slug y el título para filtrar rápido.
+const TEMAS: [string, RegExp][] = [
+  ['Agentes', /agente|subagente|jarvis|equipo-agentes|decision/i],
+  ['Prompts', /prompt|codigos|estilos|gato|escena|referencia-3d|astra/i],
+  ['Trabajo', /trabajo|postulac|ofertas|busqueda/i],
+  ['Negocio', /whatsapp|comercial|sales|vender|instagram|seguimiento|automatizar|ordenar|bot/i],
+  ['Claude', /claude|skill|plugin|conector|mcp|cowork|loop|opus|kimi|tokens|notebooklm|habilidad|chatgpt/i],
+];
+const recursos = Object.entries(raw)
+  .map(([path, src]) => {
+    const slug = path.replace('./', '').replace('.astro', '');
+    const titulo = attr(src, 'titulo');
+    const texto = `${slug} ${titulo}`;
+    return {
+      slug,
+      titulo,
+      descripcion: attr(src, 'descripcion'),
+      tipo: attr(src, 'tipo') || 'Guía',
+      tema: (TEMAS.find(([, re]) => re.test(texto)) || ['General'])[0],
+    };
+  })
+  .filter((r) => !r.slug.startsWith('_') && r.slug !== 'index' && r.titulo)
+  .sort((a, b) => a.titulo.localeCompare(b.titulo, 'es'));
+const temas = ['Todos', ...TEMAS.map((t) => t[0]), 'General'].filter((t) => t === 'Todos' || recursos.some((r) => r.tema === t));
+const n = (t: string) => (t === 'Todos' ? recursos.length : recursos.filter((r) => r.tema === t).length);
+---
+
+<BaseLayout
+  title="Recursos gratis · GENIDEIA Company"
+  description="Guías, prompts, plantillas y checklists para aplicar IA en tu trabajo y en tu negocio."
+  path="/recursos/"
+>
+  <div class="px-shell">
+    <section class="rc-hero">
+      <p class="px-eb">Biblioteca abierta</p>
+      <h1 class="px-split">Recursos para aplicar IA <em>desde hoy.</em></h1>
+      <p class="px-lead px-rv">{recursos.length} guías, prompts y plantillas que compartimos en Instagram, todas en un solo lugar. Buscá por tema o por palabra.</p>
+      <div class="rc-search px-rv">
+        <input id="rcQ" type="search" placeholder="Buscar: Claude, WhatsApp, prompts…" aria-label="Buscar recursos" autocomplete="off" />
+        <span id="rcN">{recursos.length} resultados</span>
+      </div>
+      <div class="rc-tags px-rv" role="tablist">
+        {temas.map((t, i) => <button class={i === 0 ? 'on' : ''} data-t={t}>{t}<sup>{n(t)}</sup></button>)}
+      </div>
+    </section>
+
+    <section class="rc-grid" id="rcGrid">
+      {recursos.map((r) => (
+        <a class="rc-card px-spot" href={`/recursos/${r.slug}`} data-t={r.tema} data-q={`${r.titulo} ${r.descripcion} ${r.tipo} ${r.tema}`.toLowerCase()}>
+          <span class="rc-meta"><i>{r.tipo}</i><b>{r.tema}</b></span>
+          <h3>{r.titulo}</h3>
+          <p>{r.descripcion}</p>
+          <span class="px-go">Abrir <i>→</i></span>
+        </a>
+      ))}
+      <p class="rc-empty" id="rcEmpty" hidden>No encontramos recursos con esa búsqueda.</p>
+    </section>
+
+    <section class="px-sec rc-close px-rv">
+      <div class="px-card feat">
+        <p class="px-eb">¿Querés aplicarlo en tu empresa?</p>
+        <h2>Si ya sabés qué querés automatizar, <em>lo construimos juntos.</em></h2>
+        <div class="px-cta">
+          <a class="px-btn p" href="/empresa">Agendá tu diagnóstico</a>
+          <a class="px-btn g" href="/academy">Aprendé con la Academy</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .rc-hero{padding:72px 0 30px}
+  .rc-hero h1{font-size:clamp(38px,5.4vw,70px);line-height:1.03;letter-spacing:-.045em;margin:0 0 18px;max-width:900px}
+  .rc-search{display:flex;align-items:center;gap:14px;margin:30px 0 16px;max-width:640px;padding:6px 6px 6px 18px;border-radius:999px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+  .rc-search:focus-within{box-shadow:inset 0 0 0 1px rgba(0,200,255,.6),0 0 30px -10px #00C8FF}
+  .rc-search input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;font:inherit;font-size:15px;padding:10px 0}
+  .rc-search input::placeholder{color:#7E8796}
+  .rc-search span{font-family:"JetBrains Mono",monospace;font-size:11px;color:#BFEFFF;padding:8px 14px;border-radius:999px;background:rgba(0,200,255,.1);white-space:nowrap}
+  .rc-tags{display:flex;gap:8px;flex-wrap:wrap}
+  .rc-tags button{all:unset;cursor:pointer;padding:9px 15px;border-radius:999px;font-size:13.5px;color:#B8BEC7;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+  .rc-tags button sup{font-family:"JetBrains Mono",monospace;font-size:9.5px;margin-left:5px;color:#7E8796}
+  .rc-tags button.on{color:#fff;background:linear-gradient(135deg,#007BFF,#00A8FF);box-shadow:0 10px 30px -10px rgba(0,140,255,.9)}
+  .rc-tags button.on sup{color:#DDF6FF}
+  .rc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:20px 0 30px}
+  .rc-card{position:relative;display:flex;flex-direction:column;padding:22px;border-radius:20px;color:inherit;text-decoration:none;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);transition:transform .3s,box-shadow .3s}
+  .rc-card:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px rgba(0,200,255,.45),0 26px 60px -30px rgba(0,140,255,.8)}
+  .rc-card.hide{display:none}
+  .rc-meta{display:flex;justify-content:space-between;gap:8px;margin-bottom:12px;font-family:"JetBrains Mono",monospace;font-size:10.5px}
+  .rc-meta i{font-style:normal;color:#BFEFFF;padding:4px 9px;border-radius:999px;background:rgba(0,200,255,.1)}
+  .rc-meta b{font-weight:400;color:#7E8796}
+  .rc-card h3{margin:0 0 8px;font-size:17px;line-height:1.25;letter-spacing:-.02em}
+  .rc-card p{margin:0 0 16px;font-size:13.5px;color:#B8BEC7;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .rc-card .px-go{margin-top:auto;font-size:13px}
+  .rc-empty{grid-column:1/-1;color:#7E8796;text-align:center;padding:40px 0}
+  .rc-close .px-card{text-align:center;padding:48px 28px}
+  .rc-close h2{font-size:clamp(26px,3.4vw,42px);line-height:1.08;letter-spacing:-.035em;margin:0 auto 22px;max-width:760px}
+  .rc-close h2 em{font-style:normal;background:linear-gradient(120deg,#007BFF,#00C8FF 50%,#BFEFFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .rc-close .px-cta{justify-content:center}
+  @media (max-width:980px){.rc-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:640px){
+    .rc-hero{padding-top:40px}.rc-grid{grid-template-columns:1fr}
+    .rc-tags{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px;padding:0 16px 4px;scrollbar-width:none}.rc-tags button{flex:none}
+    .rc-search span{display:none}
+  }
+</style>
+
+<script is:inline>
+(function () {
+  var q = document.getElementById('rcQ'), cards = document.querySelectorAll('.rc-card'), tags = document.querySelectorAll('.rc-tags button'), out = document.getElementById('rcN'), empty = document.getElementById('rcEmpty'), tema = 'Todos';
+  function norm(s) { return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+  function apply() {
+    var words = norm(q.value.trim()).split(/\s+/).filter(Boolean), shown = 0;
+    cards.forEach(function (c) {
+      var hay = norm(c.dataset.q), ok = (tema === 'Todos' || c.dataset.t === tema) && words.every(function (w) { return hay.indexOf(w) > -1; });
+      c.classList.toggle('hide', !ok); if (ok) shown++;
+    });
+    out.textContent = shown + (shown === 1 ? ' resultado' : ' resultados'); empty.hidden = shown > 0;
+  }
+  q.addEventListener('input', apply);
+  tags.forEach(function (b) { b.addEventListener('click', function () { tema = b.dataset.t; tags.forEach(function (x) { x.classList.toggle('on', x === b); }); apply(); }); });
+})();
+</script>

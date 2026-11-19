@@ -1,0 +1,383 @@
+[
+ {
+  "id": "donhers",
+  "cat": "Webs",
+  "title": "Donher's",
+  "subtitle": "E-commerce de relojes y accesorios",
+  "state": "Proyecto desarrollado",
+  "stateClass": "done",
+  "image": "/experiencia/images/donhers-card.webp",
+  "summary": "Experiencia de compra completa con catálogo, producto, carrito y cobro digital.",
+  "problem": "Construir una tienda que se sintiera como una marca, no como un catálogo genérico.",
+  "built": [
+   "Catálogo y fichas de producto",
+   "Favoritos, descuentos y carrito",
+   "Checkout y pagos",
+   "Diseño premium orientado a conversión"
+  ],
+  "proof": "Capturas del prototipo y sistema desarrollado.",
+  "access": "private"
+ },
+ {
+  "id": "sara",
+  "cat": "Webs",
+  "title": "Plataforma web para centro estético y SPA",
+  "subtitle": "Captación, servicios y reservas · Sara Centro Estético",
+  "state": "Proyecto desarrollado",
+  "stateClass": "done",
+  "image": "/experiencia/images/sara-card.webp",
+  "summary": "Estructura digital para convertir visibilidad local en consultas y reservas.",
+  "problem": "Ordenar presencia, propuesta y canales de contacto para un servicio local.",
+  "built": [
+   "Estructura web",
+   "Google Business y conversión",
+   "WhatsApp como canal central",
+   "Contenido y branding"
+  ],
+  "proof": "Captura real de la plataforma web desarrollada.",
+  "access": "private"
+ },
+ {
+  "id": "lorena",
+  "cat": "Webs",
+  "title": "Landing comercial para servicios",
+  "subtitle": "Presentación de oferta y conversión · Lorena Imperium",
+  "state": "Proyecto privado",
+  "stateClass": "private",
+  "image": "",
+  "summary": "Landing diseñada para explicar una propuesta de forma clara y convertir visitas en conversaciones.",
+  "problem": "Transformar una oferta de servicios en una página directa, entendible y orientada a acción.",
+  "built": [
+   "Arquitectura de landing",
+   "Jerarquía de oferta",
+   "Prueba y CTA",
+   "Adaptación mobile"
+  ],
+  "proof": "Ficha de proyecto. El acceso completo no es público.",
+  "access": "private",
+  "mock": "landing"
+ },
+ {
+  "id": "tbo",
+  "cat": "Webs",
+  "title": "Plataforma web para cadetería y última milla",
+  "subtitle": "Operación logística · TBO Express",
+  "state": "Proyecto privado",
+  "stateClass": "private",
+  "image": "",
+  "summary": "Web y sistema de marca para una operación de cadetería y última milla.",
+  "problem": "Dar una presencia profesional a una operación logística que debía crecer desde el interior.",
+  "built": [
+   "Web comercial",
+   "Posicionamiento de marca",
+   "Arquitectura de servicios",
+   "Base para futura operación digital"
+  ],
+  "proof": "Ficha de proyecto y documentación de negocio.",
+  "access": "private",
+  "mock": "route"
+ },
+ {
+  "id": "campero",
+  "cat": "Webs",
+  "title": "Plataforma web de captación para transporte",
+  "subtitle": "Servicios, cobertura y contacto · Campero Transportes",
+  "state": "Prototipo desarrollado",
+  "stateClass": "prototype",
+  "image": "/experiencia/images/campero-card.webp",
+  "summary": "Experiencia web orientada a servicios, cobertura y contacto directo.",
+  "problem": "Hacer entendible la operación de transporte y facilitar la consulta desde una sola página.",
+  "built": [
+   "Hero de servicio",
+   "Cobertura Uruguay",
+   "Secciones comerciales",
+   "Asistente de consulta"
+  ],
+  "proof": "Captura del prototipo desarrollado.",
+  "access": "private"
+ },
+ {
+  "id": "vanzza-web",
+  "cat": "Webs",
+  "title": "Sistema comercial con pedidos, puntos y comisiones",
+  "subtitle": "Tienda + operación comercial · Vanzza",
+  "state": "Sistema / web desarrollada",
+  "stateClass": "done",
+  "image": "/experiencia/images/vanzza-card.webp",
+  "summary": "Experiencia comercial conectada con pedidos, vendedoras, puntos y comisiones.",
+  "problem": "Transformar un catálogo en una operación comercial con trazabilidad.",
+  "built": [
+   "Tienda",
+   "Pedidos",
+   "Panel administrativo",
+   "Base para comisiones y liquidaciones"
+  ],
+  "proof": "Capturas del dashboard y flujo comercial.",
+  "access": "private"
+ },
+ {
+  "id": "hcea",
+  "cat": "Webs",
+  "title": "Galería digital y plataforma comercial para artistas",
+  "subtitle": "Curaduría, obras y venta · Hecho con el Alma",
+  "state": "Proyecto desarrollado",
+  "stateClass": "done",
+  "image": "/experiencia/images/hcea-card.webp",
+  "summary": "Galería digital con curaduría, artistas, obras y narrativa de marca.",
+  "problem": "Dar valor editorial a piezas artesanales y ordenar la experiencia de compra.",
+  "built": [
+   "Galería",
+   "Fichas de obra",
+   "Curaduría visual",
+   "Flujo de consulta y venta"
+  ],
+  "proof": "Capturas de diseño y experiencia.",
+  "access": "private"
+ },
+ {
+  "id": "andrew-personal",
+  "cat": "Webs",
+  "title": "Plataforma editorial de contenido y experiencias",
+  "subtitle": "Marca personal · Andrew / Comportamiento humano",
+  "state": "En evolución",
+  "stateClass": "build",
+  "image": "/experiencia/images/andrew-card.webp",
+  "summary": "Experiencias, observaciones y aprendizaje organizados en una web editorial.",
+  "problem": "Crear un activo propio para publicar experiencias y conocimiento de forma estructurada.",
+  "built": [
+   "Biblioteca",
+   "Experiencias recientes",
+   "Filtros por problema",
+   "Identidad editorial"
+  ],
+  "proof": "Capturas de la versión desarrollada.",
+  "access": "private"
+ },
+ {
+  "id": "genideia-web",
+  "cat": "Webs",
+  "title": "Plataforma comercial basada en diagnóstico y video",
+  "subtitle": "Activo propio · GENIDEIA",
+  "state": "Proyecto propio",
+  "stateClass": "own",
+  "image": "/experiencia/images/hero-card.webp",
+  "summary": "Página de GENIDEIA para presentar la metodología, ejemplos sectoriales y abrir diagnósticos.",
+  "problem": "Explicar una oferta compleja sin vender tecnología por tecnología.",
+  "built": [
+   "Posicionamiento",
+   "Videos de ejemplo",
+   "CTA a diagnóstico",
+   "Branding GENIDEIA"
+  ],
+  "proof": "Activo propio de la marca.",
+  "access": "private"
+ },
+ {
+  "id": "habits",
+  "cat": "Apps",
+  "title": "Aplicación de hábitos, experimentos y seguimiento",
+  "subtitle": "Producto propio · Habits",
+  "state": "Aplicación desarrollada",
+  "stateClass": "done",
+  "image": "/experiencia/images/habits-card.webp",
+  "summary": "App para registrar hábitos, experimentar cambios y detectar patrones personales.",
+  "problem": "Pasar de 'marcar hábitos' a observar comportamiento, registros y patrones.",
+  "built": [
+   "Hábitos",
+   "Experimentos",
+   "Registros",
+   "Patrones",
+   "Perfil y métricas"
+  ],
+  "proof": "Capturas del producto y sistema visual.",
+  "access": "private"
+ },
+ {
+  "id": "agcontent",
+  "cat": "Sistemas",
+  "title": "Sistema de generación de contenido para inmobiliarias",
+  "subtitle": "AG-CONTENT",
+  "state": "Sistema privado",
+  "stateClass": "private",
+  "image": "",
+  "summary": "Sistema pensado para organizar propiedades y convertirlas en piezas de contenido reutilizables.",
+  "problem": "Evitar que la producción inmobiliaria dependa de buscar material y reconstruir información cada vez.",
+  "built": [
+   "Biblioteca de propiedades",
+   "Activos por inmueble",
+   "Piezas y formatos",
+   "Flujo de publicación"
+  ],
+  "proof": "Portada representativa del sistema privado, basada en su función y estructura de uso.",
+  "access": "public",
+  "url": "https://drive.google.com/file/d/1E5MVehS-mHx3quEMXBEt3JwhYqeNw_fb/view?usp=sharing",
+  "actionLabel": "Ver explicación →",
+  "mock": "content"
+ },
+ {
+  "id": "contentos",
+  "cat": "Sistemas",
+  "title": "Sistema operativo para creación y análisis de contenido",
+  "subtitle": "Producto propio · Content OS",
+  "state": "Sistema propio · privado",
+  "stateClass": "private",
+  "image": "/experiencia/images/content-os-card.webp",
+  "summary": "Sistema para investigar, crear, medir y replicar contenido con una lógica de aprendizaje.",
+  "problem": "Publicar mucho no alcanza si no se registra por qué una pieza funcionó.",
+  "built": [
+   "Ideas y biblioteca",
+   "Guiones",
+   "Analítica",
+   "Patrones",
+   "Embudo y resultados"
+  ],
+  "proof": "Sistema operativo interno de GENIDEIA. Se muestra mediante capturas; el acceso no es público.",
+  "access": "private"
+ },
+ {
+  "id": "genideiaos",
+  "cat": "Sistemas",
+  "title": "Sistema operativo interno para gestión empresarial",
+  "subtitle": "Producto propio · GENIDEIA OS",
+  "state": "Sistema propio · en desarrollo",
+  "stateClass": "build",
+  "image": "/experiencia/images/genideia-os-card.webp",
+  "summary": "El cerebro operativo de la empresa: proyectos, clientes, diagnósticos, contenido y ejecución.",
+  "problem": "No depender de memoria, chats y documentos separados para dirigir la operación.",
+  "built": [
+   "Clientes y proyectos",
+   "Diagnósticos",
+   "Contratos y operación",
+   "Contenido",
+   "Portfolio y procedimientos"
+  ],
+  "proof": "Sistema interno de GENIDEIA. Acceso restringido.",
+  "access": "private"
+ },
+ {
+  "id": "cevven",
+  "cat": "Sistemas",
+  "title": "Sistema integral de membresías y operación para gimnasios",
+  "subtitle": "Administración + portal socio · prototipo Cevven",
+  "state": "Prototipo funcional",
+  "stateClass": "prototype",
+  "image": "",
+  "summary": "Sistema de gestión para centralizar socios, membresías, pagos, actividades, acceso, seguimientos y automatizaciones.",
+  "problem": "Evitar que membresías, renovaciones, pagos, reservas y control de acceso dependan de planillas, memoria y tareas separadas.",
+  "built": [
+   "Centro de control y prioridades operativas",
+   "Seguimientos y renovaciones",
+   "Membresías y gestión de socios",
+   "Pagos y estados",
+   "Actividades, horarios, cupos y reservas",
+   "Control de acceso",
+   "Automatizaciones y reportes",
+   "Portal del socio con membresía, clases y perfil"
+  ],
+  "proof": "Portada construida a partir del HTML real del prototipo de Cevven proporcionado para este portfolio.",
+  "access": "private",
+  "mock": "gym"
+ },
+ {
+  "id": "tms",
+  "cat": "Sistemas",
+  "title": "Sistema operativo para empresas de transporte",
+  "subtitle": "Solicitudes, viajes, flota y documentación · GENIDEIA TMS",
+  "state": "Demo · acceso a pedido",
+  "stateClass": "prototype",
+  "image": "/experiencia/images/kluver-card.webp",
+  "summary": "Sistema adaptable para solicitudes, viajes, unidades, conductores, mantenimiento y documentación.",
+  "problem": "Dar una vista común de la operación sin convertir WhatsApp y planillas en el sistema central.",
+  "built": [
+   "Solicitudes",
+   "Viajes",
+   "Conductores y vehículos",
+   "Documentación",
+   "Mantenimiento",
+   "Seguimiento del cliente"
+  ],
+  "proof": "Demo sectorial navegable. Se muestra completa en reunión.",
+  "access": "private"
+ },
+ {
+  "id": "firmador",
+  "cat": "Herramientas",
+  "title": "Herramienta de firma digital y gestión de contratos",
+  "subtitle": "Documento, firma y estado",
+  "state": "Herramienta desarrollada",
+  "stateClass": "done",
+  "image": "",
+  "summary": "Flujo simple para preparar, firmar y registrar contratos digitalmente.",
+  "problem": "Reducir fricción documental y centralizar el estado de la firma.",
+  "built": [
+   "Carga / preparación",
+   "Firma digital",
+   "Estado",
+   "Documento final"
+  ],
+  "proof": "Herramienta desarrollada. Se muestra en reunión mientras preparamos su nueva versión pública.",
+  "access": "private",
+  "mock": "sign"
+ },
+ {
+  "id": "acesur",
+  "cat": "Diagnósticos",
+  "title": "Diagnóstico de automatización y visibilidad operativa",
+  "subtitle": "Caso Acesur",
+  "state": "Diagnóstico realizado",
+  "stateClass": "diagnosis",
+  "image": "/experiencia/images/acesur-card.webp",
+  "summary": "Análisis de una operación consolidada para detectar excepciones, demoras y trabajo manual sin reemplazar sus sistemas.",
+  "problem": "La empresa ya tenía sistemas: la oportunidad era ver antes lo que hoy se descubre tarde.",
+  "built": [
+   "Mapa de canales y pedidos",
+   "Ventas / mostrador / depósito / despacho / devoluciones",
+   "Vista de estados y excepciones",
+   "Hipótesis + puntos a validar"
+  ],
+  "proof": "Diagnóstico y propuesta de solución. Implementación pendiente de validación.",
+  "access": "private"
+ },
+ {
+  "id": "kluver",
+  "cat": "Diagnósticos",
+  "title": "Diseño de trazabilidad para cargas y encomiendas",
+  "subtitle": "Diagnóstico · Klüver Transporte & Logística",
+  "state": "Diagnóstico + diseño de solución",
+  "stateClass": "diagnosis",
+  "image": "/experiencia/images/kluver-card.webp",
+  "summary": "Diseño de una cadena de custodia para saber qué se recibió, qué se transfirió, quién lo confirmó y cuál fue el último punto comprobado.",
+  "problem": "Evitar reconstruir el recorrido de una carga mediante llamadas cuando cambia de base, vehículo o responsable.",
+  "built": [
+   "Remito / lote / manifiesto",
+   "Transferencias",
+   "Incidencias",
+   "Historial común",
+   "Operación sin conexión",
+   "Integración futura a validar"
+  ],
+  "proof": "Diagnóstico y arquitectura propuesta. No presentado como sistema instalado.",
+  "access": "private"
+ },
+ {
+  "id": "bot",
+  "cat": "Automatizaciones",
+  "title": "Asistente de WhatsApp con IA, agenda y seguimiento",
+  "subtitle": "Automatización conversacional",
+  "state": "Automatización funcional",
+  "stateClass": "done",
+  "image": "",
+  "summary": "Asistente que entiende consultas, verifica disponibilidad, agenda y retoma conversaciones.",
+  "problem": "Responder rápido sin obligar al profesional a interrumpir su trabajo para cada consulta.",
+  "built": [
+   "Texto y audios",
+   "Consulta de disponibilidad",
+   "Google Calendar",
+   "Agendar / cancelar / reagendar",
+   "Seguimiento de indecisos"
+  ],
+  "proof": "Portada representativa del bot de WhatsApp. La demostración se muestra en reunión.",
+  "access": "private",
+  "mock": "chat"
+ }
+]

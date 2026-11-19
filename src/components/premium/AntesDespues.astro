@@ -1,0 +1,76 @@
+---
+// Comparación "hoy" vs "con un sistema": se arrastra la línea del medio (mouse, dedo o teclado).
+interface Props { eyebrow?: string; titulo?: string }
+const { eyebrow = 'Antes y después', titulo = 'Lo mismo que hacés hoy, sin perseguir planillas.' } = Astro.props;
+const ANTES = [
+  ['Pedidos por WhatsApp', 'se copian a mano a una planilla'],
+  ['Recordatorios', 'dependen de que alguien se acuerde'],
+  ['Seguimiento', 'cada uno anota en su cuaderno'],
+  ['Reportes', 'se arman a fin de mes, tarde'],
+];
+const DESPUES = [
+  ['Pedidos por WhatsApp', 'entran solos al panel, confirmados'],
+  ['Recordatorios', 'salen automáticos, a la hora justa'],
+  ['Seguimiento', 'todo el equipo ve el mismo estado'],
+  ['Reportes', 'se actualizan en vivo, todos los días'],
+];
+---
+
+<section class="ad" data-ad>
+  <div class="ad-head"><p class="ad-eb">{eyebrow}</p><h2>{titulo}</h2><p class="ad-hint">Arrastrá la línea para comparar</p></div>
+  <div class="ad-box" style="--x:50%">
+    <div class="ad-side ad-after">
+      <span class="ad-tag ok">Con un sistema</span>
+      <ul>{DESPUES.map((d) => <li><b>{d[0]}</b><span>{d[1]}</span></li>)}</ul>
+    </div>
+    <div class="ad-side ad-before">
+      <span class="ad-tag">Hoy</span>
+      <ul>{ANTES.map((d) => <li><b>{d[0]}</b><span>{d[1]}</span></li>)}</ul>
+    </div>
+    <div class="ad-handle" role="slider" tabindex="0" aria-label="Comparar antes y después" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><i>⟷</i></div>
+  </div>
+</section>
+
+<style>
+  .ad{--s:#00C8FF;--p:#007BFF;--sl:#BFEFFF;--ok:#4BE39A;--tx:#F2F4F7;--tx2:#B8BEC7;--tx3:#7E8796;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--display:"Montserrat","Poppins",system-ui,sans-serif;color:var(--tx);font-family:"Poppins",system-ui,sans-serif;padding:56px 0}
+  .ad-head{margin-bottom:24px}
+  .ad-eb{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--sl);margin:0 0 14px}
+  .ad-eb::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--s);box-shadow:0 0 10px var(--s)}
+  .ad-head h2{margin:0;font-family:var(--display);font-size:clamp(28px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;max-width:760px}
+  .ad-hint{margin:10px 0 0;font-family:var(--mono);font-size:11px;color:var(--tx3)}
+  .ad-box{position:relative;display:grid;border-radius:26px;overflow:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 50px 120px -40px rgba(0,90,255,.55);user-select:none;touch-action:pan-y}
+  .ad-side{grid-area:1/1;position:relative;padding:34px}
+  .ad-after{background:radial-gradient(circle at 80% 20%,rgba(0,200,255,.22),transparent 55%),linear-gradient(145deg,rgba(0,123,255,.22),rgba(13,24,40,.9)),#0B1324}
+  .ad-before{background:repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 1px,transparent 1px 14px),linear-gradient(180deg,#1a1d24,#111318);clip-path:inset(0 calc(100% - var(--x)) 0 0);filter:saturate(.2)}
+  .ad-tag{display:inline-flex;font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:999px;color:var(--tx2);background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+  .ad-tag.ok{color:var(--ok);background:rgba(75,227,154,.1);box-shadow:inset 0 0 0 1px rgba(75,227,154,.35)}
+  .ad-side ul{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px;max-width:520px}
+  .ad-side li{display:grid;gap:2px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)}
+  .ad-side li b{font-family:var(--display);font-size:16px}
+  .ad-side li span{font-size:14px;color:var(--tx2)}
+  .ad-before li span{text-decoration:line-through;text-decoration-color:rgba(255,107,122,.6)}
+  .ad-after ul{margin-left:auto}.ad-after .ad-tag{float:right}.ad-after ul{clear:both}
+  .ad-after li{box-shadow:inset 0 0 0 1px rgba(0,200,255,.22)}
+  .ad-handle{position:absolute;z-index:3;top:0;bottom:0;left:var(--x);width:2px;transform:translateX(-1px);background:linear-gradient(180deg,transparent,var(--s),transparent);cursor:ew-resize;outline:none}
+  .ad-handle i{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:18px;color:#fff;background:linear-gradient(135deg,var(--p),var(--s));box-shadow:0 0 0 6px rgba(0,200,255,.15),0 10px 30px -6px rgba(0,160,255,.9)}
+  .ad-handle:focus-visible i{box-shadow:0 0 0 3px #fff,0 10px 30px -6px rgba(0,160,255,.9)}
+  @media(max-width:700px){.ad-side{padding:22px}.ad-side li{padding:11px 12px}.ad-side li b{font-size:14px}.ad-side li span{font-size:12.5px}.ad-after ul,.ad-before ul{max-width:none}}
+</style>
+
+<script is:inline>
+(function(){
+  document.querySelectorAll('[data-ad]').forEach(function(root){
+    var box=root.querySelector('.ad-box'),h=root.querySelector('.ad-handle'),drag=false,touched=false;
+    function set(p){p=Math.max(4,Math.min(96,p));box.style.setProperty('--x',p+'%');h.setAttribute('aria-valuenow',Math.round(p))}
+    function at(e){var r=box.getBoundingClientRect();set((e.clientX-r.left)/r.width*100)}
+    box.addEventListener('pointerdown',function(e){drag=true;touched=true;box.setPointerCapture(e.pointerId);at(e)});
+    box.addEventListener('pointermove',function(e){if(drag)at(e)});
+    box.addEventListener('pointerup',function(){drag=false});
+    h.addEventListener('keydown',function(e){var v=Number(h.getAttribute('aria-valuenow'));if(e.key==='ArrowLeft'){touched=true;set(v-5);e.preventDefault()}if(e.key==='ArrowRight'){touched=true;set(v+5);e.preventDefault()}});
+    // pista inicial: la línea se mueve sola una vez al aparecer
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window))return;
+    var io=new IntersectionObserver(function(es){if(!es[0].isIntersecting)return;io.disconnect();var t0=null;(function st(t){if(touched)return;if(!t0)t0=t;var p=(t-t0)/2400;if(p>1){set(50);return}set(50+Math.sin(p*Math.PI*2)*28);requestAnimationFrame(st)})(performance.now())},{threshold:.4});
+    io.observe(box);
+  });
+})();
+</script>

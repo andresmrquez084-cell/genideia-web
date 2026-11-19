@@ -47,6 +47,8 @@
     setupReveals();
     if (document.readyState === 'complete') hideLoader();
     else window.addEventListener('load', hideLoader, { once: true });
+    // Tope: si un video o una imagen pesada demora la carga, la página igual se muestra.
+    setTimeout(hideLoader, 2500);
   }
 
   // Astro: dispara en la carga inicial y tras cada navegación con ClientRouter.
