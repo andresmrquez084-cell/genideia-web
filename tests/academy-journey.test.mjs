@@ -5,7 +5,7 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { onRequest } from '../functions/_middleware.js';
-import { createAcademyMiddleware } from '../lib/academy-vercel.mjs';
+import { createAcademyMiddleware, MODE_PANEL, MODE_SITE } from '../lib/academy-vercel.mjs';
 
 const SECRET = 'secreto-sintetico-de-prueba-0123456789abcdef';
 const PRIVATE = 'CONTENIDO-PRIVADO-SINTETICO';
@@ -52,11 +52,11 @@ async function cloudflare(env, path, { method = 'GET', cookie, form } = {}) {
   return summarize(res);
 }
 
-async function vercel(env, path, { host = 'academy.genideiacompany.com', cookie } = {}) {
+async function vercel(env, path, { host = 'genideiacompany.com', cookie, mode = MODE_SITE } = {}) {
   const headers = new Headers();
   if (cookie) headers.set('cookie', cookie);
   const request = new Request(`https://${host}${path}`, { headers, redirect: 'manual' });
-  const handler = createAcademyMiddleware(okNext, () => env);
+  const handler = createAcademyMiddleware(okNext, () => env, mode);
   return summarize(await handler(request));
 }
 
@@ -81,7 +81,7 @@ describe('recorrido: login en Cloudflare → autorización en Vercel', () => {
     assert.match(login.setCookie, /HttpOnly/);
     assert.match(login.setCookie, /Secure/);
 
-    const panel = await vercel(w.vercel, '/', { cookie: cookieFrom(login) });
+    const panel = await vercel(w.vercel, '/', { mode: MODE_PANEL, host: 'academy.genideiacompany.com', cookie: cookieFrom(login) });
     assert.equal(panel.status, 200);
     assert.ok(leaks(panel), 'el panel debe servirse con sesión de admin');
     assert.equal(panel.body.includes(PRIVATE), true);
@@ -92,8 +92,8 @@ describe('recorrido: login en Cloudflare → autorización en Vercel', () => {
     const login = await cloudflare(w.cf, '/academy/acceso', { method: 'POST', form: { username: 'alumno-a', password: 'clave-a-test' } });
     assert.equal(login.location, '/academy/alumnos/alumno-a');
 
-    const panel = await vercel(w.vercel, '/', { cookie: cookieFrom(login) });
-    assert.equal(panel.status, 303);
+    const panel = await vercel(w.vercel, '/', { mode: MODE_PANEL, host: 'academy.genideiacompany.com', cookie: cookieFrom(login) });
+    assert.equal(panel.status, 403);
     assert.equal(leaks(panel), false);
 
     const own = await cloudflare(w.cf, '/academy/alumnos/alumno-a/', { cookie: cookieFrom(login) });
@@ -105,7 +105,7 @@ describe('recorrido: login en Cloudflare → autorización en Vercel', () => {
 
   test('sin cookie: Vercel no sirve el panel ni Cloudflare los planes', async () => {
     const w = world();
-    const panel = await vercel(w.vercel, '/');
+    const panel = await vercel(w.vercel, '/', { mode: MODE_PANEL, host: 'academy.genideiacompany.com' });
     assert.equal(panel.status, 303);
     assert.match(panel.location, /genideiacompany\.com\/academy\/acceso/);
     assert.equal(leaks(panel), false);
@@ -124,8 +124,8 @@ describe('degradación y baja bloquean ambos entornos', () => {
     w.cf.ACADEMY_USERS_JSON = degraded;
     w.vercel.ACADEMY_USERS_JSON = degraded;
 
-    const panel = await vercel(w.vercel, '/', { cookie });
-    assert.equal(panel.status, 303);
+    const panel = await vercel(w.vercel, '/', { mode: MODE_PANEL, host: 'academy.genideiacompany.com', cookie });
+    assert.equal(panel.status, 403);
     assert.equal(leaks(panel), false);
     const sesiones = await cloudflare(w.cf, '/academy/sesiones/x/', { cookie });
     assert.equal(sesiones.status, 403);
@@ -153,7 +153,7 @@ describe('degradación y baja bloquean ambos entornos', () => {
     w.vercel.ACADEMY_USERS_JSON = cut;
     // La sesión deja de valer: redirige al login en ambos (no llega a 403).
     assert.equal((await cloudflare(w.cf, '/academy/sesiones/x/', { cookie })).status, 302);
-    assert.equal((await vercel(w.vercel, '/', { cookie })).status, 303);
+    assert.equal((await vercel(w.vercel, '/', { mode: MODE_PANEL, host: 'academy.genideiacompany.com', cookie })).status, 303);
   });
 
   test('ventana de propagación: si sólo Cloudflare recibió la baja, Vercel sigue aceptando hasta actualizarse', async () => {
@@ -163,9 +163,9 @@ describe('degradación y baja bloquean ambos entornos', () => {
     const cookie = cookieFrom(login);
     w.cf.ACADEMY_USERS_JSON = JSON.stringify(users({ 'admin-test': { disabled: true } }));
     assert.equal((await cloudflare(w.cf, '/academy/sesiones/x/', { cookie })).status, 302);
-    assert.equal((await vercel(w.vercel, '/', { cookie })).status, 200, 'Vercel aún sin la baja');
+    assert.equal((await vercel(w.vercel, '/', { mode: MODE_PANEL, host: 'academy.genideiacompany.com', cookie })).status, 200, 'Vercel aún sin la baja');
     w.vercel.ACADEMY_USERS_JSON = w.cf.ACADEMY_USERS_JSON;
-    assert.equal((await vercel(w.vercel, '/', { cookie })).status, 303);
+    assert.equal((await vercel(w.vercel, '/', { mode: MODE_PANEL, host: 'academy.genideiacompany.com', cookie })).status, 303);
   });
 });
 
@@ -174,21 +174,21 @@ describe('tokens que no deben aceptarse en ningún entorno', () => {
     const w = world();
     const old = await forgeCookie({ u: 'admin-test', role: 'admin', exp: Date.now() + 3600_000 });
     assert.equal((await cloudflare(w.cf, '/academy/sesiones/x/', { cookie: old })).status, 302);
-    assert.equal((await vercel(w.vercel, '/', { cookie: old })).status, 303);
+    assert.equal((await vercel(w.vercel, '/', { mode: MODE_PANEL, host: 'academy.genideiacompany.com', cookie: old })).status, 303);
   });
 
   test('token firmado con otro secreto se rechaza en ambos', async () => {
     const w = world();
     const forged = await forgeCookie({ u: 'admin-test', iat: Date.now(), exp: Date.now() + 3600_000 }, 'otro-secreto-sintetico-0123456789abcdefgh');
     assert.equal((await cloudflare(w.cf, '/academy/sesiones/x/', { cookie: forged })).status, 302);
-    assert.equal((await vercel(w.vercel, '/', { cookie: forged })).status, 303);
+    assert.equal((await vercel(w.vercel, '/', { mode: MODE_PANEL, host: 'academy.genideiacompany.com', cookie: forged })).status, 303);
   });
 
   test('token con iat en el futuro se rechaza en ambos', async () => {
     const w = world();
     const future = await forgeCookie({ u: 'admin-test', iat: Date.now() + 3600_000, exp: Date.now() + 7200_000 });
     assert.equal((await cloudflare(w.cf, '/academy/sesiones/x/', { cookie: future })).status, 302);
-    assert.equal((await vercel(w.vercel, '/', { cookie: future })).status, 303);
+    assert.equal((await vercel(w.vercel, '/', { mode: MODE_PANEL, host: 'academy.genideiacompany.com', cookie: future })).status, 303);
   });
 });
 
@@ -218,7 +218,7 @@ describe('rutas codificadas, barras repetidas y lockdown en ambos entornos', () 
     w.vercel.ACADEMY_LOCKDOWN = '1';
     assert.equal((await cloudflare(w.cf, '/academy/alumnos/alumno-a/', { cookie })).status, 503);
     assert.equal((await cloudflare(w.cf, '/academy/acceso', { method: 'POST', form: { username: 'admin-test', password: 'clave-admin-test' } })).status, 503);
-    const panel = await vercel(w.vercel, '/', { cookie });
+    const panel = await vercel(w.vercel, '/', { mode: MODE_PANEL, host: 'academy.genideiacompany.com', cookie });
     assert.equal(panel.status, 503);
     assert.equal(leaks(panel), false);
   });
@@ -227,7 +227,7 @@ describe('rutas codificadas, barras repetidas y lockdown en ambos entornos', () 
 describe('Vercel: hosts y rutas estáticas privadas', () => {
   test('genideia-academy.vercel.app exige admin aunque la cookie no llegue por dominio', async () => {
     const w = world();
-    const r = await vercel(w.vercel, '/', { host: 'genideia-academy.vercel.app' });
+    const r = await vercel(w.vercel, '/', { mode: MODE_PANEL, host: 'genideia-academy.vercel.app' });
     assert.equal(r.status, 303);
     assert.equal(leaks(r), false);
   });

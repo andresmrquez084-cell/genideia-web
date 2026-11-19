@@ -2,8 +2,10 @@
 
 ## Piezas
 - `lib/academy-auth.mjs`: token, permisos y decisiones. **Único** código de autorización.
-- `functions/_middleware.js`: Cloudflare Pages. Hace el login (`/academy/acceso`) y protege `/academy/*` en `genideiacompany.com`.
-- `lib/academy-vercel.mjs` + `middleware.ts` (raíz): Vercel. Protege el panel en `academy.genideiacompany.com` y `genideia-academy.vercel.app`. **No emite tokens.**
+- `functions/_middleware.js`: Cloudflare Pages. Login (`/academy/acceso`) y protección de `/academy/*` en `genideiacompany.com`.
+- `lib/academy-vercel.mjs`: middleware de Vercel con dos modos explícitos. **No emite tokens.**
+  - **Modo panel** (`academy/middleware.ts`): proyecto dedicado al panel, Root Directory = `academy/`. Toda ruta y todo host exigen admin. Sin sesión: login. Sesión sin admin: 403. Lockdown: 503 en todo. No usa nombres de host.
+  - **Modo sitio** (`middleware.ts`, raíz): proyecto del sitio comercial. Sólo las rutas `PROTECTED` de `/academy/*` exigen sesión. Lo demás es público.
 - `scripts/prebuild-academy-data.mjs`: prepara los planes y valida la configuración antes del build.
 
 ## Recorrido

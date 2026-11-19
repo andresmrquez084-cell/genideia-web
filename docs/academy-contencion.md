@@ -1,54 +1,48 @@
-# Academy: contención externa (pendiente de decisión)
+# Academy: contención de la exposición actual (propuesta única)
 
-Nada de esta lista se ejecutó. Cada acción cambia producción, borra algo o cambia visibilidad, y requiere confirmación explícita. El inventario con hosts concretos está fuera del repo, porque este repositorio es público.
+Nada de esto se ejecutó. Cada paso cambia producción y requiere tu OK. Todos los pasos de contención son reversibles. Las eliminaciones irreversibles están separadas en la sección 4.
 
-## 1. Exposición activa ahora (prioridad máxima)
-Verificado con GET (solo código de estado) el 2026-11-19:
-- `genideiacompany.com/academy/alumnos/<slug>/` → 200 sin login. `main` versiona los planes de alumnos (23 archivos) y Cloudflare sirve `main` en producción sin middleware.
-- `genideiacompany.com/academy/sesiones/` → 200 sin login.
-- Panel de Vercel (`academy.genideiacompany.com` y el alias `genideia-academy.vercel.app`) → 200 sin login. El despliegue de producción contiene un bloque de datos embebido.
+Hosts concretos e inventario de deployments: fuera del repo (el repo es público).
 
-Estas rutas **no se corrigen con este PR**: el PR cambia `main` sólo cuando se mergea, y el despliegue actual de producción no pasa por el middleware nuevo.
+## Contención (reversible)
 
-Opciones para cerrar **antes** del merge (cada una es un cambio de configuración de producción que requiere tu OK):
-- **A (recomendada, rápida y reversible):** regla de WAF en Cloudflare que responda 403 a `genideiacompany.com/academy/alumnos/*`, `/academy/sesiones/*`, `/academy/panel/*`, `/academy/data/*`. Se quita desde el mismo panel.
-- **B:** Cloudflare Access (Zero Trust) sobre esas mismas rutas. Requiere un proveedor de identidad; más trabajo.
-- **C (Vercel):** quitar los dominios `academy.genideiacompany.com` y `genideia-academy.vercel.app` del proyecto (Settings → Domains). Se vuelven a agregar cuando haga falta. No borra deployments.
-- **D (Vercel):** activar Deployment Protection (Vercel Authentication) en producción. Alternativa a C.
+### 1. Rutas privadas del dominio principal (Cloudflare, zona genideiacompany.com)
+- Recurso: Security → WAF → Custom rules. Regla nueva, acción **Block**.
+- Expresión: `lower(http.request.uri.path) matches "^/academy/(alumnos|sesiones|panel|data)(/|$)"`
+- Impacto: alumnos y admin pierden acceso a esas rutas en el dominio principal hasta que se decida el cierre definitivo. Las páginas comerciales no cambian.
+- Reversión: deshabilitar o borrar la regla. Efecto inmediato.
+- Verificación: `curl` con código de estado sobre `/academy/alumnos/<slug>/`, `/academy/sesiones/`, `/academy/panel/`, `/academy/data/public-plans.json`, y variantes codificadas (`/%61cademy/…`, `//academy/…`). Si alguna variante devuelve 200, la regla no la cubre y hay que agregar otra expresión; no se da por cerrado con sólo la regla.
 
-No puedo confirmar por qué el middleware de Vercel no bloquea el panel: el dominio responde `x-vercel-cache: HIT` con 200. Hay que revisar los Logs del deployment de producción antes de confiar en él.
+### 2. Panel y dominios alternativos de Vercel (proyecto genideia-academy)
+- Recurso: Settings → Domains del proyecto `genideia-academy`. Quitar `academy.genideiacompany.com` y `genideia-academy.vercel.app`.
+- Impacto: el panel deja de ser accesible en esos hosts. No se borra ningún deployment.
+- Reversión: volver a agregar cada dominio. Efecto cuando Vercel reasigna el alias (segundos a minutos).
+- Verificación: `curl` a ambos dominios debe dar error de dominio no asignado (no 200).
+- Los deployments de hash (`…-projects.vercel.app`) ya responden 302 a SSO de Vercel. No se tocan en esta fase.
 
-## 2. Deployments viejos
-### Cloudflare Pages (`genideia-web`)
-- Conocidos y públicos con contenido sensible: el deployment de hash `34754832` (planes sin protección) y `11cd537e` (commit `3e66917`, con bypass). Ambos responden 200.
-- No tengo acceso al listado completo desde aquí. Hay que revisarlo en el dashboard: Workers & Pages → genideia-web → Deployments.
-- Qué borrar: todo deployment cuyo commit sea anterior a la protección, y cualquier preview con carpeta `academy/alumnos` o `alumnos/`.
-- Qué no borrar: el deployment de producción activo.
-- Qué se pierde: la posibilidad de abrir esa versión exacta. El código sigue en Git, así que se puede reconstruir desde el commit. Es irreversible para ese deployment.
+### 3. URLs antiguas de Pages (`*.genideia-web.pages.dev`)
+Bloquear sólo el dominio principal no protege las URL de hash: siguen públicas (200) con planes antiguos.
+- Recurso: Zero Trust → Access → Applications. Nueva aplicación **self-hosted** para el hostname `*.genideia-web.pages.dev`. Política: Allow sólo al email del owner. Requiere un proveedor de identidad (p. ej. One-time PIN por email).
+- Impacto: todas las URL `pages.dev` del proyecto (previews, deployments antiguos y producción por esa URL) piden login. El dominio propio `genideiacompany.com` no cambia.
+- Reversión: borrar la aplicación de Access.
+- Verificación: `curl` sobre `34754832.genideia-web.pages.dev` y `11cd537e.genideia-web.pages.dev` debe responder redirect a login de Access, no 200.
 
-### Vercel (`genideia-academy`)
-- 20 deployments (inventario fuera del repo). 13 responden 302 a SSO de Vercel: no son públicos, pero conservan el contenido. 7 ya responden 410 (eliminados).
-- Qué borrar: los previews con 302 y los dos despliegues de producción anteriores a `b384dff`. Son versiones prohibidas como rollback (ver runbook).
-- Qué no borrar: el deployment de producción actual hasta que haya uno nuevo verificado.
-- Qué se pierde: la posibilidad de volver a esas versiones. Irreversible para cada deployment.
+### Orden
+1 → verificar → 2 → verificar → 3 → verificar. Si un paso rompe algo, revertir ese paso antes de seguir.
 
-## 3. Repositorio público → privado
-Comando (no ejecutado): `gh repo edit <owner>/<repo> --visibility private --accept-visibility-change-consequences`
+## Decisiones que necesito de vos (en lote)
+1. OK para aplicar los pasos 1, 2 y 3 en producción (son reversibles).
+2. Proveedor de identidad para Access (paso 3): One-time PIN por email al `owner` alcanza.
+3. Crear un proyecto nuevo de Vercel para el panel (Root Directory `academy/`) y reasignarle los dominios del paso 2. Sin ese proyecto, el modo panel no tiene dónde ejecutarse y no se puede validar en Vercel real.
 
-Efecto y verificación antes:
-- **Historial:** no cambia. Quien ya clonó o tiene una copia en caché sigue teniendo los datos. Hacerlo privado no borra el historial. Para eso haría falta reescribirlo (`git filter-repo` + force push), decisión aparte.
-- **Vercel:** la integración con GitHub sigue si la app de Vercel tiene acceso al repo. Verificar en Project → Settings → Git (repositorio conectado) y disparar un deploy de prueba.
-- **Cloudflare Pages:** verificar en Settings → Builds & deployments que el repo sigue conectado y que el próximo build corre.
-- **Vercel Preview Comments** (check de PR): depende de la misma app; verificar.
-- **GitHub Actions:** el workflow `content-os-sync` corre cada hora. Sigue funcionando en repo privado, pero consume minutos del plan.
-- **Forks:** 0 al 2026-11-19.
-- **Colaboradores:** mantienen acceso. Enlaces públicos a archivos del repo (en docs o Notion) dejan de funcionar.
+## 4. Eliminaciones irreversibles (separadas, no incluidas en la contención)
+Ninguna se hace sin confirmación explícita por grupo.
+- Cloudflare Pages: deployments `34754832` y `11cd537e`, y cualquier deployment anterior al commit de protección. Se pierde la capacidad de abrir esa versión exacta. El código sigue en Git.
+- Vercel: los 13 deployments con SSO y los dos despliegues de producción anteriores a `b384dff`. Mismo efecto.
+- Historial de Git: reescribir con `git filter-repo` + force push. Irreversible para cualquier clon existente.
+- Cambio de visibilidad del repo a privado: **reversible** (se puede volver a público), pero no borra lo ya clonado. Se decide aparte.
 
-Recomendación: hacerlo después de la contención de las secciones 1 y 2, y después de confirmar que las integraciones siguen operativas.
-
-## 4. Orden sugerido
-1. Decidir la opción de la sección 1 (A, B, C o D) y aplicarla con tu OK.
-2. Verificar con `curl` que las rutas privadas responden 403/302 en producción.
-3. Borrar deployments viejos (sección 2), con tu OK por cada grupo.
-4. Cambiar visibilidad del repo (sección 3), con tu OK.
-5. Recién después, mergear el PR y verificar el preview de producción con la checklist de `docs/academy-acceso.md`.
+## Orden sugerido después de la contención
+1. Mergear el PR cuando el preview de Cloudflare y el proyecto de panel en Vercel estén verificados.
+2. Verificar en producción con la checklist de `docs/academy-acceso.md`.
+3. Recién después, decidir sobre las eliminaciones de la sección 4.
