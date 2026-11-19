@@ -128,9 +128,11 @@ const RUBROS = [
   .pc-push b{font-family:var(--mono);font-weight:400;font-size:9.5px;color:var(--sl)}
   .pc-push strong{font-size:12.5px}
   .pc-push span{font-size:11px;color:var(--tx2);line-height:1.35}
-  .pc-prows{display:grid;gap:6px;margin-top:12px}
+  .pc-prows{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;margin-top:12px}
   .pc-prow{display:flex;justify-content:space-between;gap:6px;align-items:center;padding:9px 10px;border-radius:12px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);font-size:11px;animation:pcin .55s var(--ease) both}
-  .pc-prow span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pc-prow span:first-child{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pc-prow span:last-child{flex:none}
+  .pc-push strong,.pc-push span{overflow-wrap:anywhere}
   .pc-note{font-family:var(--mono);font-size:11px;color:var(--tx3);margin:34px 0 0;text-align:center}
 
   @media(max-width:980px){.pc-stage{grid-template-columns:minmax(0,1fr) 190px}.pc-phone{width:190px}.pc-split{grid-template-columns:minmax(0,1fr)}.pc-chart{display:none}}
