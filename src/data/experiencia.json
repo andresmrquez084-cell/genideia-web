@@ -283,7 +283,7 @@
   "cat": "Sistemas",
   "title": "Sistema operativo para empresas de transporte",
   "subtitle": "Solicitudes, viajes, flota y documentación · GENIDEIA TMS",
-  "state": "Demo navegable",
+  "state": "Demo · acceso a pedido",
   "stateClass": "prototype",
   "image": "/experiencia/images/kluver-card.webp",
   "summary": "Sistema adaptable para solicitudes, viajes, unidades, conductores, mantenimiento y documentación.",
@@ -296,9 +296,8 @@
    "Mantenimiento",
    "Seguimiento del cliente"
   ],
-  "proof": "Demo sectorial navegable. No representa una implantación única para todas las empresas.",
-  "access": "public",
-  "url": "https://genideia-tms.vercel.app/?pais=ar"
+  "proof": "Demo sectorial navegable. Se muestra completa en reunión.",
+  "access": "private"
  },
  {
   "id": "firmador",
@@ -316,9 +315,8 @@
    "Estado",
    "Documento final"
   ],
-  "proof": "Herramienta pública.",
-  "access": "public",
-  "url": "https://genideia-firmador.vercel.app/",
+  "proof": "Herramienta desarrollada. Se muestra en reunión mientras preparamos su nueva versión pública.",
+  "access": "private",
   "mock": "sign"
  },
  {
@@ -378,10 +376,8 @@
    "Agendar / cancelar / reagendar",
    "Seguimiento de indecisos"
   ],
-  "proof": "Portada representativa del bot de WhatsApp, orientada a atención, agenda y seguimiento.",
-  "access": "public",
-  "url": "https://drive.google.com/file/d/1I-q65XqCti2M_V5ubDrm2E2FHEDnmiCC/view",
-  "actionLabel": "Ver demostración →",
+  "proof": "Portada representativa del bot de WhatsApp. La demostración se muestra en reunión.",
+  "access": "private",
   "mock": "chat"
  }
 ]

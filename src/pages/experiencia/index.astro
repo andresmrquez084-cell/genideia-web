@@ -109,20 +109,20 @@ const pad = (n: number) => String(n).padStart(2, '0');
     <!-- TMS -->
     <section class="px-sec ex-tms" id="destacado">
       <div class="px-head">
-        <div><p class="px-eb">Sistema destacado</p><h2 class="px-split">Un recorrido técnico <em>de principio a fin.</em></h2></div>
+        <div><p class="px-eb">Sistema destacado</p><h2 class="px-split">Una operación entera <em>en una sola vista.</em></h2></div>
         <p class="px-side px-rv">GENIDEIA TMS muestra, sin abrir nada, qué información interviene, qué se automatiza y cómo se conecta cada parte.</p>
       </div>
       <div class="ex-tms-g">
         <div class="px-win px-rv">
-          <div class="px-win-top"><i></i><i></i><i></i><span>GENIDEIA TMS · recorrido en video</span><b class="px-live"><span></span>demo</b></div>
+          <div class="px-win-top"><i></i><i></i><i></i><span>GENIDEIA TMS · panel de operación</span><b class="px-live"><span></span>demo</b></div>
           <div class="ex-video">
-            <video controls playsinline preload="none" poster="/experiencia/images/kluver-full.webp" src="https://dbwuubabafzsinaokawe.supabase.co/storage/v1/object/public/genideia-videos/portfolio/tms.mp4"></video>
+            <img src="/experiencia/images/kluver-full.webp" alt="Panel de operación de GENIDEIA TMS" loading="lazy" decoding="async" />
           </div>
         </div>
         <div class="ex-tms-side px-rv">
           <p class="px-k">01 · Sistema destacado</p>
           <h3>GENIDEIA TMS</h3>
-          <p>Centraliza solicitudes, viajes, conductores, vehículos y documentación. El video recorre la operación completa: qué entra, cómo se registra y dónde intervienen las alertas.</p>
+          <p>Centraliza solicitudes, viajes, conductores, vehículos y documentación. Muestra la operación completa: qué entra, cómo se registra y dónde intervienen las alertas.</p>
           <div class="ex-flow" aria-label="Flujo del sistema">
             {['Solicitud', 'Viaje', 'Unidad', 'Documentación', 'Alerta'].map((f, i) => <span style={`--i:${i}`}>{f}</span>)}
           </div>
@@ -131,7 +131,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
             <div><small>Datos</small><b>Estados y responsables</b></div>
             <div><small>Automatización</small><b>Alertas por evento</b></div>
           </div>
-          <a class="px-btn g sm" href="https://genideia-tms.vercel.app/?pais=ar" target="_blank" rel="noopener noreferrer">Abrir demo navegable ↗</a>
+          <a class="px-btn g sm" href="/empresa">Quiero algo así para mi operación →</a>
         </div>
       </div>
     </section>
@@ -278,7 +278,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
         </div>
         <p class="px-lead">Hoy GENIDEIA reúne esas capacidades para resolver problemas empresariales de forma progresiva, empezando por procesos acotados, medibles y con un retorno claro.</p>
         <div class="px-cta">
-          <a class="px-btn p" href="https://andres.genideiacompany.com/empresa">Agendá tu diagnóstico</a>
+          <a class="px-btn p" href="/empresa">Agendá tu diagnóstico</a>
           <a class="px-btn g" href="https://wa.me/59892302941" target="_blank" rel="noopener noreferrer">Hablemos por WhatsApp</a>
         </div>
       </div>
@@ -368,7 +368,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   /* TMS */
   .ex-tms-g{display:grid;grid-template-columns:1.35fr .85fr;gap:28px;align-items:center}
   .ex-video{aspect-ratio:16/9;background:#020817}
-  .ex-video video{width:100%;height:100%;display:block;object-fit:contain;background:#020817}
+  .ex-video img{width:100%;height:100%;display:block;object-fit:cover;object-position:top}
   .ex-tms-side h3{font-size:30px;margin:6px 0 10px;letter-spacing:-.03em}
   .ex-tms-side>p{color:#B8BEC7;margin:0 0 20px}
   .ex-flow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}

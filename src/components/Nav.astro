@@ -3,9 +3,10 @@
 // Cada link lleva directo a su página real, sin contenido duplicado (pedido de Andrés, 17/09).
 const navLinks = [
   { href: '/nosotros', label: 'Nosotros' },
-  { href: 'https://genideiacompany.com/experiencia/', label: 'Nuestra experiencia' },
+  { href: '/experiencia', label: 'Nuestra experiencia' },
   { href: '/academy', label: 'Genideia Academy' },
-  { href: 'https://andres.genideiacompany.com/empresa', label: 'Agendá tu diagnóstico' },
+  { href: '/recursos', label: 'Recursos' },
+  { href: '/empresa', label: 'Agendá tu diagnóstico' },
 ];
 const here = Astro.url.pathname.replace(/\/$/, '');
 ---
