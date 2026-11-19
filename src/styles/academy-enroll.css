@@ -196,3 +196,18 @@ html:has(.enroll){scroll-behavior:smooth;overflow-x:clip}
   #signature-pad{background:white;border:1px solid #ccc}
   .enj .en-rv{opacity:1!important;transform:none!important}
 }
+
+
+/* Interaction safety */
+.topbar .brand,.en-steps a,.actions button,.signature-head button,
+.payment:not(.is-locked) a,.payment:not(.is-locked) button,.payment:not(.is-locked) select,.payment:not(.is-locked) input{
+  position:relative;
+  z-index:5;
+}
+.topbar .brand,.en-steps a,.actions button,.signature-head button,
+.payment:not(.is-locked) a,.payment:not(.is-locked) button{
+  pointer-events:auto!important;
+  cursor:pointer;
+}
+.primary::after,.en-spot::before,.hero::after{pointer-events:none!important}
+#recibis,#datos,#contrato,#pago{scroll-margin-top:150px}
