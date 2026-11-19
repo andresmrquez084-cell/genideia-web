@@ -30,3 +30,6 @@ alumnos/
 academy/plan-mauro.html
 academy/plan-rodrigo.html
 public/academy/sesiones/
+
+# Supabase CLI
+supabase/.temp/
