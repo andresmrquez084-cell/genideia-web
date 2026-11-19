@@ -394,12 +394,14 @@ function resumen(){
   var e=F.empresa,v=F.vista||{},c=conv(),A=actsSorted();
   var ks=c&&c.contactos&&c.contactos.length?F.contactos.filter(function(k){return c.contactos.indexOf(k.id)>=0}):F.contactos;
   var quien=ks.length?ks.slice(0,3).map(function(k){return esc(k.nombre||k.email||'Contacto')+(k.cargo?' · '+esc(k.cargo):'')+' · '+(k.rol_decision?esc(ROLES[k.rol_decision]):'<span class="sv">rol sin verificar</span>')}).join('<br>'):'<span class="sv">Sin contacto identificado</span>';
-  var resp=A.filter(function(a){return a.direccion==='entrante'&&a.tipo!=='rebote'&&a.estado_envio!=='respuesta_automatica'}).sort(byFecha)[0];
-  var respTxt=resp?(resp.fecha_hecho?esc(fdt(resp.fecha_hecho)):sv('Fecha sin verificar'))+(resp.clasificacion?' · '+esc(CLASIF[resp.clasificacion]):' · <span class="sv">sin clasificar</span>')+(resp.texto?'<div class="faint">“'+esc(strip(resp.texto).slice(0,140))+'”</div>':''):(v.sin_desglosar?'<span class="nd">Actividad sin desglosar; consultar historial</span>':'<span class="muted">Sin respuesta registrada</span>');
+  var resp=A.filter(GenideiaMedicion.humana).sort(byFecha)[0];
+  var respLabel=resp&&GenideiaMedicion.REACCIONES[GenideiaMedicion.reaccion(resp)];
+  var respTxt=resp?(resp.fecha_hecho?esc(fdt(resp.fecha_hecho)):sv('Fecha sin verificar'))+' · '+esc(respLabel||'Sin clasificar')+(resp.texto?'<div class="faint">“'+esc(strip(resp.texto).slice(0,140))+'”</div>':''):(v.sin_desglosar?'<span class="nd">Actividad sin desglosar; consultar historial</span>':'<span class="muted">Sin respuesta registrada</span>');
   var despues='<span class="muted">—</span>';
   if(resp){var out=A.filter(function(a){return a.direccion==='saliente'&&a.fecha_hecho&&resp.fecha_hecho&&a.fecha_hecho>resp.fecha_hecho}).sort(function(a,b){return a.fecha_hecho.localeCompare(b.fecha_hecho)})[0];
     despues=out?esc(TIPOS[out.tipo])+' · '+esc(fdt(out.fecha_hecho))+(out.asunto?'<div class="faint">'+esc(out.asunto)+'</div>':''):'<span class="muted">Nada registrado después de la respuesta</span>'}
   var mat=F.materiales.slice().sort(function(a,b){return String(b.enviado_en||'').localeCompare(String(a.enviado_en||''))})[0],dev='<span class="muted">No se registraron materiales</span>';
+  if(!mat){var ma=A.filter(function(a){return a.direccion==='saliente'&&GenideiaMedicion.material(a)}).sort(byFecha)[0];if(ma)mat={tipo:ma.tipo==='propuesta'?'propuesta_comercial':'ejemplo_referencia',titulo:ma.asunto||'Material enviado',actividad_id:ma.id,enviado_en:ma.fecha_hecho}}
   if(mat){var post=matResp(mat);dev=esc(MATS[mat.tipo])+': '+esc(mat.titulo)+' — '+(post?'devolución '+(post.fecha_hecho?esc(fdt(post.fecha_hecho)):'sin fecha'):'<span class="sv">sin devolución registrada</span>')}
   var actor=!c?'<span class="muted">Sin conversación</span>':c.atencion==='nos_toca_responder'?'<b>Nosotros</b>':c.atencion==='esperando_prospecto'?'El prospecto':c.atencion==='esperando_derivacion'?'Otra persona de la empresa (derivación)':c.atencion==='seguimiento_programado'?'Nosotros, en la fecha programada':c.atencion==='pausado'?'Nadie por ahora (pausado)':c.atencion==='cerrado'?'Nadie (cerrado)':'<span class="sv">Sin definir</span>';
   var t=F.tareas.filter(function(x){return x.estado==='pendiente'})[0];
@@ -412,7 +414,8 @@ function resumen(){
 function rk(k,v){return '<div><div class="k">'+esc(k)+'</div><div class="v">'+v+'</div></div>'}
 function byFecha(a,b){return String(b.fecha_hecho||'').localeCompare(String(a.fecha_hecho||''))}
 function matResp(m){if(m.respuesta_actividad_id)return F.actividades.find(function(a){return a.id===m.respuesta_actividad_id});
-  if(!m.enviado_en)return null;return F.actividades.filter(function(a){return a.direccion==='entrante'&&a.tipo!=='rebote'&&a.fecha_hecho&&a.fecha_hecho>m.enviado_en}).sort(function(a,b){return a.fecha_hecho.localeCompare(b.fecha_hecho)})[0]||null}
+  var explicit=F.actividades.find(function(a){return GenideiaMedicion.humana(a)&&((a.responde_a&&a.responde_a===m.actividad_id)||(a.datos_extra||{}).fase_respuesta==='despues_presentacion')});if(explicit)return explicit;
+  if(!m.enviado_en)return null;return F.actividades.filter(function(a){return GenideiaMedicion.humana(a)&&a.fecha_hecho&&a.fecha_precision==='exacta'&&a.fecha_hecho>m.enviado_en}).sort(function(a,b){return a.fecha_hecho.localeCompare(b.fecha_hecho)})[0]||null}
 function renderFicha(){
   var e=F.empresa,v=F.vista||{};
   var tabs=[['crono','Cronología ('+F.actividades.length+')'],['contactos','Contactos ('+F.contactos.length+')'],['materiales','Propuestas y materiales ('+F.materiales.length+')'],['tareas','Tareas y seguimientos ('+F.tareas.filter(function(t){return t.estado==='pendiente'}).length+')'],['datos','Datos y fuentes ('+F.fuentes.length+')'],['historial','Historial original']];
@@ -513,7 +516,12 @@ function fact(kind,id){
       '<label class="f"><span>Contacto</span><select class="in" id="a_co">'+contactOpts()+'</select></label>'+
       '<label class="f"><span>Estado del envío (email)</span><select class="in" id="a_es">'+opts(sel(ENVIO),'','Sin dato')+'</select></label>'+
       '<label class="f"><span>Clasificación (respuestas humanas)</span><select class="in" id="a_cl">'+opts(sel(CLASIF),'','Sin clasificar')+'</select></label>'+
+      '<label class="f"><span>Reacción concreta</span><select class="in" id="a_rx">'+opts(sel(GenideiaMedicion.REACCIONES),'','Sin clasificar')+'</select></label>'+
+      '<label class="f"><span>Etapa de la respuesta</span><select class="in" id="a_fase">'+opts([['antes_presentacion','Antes de la presentación'],['despues_presentacion','Después de la presentación']],'','Sin verificar')+'</select></label>'+
+      '<label class="f full"><span>Responde a este mensaje (si está verificado)</span><select class="in" id="a_parent">'+opts(F.actividades.filter(GenideiaMedicion.saliente).map(function(x){return [x.clave,(x.fecha_hecho?fdt(x.fecha_hecho):'Sin fecha')+' · '+(x.asunto||x.tipo)]}),'','Sin vínculo verificado')+'</select></label>'+
       '<label class="f"><span>¿Primera respuesta?</span><select class="in" id="a_pr">'+opts([['no','No'],['si','Sí']],'no')+'</select></label>'+
+      '<label class="f"><span>Versión del mensaje enviado</span><input class="in" id="a_var" placeholder="Ej.: H1-v1 o WhatsApp-v2"></label>'+
+      '<label class="f full"><span>Cambio respecto a la versión anterior</span><input class="in" id="a_cambio" placeholder="Ej.: cambiamos solo la apertura"></label>'+
       '<label class="f full"><span>Asunto o título</span><input class="in" id="a_as"></label>'+
       '<label class="f full"><span>Texto o resumen fiel</span><textarea class="in" id="a_tx" placeholder="Pegá el texto tal cual, o un resumen fiel"></textarea></label>'+
       '<label class="f"><span>¿Es un resumen?</span><select class="in" id="a_re">'+opts([['no','No, es el texto'],['si','Sí, es un resumen']],'no')+'</select></label>'+
@@ -523,7 +531,9 @@ function fact(kind,id){
     $('#a_ok').onclick=function(){var fe=val('a_fe'),mi=val('a_mi');
       var a={clave:mi?'msg:'+mi:'ui:'+uuid(),empresa:e.clave,conversacion:convClave(),contacto:val('a_co')||null,tipo:val('a_ti'),direccion:val('a_di'),canal:val('a_ca'),
         fecha_hecho:fe?new Date(fe).toISOString():null,fecha_precision:fe?'exacta':'sin_verificar',fecha_reporte:new Date().toISOString(),asunto:val('a_as'),texto:val('a_tx'),es_resumen:val('a_re')==='si',
-        estado_envio:val('a_es')||null,clasificacion:val('a_cl')||null,primera_respuesta:val('a_pr')==='si',evidencia:val('a_ev'),message_id:mi||null,responsable:me};
+        estado_envio:val('a_es')||null,clasificacion:val('a_cl')||null,primera_respuesta:val('a_pr')==='si',evidencia:val('a_ev'),message_id:mi||null,responsable:me,
+        variante:val('a_var')||null,datos_extra:{reaccion:val('a_rx')||null,fase_respuesta:val('a_fase')||null,cambio_mensaje:val('a_cambio')||null}};
+      if(val('a_parent'))a.responde_a=val('a_parent');
       var p={actividades:[a]};if(!c)p.conversaciones=[{clave:convClave(),empresa:e.clave,etapa:'contacto_iniciado',atencion:a.direccion==='entrante'?'nos_toca_responder':'esperando_prospecto',etapa_evidencia:'Primera actividad registrada a mano',canal:a.canal}];
       save(p,'completar')};
   }
@@ -688,6 +698,8 @@ $('#loginForm').addEventListener('submit',async function(e){e.preventDefault();$
 (async function boot(){
   if(!window.supabase){setSync('bad','Sin conexión');toast('No se pudo cargar la conexión con la base.','bad');return}
   sb=window.supabase.createClient(SB_URL,SB_KEY);
+  if(window.GenideiaPanel)GenideiaPanel({sb:sb,views:VIEWS,$:$,esc:esc,table:table,kpi:kpi,opts:opts,modal:modal,guardar:guardar,q:q,toast:toast,closeModal:closeModal,show:show,fdt:fdt,view:function(){return view},me:function(){return me}});
   var s=await sb.auth.getSession();if(s.data.session)enter();else showLogin();
 })();
 })();
+
