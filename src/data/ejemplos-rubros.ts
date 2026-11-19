@@ -8,7 +8,7 @@ export const RUBROS_EJEMPLOS: Rubro[] = [
   {
     id: 'transporte',
     label: 'Transporte',
-    video: '/videos/ejemplos-transporte.mp4',
+    video: 'https://tsktonjqpwdkfmxgknnq.supabase.co/storage/v1/object/public/genideia-videos/ejemplos-transporte.mp4',
     items: [
       { titulo: 'Solicitudes centralizadas', desc: 'Los pedidos que hoy entran dispersos por WhatsApp, llamadas y email quedan en un solo lugar, con estado y seguimiento en tiempo real.' },
       { titulo: 'Historial de condiciones de rutas', desc: 'Registro de las mejores rutas y caminos — estado, obstrucciones, restricciones de altura — para planificar cada traslado.' },
@@ -21,7 +21,7 @@ export const RUBROS_EJEMPLOS: Rubro[] = [
   {
     id: 'automotriz',
     label: 'Automotriz',
-    video: '/videos/ejemplos-automotriz.mp4',
+    video: 'https://tsktonjqpwdkfmxgknnq.supabase.co/storage/v1/object/public/genideia-videos/ejemplos-automotriz.mp4',
     items: [
       { titulo: 'Solicitudes centralizadas', desc: 'Las consultas que hoy llegan por distintos medios y quedan repartidas sin criterio se centralizan, se interpretan y se derivan parejo entre vendedores.' },
       { titulo: 'Consulta de stock automática', desc: 'El asistente consulta stock, responde al cliente y precarga el pedido — el vendedor solo confirma y factura.' },
