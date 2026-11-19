@@ -513,3 +513,18 @@ body::after{
 @media (prefers-reduced-motion:reduce){
   .ac-col::after,.ac-kcard.s-now::after,.ac-node.s-now{animation:none!important}
 }
+
+
+/* Interaction safety */
+.ac-intro{pointer-events:none!important}
+.btn,.linkbtn,.back,.nav button,.student-card,.module-card,.row,.session,.issue,
+.ac-chip,.ac-kcard,.ac-cell,.ac-titem,.ac-node,.ac-tabs button,.ac-follow-card{
+  position:relative;
+  z-index:5;
+  pointer-events:auto!important;
+  cursor:pointer;
+}
+.btn::before,.btn::after,.linkbtn::before,.linkbtn::after,.ac-spot::before,
+.module-card::after,.ac-follow-card::before,.stat::before,.ac-col::after,.ac-kcard::after{
+  pointer-events:none!important;
+}
