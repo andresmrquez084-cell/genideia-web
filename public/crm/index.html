@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CRM · GENIDEIA</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A0F1A">
+<link rel="icon" href="/crm/icono.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Poppins:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/crm/base.css">
+<link rel="stylesheet" href="/crm/crm.css">
+</head>
+<body class="crm">
+<div class="ambient" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="halo" id="halo" aria-hidden="true"></div>
+
+<header class="top glass blur">
+  <a class="brand" href="/crm"><img src="/crm/icono.png" alt="" width="28" height="28"><span>GENIDEIA</span><small>CRM</small></a>
+  <nav class="tabs" aria-label="Vistas">
+    <button data-view="hoy" class="on">Hoy</button>
+    <button data-view="pipeline">Pipeline</button>
+    <button data-view="empresas">Empresas</button>
+    <button data-view="metricas">Métricas</button>
+  </nav>
+  <div class="top-act">
+    <button class="btn btn-g sm" id="btnMenu" aria-label="Datos" title="Exportar o importar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v3h16v-3"/></svg>
+    </button>
+    <button class="btn btn-p sm" id="btnNew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg><span>Nueva</span></button>
+  </div>
+</header>
+
+<main class="wrap" id="app">
+  <section class="view on" id="v-hoy"></section>
+  <section class="view" id="v-pipeline"></section>
+  <section class="view" id="v-empresas"></section>
+  <section class="view" id="v-metricas"></section>
+</main>
+
+<!-- Ficha de empresa -->
+<div class="drawer-bg" id="drawerBg" hidden></div>
+<aside class="drawer glass blur" id="drawer" aria-hidden="true" role="dialog" aria-label="Ficha"></aside>
+
+<!-- Menú de datos -->
+<div class="menu glass blur" id="menu" hidden>
+  <button data-act="export">Exportar copia (JSON)</button>
+  <label>Importar copia (JSON)<input type="file" accept=".json,application/json" data-act="import" hidden></label>
+  <label>Importar empresas (CSV)<input type="file" accept=".csv,text/csv" data-act="csv" hidden></label>
+  <button data-act="demo">Cargar datos de ejemplo</button>
+  <button data-act="wipe" class="danger">Borrar todo</button>
+  <p class="faint">Los datos se guardan en este navegador. Exportá una copia seguido.</p>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="/crm/crm.js"></script>
+</body>
+</html>
