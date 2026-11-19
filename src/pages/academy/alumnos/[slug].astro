@@ -106,11 +106,11 @@ const ring = 2 * Math.PI * 52;
             <b>M{pad(next.id)} · {next.title}</b>
           </div>
         )}
-        <div class="mini">
-          <span class="k-done"><b data-count={counts.done}>{counts.done}</b>completados</span>
-          <span class="k-now"><b data-count={counts.now}>{counts.now}</b>en curso</span>
-          <span class="k-todo"><b data-count={counts.todo}>{counts.todo}</b>por delante</span>
-        </div>
+      </div>
+      <div class="mini">
+        <span class="k-done"><b data-count={counts.done}>{counts.done}</b>completados</span>
+        <span class="k-now"><b data-count={counts.now}>{counts.now}</b>en curso</span>
+        <span class="k-todo"><b data-count={counts.todo}>{counts.todo}</b>por delante</span>
       </div>
     </aside>
   </section>
@@ -509,7 +509,7 @@ html{scroll-behavior:smooth;overflow-x:clip}
 .next{padding:12px 14px;border-radius:14px;background:rgba(0,200,255,.08);box-shadow:inset 0 0 0 1px rgba(0,200,255,.25)}
 .next span{display:block;color:var(--sl)}
 .next b{display:block;font-family:var(--display);font-weight:600;font-size:14.5px;margin-top:3px;line-height:1.35}
-.mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:10px 14px;margin-top:14px}
+.mini{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 14px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}
 .mini span{font-family:var(--mono);font-size:10.5px;color:var(--tx3);display:flex;flex-direction:column;align-items:flex-start;gap:2px}
 .mini b{font-family:var(--display);font-size:20px;font-weight:700;letter-spacing:-.03em}
 .k-done b{color:var(--ok)}.k-now b{color:var(--sl)}.k-todo b{color:var(--tx2)}
