@@ -24,7 +24,7 @@ const FB_PIXEL_ID = '';
 const publicDir = new URL('../../public', import.meta.url);
 const existeArchivo = (ruta: string) => fs.existsSync(new URL(`.${ruta}`, `${publicDir}/`));
 
-const VIDEO_01 = '/videos/andres-01-porque.mp4';
+const VIDEO_01 = 'https://tsktonjqpwdkfmxgknnq.supabase.co/storage/v1/object/public/genideia-videos/andres-01-porque.mp4';
 const videoPrincipal = existeArchivo(VIDEO_01) ? VIDEO_01 : '/videos/landing-andres.mp4';
 
 const rubrosConMsg = RUBROS_EJEMPLOS.map((r) => ({
