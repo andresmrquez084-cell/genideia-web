@@ -468,7 +468,7 @@ function mergeIn(d){
 }
 
 /* ---------- nube: Supabase (proyecto propio, solo emails de crm_admins) ---------- */
-var SB_URL='https://fzrrbqqvteyuwbvfgvnx.supabase.co',SB_KEY='__CRM_PUBLISHABLE_KEY__';
+var SB_URL='https://fzrrbqqvteyuwbvfgvnx.supabase.co',SB_KEY='sb_publishable_g4URDx6lcAN9U_sFUcMUVQ_lFTxCnjc';
 var sb=null,cloud=false,snap={c:{},e:{}},syncT=null,syncing=false,again=false;
 var CT='crm_companies',ET='crm_interactions';
 function setSync(state,txt){var el=$('#sync');if(!el)return;el.className='sync '+state;el.querySelector('span').textContent=txt}
