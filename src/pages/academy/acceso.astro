@@ -1,0 +1,51 @@
+---
+import '../../styles/global.css';
+const error = Astro.url.searchParams.get('error') === '1';
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Acceso · Genideia Academy</title>
+  <meta name="description" content="Acceso privado para alumnos y administración de Genideia Academy." />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="amb" aria-hidden="true"></div>
+  <main class="shell">
+    <a class="brand" href="/academy">
+      <img src="/academy/assets/academy-logo.svg" alt="" width="44" height="44" />
+      <span><b>GENIDEIA</b><small>ACADEMY</small></span>
+    </a>
+    <section class="card">
+      <p class="eyebrow">ACCESO PRIVADO</p>
+      <h1>Tu espacio en Academy.</h1>
+      <p class="lead">Ingresá con el usuario que recibiste de Genideia. Si sos alumno, vas directo a tu recorrido. Si sos administrador, vas al panel interno.</p>
+      {error && <div class="error">Usuario o contraseña incorrectos.</div>}
+      <form method="post" action="/academy/acceso">
+        <label>Usuario<input name="username" autocomplete="username" required /></label>
+        <label>Contraseña<input name="password" type="password" autocomplete="current-password" required /></label>
+        <button type="submit">Ingresar <span>→</span></button>
+      </form>
+      <div class="help"><span>¿No tenés acceso?</span><p>Los usuarios se habilitan cuando comienza el acompañamiento.</p></div>
+    </section>
+    <a class="back" href="/academy">← Volver a Genideia Academy</a>
+  </main>
+</body>
+</html>
+<style>
+:root{--bg:#07080D;--surface:#101526;--text:#F2F4F7;--muted:#AEB7C4;--cyan:#00C8FF;--blue:#007BFF;--line:rgba(255,255,255,.10)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:Poppins,system-ui,sans-serif;display:grid;place-items:center;overflow-x:hidden}
+.amb{position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 15%,rgba(0,123,255,.20),transparent 28%),radial-gradient(circle at 80% 80%,rgba(0,200,255,.12),transparent 30%)}
+.shell{position:relative;width:min(520px,calc(100% - 30px));padding:36px 0}.brand{display:flex;align-items:center;gap:12px;width:max-content;margin:0 auto 22px;color:inherit;text-decoration:none}.brand img{border-radius:50%;border:1px solid rgba(0,200,255,.32);box-shadow:0 0 25px rgba(0,123,255,.25)}.brand b,.brand small{display:block;font-family:Montserrat,sans-serif;letter-spacing:.16em}.brand b{font-size:13px}.brand small{font-size:11px;color:var(--cyan);margin-top:2px}
+.card{padding:34px;border-radius:26px;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018)),rgba(10,15,26,.82);border:1px solid rgba(0,200,255,.16);box-shadow:0 40px 100px -45px rgba(0,100,255,.55);backdrop-filter:blur(18px)}
+.eyebrow{font-size:11px;letter-spacing:.12em;color:#BFEFFF;font-weight:600;margin:0 0 10px}h1{font:700 clamp(32px,7vw,48px)/1.02 Montserrat,sans-serif;letter-spacing:-.04em;margin:0 0 16px}.lead{color:var(--muted);font-size:14px;line-height:1.7;margin:0 0 24px}
+form{display:grid;gap:14px}label{display:grid;gap:7px;font-size:12px;color:var(--muted)}input{width:100%;padding:14px 15px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.045);color:#fff;font:inherit;outline:none}input:focus{border-color:rgba(0,200,255,.6);box-shadow:0 0 0 4px rgba(0,200,255,.10)}
+button{margin-top:4px;border:0;border-radius:999px;padding:14px 20px;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;font:600 15px Poppins,sans-serif;cursor:pointer;box-shadow:0 14px 34px -16px rgba(0,123,255,.85)}button span{margin-left:6px}.error{margin:0 0 16px;padding:11px 13px;border-radius:12px;background:rgba(255,85,110,.08);border:1px solid rgba(255,85,110,.24);color:#FFB0BD;font-size:13px}
+.help{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}.help span{font-size:12px;color:#fff}.help p{margin:3px 0 0;color:#7E8796;font-size:12px}.back{display:block;text-align:center;color:#8793A3;text-decoration:none;font-size:12px;margin-top:18px}
+</style>
