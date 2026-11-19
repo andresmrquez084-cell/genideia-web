@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/crm",
+      "destination": "/crm/",
+      "permanent": true
+    },
+    {
       "source": "/experiencia",
       "destination": "/experiencia/",
       "permanent": true
