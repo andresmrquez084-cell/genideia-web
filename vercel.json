@@ -11,6 +11,16 @@
       "permanent": true
     },
     {
+      "source": "/empresa",
+      "destination": "https://andres.genideiacompany.com/",
+      "permanent": true
+    },
+    {
+      "source": "/empresa/",
+      "destination": "https://andres.genideiacompany.com/",
+      "permanent": true
+    },
+    {
       "source": "/",
       "has": [
         {

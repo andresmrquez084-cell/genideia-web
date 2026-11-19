@@ -1,3 +1,5 @@
 # Generado desde vercel.json (reglas por ruta). Las reglas por host van en Cloudflare Redirect Rules.
 /crm /crm/ 301
 /experiencia /experiencia/ 301
+/empresa https://andres.genideiacompany.com/ 301
+/empresa/ https://andres.genideiacompany.com/ 301
