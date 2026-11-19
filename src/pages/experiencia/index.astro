@@ -230,29 +230,6 @@ const pad = (n: number) => String(n).padStart(2, '0');
       </div>
     </section>
 
-    <!-- CONTENIDO -->
-    <section class="px-sec ex-ct" id="contenido">
-      <div class="ex-ct-g">
-        <div>
-          <p class="px-eb">Una etapa que seguimos aprovechando</p>
-          <h2 class="px-split">También aprendimos <em>a captar atención.</em></h2>
-          <p class="px-lead px-rv">Una solución no solamente tiene que funcionar: también tiene que ser entendida, adoptada y comunicada.</p>
-        </div>
-        <div class="ex-big px-rv">
-          <div class="px-card"><b data-count="100" data-pre="+" data-suf="K">0</b><span>reproducciones alcanzadas por una pieza propia</span><i class="ex-bars">{[30, 45, 38, 62, 55, 80, 100].map((h) => <em style={`--h:${h}%`}></em>)}</i></div>
-          <div class="px-card"><b><span data-count="3" data-suf="×">0</span> +20K</b><span>tres piezas por encima de 20.000 reproducciones</span><i class="ex-bars">{[20, 35, 70, 40, 72, 50, 74].map((h) => <em style={`--h:${h}%`}></em>)}</i></div>
-        </div>
-      </div>
-      <div class="ex-pipe px-rv">
-        <p class="px-k">Por qué importa · distribución + sistemas</p>
-        <div class="ex-pipe-row">
-          {['Captar', 'Entender', 'Convertir', 'Operar', 'Medir'].map((w, i) => <span style={`--i:${i}`}>{w}</span>)}
-          <i class="ex-pipe-dot"></i>
-        </div>
-        <p class="ex-pipe-t">Empezar desde marketing nos enseñó a mirar el negocio desde la demanda. Construir sistemas nos obligó a mirar qué pasa puertas adentro cuando esa demanda entra.</p>
-      </div>
-    </section>
-
     <!-- EQUIPO -->
     <section class="px-sec" id="equipo">
       <div class="px-head">
@@ -471,25 +448,6 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .ex-alerts span{font-family:"JetBrains Mono",monospace;font-size:11px;padding:7px 11px;border-radius:10px;background:rgba(255,255,255,.04);animation:exIn .4s both}
   .ex-alerts .ok{color:#4BE39A}.ex-alerts .bad{color:#FF8A96;background:rgba(255,107,122,.08);box-shadow:inset 0 0 0 1px rgba(255,107,122,.3)}
 
-  /* contenido */
-  .ex-ct-g{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-  .ex-ct h2{font-size:clamp(30px,3.8vw,48px);line-height:1.06;letter-spacing:-.04em;margin:0 0 14px}
-  .ex-big{display:grid;gap:14px}
-  .ex-big .px-card{position:relative;overflow:hidden}
-  .ex-big b{display:block;font-family:Montserrat,sans-serif;font-size:clamp(40px,5vw,64px);letter-spacing:-.04em;line-height:1;background:linear-gradient(135deg,#fff,#BFEFFF 50%,#00C8FF);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .ex-big span{color:#B8BEC7;font-size:14px}
-  .ex-bars{position:absolute;right:20px;bottom:18px;display:flex;align-items:flex-end;gap:5px;height:56px;width:110px}
-  .ex-bars em{flex:1;height:var(--h);border-radius:3px 3px 0 0;background:linear-gradient(#00C8FF,rgba(0,123,255,.2));transform-origin:bottom;transform:scaleY(0);transition:transform 1s cubic-bezier(.2,.8,.2,1)}
-  .px-rv.in .ex-bars em{transform:scaleY(1)}
-  .ex-bars em:nth-child(2){transition-delay:.08s}.ex-bars em:nth-child(3){transition-delay:.16s}.ex-bars em:nth-child(4){transition-delay:.24s}.ex-bars em:nth-child(5){transition-delay:.32s}.ex-bars em:nth-child(6){transition-delay:.4s}.ex-bars em:nth-child(7){transition-delay:.48s}
-  .ex-pipe{margin-top:40px;padding:26px;border-radius:24px;background:rgba(255,255,255,.03);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
-  .ex-pipe-row{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:16px 0}
-  .ex-pipe-row::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:rgba(255,255,255,.08)}
-  .ex-pipe-row span{position:relative;text-align:center;padding:12px 6px;border-radius:14px;font-family:Montserrat,sans-serif;font-size:15px;background:#0B1324;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);animation:exStep 5s calc(var(--i)*1s) infinite}
-  @keyframes exStep{0%,18%{color:#fff;box-shadow:inset 0 0 0 1px #00C8FF,0 0 30px -8px #00C8FF;background:linear-gradient(135deg,rgba(0,123,255,.35),#0B1324)}26%,100%{color:#B8BEC7}}
-  .ex-pipe-dot{position:absolute;top:calc(50% - 5px);left:0;width:10px;height:10px;border-radius:50%;background:#00C8FF;box-shadow:0 0 14px #00C8FF;animation:exRun 5s linear infinite;pointer-events:none}
-  @keyframes exRun{from{left:0}to{left:calc(100% - 10px)}}
-  .ex-pipe-t{margin:0;color:#B8BEC7;max-width:760px}
 
   .ex-role-i{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;font-size:20px;color:#00C8FF;background:rgba(0,200,255,.1);box-shadow:inset 0 0 0 1px rgba(0,200,255,.3);margin-bottom:14px}
 
@@ -540,7 +498,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     .ex-ev-in{grid-template-columns:1fr;gap:22px}
     .ex-ev-rail{display:none}
     .ex-ev-sub{margin-bottom:0}
-    .ex-tms-g,.ex-diag,.ex-ct-g{grid-template-columns:1fr}
+    .ex-tms-g,.ex-diag{grid-template-columns:1fr}
     .ex-grid{grid-template-columns:1fr 1fr}
   }
   @media (max-width:640px){
@@ -555,15 +513,13 @@ const pad = (n: number) => String(n).padStart(2, '0');
     .ex-filters{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px 14px;padding:0 16px 4px;scrollbar-width:none}
     .ex-filters button{flex:none}
     .ex-chain b{font-size:9.5px!important}.ex-chain button span{width:28px;height:28px}.ex-chain-line{top:14px}
-    .ex-pipe-row{grid-template-columns:1fr;gap:6px}.ex-pipe-row::before,.ex-pipe-dot{display:none}
     .ex-row{flex-direction:column;align-items:flex-start}
     .ex-modal{padding:0;align-items:end}
     .ex-sheet{max-height:92vh;border-radius:24px 24px 0 0}
     .ex-m-b{padding:20px}.ex-m-cols{grid-template-columns:1fr}
-    .ex-bars{width:70px;height:40px}
   }
   @media (prefers-reduced-motion:reduce){
-    .ex-flow span,.ex-pipe-row span,.ex-pipe-dot,.ex-mock *,.ex-hub .ring,.ex-hub .nd.warn{animation:none!important}
+    .ex-flow span,.ex-mock *,.ex-hub .ring,.ex-hub .nd.warn{animation:none!important}
     .ex-dk{transition:none}
   }
 </style>
