@@ -1,5 +1,5 @@
 ---
-// Lead magnet · palabra clave ManyChat: 6.2 (carrusel "Llegó GPT-6.2", 18/11/2026)
+// Lead magnet · palabra clave ManyChat: ASTRA (antes 6.2; carrusel "Llegó GPT-6.2", 18/11/2026)
 // URL pública: /recursos/astra-o-sol
 // Datos verificados en el anuncio oficial https://openai.com/index/introducing-gpt-6-2-astra-sol/ (17/11/2026)
 // y en la cobertura de SiliconANGLE / VentureBeat / 9to5Mac del mismo día: roles de cada modelo, planes,
@@ -60,6 +60,48 @@ Armá un primer borrador de [LO QUE NECESITÁS]. No lo pulas: quiero la estructu
 const flujoAstra = `Paso 2 (cambiá a GPT-6.2 Astra en la misma conversación):
 Revisá el borrador de arriba como un experto en [TEMA]. Corregí errores, completá lo que falta, ajustá el tono para [QUIÉN LO VA A LEER] y entregame la versión final lista para usar.`;
 
+
+// Los 6 prompts del carrusel v2 (obras reales hechas con GPT-6.2): enseñan el tipo de construcción;
+// la escena es [TU …] con el ejemplo del carrusel (regla: el prompt enseña la técnica, no copia la obra).
+const construi = [
+  ['París a escala real', '@Dimillian recreó París entero: se camina, se maneja y tiene más de 50 monumentos.', `Recreá [TU CIUDAD O BARRIO — por ejemplo, la Ciudad Vieja de Montevideo] como un mundo 3D en un solo archivo HTML con three.js.
+- Calles con la forma aproximada del lugar real y entre 5 y 10 edificios emblemáticos modelados con detalle; el resto, edificios generados por código.
+- Se camina con WASD (o un joystick en pantalla en el celular) y con la tecla E te subís a un auto y manejás.
+- Tráfico simple, peatones caminando y luz de atardecer.
+- Cuando te acercás a un lugar emblemático aparece su nombre.
+Antes de entregar, revisá que corra fluido y que no haya errores en la consola.`],
+  ['Una calle viva de noche', '@monokern armó Times Square desde cero en 1 h 16 min, y corre en el navegador.', `Armá en un solo archivo HTML con three.js [UNA CALLE CON MUCHA VIDA — por ejemplo, 18 de Julio un viernes a la noche].
+- Carteles luminosos animados de marcas inventadas a los dos lados (que se muevan y cambien de imagen).
+- Autos y taxis que circulan, semáforos que cambian y peatones que cruzan en las esquinas.
+- Piso mojado con reflejos de las luces y edificios con ventanas encendidas.
+- La cámara recorre la calle sola y con el mouse o el dedo podés mirar alrededor.
+Cuidá que se sienta de noche: contraste alto, luces cálidas y frías mezcladas.`],
+  ['Tu producto, pieza por pieza', '@CodeByNZ hizo un helicóptero que vuela y se desarma, en 7 minutos y con Sol.', `Modelá [TU PRODUCTO — por ejemplo, la cafetera que vendo / una moto / un mueble] en 3D en un solo archivo HTML con three.js.
+- Que tenga todas sus piezas principales, con materiales realistas.
+- Un botón "Desarmar" que separa las piezas con una animación suave (vista explotada) y muestra el nombre de cada una.
+- Un botón "En uso" que lo muestra funcionando.
+- Fondo claro tipo estudio, sombra en el piso y rotación con el mouse o el dedo.
+Pensalo para mostrárselo a un cliente: tiene que verse profesional en el celular.`],
+  ['Un juego con identidad propia', '@HolyMolly_AI le dio el mismo prompt a Opus 5.5 y a Astra: Astra sumó rampas, trucos y puntaje solo.', `Hacé un juego 3D jugable en un solo archivo HTML sobre [TU IDEA — por ejemplo, un repartidor en bici esquivando autos en Pocitos].
+- Dirección de arte propia, no genérica: elegí una paleta de 4 colores y un tema visual y mantenelo en todo.
+- Tres tipos de obstáculos o terrenos distintos.
+- Un sistema de trucos o combos con nombre y puntaje que aparece en pantalla.
+- Interfaz con puntaje, mejor récord y un mensaje cuando perdés.
+- Controles con teclado y táctiles para el celular.
+Después de la primera versión, proponeme 3 mejoras que lo harían más divertido.`],
+  ['Un anuncio, tres versiones', 'Higgsfield Miracle (en beta privada) usa Astra para cambiar una sola parte de un video sin regenerar el resto.', `Tengo un video de [DESCRIBÍ TU VIDEO — por ejemplo, una persona caminando por la calle con mi producto en la mano].
+Quiero sacar 3 anuncios distintos sin volver a grabar. Para cada versión decime:
+1. A quién le habla y qué cambia en la imagen (fondo, ropa, cartel, color del producto, clima).
+2. El texto en pantalla y la frase final.
+3. El prompt exacto para pedirle cada cambio a una herramienta de edición de video con IA, cambiando una sola cosa por vez para que el resto quede igual.`],
+  ['Una simulación física de verdad', 'En la demo de lanzamiento, Astra modeló un auto, programó la física de neumáticos y suspensión y lo animó.', `Simulá [UN SISTEMA FÍSICO DE TU RUBRO — por ejemplo, un camión cargado pasando por un pozo / una cinta transportadora / una grúa levantando una carga] en un solo archivo HTML con three.js.
+- Modelo 3D del sistema.
+- Física programada de verdad (resortes, amortiguación, fricción, peso), no una animación fija.
+- Un panel al costado con gráficos en vivo de las fuerzas y la velocidad.
+- Controles deslizables para cambiar los parámetros (peso, velocidad, rigidez) y ver cómo responde.
+Explicame en 3 líneas qué ecuaciones usaste.`],
+];
+
 const selector = `Antes de empezar, clasificá esta tarea.
 Decime si es DIFÍCIL (trabajo largo, mucha precisión, hay que investigar, construir y revisar) o DEL DÍA A DÍA (el resultado está claro y conviene ir rápido).
 Si es difícil, recomendame GPT-6.2 Astra; si es del día a día, GPT-6.2 Sol.
@@ -68,17 +110,18 @@ La tarea es: [DESCRIBÍ TU TAREA ACÁ]`;
 ---
 <RecursoLayout
   titulo="Astra o Sol: cuál usar para cada tarea"
-  descripcion="Todo GPT-6.2 en una página: un selector que te dice qué modelo usar, una calculadora de costos, 12 prompts listos y el flujo para pagar menos sin perder calidad."
+  descripcion="Los 6 prompts para construir lo del carrusel (una ciudad 3D, tu producto pieza por pieza, un juego, una simulación) y todo GPT-6.2 en una página: un selector que te dice qué modelo usar, una calculadora de costos, 12 prompts listos y el flujo para pagar menos sin perder calidad."
   tipo="Guía completa"
   barLabel="Guía · @andresalbornoz.ai"
-  palabraClave="6.2"
+  palabraClave="ASTRA"
   masterclass={true}
   mclassUrl={grupo}
 >
-  <div class="lead"><b>OpenAI lanzó GPT-6.2 Astra y GPT-6.2 Sol el 17 de noviembre. No son lo mismo con distinto precio: cada uno tiene su rol. Acá no tenés solo el resumen: tenés un selector que te dice cuál usar en 10 segundos, una calculadora de costos, 12 prompts listos para copiar y el truco para pagar menos sin perder calidad.</b></div>
+  <div class="lead"><b>Te prometí los prompts para construir algo como lo del carrusel. Arriba de todo tenés los 6, uno por obra, pensados para que hagas tu versión: tu ciudad, tu producto, tu juego. Y abajo, todo lo que necesitás de GPT-6.2: un selector que te dice qué modelo usar, una calculadora de costos, 12 prompts más para el día a día y el truco para pagar menos.</b></div>
 
   <div class="toc">
     <b>En esta guía</b>
+    <a href="#construi">★ Construí algo así: los 6 prompts del carrusel</a>
     <a href="#selector">1 · El selector: ¿Astra o Sol?</a>
     <a href="#regla">2 · La regla y qué trae GPT-6.2</a>
     <a href="#tareas">3 · Cuál usar para cada tarea</a>
@@ -87,6 +130,16 @@ La tarea es: [DESCRIBÍ TU TAREA ACÁ]`;
     <a href="#calculadora">6 · Calculadora de costos de la API</a>
     <a href="#errores">7 · Errores que te hacen gastar de más</a>
   </div>
+
+  <h2 id="construi">★ Construí algo así: los 6 prompts del carrusel</h2>
+  <div class="alert"><b>Cómo usarlos:</b> estos prompts enseñan el tipo de construcción, no copian la obra. Cambiá lo que está entre [corchetes] por algo tuyo (tu ciudad, tu producto, tu rubro). Usalos con <b>GPT-6.2 Astra</b> y razonamiento alto. El resultado es un archivo HTML: lo abrís en el navegador y listo. Si algo no anda, pegale el error y pedile que lo arregle.</div>
+  {construi.map((c, i) => (
+    <div class="obra">
+      <h3 class="sub"><span class="tag a">0{i + 1}</span> {c[0]}</h3>
+      <p>{c[1]}</p>
+      <div class="codewrap"><button class="copy">Copiar</button><pre class="code"><code>{c[2]}</code></pre></div>
+    </div>
+  ))}
 
   <h2 id="selector">1 · El selector: ¿Astra o Sol?</h2>
   <p>Respondé 4 preguntas sobre tu tarea y te digo qué modelo usar.</p>
@@ -176,6 +229,7 @@ La tarea es: [DESCRIBÍ TU TAREA ACÁ]`;
 
   <h2>Checklist</h2>
   <ul class="check">
+    <li>Construí mi versión de al menos una obra del carrusel.</li>
     <li>Pasé una tarea mía por el selector.</li>
     <li>Probé la misma tarea con Sol y con Astra.</li>
     <li>Guardé los 3 prompts que más voy a usar.</li>
