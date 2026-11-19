@@ -10,63 +10,62 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Poppins:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/crm/base.css">
-<link rel="stylesheet" href="/crm/crm.css">
+<link rel="stylesheet" href="/crm/crm.css?v=4">
 </head>
-<body class="crm">
-<div class="ambient" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
-<div class="grain" aria-hidden="true"></div>
-<div class="halo" id="halo" aria-hidden="true"></div>
+<body class="px crm">
+<div class="px-amb" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+<div class="px-grain" aria-hidden="true"></div>
 
-<header class="top glass blur">
-  <a class="brand" href="/crm"><img src="/crm/icono.png" alt="" width="28" height="28"><span>GENIDEIA</span><small>CRM</small></a>
-  <nav class="tabs" aria-label="Vistas">
-    <button data-view="hoy" class="on">Hoy</button>
+<header class="px-top">
+  <a class="px-brand" href="/crm/"><img src="/crm/logo-crm.png" alt="" width="38" height="38"><span><b>GENIDEIA <em>CRM</em></b><small>Prospección y conversaciones</small></span></a>
+  <nav class="vtabs" id="tabs" aria-label="Vistas">
+    <button data-view="hoy">Hoy</button>
+    <button data-view="conversaciones">Conversaciones</button>
     <button data-view="pipeline">Pipeline</button>
     <button data-view="empresas">Empresas</button>
+    <button data-view="nichos">Nichos</button>
+    <button data-view="tandas">Tandas</button>
     <button data-view="metricas">Métricas</button>
+    <button data-view="revision">Revisión <span class="cnt" id="revCnt"></span></button>
   </nav>
   <div class="top-act">
-    <span class="sync" id="sync" title="Estado de guardado"><i></i><span>Local</span></span>
-    <button class="btn btn-g sm" id="btnMenu" aria-label="Datos" title="Exportar o importar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v3h16v-3"/></svg>
-    </button>
-    <button class="btn btn-p sm" id="btnNew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg><span>Nueva</span></button>
+    <span class="sync" id="sync"><i></i><span>Conectando</span></span>
+    <button class="px-btn g sm" id="btnDatos" aria-haspopup="true">Datos</button>
+    <button class="px-btn p sm" id="btnNueva">Nueva empresa</button>
   </div>
 </header>
 
-<main class="wrap" id="app">
-  <section class="view on" id="v-hoy"></section>
+<main class="px-shell wrap" id="app">
+  <section class="view" id="v-hoy"></section>
+  <section class="view" id="v-conversaciones"></section>
   <section class="view" id="v-pipeline"></section>
   <section class="view" id="v-empresas"></section>
+  <section class="view" id="v-nichos"></section>
+  <section class="view" id="v-tandas"></section>
   <section class="view" id="v-metricas"></section>
+  <section class="view" id="v-revision"></section>
 </main>
 
-<!-- Ficha de empresa -->
-<div class="drawer-bg" id="drawerBg" hidden></div>
-<aside class="drawer glass blur" id="drawer" aria-hidden="true" role="dialog" aria-label="Ficha"></aside>
+<div class="scrim" id="scrim" hidden></div>
+<aside class="ficha" id="ficha" aria-hidden="true" role="dialog" aria-label="Ficha de empresa"></aside>
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true"></div>
 
-<!-- Menú de datos -->
-<div class="menu glass blur" id="menu" hidden>
-  <button data-act="export">Exportar copia (JSON)</button>
-  <label>Importar copia (JSON)<input type="file" accept=".json,application/json" data-act="import" hidden></label>
-  <label>Importar empresas (CSV)<input type="file" accept=".csv,text/csv" data-act="csv" hidden></label>
-  <button data-act="demo">Cargar datos de ejemplo</button>
-  <button data-act="wipe" class="danger">Borrar datos de ejemplo</button>
+<div class="menu" id="menu" hidden>
+  <button data-act="exportar">Exportar todo (JSON con relaciones)</button>
+  <label>Importar archivo (JSON genideia-crm/2)<input type="file" accept=".json,application/json" id="fileImport" hidden></label>
+  <button data-act="formato">Formato de importación y API</button>
   <button data-act="logout">Cerrar sesión</button>
-  <p class="faint">Los datos se guardan en la nube y los ven todos los administradores.</p>
+  <p>Los datos viven en Supabase y solo los ven los administradores del CRM.</p>
 </div>
 
-<!-- Ingreso: mismo usuario que el panel de clientes -->
 <div class="login" id="login" hidden>
-  <form class="glass blur login-card" id="loginForm">
-    <img src="/crm/icono.png" alt="" width="52" height="52">
-    <span class="eyebrow">CRM GENIDEIA</span>
-    <h1>Ingresá para ver el pipeline</h1>
-    <p class="faint">Mismo usuario de administrador del panel de clientes.</p>
+  <form class="card login-card" id="loginForm">
+    <img src="/crm/logo-crm.png" alt="" width="54" height="54">
+    <p class="px-eb">CRM GENIDEIA</p>
+    <h1>Ingresá para ver las conversaciones</h1>
     <label class="f"><span>Email</span><input class="in" id="lgEmail" type="email" autocomplete="username" required></label>
     <label class="f"><span>Contraseña</span><input class="in" id="lgPass" type="password" autocomplete="current-password" required></label>
-    <button class="btn btn-p" id="lgBtn" type="submit">Entrar</button>
+    <button class="px-btn p" type="submit">Entrar</button>
     <p class="lg-msg" id="loginMsg" role="alert"></p>
   </form>
 </div>
@@ -74,6 +73,6 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"></script>
-<script src="/crm/crm.js"></script>
+<script src="/crm/crm.js?v=4"></script>
 </body>
 </html>
