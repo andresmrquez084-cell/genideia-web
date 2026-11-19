@@ -62,5 +62,5 @@ revoke execute on function public.crm_is_admin() from anon;
 
 -- Quién puede entrar. Ya corrido en el proyecto con este email.
 insert into public.crm_admins (email) values
-  ('genideiaconsultoriaia@gmail.com')
+  ('genideiaconsultoraia@gmail.com')
 on conflict do nothing;
