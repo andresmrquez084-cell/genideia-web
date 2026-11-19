@@ -4,6 +4,7 @@ import '../styles/global.css';
 const WA = '59892302941';
 const waUrl = (msg: string) => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
 const b2cUrl = waUrl('Hola Andrés, vi tu landing y quiero aprender a usar IA de forma práctica.');
+const b2bUrl = waUrl('Hola Andrés, vi tu landing y quiero aplicar IA en mi empresa.');
 const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
 ---
 
@@ -90,7 +91,7 @@ const grupoUrl = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
                 <span>SISTEMAS</span>
               </div>
 
-              <a class="cta cta-business" href="/empresa">
+              <a class="cta cta-business" href={b2bUrl} target="_blank" rel="noopener noreferrer">
                 <span>Ver cómo puedo ayudarte</span>
                 <span aria-hidden="true">→</span>
               </a>

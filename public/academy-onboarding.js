@@ -6,6 +6,7 @@
   const body = document.body;
   const service = body.dataset.service;
   if (!service || !['grupal', '1a1'].includes(service)) return;
+  if (body.dataset.disponible === 'no') return; // programa cerrado: no se crean inscripciones
 
   const params = new URLSearchParams(location.search);
   const isExternalPayment = params.get('fundador') === '1';
