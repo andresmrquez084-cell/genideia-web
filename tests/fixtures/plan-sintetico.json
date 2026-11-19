@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "updatedAt": null,
+  "students": [
+    {
+      "slug": "alumno-a",
+      "name": "Alumno Sintético A",
+      "eyebrow": "Plan sintético",
+      "intro": "Introducción sintética para pruebas.",
+      "status": "En curso",
+      "objective": "Objetivo sintético.",
+      "method": [
+        "Paso 1 sintético",
+        "Paso 2 sintético"
+      ],
+      "projects": [
+        {
+          "title": "Proyecto sintético",
+          "description": "Descripción sintética."
+        }
+      ],
+      "modules": [
+        {
+          "id": "alumno-a-m1",
+          "title": "Módulo sintético 1",
+          "state": "Completado",
+          "objective": "Objetivo sintético",
+          "result": "Resultado sintético",
+          "topics": [
+            "Tema A",
+            "Tema B"
+          ]
+        },
+        {
+          "id": "alumno-a-m2",
+          "title": "Módulo sintético 2",
+          "state": "En curso",
+          "objective": "Objetivo sintético",
+          "result": "Resultado sintético",
+          "topics": [
+            "Tema A",
+            "Tema B"
+          ]
+        },
+        {
+          "id": "alumno-a-m3",
+          "title": "Módulo sintético 3",
+          "state": "Pendiente",
+          "objective": "Objetivo sintético",
+          "result": "Resultado sintético",
+          "topics": [
+            "Tema A",
+            "Tema B"
+          ]
+        }
+      ],
+      "closing": "Cierre sintético."
+    },
+    {
+      "slug": "alumno-b",
+      "name": "Alumno Sintético B",
+      "eyebrow": "Plan sintético",
+      "intro": "Introducción sintética para pruebas.",
+      "status": "En curso",
+      "objective": "Objetivo sintético.",
+      "method": [
+        "Paso 1 sintético",
+        "Paso 2 sintético"
+      ],
+      "projects": [
+        {
+          "title": "Proyecto sintético",
+          "description": "Descripción sintética."
+        }
+      ],
+      "modules": [
+        {
+          "id": "alumno-b-m1",
+          "title": "Módulo sintético 1",
+          "state": "Completado",
+          "objective": "Objetivo sintético",
+          "result": "Resultado sintético",
+          "topics": [
+            "Tema A",
+            "Tema B"
+          ]
+        },
+        {
+          "id": "alumno-b-m2",
+          "title": "Módulo sintético 2",
+          "state": "En curso",
+          "objective": "Objetivo sintético",
+          "result": "Resultado sintético",
+          "topics": [
+            "Tema A",
+            "Tema B"
+          ]
+        },
+        {
+          "id": "alumno-b-m3",
+          "title": "Módulo sintético 3",
+          "state": "Pendiente",
+          "objective": "Objetivo sintético",
+          "result": "Resultado sintético",
+          "topics": [
+            "Tema A",
+            "Tema B"
+          ]
+        }
+      ],
+      "closing": "Cierre sintético."
+    }
+  ]
+}
