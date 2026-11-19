@@ -528,3 +528,16 @@ body::after{
 .module-card::after,.ac-follow-card::before,.stat::before,.ac-col::after,.ac-kcard::after{
   pointer-events:none!important;
 }
+
+
+/* Legibilidad de nombres en el panel de alumnos */
+.student-card h3,
+.student-top h3,
+.detail-head h2{
+  color:#F2F4F7!important;
+  font-weight:700;
+  text-shadow:0 0 18px rgba(0,200,255,.08);
+}
+.student-card:hover h3{
+  color:#FFFFFF!important;
+}
