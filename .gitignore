@@ -21,3 +21,12 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Academy: datos personales de alumnos. No se versionan.
+private/
+academy/data/public-plans.json
+academy/alumnos/
+alumnos/
+academy/plan-mauro.html
+academy/plan-rodrigo.html
+public/academy/sesiones/
