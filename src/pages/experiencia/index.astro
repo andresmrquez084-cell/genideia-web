@@ -1,0 +1,684 @@
+---
+// Portfolio de experiencia aplicada: evolución, proyectos, diagnósticos y equipo.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PROJECTS from '../../data/experiencia.json';
+
+type P = (typeof PROJECTS)[number] & { mock?: string; url?: string; actionLabel?: string };
+const projects = PROJECTS as P[];
+const CATS = ['Todos', 'Webs', 'Apps', 'Sistemas', 'Herramientas', 'Diagnósticos', 'Automatizaciones'];
+const count = (c: string) => (c === 'Todos' ? projects.length : projects.filter((p) => p.cat === c).length);
+const deck = projects.filter((p) => p.image).slice(0, 7);
+const WIDE = new Set(['donhers', 'contentos', 'tms', 'vanzza-web']);
+const TALL = new Set(['habits']);
+
+const ETAPAS = [
+  ['Web & Marketing', 'Landings, e-commerce, branding, captación y presencia digital.', ['Landings', 'E-commerce', 'Branding']],
+  ['Contenido', 'Producción, formatos, distribución y aprendizaje a partir de métricas.', ['Guiones', 'Formatos', 'Métricas']],
+  ['Automatizaciones', 'Bots, asistentes y procesos ejecutados por software.', ['WhatsApp + IA', 'Agenda', 'Seguimiento']],
+  ['Apps & Sistemas', 'Herramientas propias, paneles, aplicaciones y sistemas operativos.', ['Paneles', 'Apps', 'Sistemas propios']],
+  ['Diagnóstico empresarial', 'Procesos, fricciones, excepciones, impacto y retorno potencial.', ['Procesos', 'Excepciones', 'Retorno']],
+  ['GENIDEIA hoy', 'Diagnóstico + diseño + implementación progresiva para empresas.', ['Diagnóstico', 'Diseño', 'Implementación']],
+];
+const ROLES = [
+  ['◎', 'Automatización & diagnóstico', 'Andrés lidera el análisis de procesos, diseño de solución, automatización con IA y relación entre problema operativo y retorno.'],
+  ['↗', 'Adquisición & creatividad', 'Estrategia de contenidos, anuncios y piezas comerciales asistidas por IA para que la tecnología también tenga una capa de comunicación y distribución.'],
+  ['⌘', 'Desarrollo técnico', 'Perfiles de desarrollo se incorporan según el proyecto para interfaces, backend, integraciones, infraestructura y necesidades específicas de implementación.'],
+];
+const KLUVER = [
+  ['Remito', 'Qué se recibió y de quién'],
+  ['Lote / bulto', 'Cada pieza con su identificador'],
+  ['Manifiesto', 'Qué sale en cada vehículo'],
+  ['Transferencias', 'Quién entrega y quién confirma'],
+  ['Incidencias', 'Faltantes, daños o demoras'],
+  ['Historial', 'Último punto comprobado'],
+];
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<BaseLayout
+  title="Experiencia aplicada · GENIDEIA Company"
+  description="De marketing a sistemas para empresas: proyectos, sistemas, diagnósticos y cómo trabajamos en GENIDEIA."
+  path="/experiencia/"
+>
+  <div class="px-shell">
+    <!-- HERO -->
+    <section class="ex-hero">
+      <div class="ex-hero-txt">
+        <p class="px-eb">Experiencia aplicada · portfolio de trabajo</p>
+        <h1 class="px-split">De marketing a <em>sistemas para empresas.</em></h1>
+        <p class="px-lead px-rv">Empezamos resolviendo comunicación, web y contenido. Después construimos automatizaciones, aplicaciones y sistemas propios. Hoy usamos esa experiencia para diagnosticar operaciones y desarrollar soluciones por etapas.</p>
+        <div class="px-cta px-rv">
+          <a class="px-btn p" href="#proyectos">Explorar proyectos</a>
+          <a class="px-btn g" href="#evolucion">Ver cómo evolucionamos ↓</a>
+        </div>
+        <div class="ex-stats px-rv">
+          <div><b data-count={projects.length}>0</b><span>proyectos en el portfolio</span></div>
+          <div><b data-count="6">0</b><span>etapas de evolución</span></div>
+          <div><b data-count="100" data-pre="+" data-suf="K">0</b><span>reproducciones de una pieza</span></div>
+        </div>
+      </div>
+      <div class="ex-deck" aria-label="Proyectos destacados">
+        {deck.map((p, i) => (
+          <button class="ex-dk" data-open={p.id} style={`--i:${i}`} aria-label={`Ver ${p.title}`}>
+            <img src={p.image} alt="" width="900" height="560" decoding="async" loading={i < 3 ? 'eager' : 'lazy'} />
+            <span class="ex-dk-l"><i class={`ex-dot ${p.stateClass}`}></i>{p.title}<small>{p.cat}</small></span>
+          </button>
+        ))}
+        <div class="ex-deck-bar"><span id="exDeckN">01</span><i><b id="exDeckP"></b></i><span>{pad(deck.length)}</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- EVOLUCIÓN (scroll) -->
+  <section class="ex-ev" id="evolucion" style={`--n:${ETAPAS.length}`}>
+    <div class="ex-ev-stick">
+      <div class="px-shell ex-ev-in">
+        <div class="ex-ev-l">
+          <p class="px-eb">Nuestra evolución</p>
+          <h2>Cada etapa agregó <em>una capacidad.</em></h2>
+          <p class="ex-ev-sub">No presentamos una historia que no existe: pasamos de resolver piezas digitales concretas a estudiar procesos completos.</p>
+          <div class="ex-ev-rail"><i id="exEvFill"></i>
+            {ETAPAS.map((e, i) => <button data-ev={i}><b>{pad(i + 1)}</b><span>{e[0]}</span></button>)}
+          </div>
+        </div>
+        <div class="ex-ev-r">
+          <div class="ex-stack">
+            {ETAPAS.map((e, i) => (
+              <div class="ex-layer" data-l={i} style={`--i:${i}`}>
+                <span class="ex-layer-n">{pad(i + 1)}</span>
+                <div><b>{e[0]}</b><p>{e[1]}</p><div class="ex-chips">{e[2].map((c) => <i>{c}</i>)}</div></div>
+              </div>
+            ))}
+          </div>
+          <p class="ex-ev-note">Marketing, ventas, operación, información y sistemas forman parte del mismo negocio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="px-shell">
+    <!-- HONESTIDAD -->
+    <section class="px-sec ex-truth px-rv">
+      <div class="px-card feat">
+        <span class="px-tag">Qué hemos hecho hasta ahora</span>
+        <p>Gran parte de nuestras primeras automatizaciones, aplicaciones y herramientas fueron desarrolladas para personas, profesionales y operadores alrededor de negocios, no como grandes implantaciones corporativas. Esa etapa nos permitió construir, probar y resolver problemas reales.</p>
+        <p>Más recientemente empezamos a realizar <b>diagnósticos de empresas</b>: primero analizamos cómo funciona la operación, qué se repite, dónde aparece la excepción y cuánto podría valer resolverla. La implementación viene después de validar ese mapa.</p>
+      </div>
+    </section>
+
+    <!-- TMS -->
+    <section class="px-sec ex-tms" id="destacado">
+      <div class="px-head">
+        <div><p class="px-eb">Sistema destacado</p><h2 class="px-split">Un recorrido técnico <em>de principio a fin.</em></h2></div>
+        <p class="px-side px-rv">GENIDEIA TMS muestra, sin abrir nada, qué información interviene, qué se automatiza y cómo se conecta cada parte.</p>
+      </div>
+      <div class="ex-tms-g">
+        <div class="px-win px-rv">
+          <div class="px-win-top"><i></i><i></i><i></i><span>GENIDEIA TMS · recorrido en video</span><b class="px-live"><span></span>demo</b></div>
+          <div class="ex-video">
+            <video controls playsinline preload="none" poster="/experiencia/images/kluver-full.webp" src="https://dbwuubabafzsinaokawe.supabase.co/storage/v1/object/public/genideia-videos/portfolio/tms.mp4"></video>
+          </div>
+        </div>
+        <div class="ex-tms-side px-rv">
+          <p class="px-k">01 · Sistema destacado</p>
+          <h3>GENIDEIA TMS</h3>
+          <p>Centraliza solicitudes, viajes, conductores, vehículos y documentación. El video recorre la operación completa: qué entra, cómo se registra y dónde intervienen las alertas.</p>
+          <div class="ex-flow" aria-label="Flujo del sistema">
+            {['Solicitud', 'Viaje', 'Unidad', 'Documentación', 'Alerta'].map((f, i) => <span style={`--i:${i}`}>{f}</span>)}
+          </div>
+          <div class="ex-spec">
+            <div><small>Interfaz</small><b>Panel de operación</b></div>
+            <div><small>Datos</small><b>Estados y responsables</b></div>
+            <div><small>Automatización</small><b>Alertas por evento</b></div>
+          </div>
+          <a class="px-btn g sm" href="https://genideia-tms.vercel.app/?pais=ar" target="_blank" rel="noopener noreferrer">Abrir demo navegable ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROYECTOS -->
+    <section class="px-sec" id="proyectos">
+      <div class="px-head">
+        <div><p class="px-eb">Trabajo desarrollado</p><h2 class="px-split">Proyectos, sistemas <em>y herramientas.</em></h2></div>
+        <p class="px-side px-rv">Cada ficha distingue su estado real. Los sistemas privados se muestran con capturas o explicación del alcance, sin exponer su acceso.</p>
+      </div>
+      <div class="ex-filters" role="tablist">
+        {CATS.map((c, i) => <button class={i === 0 ? 'on' : ''} data-cat={c}>{c}<sup>{count(c)}</sup></button>)}
+      </div>
+      <div class="ex-legend">
+        <span><i class="ex-dot done"></i>Desarrollado</span><span><i class="ex-dot prototype"></i>Prototipo / demo</span><span><i class="ex-dot build"></i>En desarrollo</span><span><i class="ex-dot private"></i>Privado</span><span><i class="ex-dot diagnosis"></i>Diagnóstico</span><span><i class="ex-dot own"></i>Propio</span>
+      </div>
+      <div class="ex-grid" id="exGrid">
+        {projects.map((p) => (
+          <article class={`ex-card ${WIDE.has(p.id) ? 'w' : ''} ${TALL.has(p.id) ? 't' : ''}`} data-cat={p.cat} data-open={p.id} tabindex="0" role="button" aria-label={`Ver ficha: ${p.title}`}>
+            <div class="ex-cover">
+              {p.image ? (
+                <img src={p.image} alt="" loading="lazy" decoding="async" />
+              ) : (
+                <div class={`ex-mock m-${p.mock}`} aria-hidden="true">
+                  {p.mock === 'landing' && (<><i class="a"></i><i class="b"></i><i class="c"></i><i class="btn">Agendar</i></>)}
+                  {p.mock === 'route' && (<svg viewBox="0 0 300 170"><path class="rt" d="M20 140 C 80 140, 70 40, 140 60 S 220 140, 280 30" /><circle r="6" class="mv"><animateMotion dur="4s" repeatCount="indefinite" path="M20 140 C 80 140, 70 40, 140 60 S 220 140, 280 30" /></circle><circle cx="20" cy="140" r="5" class="pt" /><circle cx="140" cy="60" r="5" class="pt" /><circle cx="280" cy="30" r="5" class="pt" /></svg>)}
+                  {p.mock === 'content' && Array.from({ length: 12 }).map((_, k) => <i style={`--k:${k}`}></i>)}
+                  {p.mock === 'gym' && ['Socio 0142', 'Socio 0278', 'Socio 0311', 'Socio 0459'].map((s, k) => <div class="r" style={`--k:${k}`}><span>{s}</span><b>{k === 2 ? 'Renovar' : 'Activo'}</b></div>)}
+                  {p.mock === 'sign' && (<><div class="doc"><i></i><i></i><i></i><i></i><svg viewBox="0 0 160 50"><path d="M5 35 C 25 5, 35 45, 55 25 S 85 5, 95 30 S 130 40, 155 15" /></svg></div><b class="st">Firmado ✓</b></>)}
+                  {p.mock === 'chat' && (<><span class="in">¿Tenés lugar el jueves?</span><span class="out">Sí, a las 15:00 o 17:30.</span><span class="in">15:00 dale</span><span class="out">Listo, quedó agendado ✓</span></>)}
+                </div>
+              )}
+              <span class="ex-state"><i class={`ex-dot ${p.stateClass}`}></i>{p.state}</span>
+            </div>
+            <div class="ex-body">
+              <span class="ex-cat">{p.cat}</span>
+              <h3>{p.title}</h3>
+              <p class="ex-sub">{p.subtitle}</p>
+              <p class="ex-sum">{p.summary}</p>
+              <span class="px-go">Ver ficha <i>→</i></span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- DIAGNÓSTICOS -->
+    <section class="px-sec" id="diagnosticos">
+      <div class="px-head">
+        <div><p class="px-eb">Diagnóstico empresarial</p><h2 class="px-split">Antes de construir, <em>entendemos la operación.</em></h2></div>
+        <p class="px-side px-rv">Separamos lo confirmado, lo que proponemos y lo que todavía falta validar. Los esquemas de abajo son ilustrativos.</p>
+      </div>
+      <div class="ex-diag">
+        <article class="px-win ex-kl px-rv">
+          <div class="px-win-top"><i></i><i></i><i></i><span>Klüver · cadena de custodia</span><b class="px-live"><span></span>esquema</b></div>
+          <div class="ex-kl-b">
+            <span class="px-tag">Diagnóstico + diseño de solución</span>
+            <h3>Saber dónde está cada carga, sin llamar a nadie.</h3>
+            <div class="ex-chain" id="exChain">
+              <i class="ex-chain-line"><b></b></i>
+              {KLUVER.map((k, i) => <button data-k={i}><span>{pad(i + 1)}</span><b>{k[0]}</b></button>)}
+            </div>
+            <div class="ex-kl-info"><b id="exKlT">{KLUVER[0][0]}</b><span id="exKlD">{KLUVER[0][1]}</span></div>
+            <ul class="ex-log" id="exLog" aria-live="off"></ul>
+            <div class="ex-row"><small>Propuesta de diseño. No presentada como sistema instalado.</small><button class="px-btn g sm" data-open="kluver">Ver ficha</button></div>
+          </div>
+        </article>
+        <article class="px-win ex-ac px-rv">
+          <div class="px-win-top"><i></i><i></i><i></i><span>Acesur · visibilidad operativa</span><b class="px-live"><span></span>esquema</b></div>
+          <div class="ex-kl-b">
+            <span class="px-tag">Diagnóstico realizado</span>
+            <h3>Ver antes lo que hoy se descubre tarde.</h3>
+            <svg class="ex-hub" viewBox="0 0 420 230" aria-hidden="true">
+              <defs><linearGradient id="exg" x1="0" x2="1"><stop stop-color="#007BFF" /><stop offset="1" stop-color="#00C8FF" /></linearGradient></defs>
+              {['WhatsApp', 'App', 'Email', 'Teléfono'].map((c, i) => (
+                <g>
+                  <path id={`exin${i}`} class="ln" d={`M78 ${30 + i * 56} C 150 ${30 + i * 56}, 150 115, 200 115`} />
+                  <rect x="4" y={16 + i * 56} width="74" height="28" rx="14" class="nd" /><text x="41" y={34 + i * 56}>{c}</text>
+                  <circle r="3.5" class="pk"><animateMotion dur={`${2.2 + i * 0.4}s`} begin={`${i * 0.5}s`} repeatCount="indefinite"><mpath href={`#exin${i}`} /></animateMotion></circle>
+                </g>
+              ))}
+              {['Depósito', 'Despacho', 'Devoluciones'].map((c, i) => (
+                <g>
+                  <path id={`exout${i}`} class="ln" d={`M250 115 C 290 115, 290 ${45 + i * 70}, 330 ${45 + i * 70}`} />
+                  <rect x="330" y={31 + i * 70} width="86" height="28" rx="14" class={`nd ${i === 2 ? 'warn' : ''}`} /><text x="373" y={49 + i * 70}>{c}</text>
+                  <circle r="3.5" class={`pk ${i === 2 ? 'bad' : ''}`}><animateMotion dur={`${2.6 + i * 0.3}s`} begin={`${0.8 + i * 0.4}s`} repeatCount="indefinite"><mpath href={`#exout${i}`} /></animateMotion></circle>
+                </g>
+              ))}
+              <circle cx="225" cy="115" r="30" class="core" /><circle cx="225" cy="115" r="30" class="ring" />
+              <text x="225" y="112" class="ct">Vista de</text><text x="225" y="126" class="ct">estados</text>
+            </svg>
+            <div class="ex-alerts" id="exAlerts"><span class="ok">Pedido #A-102 despachado</span></div>
+            <div class="ex-row"><small>Agrega visibilidad sin reemplazar lo que ya funciona.</small><button class="px-btn g sm" data-open="acesur">Ver ficha</button></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTENIDO -->
+    <section class="px-sec ex-ct" id="contenido">
+      <div class="ex-ct-g">
+        <div>
+          <p class="px-eb">Una etapa que seguimos aprovechando</p>
+          <h2 class="px-split">También aprendimos <em>a captar atención.</em></h2>
+          <p class="px-lead px-rv">Una solución no solamente tiene que funcionar: también tiene que ser entendida, adoptada y comunicada.</p>
+        </div>
+        <div class="ex-big px-rv">
+          <div class="px-card"><b data-count="100" data-pre="+" data-suf="K">0</b><span>reproducciones alcanzadas por una pieza propia</span><i class="ex-bars">{[30, 45, 38, 62, 55, 80, 100].map((h) => <em style={`--h:${h}%`}></em>)}</i></div>
+          <div class="px-card"><b><span data-count="3" data-suf="×">0</span> +20K</b><span>tres piezas por encima de 20.000 reproducciones</span><i class="ex-bars">{[20, 35, 70, 40, 72, 50, 74].map((h) => <em style={`--h:${h}%`}></em>)}</i></div>
+        </div>
+      </div>
+      <div class="ex-pipe px-rv">
+        <p class="px-k">Por qué importa · distribución + sistemas</p>
+        <div class="ex-pipe-row">
+          {['Captar', 'Entender', 'Convertir', 'Operar', 'Medir'].map((w, i) => <span style={`--i:${i}`}>{w}</span>)}
+          <i class="ex-pipe-dot"></i>
+        </div>
+        <p class="ex-pipe-t">Empezar desde marketing nos enseñó a mirar el negocio desde la demanda. Construir sistemas nos obligó a mirar qué pasa puertas adentro cuando esa demanda entra.</p>
+      </div>
+    </section>
+
+    <!-- EQUIPO -->
+    <section class="px-sec" id="equipo">
+      <div class="px-head">
+        <div><p class="px-eb">Cómo trabajamos hoy</p><h2 class="px-split">Un modelo <em>por especialidades.</em></h2></div>
+        <p class="px-side px-rv">Cada proyecto se estructura con los perfiles necesarios para analizar, construir, lanzar y sostener la solución.</p>
+      </div>
+      <div class="px-grid c3">
+        {ROLES.map((r, i) => (
+          <article class="px-card px-spot px-rv ex-role" data-n={pad(i + 1)}>
+            <span class="ex-role-i">{r[0]}</span><h3>{r[1]}</h3><p>{r[2]}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- CIERRE -->
+    <section class="px-sec ex-close px-rv">
+      <div class="px-card feat">
+        <p class="px-eb">La idea central</p>
+        <h2>No llegamos hasta acá <em>por un único proyecto.</em></h2>
+        <div class="ex-path" aria-label="Recorrido">
+          {['Marketing', 'Webs', 'Herramientas', 'Automatizaciones', 'Aplicaciones', 'Sistemas', 'Operaciones completas'].map((w, i) => <span style={`--i:${i}`}>{w}</span>)}
+        </div>
+        <p class="px-lead">Hoy GENIDEIA reúne esas capacidades para resolver problemas empresariales de forma progresiva, empezando por procesos acotados, medibles y con un retorno claro.</p>
+        <div class="px-cta">
+          <a class="px-btn p" href="https://andres.genideiacompany.com/empresa">Agendá tu diagnóstico</a>
+          <a class="px-btn g" href="https://wa.me/59892302941" target="_blank" rel="noopener noreferrer">Hablemos por WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FICHA -->
+  <div class="ex-modal" id="exModal" aria-hidden="true">
+    <div class="ex-modal-bg" data-close></div>
+    <div class="ex-sheet" role="dialog" aria-modal="true" aria-labelledby="exMT">
+      <div class="ex-sheet-top">
+        <button class="ex-nav" data-step="-1" aria-label="Proyecto anterior">←</button>
+        <span id="exMI">01 / 19</span>
+        <button class="ex-nav" data-step="1" aria-label="Proyecto siguiente">→</button>
+        <button class="ex-x" data-close aria-label="Cerrar">×</button>
+      </div>
+      <div id="exMC"></div>
+    </div>
+  </div>
+
+  <script is:inline type="application/json" id="exData" set:html={JSON.stringify(projects)} />
+</BaseLayout>
+
+<style is:global>
+  .ex-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#7E8796;flex:none}
+  .ex-dot.done{background:#4BE39A;box-shadow:0 0 10px #4BE39A}
+  .ex-dot.prototype{background:#00C8FF;box-shadow:0 0 10px #00C8FF}
+  .ex-dot.build{background:#F5B94B;box-shadow:0 0 10px #F5B94B}
+  .ex-dot.private{background:#9AA6B8}
+  .ex-dot.diagnosis{background:#A98BFF;box-shadow:0 0 10px #A98BFF}
+  .ex-dot.own{background:#BFEFFF;box-shadow:0 0 10px #BFEFFF}
+
+  /* hero */
+  .ex-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding:72px 0 40px;min-height:calc(100vh - 90px)}
+  .ex-hero h1{font-size:clamp(40px,5.6vw,76px);line-height:1.02;letter-spacing:-.045em;margin:0 0 22px}
+  .ex-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:38px;max-width:560px}
+  .ex-stats div{padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.035);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+  .ex-stats b{display:block;font-family:Montserrat,sans-serif;font-size:30px;letter-spacing:-.03em;background:linear-gradient(135deg,#fff,#BFEFFF 60%,#00C8FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .ex-stats span{font-size:12px;color:#B8BEC7}
+  .ex-deck{position:relative;height:480px;perspective:1400px}
+  .ex-dk{position:absolute;inset:40px 30px 70px;border:0;padding:0;border-radius:22px;overflow:hidden;cursor:pointer;background:#0B1324;
+    box-shadow:0 0 0 1px rgba(255,255,255,.12),0 40px 90px -30px rgba(0,90,255,.7);
+    transform:translate3d(calc(var(--p,0)*34px),calc(var(--p,0)*-26px),calc(var(--p,0)*-90px)) rotateY(-14deg) rotateX(6deg);
+    opacity:calc(1 - var(--p,0)*.22);z-index:calc(20 - var(--p,0));transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .9s,filter .9s;filter:brightness(calc(1 - var(--p,0)*.18))}
+  .ex-dk.out{transform:translate3d(-60px,60px,80px) rotateY(-14deg) rotateX(6deg) scale(.96);opacity:0}
+  .ex-dk img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+  .ex-dk-l{position:absolute;left:14px;right:14px;bottom:14px;display:flex;align-items:center;gap:9px;padding:10px 14px;border-radius:14px;background:rgba(6,12,24,.78);backdrop-filter:blur(10px);font-family:Montserrat,sans-serif;font-size:14px;color:#fff;text-align:left;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+  .ex-dk-l small{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:10.5px;color:#BFEFFF}
+  .ex-deck-bar{position:absolute;left:30px;right:30px;bottom:0;display:flex;align-items:center;gap:12px;font-family:"JetBrains Mono",monospace;font-size:11px;color:#7E8796}
+  .ex-deck-bar i{flex:1;height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+  .ex-deck-bar i b{display:block;height:100%;width:0;background:linear-gradient(90deg,#007BFF,#00C8FF)}
+  .ex-deck-bar i b.run{width:100%;transition:width 3.2s linear}
+
+  /* evolución */
+  .ex-ev{position:relative}
+  .pxj .ex-ev{height:calc(var(--n)*62vh + 60vh)}
+  .ex-ev-stick{padding:70px 0}
+  .pxj .ex-ev-stick{position:sticky;top:0;min-height:100vh;display:flex;align-items:center;padding:80px 0 40px}
+  .ex-ev-in{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center;width:100%}
+  .ex-ev h2{font-size:clamp(32px,4vw,54px);line-height:1.05;letter-spacing:-.04em;margin:0 0 14px}
+  .ex-ev h2 em,.ex-close h2 em{font-style:normal;background:linear-gradient(120deg,#007BFF,#00C8FF 50%,#BFEFFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .ex-ev-sub{color:#B8BEC7;max-width:440px;margin:0 0 28px}
+  .ex-ev-rail{position:relative;display:grid;gap:4px;padding-left:22px}
+  .ex-ev-rail::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:rgba(255,255,255,.08)}
+  .ex-ev-rail>i{position:absolute;left:5px;top:8px;width:2px;height:calc((100% - 16px)*var(--f,0));background:linear-gradient(#007BFF,#00C8FF);box-shadow:0 0 12px #00C8FF;transition:height .3s}
+  .ex-ev-rail button{all:unset;cursor:pointer;display:flex;gap:12px;align-items:baseline;padding:6px 0;color:#7E8796;font-size:15px;transition:color .3s}
+  .ex-ev-rail button b{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:400}
+  .ex-ev-rail button.on{color:#fff}.ex-ev-rail button.on b{color:#00C8FF}
+  .ex-stack{display:grid;gap:10px}
+  .ex-layer{display:flex;gap:18px;align-items:flex-start;padding:16px 20px;border-radius:18px;background:rgba(255,255,255,.03);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);transition:all .6s cubic-bezier(.2,.8,.2,1)}
+  .pxj .ex-layer{opacity:.22;transform:translateX(30px) scale(.97);filter:saturate(0)}
+  .pxj .ex-layer.on{opacity:1;transform:none;filter:none;background:linear-gradient(135deg,rgba(0,123,255,.16),rgba(0,200,255,.05));box-shadow:inset 0 0 0 1px rgba(0,200,255,.28)}
+  .pxj .ex-layer.cur{box-shadow:inset 0 0 0 1px rgba(0,200,255,.7),0 20px 60px -20px rgba(0,160,255,.7);transform:translateX(-8px)}
+  .ex-layer-n{font-family:Montserrat,sans-serif;font-size:28px;font-weight:700;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(191,239,255,.5);min-width:44px}
+  .ex-layer.cur .ex-layer-n{-webkit-text-stroke:0;color:#00C8FF}
+  .ex-layer b{font-family:Montserrat,sans-serif;font-size:17px}
+  .ex-layer p{margin:3px 0 0;font-size:13.5px;color:#B8BEC7}
+  .ex-chips{display:flex;flex-wrap:wrap;gap:6px;max-height:0;overflow:hidden;transition:max-height .5s,margin .5s}
+  .ex-layer.cur .ex-chips,.ex-ev:not(.js) .ex-chips{max-height:60px;margin-top:10px}
+  .ex-chips i{font-style:normal;font-family:"JetBrains Mono",monospace;font-size:10.5px;padding:4px 9px;border-radius:999px;color:#BFEFFF;background:rgba(0,200,255,.1);box-shadow:inset 0 0 0 1px rgba(0,200,255,.25)}
+  .ex-ev-note{margin:18px 0 0;font-family:"JetBrains Mono",monospace;font-size:11.5px;color:#7E8796}
+
+  .ex-truth .px-card{display:grid;grid-template-columns:1fr 1fr;gap:10px 40px}
+  .ex-truth .px-tag{grid-column:1/-1;justify-self:start}
+  .ex-truth p{margin:0;color:#B8BEC7}
+
+  /* TMS */
+  .ex-tms-g{display:grid;grid-template-columns:1.35fr .85fr;gap:28px;align-items:center}
+  .ex-video{aspect-ratio:16/9;background:#020817}
+  .ex-video video{width:100%;height:100%;display:block;object-fit:contain;background:#020817}
+  .ex-tms-side h3{font-size:30px;margin:6px 0 10px;letter-spacing:-.03em}
+  .ex-tms-side>p{color:#B8BEC7;margin:0 0 20px}
+  .ex-flow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .ex-flow span{position:relative;font-family:"JetBrains Mono",monospace;font-size:11.5px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);animation:exFlow 5s calc(var(--i)*1s) infinite}
+  @keyframes exFlow{0%,22%{color:#fff;background:linear-gradient(135deg,rgba(0,123,255,.5),rgba(0,200,255,.3));box-shadow:inset 0 0 0 1px #00C8FF,0 0 22px -4px #00C8FF}30%,100%{}}
+  .ex-spec{display:grid;gap:8px;margin-bottom:22px}
+  .ex-spec div{display:flex;justify-content:space-between;gap:12px;padding:11px 14px;border-radius:14px;background:rgba(255,255,255,.03);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)}
+  .ex-spec small{font-family:"JetBrains Mono",monospace;font-size:11px;color:#7E8796}.ex-spec b{font-size:13.5px;font-weight:500}
+
+  /* proyectos */
+  .ex-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .ex-filters button{all:unset;cursor:pointer;padding:9px 15px;border-radius:999px;font-size:13.5px;color:#B8BEC7;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);transition:all .25s}
+  .ex-filters button sup{font-family:"JetBrains Mono",monospace;font-size:9.5px;margin-left:5px;color:#7E8796;vertical-align:super}
+  .ex-filters button:hover{color:#fff}
+  .ex-filters button.on{color:#fff;background:linear-gradient(135deg,#007BFF,#00A8FF);box-shadow:0 10px 30px -10px rgba(0,140,255,.9)}
+  .ex-filters button.on sup{color:#DDF6FF}
+  .ex-legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:26px;font-family:"JetBrains Mono",monospace;font-size:10.5px;color:#7E8796}
+  .ex-legend span{display:inline-flex;align-items:center;gap:6px}
+  .ex-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-flow:dense;gap:18px}
+  .ex-card{position:relative;display:flex;flex-direction:column;border-radius:22px;overflow:hidden;cursor:pointer;outline:none;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .35s ease,box-shadow .35s;view-transition-class:excard}
+  .ex-card:hover,.ex-card:focus-visible{box-shadow:inset 0 0 0 1px rgba(0,200,255,.45),0 30px 70px -30px rgba(0,140,255,.75)}
+  .ex-card.w{grid-column:span 2}.ex-card.t{grid-row:span 2}
+  .ex-card.hide{display:none}
+  .ex-cover{position:relative;aspect-ratio:16/10;overflow:hidden;background:#08111F}
+  .ex-card.w .ex-cover{aspect-ratio:16/8}
+  .ex-card.t .ex-cover{aspect-ratio:auto;flex:1;min-height:300px}
+  .ex-cover img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+  .ex-card:hover .ex-cover img{transform:scale(1.06)}
+  .ex-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(6,12,24,.75));pointer-events:none}
+  .ex-state{position:absolute;z-index:2;left:12px;top:12px;display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:999px;font-family:"JetBrains Mono",monospace;font-size:10.5px;color:#fff;background:rgba(6,12,24,.72);backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+  .ex-body{padding:18px 20px 20px}
+  .ex-cat{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:#00C8FF;letter-spacing:.06em;text-transform:uppercase}
+  .ex-body h3{margin:6px 0 4px;font-size:18px;line-height:1.2;letter-spacing:-.02em}
+  .ex-sub{margin:0 0 10px;font-size:12.5px;color:#7E8796}
+  .ex-sum{margin:0 0 14px;font-size:14px;color:#B8BEC7}
+  .ex-card .px-go{font-size:13px}
+
+  /* mocks sin captura */
+  .ex-mock{position:absolute;inset:0;padding:22px;background:radial-gradient(circle at 80% 10%,rgba(0,200,255,.22),transparent 55%),linear-gradient(160deg,#0C1A33,#060C18)}
+  .m-landing i{display:block;border-radius:8px;background:rgba(255,255,255,.1);margin-bottom:10px}
+  .m-landing .a{width:60%;height:18px;background:linear-gradient(90deg,#fff,#BFEFFF)}.m-landing .b{width:80%;height:10px}.m-landing .c{width:45%;height:10px}
+  .m-landing .btn{font-style:normal;display:inline-block;width:auto;height:auto;padding:8px 16px;margin-top:8px;font-size:12px;font-family:Poppins,sans-serif;color:#fff;background:linear-gradient(135deg,#007BFF,#00C8FF);border-radius:999px;animation:exPulse 2s infinite}
+  @keyframes exPulse{50%{box-shadow:0 0 0 10px rgba(0,200,255,0),0 0 24px rgba(0,200,255,.6)}}
+  .m-route svg{width:100%;height:100%}
+  .m-route .rt{fill:none;stroke:rgba(191,239,255,.35);stroke-width:2;stroke-dasharray:6 7;animation:exDash 1.6s linear infinite}
+  @keyframes exDash{to{stroke-dashoffset:-26}}
+  .m-route .mv{fill:#00C8FF;filter:drop-shadow(0 0 6px #00C8FF)}.m-route .pt{fill:#0C1A33;stroke:#BFEFFF;stroke-width:2}
+  .m-content{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;align-content:center}
+  .m-content i{aspect-ratio:1;border-radius:8px;background:rgba(255,255,255,.07);animation:exTile 4.8s calc(var(--k)*.3s) infinite}
+  @keyframes exTile{0%,10%{background:rgba(255,255,255,.07)}20%,70%{background:linear-gradient(135deg,rgba(0,123,255,.7),rgba(0,200,255,.4))}85%,100%{background:rgba(255,255,255,.07)}}
+  .m-gym{display:grid;gap:8px;align-content:center}
+  .m-gym .r{display:flex;justify-content:space-between;padding:9px 12px;border-radius:10px;background:rgba(255,255,255,.05);font-family:"JetBrains Mono",monospace;font-size:11px;color:#B8BEC7;animation:exIn .6s calc(var(--k)*.25s) both}
+  .m-gym .r b{font-weight:500;color:#4BE39A}.m-gym .r:nth-child(3) b{color:#F5B94B}
+  @keyframes exIn{from{opacity:0;transform:translateY(8px)}}
+  .m-sign{display:grid;place-items:center}
+  .m-sign .doc{width:62%;padding:14px;border-radius:8px;background:#F2F4F7}
+  .m-sign .doc i{display:block;height:6px;border-radius:3px;background:#CDD3DC;margin-bottom:7px}.m-sign .doc i:nth-child(2){width:80%}.m-sign .doc i:nth-child(4){width:55%}
+  .m-sign svg{width:70%;height:auto}.m-sign path{fill:none;stroke:#007BFF;stroke-width:3;stroke-linecap:round;stroke-dasharray:260;stroke-dashoffset:260;animation:exSign 3.6s infinite}
+  @keyframes exSign{50%,90%{stroke-dashoffset:0}100%{stroke-dashoffset:0;opacity:0}}
+  .m-sign .st{position:absolute;right:18px;bottom:18px;font-family:"JetBrains Mono",monospace;font-size:11px;color:#4BE39A;animation:exFade 3.6s infinite}
+  @keyframes exFade{0%,45%{opacity:0}55%,90%{opacity:1}100%{opacity:0}}
+  .m-chat{display:flex;flex-direction:column;justify-content:center;gap:8px}
+  .m-chat span{max-width:72%;padding:8px 12px;border-radius:14px;font-size:12px;animation:exChat 6s infinite both}
+  .m-chat .in{align-self:flex-start;background:rgba(255,255,255,.1);border-bottom-left-radius:4px}
+  .m-chat .out{align-self:flex-end;background:linear-gradient(135deg,#0A7A4F,#12A06A);border-bottom-right-radius:4px}
+  .m-chat span:nth-child(2){animation-delay:.9s}.m-chat span:nth-child(3){animation-delay:1.8s}.m-chat span:nth-child(4){animation-delay:2.7s}
+  @keyframes exChat{0%{opacity:0;transform:translateY(8px)}8%,85%{opacity:1;transform:none}100%{opacity:0}}
+
+  /* diagnósticos */
+  .ex-diag{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .ex-kl-b{padding:22px}
+  .ex-kl-b h3{margin:12px 0 18px;font-size:21px;letter-spacing:-.02em}
+  .ex-chain{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:14px}
+  .ex-chain-line{position:absolute;left:8%;right:8%;top:17px;height:2px;background:rgba(255,255,255,.1)}
+  .ex-chain-line b{display:block;height:100%;width:calc(var(--c,0)*20%);background:linear-gradient(90deg,#007BFF,#00C8FF);box-shadow:0 0 10px #00C8FF;transition:width .6s}
+  .ex-chain button{all:unset;cursor:pointer;position:relative;display:grid;justify-items:center;gap:7px;text-align:center}
+  .ex-chain button span{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:"JetBrains Mono",monospace;font-size:10.5px;color:#7E8796;background:#0B1324;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);transition:all .35s}
+  .ex-chain button b{font-size:11px;font-weight:500;color:#7E8796;line-height:1.2}
+  .ex-chain button.done span{color:#fff;background:linear-gradient(135deg,#007BFF,#00C8FF);box-shadow:0 0 16px -2px #00C8FF}
+  .ex-chain button.done b{color:#DDE3EA}
+  .ex-chain button.cur span{transform:scale(1.15);box-shadow:0 0 0 5px rgba(0,200,255,.18),0 0 18px #00C8FF}
+  .ex-kl-info{display:flex;gap:10px;align-items:baseline;padding:12px 14px;border-radius:14px;background:rgba(0,200,255,.07);box-shadow:inset 0 0 0 1px rgba(0,200,255,.2);margin-bottom:12px;font-size:13.5px}
+  .ex-kl-info b{font-family:Montserrat,sans-serif}.ex-kl-info span{color:#B8BEC7}
+  .ex-log{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:6px;min-height:96px}
+  .ex-log li{display:flex;gap:10px;font-family:"JetBrains Mono",monospace;font-size:11px;color:#B8BEC7;animation:exIn .4s both}
+  .ex-log li em{font-style:normal;color:#4BE39A}.ex-log li.bad em{color:#FF6B7A}
+  .ex-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .ex-row small{font-size:11.5px;color:#7E8796}
+  .ex-hub{width:100%;height:auto;margin-bottom:10px}
+  .ex-hub .ln{fill:none;stroke:rgba(191,239,255,.18);stroke-width:1.5}
+  .ex-hub .nd{fill:#0B1324;stroke:rgba(255,255,255,.18)}
+  .ex-hub .nd.warn{stroke:rgba(255,107,122,.6);animation:exWarn 3s infinite}
+  @keyframes exWarn{50%{stroke:#FF6B7A;filter:drop-shadow(0 0 6px #FF6B7A)}}
+  .ex-hub text{fill:#DDE3EA;font-family:"JetBrains Mono",monospace;font-size:10px;text-anchor:middle}
+  .ex-hub .pk{fill:#00C8FF;filter:drop-shadow(0 0 4px #00C8FF)}.ex-hub .pk.bad{fill:#FF6B7A;filter:drop-shadow(0 0 4px #FF6B7A)}
+  .ex-hub .core{fill:url(#exg)}.ex-hub .ring{fill:none;stroke:#00C8FF;transform-origin:225px 115px;animation:exRing 2.4s infinite}
+  @keyframes exRing{from{transform:scale(1);opacity:.9}to{transform:scale(1.7);opacity:0}}
+  .ex-hub .ct{fill:#fff;font-size:9.5px;font-family:Poppins,sans-serif}
+  .ex-alerts{display:grid;gap:6px;min-height:96px;margin-bottom:14px;align-content:start}
+  .ex-alerts span{font-family:"JetBrains Mono",monospace;font-size:11px;padding:7px 11px;border-radius:10px;background:rgba(255,255,255,.04);animation:exIn .4s both}
+  .ex-alerts .ok{color:#4BE39A}.ex-alerts .bad{color:#FF8A96;background:rgba(255,107,122,.08);box-shadow:inset 0 0 0 1px rgba(255,107,122,.3)}
+
+  /* contenido */
+  .ex-ct-g{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  .ex-ct h2{font-size:clamp(30px,3.8vw,48px);line-height:1.06;letter-spacing:-.04em;margin:0 0 14px}
+  .ex-big{display:grid;gap:14px}
+  .ex-big .px-card{position:relative;overflow:hidden}
+  .ex-big b{display:block;font-family:Montserrat,sans-serif;font-size:clamp(40px,5vw,64px);letter-spacing:-.04em;line-height:1;background:linear-gradient(135deg,#fff,#BFEFFF 50%,#00C8FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .ex-big span{color:#B8BEC7;font-size:14px}
+  .ex-bars{position:absolute;right:20px;bottom:18px;display:flex;align-items:flex-end;gap:5px;height:56px;width:110px}
+  .ex-bars em{flex:1;height:var(--h);border-radius:3px 3px 0 0;background:linear-gradient(#00C8FF,rgba(0,123,255,.2));transform-origin:bottom;transform:scaleY(0);transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+  .px-rv.in .ex-bars em{transform:scaleY(1)}
+  .ex-bars em:nth-child(2){transition-delay:.08s}.ex-bars em:nth-child(3){transition-delay:.16s}.ex-bars em:nth-child(4){transition-delay:.24s}.ex-bars em:nth-child(5){transition-delay:.32s}.ex-bars em:nth-child(6){transition-delay:.4s}.ex-bars em:nth-child(7){transition-delay:.48s}
+  .ex-pipe{margin-top:40px;padding:26px;border-radius:24px;background:rgba(255,255,255,.03);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+  .ex-pipe-row{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:16px 0}
+  .ex-pipe-row::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:rgba(255,255,255,.08)}
+  .ex-pipe-row span{position:relative;text-align:center;padding:12px 6px;border-radius:14px;font-family:Montserrat,sans-serif;font-size:15px;background:#0B1324;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);animation:exStep 5s calc(var(--i)*1s) infinite}
+  @keyframes exStep{0%,18%{color:#fff;box-shadow:inset 0 0 0 1px #00C8FF,0 0 30px -8px #00C8FF;background:linear-gradient(135deg,rgba(0,123,255,.35),#0B1324)}26%,100%{color:#B8BEC7}}
+  .ex-pipe-dot{position:absolute;top:calc(50% - 5px);left:0;width:10px;height:10px;border-radius:50%;background:#00C8FF;box-shadow:0 0 14px #00C8FF;animation:exRun 5s linear infinite;pointer-events:none}
+  @keyframes exRun{from{left:0}to{left:calc(100% - 10px)}}
+  .ex-pipe-t{margin:0;color:#B8BEC7;max-width:760px}
+
+  .ex-role-i{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;font-size:20px;color:#00C8FF;background:rgba(0,200,255,.1);box-shadow:inset 0 0 0 1px rgba(0,200,255,.3);margin-bottom:14px}
+
+  .ex-close .px-card{text-align:center;padding:56px 32px}
+  .ex-close h2{font-size:clamp(30px,4.2vw,54px);line-height:1.06;letter-spacing:-.04em;margin:0 auto 24px;max-width:820px}
+  .ex-close .px-lead{margin:22px auto 26px;max-width:640px}
+  .ex-close .px-cta{justify-content:center}
+  .ex-path{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+  .ex-path span{font-family:"JetBrains Mono",monospace;font-size:12px;padding:7px 13px;border-radius:999px;color:#7E8796;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);transition:all .5s calc(var(--i)*.18s)}
+  .ex-path span:not(:last-child)::after{content:" →";color:#3B4657}
+  .px-rv.in .ex-path span{color:#fff;box-shadow:inset 0 0 0 1px rgba(0,200,255,.35);background:rgba(0,200,255,.06)}
+  .px-rv.in .ex-path span:last-child{background:linear-gradient(135deg,#007BFF,#00C8FF);box-shadow:0 10px 30px -10px #00A8FF}
+
+  /* ficha */
+  .ex-modal{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px;visibility:hidden;pointer-events:none}
+  .ex-modal.open{visibility:visible;pointer-events:auto}
+  .ex-modal-bg{position:absolute;inset:0;background:rgba(3,6,12,.72);backdrop-filter:blur(10px);opacity:0;transition:opacity .35s}
+  .ex-modal.open .ex-modal-bg{opacity:1}
+  .ex-sheet{position:relative;width:min(980px,100%);max-height:calc(100vh - 40px);overflow:auto;border-radius:26px;background:linear-gradient(180deg,#0E1A2E,#0A0F1A);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 60px 140px -30px rgba(0,90,255,.6);transform:translateY(30px) scale(.97);opacity:0;transition:all .45s cubic-bezier(.2,.8,.2,1)}
+  .ex-modal.open .ex-sheet{transform:none;opacity:1}
+  .ex-sheet-top{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:10px;padding:12px 14px;background:rgba(10,15,26,.85);backdrop-filter:blur(10px);font-family:"JetBrains Mono",monospace;font-size:11px;color:#7E8796;box-shadow:0 1px 0 rgba(255,255,255,.07)}
+  .ex-nav,.ex-x{all:unset;cursor:pointer;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;color:#fff;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);font-size:15px}
+  .ex-x{margin-left:auto;font-size:20px}
+  .ex-nav:hover,.ex-x:hover{background:rgba(0,200,255,.18)}
+  .ex-m-img{position:relative;max-height:440px;overflow:hidden;background:#060C18}
+  .ex-m-img img{width:100%;display:block;max-height:440px;object-fit:cover;object-position:top;animation:exZoom 1s cubic-bezier(.2,.8,.2,1)}
+  @keyframes exZoom{from{transform:scale(1.06);opacity:.4}}
+  .ex-m-img .ex-mock{position:relative;height:300px}
+  .ex-m-b{padding:26px 30px 30px}
+  .ex-m-b h2{margin:12px 0 4px;font-size:clamp(24px,3vw,34px);letter-spacing:-.03em;line-height:1.1}
+  .ex-m-meta{display:flex;flex-wrap:wrap;gap:8px}
+  .ex-m-meta span{display:inline-flex;align-items:center;gap:7px;font-family:"JetBrains Mono",monospace;font-size:11px;padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+  .ex-m-sub{margin:0 0 14px;color:#7E8796;font-size:14px}
+  .ex-m-sum{font-size:16px;color:#DDE3EA;margin:0 0 22px}
+  .ex-m-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .ex-m-box{padding:18px;border-radius:18px;background:rgba(255,255,255,.03);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+  .ex-m-box h4{margin:0 0 10px;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:#00C8FF}
+  .ex-m-box p{margin:0;color:#B8BEC7;font-size:14px}
+  .ex-m-box ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+  .ex-m-box li{display:flex;gap:9px;font-size:14px;color:#DDE3EA;animation:exIn .4s both}
+  .ex-m-box li::before{content:"✓";color:#4BE39A;font-size:12px;margin-top:2px}
+  .ex-m-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:20px}
+  .ex-m-act small{color:#7E8796;font-size:12px}
+
+  @media (max-width:980px){
+    .ex-hero{grid-template-columns:1fr;min-height:0;gap:30px;padding-top:40px}
+    .ex-deck{height:360px}
+    .ex-ev-in{grid-template-columns:1fr;gap:22px}
+    .ex-ev-rail{display:none}
+    .ex-ev-sub{margin-bottom:0}
+    .ex-tms-g,.ex-diag,.ex-ct-g{grid-template-columns:1fr}
+    .ex-grid{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:640px){
+    .ex-stats{grid-template-columns:1fr 1fr 1fr;gap:8px}.ex-stats div{padding:10px}.ex-stats b{font-size:22px}.ex-stats span{font-size:10.5px}
+    .ex-deck{height:270px}.ex-dk{inset:20px 14px 46px}.ex-deck-bar{left:14px;right:14px}
+    .pxj .ex-ev{height:auto}.pxj .ex-ev-stick{position:relative;min-height:0;padding:50px 0}
+    .pxj .ex-layer{opacity:1;transform:none;filter:none}
+    .ex-chips{max-height:60px;margin-top:10px}
+    .ex-ev h2{font-size:32px}
+    .ex-truth .px-card{grid-template-columns:1fr}
+    .ex-grid{grid-template-columns:1fr}.ex-card.w{grid-column:auto}.ex-card.t{grid-row:auto}.ex-card.w .ex-cover{aspect-ratio:16/10}.ex-card.t .ex-cover{aspect-ratio:4/5;flex:none;min-height:0}
+    .ex-filters{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px 14px;padding:0 16px 4px;scrollbar-width:none}
+    .ex-filters button{flex:none}
+    .ex-chain b{font-size:9.5px!important}.ex-chain button span{width:28px;height:28px}.ex-chain-line{top:14px}
+    .ex-pipe-row{grid-template-columns:1fr;gap:6px}.ex-pipe-row::before,.ex-pipe-dot{display:none}
+    .ex-row{flex-direction:column;align-items:flex-start}
+    .ex-modal{padding:0;align-items:end}
+    .ex-sheet{max-height:92vh;border-radius:24px 24px 0 0}
+    .ex-m-b{padding:20px}.ex-m-cols{grid-template-columns:1fr}
+    .ex-bars{width:70px;height:40px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .ex-flow span,.ex-pipe-row span,.ex-pipe-dot,.ex-mock *,.ex-hub .ring,.ex-hub .nd.warn{animation:none!important}
+    .ex-dk{transition:none}
+  }
+</style>
+
+<script is:inline>
+(function () {
+  var P = JSON.parse(document.getElementById('exData').textContent);
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var esc = function (s) { return String(s || '').replace(/[&<>"']/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]; }); };
+  var full = function (u) { return u ? u.replace('-card.webp', '-full.webp') : ''; };
+  function visible(el) { var r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; }
+
+  /* contadores */
+  var cio = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return; cio.unobserve(e.target);
+      var el = e.target, to = +el.dataset.count, pre = el.dataset.pre || '', suf = el.dataset.suf || '', t0 = null;
+      if (reduce) { el.textContent = pre + to + suf; return; }
+      (function f(t) { if (!t0) t0 = t; var p = Math.min(1, (t - t0) / 1400); el.textContent = pre + Math.round(to * (1 - Math.pow(1 - p, 3))) + suf; if (p < 1) requestAnimationFrame(f); })(performance.now());
+    });
+  }, { threshold: .5 });
+  document.querySelectorAll('[data-count]').forEach(function (el) { cio.observe(el); });
+
+  /* mazo del hero */
+  var cards = [].slice.call(document.querySelectorAll('.ex-dk')), top = 0, bar = document.getElementById('exDeckP'), num = document.getElementById('exDeckN'), deckT;
+  function layout() { cards.forEach(function (c, i) { var p = (i - top + cards.length) % cards.length; c.style.setProperty('--p', Math.min(p, 4)); c.style.visibility = p > 4 ? 'hidden' : ''; }); num.textContent = String(top + 1).padStart(2, '0'); bar.classList.remove('run'); void bar.offsetWidth; if (!reduce) bar.classList.add('run'); }
+  function nextDeck() { var c = cards[top]; if (reduce) { top = (top + 1) % cards.length; layout(); return; } c.classList.add('out'); setTimeout(function () { c.classList.remove('out'); top = (top + 1) % cards.length; layout(); }, 450); }
+  layout();
+  deckT = setInterval(function () { if (!document.hidden && visible(cards[0].parentNode)) nextDeck(); }, 3400);
+
+  /* evolución por scroll */
+  var ev = document.getElementById('evolucion'), layers = ev.querySelectorAll('.ex-layer'), btns = ev.querySelectorAll('[data-ev]'), fill = document.getElementById('exEvFill'), n = layers.length, sticky = function () { return innerWidth > 640 && !reduce; };
+  ev.classList.add('js');
+  function setStage(k, f) {
+    layers.forEach(function (l, i) { l.classList.toggle('on', i <= k); l.classList.toggle('cur', i === k); });
+    btns.forEach(function (b, i) { b.classList.toggle('on', i <= k); });
+    fill.parentNode.style.setProperty('--f', f);
+  }
+  function onScroll() {
+    if (!sticky()) { setStage(n - 1, 1); layers.forEach(function (l) { l.classList.remove('cur'); }); return; }
+    var r = ev.getBoundingClientRect(), total = ev.offsetHeight - innerHeight, p = Math.max(0, Math.min(1, -r.top / total));
+    var k = Math.min(n - 1, Math.floor(p * n * 1.02));
+    setStage(k, k / (n - 1));
+  }
+  addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll); onScroll();
+  btns.forEach(function (b, i) { b.addEventListener('click', function () { var total = ev.offsetHeight - innerHeight; scrollTo({ top: ev.offsetTop + total * (i + .5) / n, behavior: 'smooth' }); }); });
+
+  /* filtros */
+  var grid = document.getElementById('exGrid'), items = grid.querySelectorAll('.ex-card'), fbtn = document.querySelectorAll('.ex-filters button'), order = P.map(function (p) { return p.id; });
+  fbtn.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var c = b.dataset.cat;
+      var run = function () { fbtn.forEach(function (x) { x.classList.toggle('on', x === b); }); items.forEach(function (it) { it.classList.toggle('hide', c !== 'Todos' && it.dataset.cat !== c); }); };
+      if (document.startViewTransition && !reduce) document.startViewTransition(run); else run();
+    });
+  });
+  items.forEach(function (it, i) { it.style.viewTransitionName = 'exc' + i; });
+
+  /* inclinación de tarjetas */
+  if (fine && !reduce) items.forEach(function (it) {
+    it.addEventListener('pointermove', function (e) { var r = it.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; it.style.setProperty('--ry', (x * 6) + 'deg'); it.style.setProperty('--rx', (-y * 6) + 'deg'); });
+    it.addEventListener('pointerleave', function () { it.style.setProperty('--ry', '0deg'); it.style.setProperty('--rx', '0deg'); });
+    it.addEventListener('pointerenter', function () { var p = P.find(function (x) { return x.id === it.dataset.open; }); if (p && p.image) new Image().src = full(p.image); }, { once: true });
+  });
+
+  /* ficha */
+  var modal = document.getElementById('exModal'), mc = document.getElementById('exMC'), mi = document.getElementById('exMI'), cur = -1, lastFocus;
+  function list() { var vis = [].filter.call(items, function (it) { return !it.classList.contains('hide'); }).map(function (it) { return it.dataset.open; }); return vis.length ? vis : order; }
+  function render(id) {
+    var p = P.find(function (x) { return x.id === id; }); if (!p) return;
+    var L = list(); cur = L.indexOf(id); if (cur < 0) { L = order; cur = order.indexOf(id); }
+    mi.textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(L.length).padStart(2, '0');
+    var src = document.querySelector('.ex-card[data-open="' + id + '"] .ex-mock');
+    var img = p.image ? '<div class="ex-m-img"><img src="' + full(p.image) + '" alt="' + esc(p.title) + '"></div>' : (src ? '<div class="ex-m-img">' + src.outerHTML + '</div>' : '');
+    var how = p.cat === 'Diagnósticos' ? 'Es un diagnóstico / diseño de solución. No se presenta como implantación productiva ni como resultado económico ya obtenido.' : 'El estado indicado arriba describe el alcance real del proyecto.';
+    var act = p.access === 'public' && p.url ? '<a class="px-btn p sm" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer">' + esc(p.actionLabel || 'Abrir ↗') + '</a>' : '<small>Acceso privado: se muestra con capturas o explicación del alcance.</small>';
+    mc.innerHTML = img + '<div class="ex-m-b"><div class="ex-m-meta"><span>' + esc(p.cat) + '</span><span><i class="ex-dot ' + esc(p.stateClass) + '"></i>' + esc(p.state) + '</span></div>' +
+      '<h2 id="exMT">' + esc(p.title) + '</h2><p class="ex-m-sub">' + esc(p.subtitle) + '</p><p class="ex-m-sum">' + esc(p.summary) + '</p>' +
+      '<div class="ex-m-cols"><div class="ex-m-box"><h4>Problema / contexto</h4><p>' + esc(p.problem) + '</p></div>' +
+      '<div class="ex-m-box"><h4>Qué desarrollamos o propusimos</h4><ul>' + (p.built || []).map(function (b, i) { return '<li style="animation-delay:' + (i * .06) + 's">' + esc(b) + '</li>'; }).join('') + '</ul></div>' +
+      '<div class="ex-m-box"><h4>Evidencia disponible</h4><p>' + esc(p.proof) + '</p></div>' +
+      '<div class="ex-m-box"><h4>Cómo leer este caso</h4><p>' + how + '</p></div></div>' +
+      '<div class="ex-m-act">' + act + '</div></div>';
+    modal.querySelector('.ex-sheet').scrollTop = 0;
+  }
+  function open(id) { lastFocus = document.activeElement; render(id); modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; modal.querySelector('.ex-x').focus(); history.replaceState(null, '', '#p-' + id); }
+  function close() { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; history.replaceState(null, '', location.pathname); if (lastFocus) lastFocus.focus(); }
+  function step(d) { var L = list(); var id = L[(cur + d + L.length) % L.length]; render(id); history.replaceState(null, '', '#p-' + id); }
+  document.addEventListener('click', function (e) {
+    var o = e.target.closest('[data-open]'); if (o) { e.preventDefault(); open(o.dataset.open); return; }
+    if (e.target.closest('[data-close]')) close();
+    var s = e.target.closest('[data-step]'); if (s) step(+s.dataset.step);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (modal.classList.contains('open')) { if (e.key === 'Escape') close(); if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1); return; }
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('ex-card')) { e.preventDefault(); open(e.target.dataset.open); }
+  });
+  if (location.hash.indexOf('#p-') === 0) open(location.hash.slice(3));
+
+  /* Klüver: cadena de custodia (ejemplo ilustrativo) */
+  var K = [['Remito', 'Qué se recibió y de quién'], ['Lote / bulto', 'Cada pieza con su identificador'], ['Manifiesto', 'Qué sale en cada vehículo'], ['Transferencias', 'Quién entrega y quién confirma'], ['Incidencias', 'Faltantes, daños o demoras'], ['Historial', 'Último punto comprobado']];
+  var LOG = ['Remito R-2207 recibido en base Montevideo', 'Lote L-14 · 6 bultos etiquetados', 'Manifiesto M-88 asignado a unidad 03', 'Transferencia confirmada por base Paysandú', 'Incidencia: 1 bulto con demora', 'Último punto comprobado: base Salto'];
+  var chain = document.getElementById('exChain'), kb = chain.querySelectorAll('button'), kt = document.getElementById('exKlT'), kd = document.getElementById('exKlD'), log = document.getElementById('exLog'), ki = 0, kAuto = true, hh = 9, mm = 2;
+  function kSet(i, write) {
+    ki = i; kb.forEach(function (b, j) { b.classList.toggle('done', j <= i); b.classList.toggle('cur', j === i); });
+    chain.style.setProperty('--c', i); kt.textContent = K[i][0]; kd.textContent = K[i][1];
+    if (write) { mm += 7 + i * 3; if (mm >= 60) { hh++; mm -= 60; } var li = document.createElement('li'); if (i === 4) li.className = 'bad'; li.innerHTML = '<em>' + String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0') + '</em>' + LOG[i]; log.prepend(li); while (log.children.length > 4) log.lastChild.remove(); }
+  }
+  kb.forEach(function (b, i) { b.addEventListener('click', function () { kAuto = false; kSet(i, false); }); });
+  kSet(0, true);
+  setInterval(function () { if (!kAuto || reduce || !visible(chain)) return; if (ki === K.length - 1) { log.innerHTML = ''; hh = 9; mm = 2; kSet(0, true); } else kSet(ki + 1, true); }, 1800);
+
+  /* Acesur: eventos de ejemplo */
+  var AL = [['ok', 'Pedido #A-102 despachado'], ['ok', 'WhatsApp → pedido #A-117 confirmado'], ['bad', 'Excepción: devolución sin motivo cargado'], ['ok', 'Email → pedido #A-121 en depósito'], ['bad', 'Excepción: pedido #A-109 sin despacho hace 48 h'], ['ok', 'Teléfono → pedido #A-124 ingresado']], ai = 1, al = document.getElementById('exAlerts');
+  setInterval(function () { if (reduce || !visible(al)) return; var a = AL[ai++ % AL.length], s = document.createElement('span'); s.className = a[0]; s.textContent = a[1]; al.prepend(s); while (al.children.length > 3) al.lastChild.remove(); }, 2100);
+})();
+</script>
