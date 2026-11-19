@@ -38,6 +38,50 @@ if (process.env.ACADEMY_PLANS_JSON) {
   problems.push('falta ACADEMY_PLANS_JSON (sin planes, las rutas de alumno quedarían vacías)');
 }
 
+// 1b) Reparo texto con la codificación rota (UTF-8 leído como MacRoman: "Diagnóstico" -> "Diagn√≥stico").
+// Pasa cuando el JSON se pegó o guardó con la codificación equivocada. Si una cadena no se puede
+// revertir de forma segura, se deja tal cual. Nunca imprime contenido de los planes.
+{
+  const mac = new TextDecoder('macintosh');
+  const rev = new Map();
+  for (let b = 128; b < 256; b++) rev.set(mac.decode(Uint8Array.of(b)), b);
+  const utf8 = new TextDecoder('utf-8', { fatal: true });
+  let fixed = 0;
+  const fixString = (str) => {
+    if (!/[\u221a\u00ac\u201a]/.test(str)) return str;
+    const bytes = [];
+    for (const ch of str) {
+      const cp = ch.codePointAt(0);
+      if (cp < 128) bytes.push(cp);
+      else if (rev.has(ch)) bytes.push(rev.get(ch));
+      else return str;
+    }
+    try {
+      const out = utf8.decode(Uint8Array.from(bytes));
+      if (out !== str) fixed++;
+      return out;
+    } catch {
+      return str;
+    }
+  };
+  const walk = (v) => {
+    if (typeof v === 'string') return fixString(v);
+    if (Array.isArray(v)) return v.map(walk);
+    if (v && typeof v === 'object') return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, walk(x)]));
+    return v;
+  };
+  try {
+    const data = JSON.parse(readFileSync(target, 'utf8'));
+    const repaired = walk(data);
+    if (fixed > 0) {
+      writeFileSync(target, JSON.stringify(repaired));
+      console.log(`[academy] reparé ${fixed} textos de los planes con la codificación rota (conviene corregir el origen)`);
+    }
+  } catch {
+    /* el archivo ya fue validado arriba */
+  }
+}
+
 // 2) Configuración de login (runtime). Se valida aquí sólo lo visible en build.
 const secret = process.env.ACADEMY_SESSION_SECRET || '';
 if (secret.length < 32) problems.push('falta ACADEMY_SESSION_SECRET (32+ caracteres)');
