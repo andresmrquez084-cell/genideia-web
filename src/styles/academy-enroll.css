@@ -211,3 +211,8 @@ html:has(.enroll){scroll-behavior:smooth;overflow-x:clip}
 }
 .primary::after,.en-spot::before,.hero::after{pointer-events:none!important}
 #recibis,#datos,#contrato,#pago{scroll-margin-top:150px}
+
+/* programa no disponible por el momento */
+body[data-disponible="no"] #datos,body[data-disponible="no"] #contrato,body[data-disponible="no"] #pago{opacity:.38;pointer-events:none;filter:saturate(.6)}
+.na-banner{margin:0 0 22px}
+.na-banner .wide{max-width:340px}

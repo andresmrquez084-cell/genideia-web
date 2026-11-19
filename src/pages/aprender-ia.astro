@@ -48,6 +48,7 @@ const waTestimonio = waUrl('Hola Andrés, vi el testimonio de Marcelo y quiero a
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <meta name="theme-color" content="#0A0F1A" />
   <script>import '../transitions/reveal.js';</script>
+  <script is:inline src="/academy-gate.js"></script>
 </head>
 <body>
   <div class="vp-amb" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
@@ -80,12 +81,17 @@ const waTestimonio = waUrl('Hola Andrés, vi el testimonio de Marcelo y quiero a
   <!-- ── VIDEO PRINCIPAL ──────────────────────────────────────── -->
   <section class="vsl-section">
     <div class="wrap">
-      <div class="video-shell" data-reveal>
+      <div class="video-shell" data-reveal id="video">
         <div class="video-frame">
           <video id="vid-principal" controls playsinline preload="metadata">
             <source src={VIDEO} type="video/mp4" />
             Tu navegador no soporta el video.
           </video>
+        </div>
+        <div class="vsl-gate" id="vsl-gate" data-estado="bloqueado">
+          <p class="vg-t" id="vg-t"><b>Mirá el video completo</b> para elegir tu programa. Después vas a ver el testimonio de Marcelo y se habilitan las inscripciones.</p>
+          <div class="vg-bar" aria-hidden="true"><i id="vg-fill"></i></div>
+          <a class="btn-primary vg-go" id="vg-go" href="#programas" hidden>Elegir mi programa →</a>
         </div>
         <div class="video-cta">
           <a href={waDefault} target="_blank" rel="noopener noreferrer" class="btn-primary" data-track-lead>Quiero agendar mi diagnóstico →</a>
@@ -123,7 +129,7 @@ const waTestimonio = waUrl('Hola Andrés, vi el testimonio de Marcelo y quiero a
   </section>
 
   <!-- ── RECORRIDO Y PROGRAMAS (mismo formato que /academy) ──────── -->
-  <div class="wrap"><AcademyBloque /></div>
+  <div class="wrap" id="programas"><AcademyBloque /></div>
 
   <!-- ── FOOTER ────────────────────────────────────────────── -->
   <footer class="site-footer">
@@ -232,6 +238,14 @@ const waTestimonio = waUrl('Hola Andrés, vi el testimonio de Marcelo y quiero a
     }
     .video-frame { padding:18px; background:linear-gradient(180deg, rgba(24,207,255,.035), rgba(255,255,255,.01)); }
     .video-frame video { display:block; width:100%; aspect-ratio:16/9; background:#000; border-radius:16px; border:1px solid rgba(24,207,255,.08); }
+    .vsl-gate { padding:16px 18px 4px; border-top:1px solid rgba(255,255,255,.08); display:grid; gap:10px; justify-items:center; text-align:center; }
+    .vg-t { margin:0; color:#B8BEC7; font-size:.95rem; }
+    .vg-t b { color:#F2F4F7; }
+    .vg-bar { width:min(420px,100%); height:6px; border-radius:99px; background:rgba(255,255,255,.08); overflow:hidden; }
+    .vg-bar i { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--blue),var(--cyan)); transition:width .4s; }
+    .vsl-gate[data-estado="listo"] .vg-bar { display:none; }
+    .vg-go[hidden] { display:none; }
+    :global(html.vsl-locked) :global(.ab-prog) { opacity:.55; }
     .video-cta { padding:18px; border-top:1px solid rgba(255,255,255,.08); display:flex; justify-content:center; }
     @media (max-width:620px) { .video-frame { padding:10px; } }
 
