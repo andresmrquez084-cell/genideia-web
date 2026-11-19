@@ -100,7 +100,7 @@ import '../../styles/client-hub.css';
 </main></div><div id="toast" class="toast"></div>
 <script type="module">
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
-const URL='https://dbwuubabafzsinaokawe.supabase.co',KEY='sb_publishable_5uIKiEXiz-7FW4guG1Tg_Q_gVVotzih';const sb=createClient(URL,KEY);const $=id=>document.getElementById(id);let session,clients=[],projects=[],payments=[],currentDraftId=null,currentAnalysis=null,currentProposalLogoUrl=null;
+const URL='https://tsktonjqpwdkfmxgknnq.supabase.co',KEY='sb_publishable_n1LVK5FwRCGu4llpssDWtg_fIOi-0O3';const sb=createClient(URL,KEY);const $=id=>document.getElementById(id);let session,clients=[],projects=[],payments=[],currentDraftId=null,currentAnalysis=null,currentProposalLogoUrl=null;
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
 async function guard(){const r=await sb.auth.getSession();session=r.data.session;if(!session){location.href='/clientes';return false}const{data:p}=await sb.from('gen_hub_profiles').select('*').eq('auth_user_id',session.user.id).maybeSingle();if(!p||p.role!=='admin'){location.href='/clientes/portal';return false}$('adminName').textContent=p.nombre||p.username;return true}
 function nav(id){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===id));$(id).classList.add('active')}
