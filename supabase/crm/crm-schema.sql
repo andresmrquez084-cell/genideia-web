@@ -60,8 +60,7 @@ grant select on public.crm_admins to authenticated;
 grant select, insert, update, delete on public.crm_companies, public.crm_interactions to authenticated;
 revoke execute on function public.crm_is_admin() from anon;
 
--- Quién puede entrar. Cambiar por los emails reales antes de correrlo.
+-- Quién puede entrar. Ya corrido en el proyecto con este email.
 insert into public.crm_admins (email) values
-  ('tu-email@ejemplo.com'),
-  ('email-del-socio@ejemplo.com')
+  ('genideiaconsultoriaia@gmail.com')
 on conflict do nothing;
