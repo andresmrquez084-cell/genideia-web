@@ -50,7 +50,8 @@ function load(){
   return {v:1,companies:[],interactions:[]};
 }
 function save(){
-  try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){toast('No se pudo guardar en este navegador. Exportá una copia.','warn')}
+  try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){}
+  scheduleSync();
 }
 function co(id){return db.companies.find(function(c){return c.id===id})}
 function evsOf(id){return db.interactions.filter(function(e){return e.companyId===id}).sort(function(a,b){return (b.date+b.at).localeCompare(a.date+a.at)})}
@@ -361,7 +362,15 @@ function menuAct(a){
     toast('Copia descargada');
   }
   if(a==='demo')loadDemo();
-  if(a==='wipe')toast('Se borran todas las empresas de este navegador.','warn',{label:'Borrar todo',fn:function(){db={v:1,companies:[],interactions:[]};save();renderAll();toast('Datos borrados')}});
+  if(a==='wipe'){
+    var n=db.companies.filter(function(c){return c.demo}).length;
+    if(!n){toast('No hay datos de ejemplo cargados.');return}
+    toast('Se borran las '+n+' empresas de ejemplo. Los datos reales quedan.','warn',{label:'Borrar ejemplos',fn:function(){
+      var ids={};db.companies.forEach(function(c){if(c.demo)ids[c.id]=1});
+      db.companies=db.companies.filter(function(c){return !ids[c.id]});db.interactions=db.interactions.filter(function(e){return !ids[e.companyId]});
+      save();renderAll();toast('Ejemplos borrados')}});
+  }
+  if(a==='logout'&&sb){sb.auth.signOut().then(function(){try{localStorage.removeItem(KEY)}catch(e){}location.reload()})}
 }
 function fileAct(a,f){
   var r=new FileReader();
@@ -369,7 +378,7 @@ function fileAct(a,f){
     try{
       if(a==='import'){
         var d=JSON.parse(r.result);if(!d||!Array.isArray(d.companies))throw 0;
-        toast('Reemplaza los datos actuales por los de la copia ('+d.companies.length+' empresas).','warn',{label:'Reemplazar',fn:function(){db=d;db.interactions=db.interactions||[];save();renderAll();toast('Copia importada')}});
+        toast('Se suman '+d.companies.length+' empresas de la copia. Las que ya existen se actualizan.','warn',{label:'Importar',fn:function(){mergeIn(d);save();renderAll();toast('Copia importada')}});
       }
       if(a==='csv'){var n=importCSV(r.result);save();renderAll();toast(n+' empresas importadas')}
     }catch(err){toast('El archivo no tiene el formato esperado.','warn')}
@@ -452,6 +461,109 @@ if(matchMedia('(hover: hover) and (pointer: fine)').matches){
   },{passive:true});
 }
 
+function mergeIn(d){
+  var ci={},ei={};db.companies.forEach(function(c,i){ci[c.id]=i});db.interactions.forEach(function(e,i){ei[e.id]=i});
+  (d.companies||[]).forEach(function(c){if(c&&c.id){if(ci[c.id]!=null)db.companies[ci[c.id]]=c;else db.companies.push(c)}});
+  (d.interactions||[]).forEach(function(e){if(e&&e.id&&e.companyId){if(ei[e.id]!=null)db.interactions[ei[e.id]]=e;else db.interactions.push(e)}});
+}
+
+/* ---------- nube: Supabase (proyecto propio, solo emails de crm_admins) ---------- */
+var SB_URL='https://fzrrbqqvteyuwbvfgvnx.supabase.co',SB_KEY='sb_publishable_g4URDx6lcAN9U_sFUcMUVQ_lFTxCnjc';
+var sb=null,cloud=false,snap={c:{},e:{}},syncT=null,syncing=false,again=false;
+var CT='crm_companies',ET='crm_interactions';
+function setSync(state,txt){var el=$('#sync');if(!el)return;el.className='sync '+state;el.querySelector('span').textContent=txt}
+function scheduleSync(){if(!cloud)return;setSync('busy','Guardando');clearTimeout(syncT);syncT=setTimeout(sync,600)}
+function rowsOf(){
+  var c={},e={};
+  db.companies.forEach(function(x){c[x.id]=JSON.stringify(x)});
+  db.interactions.forEach(function(x){if(c[x.companyId]!=null)e[x.id]=JSON.stringify(x)});
+  return {c:c,e:e};
+}
+function diff(cur,old){
+  var up=[],del=[];
+  Object.keys(cur).forEach(function(id){if(cur[id]!==old[id])up.push(id)});
+  Object.keys(old).forEach(function(id){if(cur[id]==null)del.push(id)});
+  return {up:up,del:del};
+}
+async function sync(){
+  if(!cloud)return;
+  if(syncing){again=true;return}
+  syncing=true;
+  var cur=rowsOf(),dc=diff(cur.c,snap.c),de=diff(cur.e,snap.e),now=new Date().toISOString();
+  try{
+    var chunk=function(a){var o=[];for(var i=0;i<a.length;i+=400)o.push(a.slice(i,i+400));return o};
+    for(var a of chunk(dc.up)){var r=await sb.from(CT).upsert(a.map(function(id){return {id:id,data:JSON.parse(cur.c[id]),actualizado_en:now}}));if(r.error)throw r.error}
+    for(var b of chunk(de.up)){var r2=await sb.from(ET).upsert(b.map(function(id){var d=JSON.parse(cur.e[id]);return {id:id,company_id:d.companyId,data:d,actualizado_en:now}}));if(r2.error)throw r2.error}
+    for(var x of chunk(de.del)){var r3=await sb.from(ET).delete().in('id',x);if(r3.error)throw r3.error}
+    for(var y of chunk(dc.del)){var r4=await sb.from(CT).delete().in('id',y);if(r4.error)throw r4.error}
+    snap=cur;setSync('ok','Guardado');
+  }catch(err){
+    setSync('bad','Sin guardar');
+    toast('No se pudo guardar en la nube. Se reintenta solo.','warn');
+    clearTimeout(syncT);syncT=setTimeout(sync,8000);
+  }finally{
+    syncing=false;
+    if(again){again=false;sync()}
+  }
+}
+async function pullAll(table){
+  var out=[],from=0;
+  while(true){
+    var r=await sb.from(table).select('id,data').range(from,from+999);
+    if(r.error)throw r.error;
+    out=out.concat(r.data);if(r.data.length<1000)break;from+=1000;
+  }
+  return out;
+}
+async function pull(){
+  var cs=await pullAll(CT),es=await pullAll(ET);
+  var local=db;
+  db={v:1,companies:cs.map(function(r){return r.data}),interactions:es.map(function(r){return r.data})};
+  snap=rowsOf();
+  try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){}
+  return local;
+}
+function showLogin(msg){
+  var el=$('#login');el.hidden=false;
+  $('#loginMsg').textContent=msg||'';
+  setTimeout(function(){$('#lgEmail').focus()},50);
+}
+async function enterCloud(){
+  setSync('busy','Cargando');
+  try{
+    var local=await pull();
+    cloud=true;$('#login').hidden=true;setSync('ok','Guardado');
+    renderAll();
+    // primera vez: subir lo que había en este navegador
+    var extra=(local.companies||[]).filter(function(c){return !c.demo&&!db.companies.some(function(x){return x.id===c.id})});
+    if(extra.length)toast(extra.length+' empresas de este navegador no están en la nube.','warn',{label:'Subirlas',fn:function(){mergeIn({companies:extra,interactions:(local.interactions||[]).filter(function(e){return extra.some(function(c){return c.id===e.companyId})})});save();renderAll();toast('Subiendo '+extra.length+' empresas')}});
+  }catch(err){
+    cloud=false;setSync('bad','Sin acceso');
+    showLogin('Tu usuario no tiene acceso de administrador al CRM.');
+  }
+}
+async function bootCloud(){
+  if(!window.supabase||!window.supabase.createClient){setSync('bad','Sin conexión');toast('Sin conexión con la nube. Los cambios quedan en este navegador.','warn');return}
+  sb=window.supabase.createClient(SB_URL,SB_KEY);
+  var s=await sb.auth.getSession();
+  if(s.data&&s.data.session)enterCloud();else showLogin();
+}
+document.addEventListener('submit',async function(e){
+  if(e.target.id!=='loginForm')return;
+  e.preventDefault();
+  var b=$('#lgBtn');b.disabled=true;b.textContent='Entrando';
+  var r=await sb.auth.signInWithPassword({email:$('#lgEmail').value.trim(),password:$('#lgPass').value});
+  b.disabled=false;b.textContent='Entrar';
+  if(r.error){$('#loginMsg').textContent=/fetch|network/i.test(r.error.message||r.error.name||'')?'Sin conexión con el servidor. Probá de nuevo.':'Email o contraseña incorrectos.';return}
+  enterCloud();
+});
+// al volver a la pestaña, traer lo que haya cargado el socio
+document.addEventListener('visibilitychange',async function(){
+  if(document.visibilityState!=='visible'||!cloud||syncing||syncT&&$('#sync').classList.contains('busy'))return;
+  try{await pull();if(!drawerId)renderAll()}catch(e){}
+});
+
 var start=(location.hash||'').slice(1);
 show(['hoy','pipeline','empresas','metricas'].indexOf(start)>=0?start:'hoy');
+bootCloud();
 })();

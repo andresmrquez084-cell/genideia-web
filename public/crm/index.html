@@ -27,6 +27,7 @@
     <button data-view="metricas">Métricas</button>
   </nav>
   <div class="top-act">
+    <span class="sync" id="sync" title="Estado de guardado"><i></i><span>Local</span></span>
     <button class="btn btn-g sm" id="btnMenu" aria-label="Datos" title="Exportar o importar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v3h16v-3"/></svg>
     </button>
@@ -51,12 +52,28 @@
   <label>Importar copia (JSON)<input type="file" accept=".json,application/json" data-act="import" hidden></label>
   <label>Importar empresas (CSV)<input type="file" accept=".csv,text/csv" data-act="csv" hidden></label>
   <button data-act="demo">Cargar datos de ejemplo</button>
-  <button data-act="wipe" class="danger">Borrar todo</button>
-  <p class="faint">Los datos se guardan en este navegador. Exportá una copia seguido.</p>
+  <button data-act="wipe" class="danger">Borrar datos de ejemplo</button>
+  <button data-act="logout">Cerrar sesión</button>
+  <p class="faint">Los datos se guardan en la nube y los ven todos los administradores.</p>
+</div>
+
+<!-- Ingreso: mismo usuario que el panel de clientes -->
+<div class="login" id="login" hidden>
+  <form class="glass blur login-card" id="loginForm">
+    <img src="/crm/icono.png" alt="" width="52" height="52">
+    <span class="eyebrow">CRM GENIDEIA</span>
+    <h1>Ingresá para ver el pipeline</h1>
+    <p class="faint">Mismo usuario de administrador del panel de clientes.</p>
+    <label class="f"><span>Email</span><input class="in" id="lgEmail" type="email" autocomplete="username" required></label>
+    <label class="f"><span>Contraseña</span><input class="in" id="lgPass" type="password" autocomplete="current-password" required></label>
+    <button class="btn btn-p" id="lgBtn" type="submit">Entrar</button>
+    <p class="lg-msg" id="loginMsg" role="alert"></p>
+  </form>
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"></script>
 <script src="/crm/crm.js"></script>
 </body>
 </html>
