@@ -119,7 +119,7 @@ function box(t,n,rows,empty){return '<div class="card"><h3>'+esc(t)+' <span clas
 /* ---------- celdas comunes: último mensaje nuestro / última respuesta / próxima acción ---------- */
 function cOut(r){if(r.ultimo_saliente)return '<span class="dt">'+esc(fdt(r.ultimo_saliente))+'</span>';if(r.sin_desglosar)return '<span class="nd">Actividad sin desglosar; consultar historial</span>';if(r.saliente_sin_fecha)return sv('Sin verificar');return '<span class="muted">Sin envíos registrados</span>'}
 function cIn(r){if(r.ultima_respuesta)return '<span class="dt">'+esc(fdt(r.ultima_respuesta))+'</span>';if(r.sin_desglosar)return '<span class="nd">Actividad sin desglosar; consultar historial</span>';if(r.respuesta_sin_fecha)return sv('Sin verificar');return '<span class="muted">Sin respuesta registrada</span>'}
-function cNext(r){if(!r.proxima_accion&&!r.proxima_fecha)return '<span class="muted">Sin próxima acción</span>';return '<div class="w">'+esc(r.proxima_accion||'Seguimiento')+'</div>'+dchip(r.proxima_fecha)+(r.responsable_accion||r.responsable?' <span class="faint">· '+esc(r.responsable_accion||r.responsable)+'</span>':'')}
+function cNext(r){if(!r.proxima_accion&&!r.proxima_fecha)return '<span class="muted">Sin próxima acción</span>';return '<div class="w" title="'+esc(r.proxima_accion||'Seguimiento')+'">'+esc(r.proxima_accion||'Seguimiento')+'</div>'+dchip(r.proxima_fecha)+(r.responsable_accion||r.responsable?' <span class="faint">· '+esc(r.responsable_accion||r.responsable)+'</span>':'')}
 
 /* ---------- CONVERSACIONES ---------- */
 var CF={q:'',atencion:'',etapa:'',canal:'',cerradas:false,page:0};
@@ -137,11 +137,11 @@ VIEWS.conversaciones=async function(){
   if(!CF.cerradas)b=b.lt('prioridad',9);
   var r=await q(b.order('prioridad').order('proxima_fecha',{nullsFirst:false}).order('ultima_respuesta',{ascending:false,nullsFirst:false}).range(CF.page*PAGE,CF.page*PAGE+PAGE-1));
   el.innerHTML=head+table(['Empresa','Etapa','Atención','Último mensaje nuestro','Última respuesta del prospecto','Próxima acción'],r.data.map(function(c){
-    return '<tr data-emp="'+c.empresa_id+'"><td><b>'+esc(c.empresa)+'</b>'+flags(c)+'<div class="faint">'+esc([c.contactos,c.canal,c.pais].filter(Boolean).join(' · '))+'</div></td><td>'+etapa(c.etapa)+'</td><td>'+atenc(c.atencion)+'</td><td>'+cOut(c)+'</td><td>'+cIn(c)+'</td><td>'+cNext(c)+'</td></tr>'}),'No hay conversaciones con esos filtros.')+pager(r.count,CF,'conv');
+    return '<tr data-emp="'+c.empresa_id+'"><td><b>'+esc(c.empresa)+'</b>'+flags(c)+'<div class="faint">'+esc(uniq([c.contactos,c.canal,c.pais]).join(' · '))+'</div></td><td>'+etapa(c.etapa)+'</td><td>'+atenc(c.atencion)+'</td><td>'+cOut(c)+'</td><td>'+cIn(c)+'</td><td>'+cNext(c)+'</td></tr>'}),'No hay conversaciones con esos filtros.')+pager(r.count,CF,'conv');
   bindF('#cq','q',CF);bindF('#cat','atencion',CF);bindF('#cet','etapa',CF);bindF('#cca','canal',CF);bindF('#ccl','cerradas',CF);
 };
 function flags(r){return (r.no_contactar?' <span class="chip flag">No contactar</span>':'')+(r.error_canal?' <span class="chip warnf">Error de canal</span>':'')}
-function table(h,rows,empty){return '<div class="tblw"><table class="tbl"><thead><tr>'+h.map(function(x){return '<th>'+esc(x)+'</th>'}).join('')+'</tr></thead><tbody>'+rows.join('')+'</tbody></table>'+(rows.length?'':'<div class="empty" style="margin:14px">'+esc(empty)+'</div>')+'</div>'}
+function table(h,rows,empty){rows=rows.map(function(r){var i=0;return r.replace(/<td(?=[\s>])/g,function(){return '<td data-l="'+esc(h[i++]||'')+'"'})});return '<div class="tblw"><table class="tbl"><thead><tr>'+h.map(function(x){return '<th>'+esc(x)+'</th>'}).join('')+'</tr></thead><tbody>'+rows.join('')+'</tbody></table>'+(rows.length?'':'<div class="empty" style="margin:14px">'+esc(empty)+'</div>')+'</div>'}
 function pager(total,st,key){var from=st.page*PAGE+1,to=Math.min(total,(st.page+1)*PAGE);
   return '<div class="pager"><span>'+(total?from+'–'+to+' de '+total:'0 resultados')+'</span><span><button class="px-btn g xs" data-pg="'+key+'" data-d="-1"'+(st.page?'':' disabled')+'>Anterior</button> <button class="px-btn g xs" data-pg="'+key+'" data-d="1"'+(to<total?'':' disabled')+'>Siguiente</button></span></div>'}
 var debT=null;
@@ -187,7 +187,7 @@ VIEWS.empresas=async function(){
   b=EF.orden==='out'?b.order('ultimo_saliente',{ascending:false,nullsFirst:false}):EF.orden==='in'?b.order('ultima_respuesta',{ascending:false,nullsFirst:false}):EF.orden==='nombre'?b.order('nombre'):b.order('proxima_fecha',{nullsFirst:false}).order('ultima_respuesta',{ascending:false,nullsFirst:false});
   var r=await q(b.order('nombre').range(EF.page*PAGE,EF.page*PAGE+PAGE-1));
   el.innerHTML=head+table(['Empresa','Etapa','Atención','Último mensaje nuestro','Última respuesta del prospecto','Próxima acción'],r.data.map(function(c){
-    return '<tr data-emp="'+c.id+'"><td><b>'+esc(c.nombre)+'</b>'+flags(c)+(c.n_revision?' <span class="chip warnf" title="Ítems para revisar">'+c.n_revision+' a revisar</span>':'')+'<div class="faint">'+(c.nicho?'<span style="color:var(--sl)">'+esc(c.nicho)+'</span> · ':'')+esc([c.rubro,c.ciudad,c.pais].filter(Boolean).join(' · ')||'')+'</div><div class="faint">'+esc((c.bases||[]).filter(function(x){return x}).join(' + '))+'</div></td><td>'+etapa(c.etapa)+'</td><td>'+(c.etapa==='sin_contactar'?'<span class="muted">—</span>':atenc(c.atencion))+'</td><td>'+cOut(c)+'</td><td>'+cIn(c)+'</td><td>'+cNext(c)+'</td></tr>'}),'Ninguna empresa coincide con los filtros.')+pager(r.count,EF,'emp');
+    return '<tr data-emp="'+c.id+'"><td><b>'+esc(c.nombre)+'</b>'+flags(c)+(c.n_revision?' <span class="chip warnf" title="Ítems para revisar">'+c.n_revision+' a revisar</span>':'')+'<div class="faint">'+(c.nicho?'<span style="color:var(--sl)">'+esc(c.nicho)+'</span> · ':'')+esc(uniq([c.rubro,c.ciudad,c.pais],[c.nicho]).join(' · ')||'')+'</div><div class="faint">'+esc((c.bases||[]).filter(function(x){return x}).join(' + '))+'</div></td><td>'+etapa(c.etapa)+'</td><td>'+(c.etapa==='sin_contactar'?'<span class="muted">—</span>':atenc(c.atencion))+'</td><td>'+cOut(c)+'</td><td>'+cIn(c)+'</td><td>'+cNext(c)+'</td></tr>'}),'Ninguna empresa coincide con los filtros.')+pager(r.count,EF,'emp');
   bindF('#eq','q',EF);bindF('#eni','nicho',EF);bindF('#eet','etapa',EF);bindF('#eat','atencion',EF);bindF('#eor','origen',EF);bindF('#epa','pais',EF);bindF('#eord','orden',EF);
   bindF('#enc','nc',EF);bindF('#eec','ec',EF);bindF('#end','nd',EF);bindF('#erv','rv',EF);
 };
@@ -209,17 +209,17 @@ function evalNicho(x,p0){
 function conclusiones(x,p0,V){
   var L=[],ev=evalNicho(x,p0),rate=x.observados?x.respondieron_en_ventana/x.observados:0,w=wilson(x.respondieron_en_ventana,x.observados);
   if(!x.contactadas)L.push(['wait','Todavía no se contactó a ninguna empresa de este nicho.','Hay '+x.empresas+' empresas cargadas.']);
-  else if(!x.observados)L.push(['wait','Los envíos todavía no cumplieron la ventana de '+V+' día(s), o no tienen fecha exacta.','Cuando pasen, se calcula la tasa con la misma regla que el resto.']);
-  else if(ev.k==='wait')L.push(['wait','No alcanza para concluir: '+x.observados+' envíos observados (se necesitan al menos '+MIN_N+').',x.respondieron_en_ventana+' respondieron dentro de '+V+' día(s) ('+pct(rate)+'). Seguir midiendo antes de decidir.']);
+  else if(!x.observados)L.push(['wait','Los envíos todavía no cumplieron la ventana de '+dias(V)+', o no tienen fecha exacta.','Cuando pasen, se calcula la tasa con la misma regla que el resto.']);
+  else if(ev.k==='wait')L.push(['wait','No alcanza para concluir: '+x.observados+' envíos observados (se necesitan al menos '+MIN_N+').',x.respondieron_en_ventana+' respondieron dentro de '+dias(V)+' ('+pct(rate)+'). Seguir midiendo antes de decidir.']);
   else L.push([ev.k==='up'?'up':ev.k==='down'?'down':'',ev.k==='up'?'Responde mejor que el promedio.':ev.k==='down'?'Responde peor que el promedio.':'No se distingue del promedio.',
-    x.respondieron_en_ventana+' de '+x.observados+' envíos respondieron dentro de '+V+' día(s): '+pct(rate)+' (rango probable '+pct(w[0])+' a '+pct(w[1])+'). Promedio general: '+pct(p0)+'.']);
+    x.respondieron_en_ventana+' de '+x.observados+' envíos respondieron dentro de '+dias(V)+': '+pct(rate)+' (rango probable '+pct(w[0])+' a '+pct(w[1])+'). Promedio general: '+pct(p0)+'.']);
   var c=x.clasificacion||{},ic=c.interes_concreto||0,co=c.cordial_sin_compromiso||0,de=c.derivacion||0,ne=c.negativa_baja||0,sc=c.sin_clasificar||0,tot=ic+co+de+ne+sc;
   if(tot){var parts=[];if(ic)parts.push(ic+' con interés concreto');if(co)parts.push(co+' cordiales sin compromiso');if(de)parts.push(de+' derivaciones');if(ne)parts.push(ne+' negativas o bajas');if(sc)parts.push(sc+' sin clasificar');
     L.push([ic?'up':'wait',ic?'Hay interés concreto en este nicho.':'Responden, pero todavía sin interés concreto.','Respuestas humanas: '+parts.join(', ')+'. Aceptar ejemplos o decir “lo tendré en cuenta” no es interés concreto.'])}
   if(x.intentos>=10&&x.rebotes/x.intentos>=0.1)L.push(['down','Muchos rebotes: '+pct(x.rebotes/x.intentos)+' de los envíos.','Revisar la calidad de los emails de este nicho antes de la próxima tanda ('+x.rebotes+' de '+x.intentos+').']);
-  if(x.sin_desglosar)L.push(['wait',x.sin_desglosar+' empresa(s) con contacto previo sin detalle.','Figuran como contactadas en el origen pero sin mensajes con fecha: la medición de este nicho está incompleta.']);
+  if(x.sin_desglosar)L.push(['wait',emp(x.sin_desglosar)+' con contacto previo sin detalle.','Figuran como contactadas en el origen pero sin mensajes con fecha: la medición de este nicho está incompleta.']);
   if(x.sin_contactar)L.push(['',x.sin_contactar+' de '+x.empresas+' empresas siguen sin contactar.','Es el margen que queda para la próxima tanda en este nicho.']);
-  var fb=(x.fuente_nicho||{}).base||0;if(fb)L.push(['wait','El nicho de '+fb+' empresa(s) se asignó por la base de origen.','Conviene confirmarlo en la ficha si se va a usar para decidir.']);
+  var fb=(x.fuente_nicho||{}).base||0;if(fb)L.push(['wait',(fb===1?'El nicho de 1 empresa se asignó':'El nicho de '+fb+' empresas se asignó')+' por la base de origen.','Conviene confirmarlo en la ficha si se va a usar para decidir.']);
   var vs=(x.variantes||[]).filter(function(v){return v.variante!=='Sin variante'});
   if(vs.length>1){var chicas=vs.every(function(v){return v.n<MIN_N});L.push([chicas?'wait':'',chicas?'Variantes con pocos envíos: no comparar todavía.':'Comparación de variantes disponible.',vs.map(function(v){return v.variante+': '+v.respondieron+'/'+v.n}).join(' · ')])}
   return L;
@@ -233,15 +233,15 @@ VIEWS.nichos=async function(){
   var medibles=N.filter(function(x){return x.observados>=MIN_N}).sort(function(a,b){return b.respondieron_en_ventana/b.observados-a.respondieron_en_ventana/a.observados});
   var gen=[];
   if(!so)gen.push(['wait','Todavía no hay envíos con la ventana completa.','No se puede comparar nichos por tasa de respuesta.']);
-  else if(!medibles.length)gen.push(['wait','Ningún nicho llega a '+MIN_N+' envíos observados. Por ahora no se puede decir cuál responde mejor.','Total observado: '+so+' envíos, '+sr+' respondieron dentro de '+NV+' día(s) ('+pct(p0)+'). Seguir midiendo con ventanas iguales.']);
+  else if(!medibles.length)gen.push(['wait','Ningún nicho llega a '+MIN_N+' envíos observados. Por ahora no se puede decir cuál responde mejor.','Total observado: '+so+' envíos, '+sr+' respondieron dentro de '+dias(NV)+' ('+pct(p0)+'). Seguir midiendo con ventanas iguales.']);
   else{medibles.forEach(function(x){var e=evalNicho(x,p0);if(e.k==='up'||e.k==='down')gen.push([e.k,x.nicho+': '+e.t.toLowerCase()+'.',x.respondieron_en_ventana+'/'+x.observados+' ('+pct(x.respondieron_en_ventana/x.observados)+') contra '+pct(p0)+' de promedio.'])});
     if(!gen.length)gen.push(['','Los nichos medibles no se diferencian del promedio ('+pct(p0)+').','Con los datos actuales ninguno responde claramente mejor o peor.'])}
   var masResp=N.filter(function(x){return x.respondieron}).sort(function(a,b){return b.respondieron-a.respondieron})[0];
-  if(masResp)gen.push(['','Más respuestas en números absolutos: '+masResp.nicho+' ('+masResp.respondieron+' empresa(s)).','Ojo: más respuestas también puede ser más envíos. Para comparar, mirá la tasa en la ventana.']);
+  if(masResp)gen.push(['','Más respuestas en números absolutos: '+masResp.nicho+' ('+emp(masResp.respondieron)+').','Ojo: más respuestas también puede ser más envíos. Para comparar, mirá la tasa en la ventana.']);
   var nocon=N.filter(function(x){return !x.contactadas&&x.empresas>=20}).map(function(x){return x.nicho+' ('+x.empresas+')'});
   if(nocon.length)gen.push(['','Nichos cargados sin ningún envío registrado: '+nocon.join(', ')+'.','Puede ser que nunca se contactaron o que el contacto está sin desglosar en el historial.']);
   el.innerHTML=el.querySelector('.vh').outerHTML+
-    '<div class="kpis">'+kpi('Nichos',N.length,'categorías con empresas','s')+kpi('Envíos observados',so,'con ventana de '+NV+' día(s)','')+kpi('Respondieron',sr,'dentro de la ventana',sr?'ok':'')+kpi('Promedio general',so?pct(p0):'—','tasa de respuesta','')+'</div>'+
+    '<div class="kpis">'+kpi('Nichos',N.length,'categorías con empresas','s')+kpi('Envíos observados',so,'con '+dias(NV)+' de observación','')+kpi('Respondieron',sr,'dentro de la ventana',sr?'ok':'')+kpi('Promedio general',so?pct(p0):'—','tasa de respuesta','')+'</div>'+
     '<div class="card" style="margin-bottom:16px"><h3>Conclusiones generales</h3><ul class="concl">'+gen.map(function(c){return '<li class="'+c[0]+'"><b>'+esc(c[1])+'</b><small>'+esc(c[2])+'</small></li>'}).join('')+'</ul></div>'+
     table(['Nicho','Empresas','Contactadas','Intentos','Rebotes','Respondieron','Tasa en la ventana','Evaluación'],N.map(function(x){var e=evalNicho(x,p0);
       return '<tr data-nicho="'+esc(x.nicho)+'" style="cursor:pointer"><td><b>'+esc(x.nicho)+'</b>'+(x.sin_desglosar?'<div class="faint">'+x.sin_desglosar+' sin desglosar</div>':'')+'</td><td class="num">'+x.empresas+'</td><td class="num">'+x.contactadas+'</td><td class="num">'+x.intentos+(x.reposiciones?'<div class="faint">'+x.reposiciones+' repos.</div>':'')+'</td><td class="num"'+(x.rebotes?' style="color:var(--warn)"':'')+'>'+x.rebotes+'</td><td class="num"'+(x.respondieron?' style="color:var(--ok)"':'')+'>'+x.respondieron+'</td><td class="num">'+(x.observados?pct(x.respondieron_en_ventana/x.observados)+'<div class="faint">'+x.respondieron_en_ventana+' de '+x.observados+'</div>':'<span class="muted">—</span>')+'</td><td><span class="chip '+e.c+'"'+(e.col?' style="--c:'+e.col+'"':'')+'>'+esc(e.t)+'</span></td></tr>'}),'No hay nichos.')+
@@ -287,9 +287,9 @@ VIEWS.metricas=async function(){
   el.innerHTML='<div class="vh"><div><p class="px-eb">Medición</p><h1>Métricas</h1><p>Solo cuentan actividades con prospectos; los registros administrativos quedan afuera.</p></div><label class="f"><span>Ventana de observación</span><select class="in" id="mven">'+opts([['1','1 día'],['3','3 días'],['7','7 días'],['14','14 días']],String(ventana))+'</select></label></div><div class="empty">Calculando…</div>';
   $('#mven').onchange=function(){ventana=+this.value;VIEWS.metricas()};
   var m=(await q(sb.rpc('crm_metricas',{p_ventana_dias:ventana}))).data;
-  function bars(o,labels){var ks=Object.keys(o||{}),tot=ks.reduce(function(s,k){return s+o[k]},0)||1;return ks.sort(function(a,b){return o[b]-o[a]}).map(function(k){return '<div style="display:grid;grid-template-columns:200px 1fr 40px;gap:10px;align-items:center;margin-bottom:6px;font-size:13px"><span>'+esc((labels&&labels[k]&&labels[k].n)||(labels&&typeof labels[k]==='string'&&labels[k])||k.replace(/_/g,' '))+'</span><span class="bar"><i style="width:'+(o[k]/tot*100)+'%"></i></span><span class="mono">'+o[k]+'</span></div>'}).join('')||'<div class="faint">Sin datos</div>'}
-  function cmp(list,t){return '<div class="card"><h3>'+esc(t)+'</h3>'+table(['Grupo','Envíos observados','Respondieron','Tasa',''],(list||[]).map(function(g){return '<tr><td>'+esc(g.grupo)+'</td><td class="mono">'+g.n+'</td><td class="mono">'+g.respondieron+'</td><td class="mono">'+(g.n?Math.round(g.respondieron/g.n*1000)/10+' %':'—')+'</td><td>'+(g.muestra_chica?'<span class="chip warnf">Muestra chica</span>':'')+'</td></tr>'}),'Todavía no hay envíos con la ventana completa.')+'<p class="faint" style="margin:10px 2px 0">Cada envío se observa durante '+m.ventana_dias+' día(s) desde que salió; los que todavía no cumplieron la ventana no cuentan. Con menos de 30 envíos por grupo no se declara ganador.</p></div>'}
-  el.innerHTML=el.querySelector('.vh').outerHTML+'<div class="kpis">'+
+  function bars(o,labels){var ks=Object.keys(o||{}),tot=ks.reduce(function(s,k){return s+o[k]},0)||1;return ks.sort(function(a,b){return o[b]-o[a]}).map(function(k){return '<div style="display:grid;grid-template-columns:200px 1fr 40px;gap:10px;align-items:center;margin-bottom:6px;font-size:13px"><span>'+esc((labels&&labels[k]&&labels[k].n)||(labels&&typeof labels[k]==='string'&&labels[k])||k.replace(/_/g,' ').replace(/^./,function(m){return m.toUpperCase()}))+'</span><span class="bar"><i style="width:'+(o[k]/tot*100)+'%"></i></span><span class="mono">'+o[k]+'</span></div>'}).join('')||'<div class="faint">Sin datos</div>'}
+  function cmp(list,t){return '<div class="card"><h3>'+esc(t)+'</h3>'+table(['Grupo','Envíos observados','Respondieron','Tasa'],(list||[]).map(function(g){return '<tr><td>'+esc(String(g.grupo).replace(/^\d+\s·\s/,''))+'</td><td class="mono">'+g.n+'</td><td class="mono">'+g.respondieron+'</td><td class="mono">'+(g.n?Math.round(g.respondieron/g.n*1000)/10+' %':'—')+(g.muestra_chica?'<div style="margin-top:4px"><span class="chip warnf">Muestra chica</span></div>':'')+'</td></tr>'}),'Todavía no hay envíos con la ventana completa.')+'<p class="faint" style="margin:10px 2px 0">Cada envío se observa durante '+dias(m.ventana_dias)+' desde que salió; los que todavía no cumplieron la ventana no cuentan. Con menos de 30 envíos por grupo no se declara ganador.</p></div>'}
+  el.innerHTML=el.querySelector('.vh').outerHTML+'<div class="kpis k4">'+
     kpi('Contactos únicos',m.contactos_unicos,'personas o empresas distintas','s')+kpi('Intentos',m.intentos,'mensajes enviados','')+kpi('Reposiciones',m.reposiciones,'envíos de reemplazo','')+
     kpi('Empresas contactadas',m.empresas_contactadas,'de '+m.empresas+' en la base','')+kpi('Respondieron',m.empresas_que_respondieron,m.respuestas_humanas+' respuestas humanas',m.empresas_que_respondieron?'ok':'')+
     kpi('Rebotes',m.rebotes,'no marcan la oportunidad como perdida',m.rebotes?'warn':'')+kpi('Automáticas',m.respuestas_automaticas,'respuestas automáticas','')+kpi('Sin desglosar',m.sin_desglosar,'con contacto previo sin detalle','')+'</div>'+
@@ -316,14 +316,51 @@ VIEWS.revision=async function(){
   }
   var b=sb.from('crm_revision').select('*',{count:'exact'}).eq('estado','abierta');if(RF.tipo)b=b.eq('tipo',RF.tipo);
   var r=await q(b.order('tipo').order('creado_en',{ascending:false}).range(RF.page*PAGE,RF.page*PAGE+PAGE-1));
+  var NM=await revNombres(r.data);
   el.innerHTML=head+(r.data.length?'<div class="rows">'+r.data.map(function(x){
-    return '<div class="card" style="padding:14px 16px"><div class="ev-h"><span class="chip warnf">'+esc(REVT[x.tipo]||x.tipo)+'</span><b>'+esc(x.detalle)+'</b></div>'+
-      '<div class="ev-f"><span>'+esc(x.entidad)+': <span class="mono">'+esc(x.entidad_clave||'—')+'</span></span>'+(x.relacionada_clave?'<span>con <span class="mono">'+esc(x.relacionada_clave)+'</span></span>':'')+(x.datos&&x.datos.campo?'<span>Campo '+esc(x.datos.campo)+': actual <b>'+esc(JSON.stringify(x.datos.actual))+'</b> · importado <b>'+esc(JSON.stringify(x.datos.importado))+'</b></span>':'')+'<span>'+esc(fdt(x.creado_en))+'</span></div>'+
-      '<div class="acts"><button class="px-btn g xs" data-rvopen="'+x.id+'">Abrir</button>'+(x.relacionada_clave?'<button class="px-btn g xs" data-rvopen2="'+x.id+'">Abrir la otra</button>':'')+
+    var a=NM.de(x.entidad,x.entidad_clave,x.datos),o=x.relacionada_clave?NM.de('empresas',x.relacionada_clave):null;
+    var dup=x.tipo==='posible_duplicado';
+    return '<div class="card rv"><div class="ev-h"><span class="chip warnf">'+esc(REVT[x.tipo]||x.tipo)+'</span><b>'+esc(x.detalle)+'</b></div>'+
+      (dup&&a&&o?'<div class="rv-cmp">'+rvBox(a,'Esta')+rvBox(o,'Posible duplicada')+'</div>':
+        '<div class="rv-one">'+(a?'<b>'+esc(a.nombre)+'</b>'+rvDet(a):'<span class="sv">Empresa no identificada</span>'+(function(){var z=NM.extra(x.entidad_clave);return z?'<div style="margin-top:6px"><b>'+esc(z.t||'Registro')+'</b>'+(z.f?' <span class="faint">· '+esc(fdt(z.f))+'</span>':'')+(z.d?'<div class="faint" style="margin-top:2px">'+esc(String(z.d).replace(/\s+/g,' ').slice(0,260))+'</div>':'')+'</div>':''})())+(x.relacionada_clave?' <span class="faint">con</span> '+(o?'<b>'+esc(o.nombre)+'</b>'+rvDet(o):'<span class="mono faint">'+esc(x.relacionada_clave)+'</span>'):'')+'</div>')+
+      (x.datos&&x.datos.campo?'<div class="ev-f"><span>Campo '+esc(x.datos.campo)+': actual <b>'+esc(JSON.stringify(x.datos.actual))+'</b> · importado <b>'+esc(JSON.stringify(x.datos.importado))+'</b></span></div>':'')+
+      '<div class="ev-f"><span>'+esc(fdt(x.creado_en))+'</span><span class="faint mono" title="Identificador del registro de origen">'+esc(x.entidad_clave||'')+'</span></div>'+
+      '<div class="acts">'+(a?'<button class="px-btn g xs" data-rvopen="'+x.id+'">Abrir</button>':'')+(x.relacionada_clave?'<button class="px-btn g xs" data-rvopen2="'+x.id+'">Abrir la otra</button>':'')+
       '<button class="px-btn g xs" data-rvres="'+x.id+'" data-st="resuelta">Marcar resuelta</button><button class="px-btn g xs" data-rvres="'+x.id+'" data-st="descartada">Descartar</button></div></div>'}).join('')+'</div>'+pager(r.count,RF,'rev'):'<div class="empty">No hay nada pendiente de revisión con este filtro.</div>');
   RV=r.data;
 };
 var RV=[];
+function telTxt(t){if(!t)return '';t=String(t);if(t.charAt(0)==='{'||t.charAt(0)==='['){try{var o=JSON.parse(t);o=Array.isArray(o)?o[0]:o;return (o&&o.label?o.label:'Enlace')+' (enlace)'}catch(e){}}return t}
+function rvDet(e){var d=[e.rubro,e.ciudad,e.web,telTxt(e.telefono)].filter(Boolean);return d.length?' <span class="faint">· '+esc(d.join(' · '))+'</span>':''}
+function rvBox(e,t){return '<div class="rv-b"><small>'+esc(t)+'</small><b>'+esc(e.nombre)+'</b><div class="faint">'+esc([e.rubro,e.ciudad].filter(Boolean).join(' · ')||'Rubro y ciudad pendientes')+'</div><div class="faint">'+(e.web?esc(e.web):'Web sin dato')+' · '+(e.telefono?esc(telTxt(e.telefono)):'Teléfono sin dato')+'</div></div>'}
+async function revNombres(rows){
+  var T={actividades:'crm_actividades',contactos:'crm_contactos',conversaciones:'crm_conversaciones',fuentes:'crm_fuentes',materiales:'crm_materiales',tareas:'crm_tareas'};
+  var claves={},porT={};
+  rows.forEach(function(x){
+    if(x.entidad==='empresas'&&x.entidad_clave)claves[x.entidad_clave]=1;
+    else if(T[x.entidad]&&x.entidad_clave)(porT[x.entidad]=porT[x.entidad]||{})[x.entidad_clave]=1;
+    if(x.relacionada_clave)claves[x.relacionada_clave]=1;
+    if(x.datos&&x.datos.empresa)claves[x.datos.empresa]=1});
+  var sel='id,clave,nombre,rubro,ciudad,web,telefono',porClave={},porId={},idDe={};
+  var tablas=Object.keys(porT);
+  for(var i=0;i<tablas.length;i++){var cl=Object.keys(porT[tablas[i]]);
+    var rr=await q(sb.from(T[tablas[i]]).select('clave,empresa_id').in('clave',cl));
+    (rr.data||[]).forEach(function(z){idDe[z.clave]=z.empresa_id})}
+  var ck=Object.keys(claves);
+  if(ck.length){var re=await q(sb.from('crm_empresas').select(sel).in('clave',ck));(re.data||[]).forEach(function(e){porClave[e.clave]=e;porId[e.id]=e})}
+  var ids=Object.keys(idDe).map(function(k){return idDe[k]}).filter(function(id){return id&&!porId[id]});
+  if(ids.length){var ri=await q(sb.from('crm_empresas').select(sel).in('id',ids));(ri.data||[]).forEach(function(e){porId[e.id]=e})}
+  var ex={};
+  var ek=rows.filter(function(x){return x.tipo==='sin_empresa'&&x.entidad==='ejecuciones'&&x.entidad_clave}).map(function(x){return x.entidad_clave});
+  if(ek.length){var rx=await q(sb.from('crm_ejecuciones').select('clave,titulo,fecha,detalle').in('clave',ek));(rx.data||[]).forEach(function(z){ex[z.clave]={t:z.titulo,f:z.fecha,d:z.detalle}})}
+  var fk=rows.filter(function(x){return x.tipo==='sin_empresa'&&x.entidad==='fuentes'&&x.entidad_clave}).map(function(x){return x.entidad_clave});
+  if(fk.length){var rf=await q(sb.from('crm_fuentes').select('clave,tabla,texto_original').in('clave',fk));(rf.data||[]).forEach(function(z){ex[z.clave]={t:z.tabla||'Registro de origen',f:null,d:z.texto_original}})}
+  return {extra:function(clave){return ex[clave]||null},de:function(entidad,clave,datos){
+    if(datos&&datos.empresa&&porClave[datos.empresa])return porClave[datos.empresa];
+    if(!clave)return null;
+    if(entidad==='empresas'||!T[entidad])return porClave[clave]||null;
+    return porId[idDe[clave]]||null}}
+}
 async function empresaDeClave(entidad,clave,datos){
   if(datos&&datos.empresa)clave=datos.empresa,entidad='empresas';
   if(!clave)return null;
@@ -366,7 +403,7 @@ function resumen(){
   if(mat){var post=matResp(mat);dev=esc(MATS[mat.tipo])+': '+esc(mat.titulo)+' — '+(post?'devolución '+(post.fecha_hecho?esc(fdt(post.fecha_hecho)):'sin fecha'):'<span class="sv">sin devolución registrada</span>')}
   var actor=!c?'<span class="muted">Sin conversación</span>':c.atencion==='nos_toca_responder'?'<b>Nosotros</b>':c.atencion==='esperando_prospecto'?'El prospecto':c.atencion==='esperando_derivacion'?'Otra persona de la empresa (derivación)':c.atencion==='seguimiento_programado'?'Nosotros, en la fecha programada':c.atencion==='pausado'?'Nadie por ahora (pausado)':c.atencion==='cerrado'?'Nadie (cerrado)':'<span class="sv">Sin definir</span>';
   var t=F.tareas.filter(function(x){return x.estado==='pendiente'})[0];
-  var next=c&&c.proximo_paso?esc(c.proximo_paso)+' '+dchip(c.proximo_paso_fecha):t?esc(t.accion)+' '+dchip(t.fecha)+' · '+(t.responsable?esc(t.responsable):'<span class="sv">sin responsable</span>'):'<span class="muted">Sin próximo paso</span>';
+  var next=c&&c.proximo_paso?esc(c.proximo_paso)+' '+dchip(c.proximo_paso_fecha):t?esc(t.accion)+' '+dchip(t.fecha)+' · '+(t.responsable?esc(t.responsable):'<span class="sv">sin responsable</span>'):(c&&c.atencion==='nos_toca_responder'?'<span class="sv">Responder la última respuesta · sin tarea creada</span>':'<span class="muted">Sin próximo paso</span>');
   return '<div class="resumen">'+
     rk('Con quién hablamos',quien)+rk('Qué respondió y cuándo',respTxt)+rk('Qué le enviamos después',despues)+rk('Devolución tras el material',dev)+
     rk('Situación',(c?etapa(c.etapa)+' '+atenc(c.atencion):etapa('sin_contactar'))+(c&&c.etapa_evidencia?'<div class="faint">'+esc(c.etapa_evidencia)+'</div>':''))+
@@ -379,7 +416,7 @@ function matResp(m){if(m.respuesta_actividad_id)return F.actividades.find(functi
 function renderFicha(){
   var e=F.empresa,v=F.vista||{};
   var tabs=[['crono','Cronología ('+F.actividades.length+')'],['contactos','Contactos ('+F.contactos.length+')'],['materiales','Propuestas y materiales ('+F.materiales.length+')'],['tareas','Tareas y seguimientos ('+F.tareas.filter(function(t){return t.estado==='pendiente'}).length+')'],['datos','Datos y fuentes ('+F.fuentes.length+')'],['historial','Historial original']];
-  $('#ficha').innerHTML='<div class="f-head"><div class="f-top"><div><p class="px-eb">'+esc(e.origen||'Origen sin dato')+'</p><h2>'+esc(e.nombre)+'</h2><div class="f-sub">'+(e.nicho?'<span style="color:var(--sl)">'+esc(e.nicho)+'</span>'+(e.nicho_fuente==='rubro'||e.nicho_fuente==='base'?' <span class="faint">(asignado por '+esc(e.nicho_fuente)+')</span>':'')+' · ':'')+esc([e.grupo,e.rubro,e.ciudad,e.pais].filter(Boolean).join(' · ')||'Rubro y ubicación pendientes de completar')+'</div>'+
+  $('#ficha').innerHTML='<div class="f-head"><div class="f-top"><div><p class="px-eb">'+esc(e.origen||'Origen sin dato')+'</p><h2>'+esc(e.nombre)+'</h2><div class="f-sub">'+(e.nicho?'<span style="color:var(--sl)">'+esc(e.nicho)+'</span>'+(e.nicho_fuente==='rubro'||e.nicho_fuente==='base'?' <span class="faint">(asignado por '+esc(e.nicho_fuente)+')</span>':'')+' · ':'')+esc(uniq([e.grupo,e.rubro,e.ciudad,e.pais],[e.nicho]).join(' · ')||'Rubro y ubicación pendientes de completar')+'</div>'+
     '<div class="f-flags">'+(e.no_contactar?'<span class="chip flag" title="'+esc(e.no_contactar_motivo||'')+'">No contactar</span>':'')+(v.error_canal?'<span class="chip warnf">Error de canal</span>':'')+(F.revision.filter(function(r){return r.estado==='abierta'}).length?'<span class="chip warnf">'+F.revision.filter(function(r){return r.estado==='abierta'}).length+' a revisar</span>':'')+(v.bases||[]).filter(Boolean).map(function(b){return '<span class="chip plain">'+esc(b)+'</span>'}).join('')+'</div></div>'+
     '<div style="display:flex;gap:8px"><button class="px-btn g sm" data-fact="situacion">Editar situación</button><button class="x" data-fclose aria-label="Cerrar">×</button></div></div>'+resumen()+
     '<nav class="ftabs">'+tabs.map(function(t){return '<button data-ftab="'+t[0]+'" class="'+(ftab===t[0]?'on':'')+'">'+esc(t[1])+'</button>'}).join('')+'</nav></div><div class="f-body" id="fbody"></div>';
@@ -431,12 +468,16 @@ function renderFTab(){
     b.innerHTML='<p class="faint">Notas importadas completas, tal como estaban en el CRM viejo. Nada de esto se borró ni se resumió.</p>'+(e.notas_originales?'<pre class="orig">'+esc(e.notas_originales)+'</pre>':'<div class="empty">Sin notas originales.</div>');
   }
 }
+function nkey(x){return String(x).trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/s$/,'')}
+function uniq(a,seed){var s={};(seed||[]).forEach(function(x){if(x)s[nkey(x)]=1});return a.filter(function(x){if(!x)return false;var k=nkey(x);if(s[k])return false;s[k]=1;return true})}
+function emp(n){return n+(Number(n)===1?' empresa':' empresas')}
+function dias(n){return n+(Number(n)===1?' día':' días')}
 function evHtml(a){
-  var dir=a.direccion==='entrante'?'in':a.direccion==='saliente'?'out':'';var bad=a.tipo==='rebote'||a.estado_envio==='rebotado';
+  var dir=a.direccion==='entrante'?'ev-in':a.direccion==='saliente'?'ev-out':'';var bad=a.tipo==='rebote'||a.estado_envio==='rebotado';
   var t=strip(a.texto||''),long=t.length>420;
   return '<div class="ev '+dir+(bad?' bad':'')+'"><div class="ev-h"><b>'+esc(TIPOS[a.tipo]||a.tipo)+'</b><span>'+(a.direccion==='entrante'?'del prospecto':a.direccion==='saliente'?'nuestro':'interno')+'</span>'+(a.canal?'<span class="chip plain">'+esc(a.canal)+'</span>':'')+
     '<span class="dt">'+(a.fecha_hecho?esc(fdt(a.fecha_hecho))+(a.fecha_precision==='dia'?' (solo día)':''):'<span class="sv">Fecha sin verificar</span>')+'</span>'+
-    (a.contacto_id?'<span>'+esc(cname(a.contacto_id))+'</span>':'')+(a.estado_envio?'<span class="chip'+(bad?' warnf':'')+'">'+esc(ENVIO[a.estado_envio])+'</span>':'')+(a.clasificacion?'<span class="chip" style="--c:#4BE39A">'+esc(CLASIF[a.clasificacion])+'</span>':'')+(a.primera_respuesta?'<span class="chip plain">Primera respuesta</span>':'')+(a.es_reposicion?'<span class="chip warnf">Reposición</span>':'')+(a.variante?'<span class="chip plain">'+esc(a.variante)+'</span>':'')+'</div>'+
+    (a.contacto_id?'<span>'+esc(cname(a.contacto_id))+'</span>':'')+(a.estado_envio?'<span class="chip'+(bad?' warnf':'')+'">'+'Envío: '+esc(ENVIO[a.estado_envio])+'</span>':'')+(a.clasificacion?'<span class="chip" style="--c:#4BE39A">'+esc(CLASIF[a.clasificacion])+'</span>':'')+(a.primera_respuesta?'<span class="chip plain">Primera respuesta</span>':'')+(a.es_reposicion?'<span class="chip warnf">Reposición</span>':'')+(a.variante?'<span class="chip plain">'+esc(a.variante)+'</span>':'')+'</div>'+
     (a.asunto?'<div style="margin-top:6px;font-weight:500">'+esc(a.asunto)+'</div>':'')+
     (t?'<div class="ev-t'+(long?' clip':'')+'">'+(a.es_resumen?'<span class="faint">Resumen registrado: </span>':'')+esc(t)+'</div>'+(long?'<button class="more" data-unclip>Ver texto completo</button>':''):'<div class="ev-t"><span class="sv">Texto no registrado</span></div>')+
     '<div class="ev-f">'+(a.fecha_reporte?'<span>Reportado '+esc(fdt(a.fecha_reporte))+'</span>':'')+(a.importado_en?'<span>Importado '+esc(fdt(a.importado_en))+'</span>':'')+(a.reemplaza?'<span>Reemplaza: '+esc(a.reemplaza)+'</span>':'')+(a.message_id?'<span class="mono">ID '+esc(a.message_id)+'</span>':'')+(a.evidencia?'<span>'+(safeUrl(a.evidencia)?link(a.evidencia,'Evidencia'):'Evidencia: '+esc(a.evidencia))+'</span>':'<span class="sv">Sin evidencia enlazada</span>')+(a.responsable?'<span>Por '+esc(a.responsable)+'</span>':'')+'</div></div>';
