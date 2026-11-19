@@ -68,6 +68,7 @@ const ring = 2 * Math.PI * 52;
     <a href="#ahora">Ahora</a><a href="#recorrido">Recorrido</a><a href="#proyectos">Proyectos</a><a href="#plan">Plan de estudio</a>
   </nav>
   <span class:list={['status', `s-${stateKey(student.status === 'En curso' ? 'En curso' : student.status === 'Finalizado' ? 'Completado' : 'Pendiente')}`]}>{student.status}</span>
+  <a class="logout" href="/academy/logout">Salir</a>
   <span class="prog" aria-hidden="true"><i></i></span>
 </header>
 
@@ -704,4 +705,5 @@ html{scroll-behavior:smooth;overflow-x:clip}
 }
 #ahora,#recorrido,#proyectos,#plan{scroll-margin-top:100px}
 
+.logout{font-size:12px;color:var(--tx3);text-decoration:none;padding:7px 10px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.09)}.logout:hover{color:#fff;background:rgba(255,255,255,.05)}
 </style>
