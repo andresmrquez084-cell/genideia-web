@@ -140,6 +140,29 @@ const pathD = pts.reduce((d, p, i) => i === 0 ? `M${p[0]},${p[1]}` : `${d} C${(p
     if('IntersectionObserver' in window)new IntersectionObserver(function(e){vis=e[0].isIntersecting}).observe($('.h-win'));
     MOD.forEach(function(n,i){n.addEventListener('mouseenter',function(){clearInterval(timer);show(i)})});
   } else show(3);
+
+  // Navegación robusta: garantiza que los CTA y anclas internas respondan incluso
+  // si una capa visual o una transición está activa.
+  d.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]');
+    if(!a)return;
+    var href=a.getAttribute('href')||'';
+    if(href.charAt(0)==='#'){
+      var target=d.querySelector(href);
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+        try{history.replaceState(null,'',href)}catch(_){}
+      }
+      return;
+    }
+    if(a.target==='_blank')return;
+    if(href.charAt(0)==='/' && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey){
+      e.preventDefault();
+      location.assign(href);
+    }
+  });
+
 })();
 </script>
 </body>
@@ -262,4 +285,17 @@ html:has(.hub){scroll-behavior:smooth;overflow-x:clip}
   .h-node{width:26px;height:26px;font-size:9px}.h-win-body{padding:14px 12px}.h-prog{padding:24px}.h-alum{grid-template-columns:1fr;padding:26px}
 }
 @media (prefers-reduced-motion:reduce){.hub *,.hub *::before,.hub *::after{animation-duration:.001ms!important;transition-duration:.001ms!important}.hj .h-rv,.hj .h-split .w>span{opacity:1;transform:none}}
+
+/* Interaction safety: keep every navigation control above decorative layers */
+.h-brand,.h-links a,.h-btn,.h-prog,.h-go{
+  position:relative;
+  z-index:5;
+  pointer-events:auto!important;
+  cursor:pointer;
+}
+.h-btn::before,.h-btn::after,.h-prog::before,.h-prog::after,.h-spot::before{
+  pointer-events:none!important;
+}
+#como,#modulos,#programas,#alumnos{scroll-margin-top:100px}
+
 </style>

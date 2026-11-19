@@ -65,6 +65,27 @@ const PAYONEER = 'https://link.payoneer.com/Token?t=EE9C556526D6414F946CD1122E48
   if(fm){fm.addEventListener('input',done);fm.addEventListener('change',done)}
   if(pago&&'MutationObserver' in window) new MutationObserver(done).observe(pago,{attributes:true,attributeFilter:['class']});
   active();done();
+
+  // Navegación robusta para los pasos y el regreso a Academy.
+  d.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]');
+    if(!a)return;
+    var href=a.getAttribute('href')||'';
+    if(href.charAt(0)==='#'){
+      var target=$(href);
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+        try{history.replaceState(null,'',href)}catch(_){}
+      }
+      return;
+    }
+    if(a.target==='_blank')return;
+    if(href.charAt(0)==='/'&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey){
+      e.preventDefault();
+      location.assign(href);
+    }
+  });
 })();
 </script>
 </body></html>

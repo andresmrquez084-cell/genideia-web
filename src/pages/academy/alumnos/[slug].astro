@@ -345,6 +345,28 @@ const ring = 2 * Math.PI * 52;
     }, { rootMargin: '-24% 0px -58% 0px', threshold: [0,.15,.35,.6] });
     sections.forEach(function (s) { sio.observe(s); });
   }
+
+  // Fallback de navegación para CTA/anclas internas.
+  d.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (href.charAt(0) === '#') {
+      var target = $(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        try { history.replaceState(null, '', href); } catch (_) {}
+      }
+      return;
+    }
+    if (a.target === '_blank') return;
+    if (href.charAt(0) === '/' && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+      e.preventDefault();
+      location.assign(href);
+    }
+  });
+
 })();
 </script>
 </body>
@@ -668,4 +690,18 @@ html{scroll-behavior:smooth;overflow-x:clip}
   .now-sec{padding:20px 18px;gap:16px}.now-title{align-items:flex-start;flex-direction:column;gap:7px}
 }
 @media (prefers-reduced-motion:reduce){.now-rail span,.node.s-now,.mod.s-now::after{animation:none!important}}
+
+/* Interaction safety */
+.intro-x{pointer-events:none!important}
+.brand,.links a,.btn,.node,.filters button,.mod-h{
+  position:relative;
+  z-index:5;
+  pointer-events:auto!important;
+  cursor:pointer;
+}
+.btn::before,.btn::after,.spot::before,.win::before,.mod.s-now::after,.now-sec::before{
+  pointer-events:none!important;
+}
+#ahora,#recorrido,#proyectos,#plan{scroll-margin-top:100px}
+
 </style>
