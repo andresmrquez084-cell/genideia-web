@@ -1,87 +1,282 @@
 ---
 // Lead magnet · palabra clave ManyChat: JARVIS (reel: "Tu Jarvis gratis", 31/10/2026)
 // URL pública: /recursos/jarvis-gratis-guia
-// Repo verificado (31/10): github.com/open-jarvis/OpenJarvis · público, Apache 2.0, proyecto de Stanford.
-// Los 3 pasos del reel: instalar, elegir cómo te habla, conectar correo y calendario.
-// Comandos del README: `jarvis init --preset morning-digest-mac`, `jarvis connect gdrive`, `jarvis digest --fresh`.
+// Todos los comandos y datos técnicos se verificaron (19/11/2026) contra la documentación oficial:
+//   github.com/open-jarvis/OpenJarvis (README) · open-jarvis.github.io/OpenJarvis (install, morning-digest, windows-native)
+// Datos que la guía anterior no decía y que traban a quien no tiene experiencia:
+//   · `jarvis connect gdrive` pide pegar "client_id:client_secret" (hay que crear una credencial en Google Cloud, tipo "Aplicación de escritorio").
+//   · La voz usa un servicio externo (Cartesia u OpenAI) con su propia clave. Sin clave: `jarvis digest --text-only`.
+//   · El instalador pregunta por estadísticas de uso: Enter o Y = aceptar, N = rechazar.
+//   · Windows nativo existe (PowerShell), pero la documentación recomienda WSL2.
 // El reel dice "pegá el enlace en Claude Code": el README NO documenta ese método; la instalación oficial es el script.
 // Biblioteca = Catálogo de recursos (Google Doc, compartido con cualquiera con el enlace).
-import RecursoLayout from '../../layouts/RecursoLayout.astro';
+import RecursoPremium from '../../layouts/RecursoPremium.astro';
 
 const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
 const repo = 'https://github.com/open-jarvis/OpenJarvis';
+const docs = 'https://open-jarvis.github.io/OpenJarvis/';
 const biblioteca = 'https://docs.google.com/document/d/1a3hze3j_NUeDKzMBQRtg4zWwTDlCs1l2xemB8LIgIrs/edit';
 
-const instalar = `curl -fsSL https://open-jarvis.github.io/OpenJarvis/install.sh | bash`;
+const instalar = 'curl -fsSL https://open-jarvis.github.io/OpenJarvis/install.sh | bash';
+const wsl = 'wsl --install';
+const doctor = 'jarvis doctor';
+const presetMac = 'jarvis init --preset morning-digest-mac --force';
+const presetLinux = 'jarvis init --preset morning-digest-linux --force';
+const conectar = 'jarvis connect gdrive';
+const lista = 'jarvis connect --list';
+const texto = 'jarvis digest --text-only';
+const conVoz = 'CARTESIA_API_KEY="TU_CLAVE_AQUI" jarvis digest --fresh';
+const horario = 'jarvis digest --schedule "0 7 * * *"';
+const actualizar = 'jarvis self-update';
 
-const preset = `jarvis init --preset morning-digest-mac --force`;
-
-const conectar = `jarvis connect gdrive`;
-
-const probar = `jarvis digest --fresh`;
+const indice = [
+  { id: 'que', label: 'Qué vas a lograr (y qué no)' },
+  { id: 'antes', label: 'Antes de empezar' },
+  { id: 'instalar', label: 'Instalarlo' },
+  { id: 'probar', label: 'Comprobar que anda' },
+  { id: 'resumen', label: 'Tu resumen del día' },
+  { id: 'horario', label: 'Que se genere solo' },
+  { id: 'problemas', label: 'Si algo falla' },
+  { id: 'datos', label: 'Cuidá tus datos' },
+  { id: 'mas', label: 'Qué más podés hacer' },
+  { id: 'glosario', label: 'Glosario sin vueltas' },
+  { id: 'comandos', label: 'Hoja de comandos' },
+];
 ---
-<RecursoLayout
+<RecursoPremium
   titulo="Jarvis gratis: tu resumen del día instalado en tu compu"
-  descripcion="OpenJarvis, un proyecto de código abierto ya armado por la Universidad de Stanford. Lo instalás, le conectás tu correo y tu calendario, y te deja un resumen hablado de lo que importa."
+  descripcion="OpenJarvis, un proyecto de código abierto de la Universidad de Stanford. Guía paso a paso, sin experiencia previa: lo instalás, le conectás tu correo y tu calendario, y te deja un resumen de lo que importa."
   tipo="Guía"
   barLabel="Guía · @andresalbornoz.ai"
   palabraClave="JARVIS"
-  masterclass={true}
+  chips={['Software gratis', 'Mac · Windows · Linux', 'Sin saber programar', '≈ 30 minutos']}
+  indice={indice}
   mclassUrl={grupo}
 >
-  <div class="lead"><b>Tony Stark gastó mil millones en su Jarvis. El tuyo es gratis y de código abierto. Lo instalás, le conectás tu correo y tu calendario, y cada mañana te cuenta qué importa.</b></div>
+  <Fragment slot="titulo">Jarvis gratis: <em>tu resumen del día</em> instalado en tu compu</Fragment>
+  <Fragment slot="lead">Tony Stark gastó mil millones en su Jarvis. El tuyo es gratis y de código abierto: lo instalás, le conectás tu correo y tu calendario, y cada mañana te cuenta qué importa. Esta guía te lleva de la mano, aunque nunca hayas abierto una terminal.</Fragment>
 
-  <h2>El proyecto</h2>
-  <p>OpenJarvis ya está armado: lo desarrolla la Universidad de Stanford (Hazy Research y Stanford SAIL). No programás nada: lo instalás y lo configurás.</p>
-  <p>Repo oficial, público y con licencia Apache 2.0: <a href={repo} target="_blank" rel="noopener noreferrer">{repo}</a></p>
-
-  <h2>Paso 1: instalarlo</h2>
-  <ol class="steps">
-    <li><b>Abrí la terminal</b> de tu compu. Funciona en Mac, Linux y Windows con WSL2.</li>
-    <li><b>Pegá el comando.</b> Instala uv, el entorno de Python y Ollama, y baja un modelo para correr en tu compu.</li>
-    <li><b>Esperá unos minutos.</b> Después, <code>jarvis</code> arranca el chat.</li>
-  </ol>
-  <div class="codewrap">
-    <button class="copy">Copiar</button>
-    <pre class="code"><code>{instalar}</code></pre>
+  <h2 id="que"><span class="n">1</span>Qué vas a lograr (y qué no)</h2>
+  <p><b>OpenJarvis</b> es un asistente personal que corre en tu propia compu. Lo desarrolla la Universidad de Stanford (Hazy Research y Stanford SAIL), es público y tiene licencia Apache 2.0. No programás nada: copiás comandos, los pegás y seguís las instrucciones.</p>
+  <div class="grid2">
+    <div class="mini"><b>Lo que vas a tener</b><p>Un resumen diario con tu correo y tu agenda de hoy, ordenado por lo que importa. Lo podés leer o escuchar.</p></div>
+    <div class="mini"><b>Lo que corre en tu compu</b><p>El «cerebro» (un modelo de IA local) se instala en tu máquina. No pagás suscripción por el software.</p></div>
   </div>
-  <div class="note"><b>Antes de ejecutarlo:</b> el comando baja un script desde internet. Abrí el enlace en el navegador y leélo antes de correrlo.</div>
+  <div class="note warn"><div><b>Sé realista:</b> la parte más larga no es instalar Jarvis, sino darle permiso a tu cuenta de Google (paso 5). Es un trámite de unos 10–15 minutos, una sola vez. Y para <b>escuchar</b> el resumen con voz hace falta una cuenta en un servicio de voz externo; si no querés eso, el resumen sale igual en texto.</div></div>
+  <p>Dato honesto: es un proyecto joven que cambia seguido, y su documentación y las voces de ejemplo están pensadas en inglés. Probalo con esa expectativa. Si un comando cambia, la fuente oficial siempre manda: <a href={docs} target="_blank" rel="noopener noreferrer">documentación de OpenJarvis</a>.</p>
 
-  <h2>Paso 2: que te hable</h2>
-  <p>El preset del resumen de la mañana te deja el briefing en audio, con voz:</p>
-  <div class="codewrap">
-    <button class="copy">Copiar</button>
-    <pre class="code"><code>{preset}</code></pre>
-  </div>
-  <p>Si tu compu es Linux, cambiá <code>morning-digest-mac</code> por <code>morning-digest-linux</code>.</p>
-
-  <h2>Paso 3: conectar tu correo y tu calendario</h2>
-  <p>Con un solo permiso de Google (OAuth) se conectan Gmail, Calendar y Tasks. Lo autorizás vos, en tu navegador:</p>
-  <div class="codewrap">
-    <button class="copy">Copiar</button>
-    <pre class="code"><code>{conectar}</code></pre>
-  </div>
-
-  <h2>Probá tu primer resumen</h2>
-  <p>Genera el briefing ahora mismo, sin esperar a la mañana:</p>
-  <div class="codewrap">
-    <button class="copy">Copiar</button>
-    <pre class="code"><code>{probar}</code></pre>
-  </div>
-
-  <h2>Qué te da</h2>
-  <ul class="arrow">
-    <li>Un resumen diario de tu correo y tu calendario, hablado.</li>
-    <li>Corre en tu compu. No hay suscripción: el software es gratis.</li>
-    <li>Si algo no anda, <code>jarvis doctor</code> muestra el estado de la instalación.</li>
+  <h2 id="antes"><span class="n">2</span>Antes de empezar</h2>
+  <p>Tildá lo que ya tenés (queda guardado en este navegador):</p>
+  <ul class="check">
+    <li><div><b>Una compu con Mac, Windows o Linux</b>De los últimos años. El instalador detecta tu equipo y elige el modelo que le corresponde.</div></li>
+    <li><div><b>Unos 5 GB libres en el disco</b>El modelo inicial pesa ≈ 1,5 GB y después se bajan otros más grandes en segundo plano.</div></li>
+    <li><div><b>Internet estable</b>La instalación tarda unos 3 minutos con banda ancha.</div></li>
+    <li><div><b>Una cuenta de Google</b>La de tu Gmail y tu calendario. Es la que vas a conectar en el paso 5.</div></li>
+    <li><div><b>30 minutos tranquilos</b>No hace falta saber de tecnología. Hace falta ir en orden y no saltearse pasos.</div></li>
   </ul>
 
-  <div class="note"><b>Regla:</b> conectá solo lo que necesitás. Un asistente que lee tu correo también puede equivocarse con lo que lee.</div>
+  <h2 id="instalar"><span class="n">3</span>Instalarlo</h2>
+  <p>Elegí tu sistema. Te mostramos el que parece ser el tuyo, pero podés cambiarlo:</p>
+  <div class="tabs" role="tablist" data-ostabs>
+    <button type="button" role="tab" data-os="mac" aria-selected="true">Mac</button>
+    <button type="button" role="tab" data-os="win" aria-selected="false">Windows</button>
+    <button type="button" role="tab" data-os="linux" aria-selected="false">Linux</button>
+  </div>
+
+  <div class="pane" data-os="mac">
+    <ol class="steps">
+      <li><div><b>Abrí la Terminal.</b> Apretá <code>Cmd</code> + <code>Espacio</code>, escribí «Terminal» y Enter. Se abre una ventana con texto: ahí vas a pegar los comandos.</div></li>
+      <li><div><b>Copiá el comando de abajo</b> con el botón «Copiar», pegalo en la Terminal (<code>Cmd</code> + <code>V</code>) y apretá Enter.</div></li>
+    </ol>
+    <div class="note"><div>Si la Mac te muestra una ventana para instalar las «herramientas de desarrollo» de Apple, aceptala y esperá. Después volvé a pegar el mismo comando: repetirlo es seguro.</div></div>
+  </div>
+  <div class="pane" data-os="win" hidden>
+    <p>En Windows, la documentación oficial recomienda usar <b>WSL2</b>: es una forma de tener un «mini Linux» dentro de Windows. Se instala una sola vez.</p>
+    <ol class="steps">
+      <li><div><b>Abrí PowerShell como administrador.</b> Menú Inicio → escribí «PowerShell» → clic derecho → «Ejecutar como administrador».</div></li>
+      <li><div><b>Instalá WSL2</b> pegando este comando y Enter. Después reiniciá la compu cuando te lo pida.</div></li>
+    </ol>
+    <div class="codewrap"><button type="button" class="copy">Copiar</button><pre class="code"><code>{wsl}</code></pre></div>
+    <ol class="steps">
+      <li><div><b>Abrí «Ubuntu»</b> desde el menú Inicio. La primera vez te pide crear un usuario y una contraseña (los inventás vos; mientras escribís la contraseña no se ve nada, es normal).</div></li>
+      <li><div><b>Copiá el comando de abajo</b>, pegalo en la ventana de Ubuntu (clic derecho pega) y apretá Enter.</div></li>
+    </ol>
+  </div>
+  <div class="pane" data-os="linux" hidden>
+    <ol class="steps">
+      <li><div><b>Abrí la terminal</b> de tu sistema (en Ubuntu: <code>Ctrl</code> + <code>Alt</code> + <code>T</code>).</div></li>
+      <li><div><b>Copiá el comando de abajo</b>, pegalo (<code>Ctrl</code> + <code>Shift</code> + <code>V</code>) y apretá Enter.</div></li>
+    </ol>
+  </div>
+
+  <span class="codelabel">Comando de instalación</span>
+  <div class="codewrap"><button type="button" class="copy">Copiar</button><pre class="code"><code>{instalar}</code></pre></div>
+  <div class="note warn"><div><b>Antes de ejecutar cualquier cosa de internet:</b> este comando descarga un programa y lo corre. Es el instalador oficial del proyecto, pero acostumbrate a abrir el enlace en el navegador y leerlo primero: <a href="https://open-jarvis.github.io/OpenJarvis/install.sh" target="_blank" rel="noopener noreferrer">ver el script</a>.</div></div>
+
+  <h3>Qué vas a ver mientras se instala</h3>
+  <ul class="check">
+    <li><div><b>Mucho texto que va pasando.</b>Es normal. Instala las herramientas que necesita (uv, Python, Ollama) y baja un modelo chico de IA.</div></li>
+    <li><div><b>Una pregunta sobre estadísticas de uso.</b>Te pregunta si querés compartir datos de uso con el proyecto. <b>Enter o Y = aceptar. N = no compartir.</b> Si dudás, escribí <code>N</code> y Enter.</div></li>
+    <li><div><b>Unos 3 minutos de espera.</b>Algunas piezas siguen bajando en segundo plano después de que termina. No hace falta esperar a que acaben.</div></li>
+  </ul>
+  <p>Cuando termine, <b>cerrá la terminal y abrí una nueva</b>. Así tu compu reconoce el comando <code>jarvis</code>.</p>
+
+  <h2 id="probar"><span class="n">4</span>Comprobar que anda</h2>
+  <p>Escribí este comando. Te muestra si todo quedó bien instalado y qué piezas faltan terminar de bajar:</p>
+  <div class="codewrap"><button type="button" class="copy">Copiar</button><pre class="code"><code>{doctor}</code></pre></div>
+  <p>Después probá hablar con Jarvis. Escribí <code>jarvis</code> y Enter: se abre un chat en la terminal. Preguntale algo simple («¿Qué podés hacer?») y listo. Para salir, apretá <code>Ctrl</code> + <code>C</code>.</p>
+  <div class="note ok"><div><b>Si llegaste hasta acá, lo difícil ya pasó.</b> Jarvis está instalado y funciona. Lo que sigue es conectarlo a tu correo y tu calendario.</div></div>
+
+  <h2 id="resumen"><span class="n">5</span>Tu resumen del día</h2>
+  <h3>A · Elegí la plantilla del resumen</h3>
+  <p>Jarvis trae «presets» (configuraciones ya armadas). Este es el del resumen de la mañana, pensado para correo, calendario, clima y noticias:</p>
+  <div class="pane" data-os="mac">
+    <div class="codewrap"><button type="button" class="copy">Copiar</button><pre class="code"><code>{presetMac}</code></pre></div>
+  </div>
+  <div class="pane" data-os="win" hidden>
+    <p>Usá la versión de Linux, dentro de Ubuntu:</p>
+    <div class="codewrap"><button type="button" class="copy">Copiar</button><pre class="code"><code>{presetLinux}</code></pre></div>
+  </div>
+  <div class="pane" data-os="linux" hidden>
+    <div class="codewrap"><button type="button" class="copy">Copiar</button><pre class="code"><code>{presetLinux}</code></pre></div>
+  </div>
+  <p>También existe <code>morning-digest-minimal</code>, una versión más liviana. La opción <code>--force</code> reemplaza tu configuración por la de la plantilla: para una instalación nueva está bien.</p>
+
+  <h3>B · Conseguí la «llave» de Google</h3>
+  <p>Para leer tu correo y tu calendario, Jarvis necesita que crees una credencial en tu propia cuenta de Google. Es lo que parece complicado, pero son pasos de clic. Tomate tu tiempo:</p>
+  <ol class="steps">
+    <li><div>Entrá a <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer">console.cloud.google.com</a> con tu cuenta de Google y aceptá los términos si te los pide.</div></li>
+    <li><div><b>Creá un proyecto nuevo</b> (arriba a la izquierda, el selector de proyectos). Ponele un nombre cualquiera, por ejemplo «Mi Jarvis».</div></li>
+    <li><div><b>Habilitá tres APIs.</b> En «APIs y servicios» → «Biblioteca», buscá y activá: <b>Gmail API</b>, <b>Google Calendar API</b> y <b>Google Tasks API</b>.</div></li>
+    <li><div><b>Configurá la pantalla de consentimiento.</b> Elegí tipo «Externo», poné un nombre y tu correo, y agregá <b>tu propio correo como «usuario de prueba»</b>.</div></li>
+    <li><div><b>Creá la credencial.</b> En «Credenciales» → «Crear credenciales» → «ID de cliente de OAuth» → tipo de aplicación: <b>«Aplicación de escritorio»</b>. Es el tipo que recomienda Jarvis.</div></li>
+    <li><div>Google te muestra un <b>ID de cliente</b> y un <b>secreto de cliente</b>. Copiá los dos en un bloc de notas: los vas a pegar juntos en el paso siguiente.</div></li>
+  </ol>
+  <div class="note"><div>Google cambia los nombres de los menús seguido. Si algo no aparece donde dice, usá el buscador de la consola con la palabra clave (por ejemplo «Credenciales»). La idea es siempre la misma: proyecto → APIs → pantalla de consentimiento → credencial de escritorio.</div></div>
+
+  <h3>C · Conectá tu cuenta</h3>
+  <div class="codewrap"><button type="button" class="copy">Copiar</button><pre class="code"><code>{conectar}</code></pre></div>
+  <ol class="steps">
+    <li><div>Jarvis te pide pegar <code>ID_DE_CLIENTE:SECRETO</code>: los dos datos juntos, separados por dos puntos y <b>sin espacios</b>.</div></li>
+    <li><div>Se abre el navegador. Elegí tu cuenta. Google puede avisar «Google no verificó esta aplicación»: es normal, porque la aplicación la creaste vos. Seguí adelante solo si es tu propio proyecto.</div></li>
+    <li><div>Aceptá los permisos y volvé a la terminal.</div></li>
+  </ol>
+  <div class="note warn"><div><b>Mirá lo que estás autorizando:</b> este permiso de Google cubre Gmail, Calendar, Tasks, Contactos y Drive. Es amplio. Usalo con una cuenta en la que confíes y no compartas nunca el secreto de cliente.</div></div>
+  <p>Para comprobar qué quedó conectado:</p>
+  <div class="codewrap"><button type="button" class="copy">Copiar</button><pre class="code"><code>{lista}</code></pre></div>
+
+  <h3>D · Generá tu primer resumen</h3>
+  <p>Hay dos formas. Empezá por la primera, que no necesita nada más:</p>
+  <div class="grid2">
+    <div class="mini"><b>Solo texto (sin costo extra)</b><p>Te muestra el resumen escrito en la terminal.</p></div>
+    <div class="mini"><b>Con voz</b><p>Requiere una clave de un servicio de voz externo (Cartesia u OpenAI). Ellos pueden cobrar por uso: mirá sus precios.</p></div>
+  </div>
+  <span class="codelabel">Opción 1 · solo texto</span>
+  <div class="codewrap"><button type="button" class="copy">Copiar</button><pre class="code"><code>{texto}</code></pre></div>
+  <span class="codelabel">Opción 2 · con voz (reemplazá TU_CLAVE_AQUI por tu clave)</span>
+  <div class="codewrap"><button type="button" class="copy">Copiar</button><pre class="code"><code>{conVoz}</code></pre></div>
+  <div class="note"><div>Para generar la voz, el texto del resumen se envía al servicio que elijas. Si eso no te cierra, quedate con la opción de texto: es totalmente válida.</div></div>
+  <p>Truco: dentro del chat de Jarvis (<code>jarvis</code>), si escribís «Good morning» te arma el resumen del día.</p>
+
+  <h2 id="horario"><span class="n">6</span>Que se genere solo</h2>
+  <p>Si querés que el resumen se arme todas las mañanas, programá la hora. Este ejemplo lo deja para las 7:00:</p>
+  <div class="codewrap"><button type="button" class="copy">Copiar</button><pre class="code"><code>{horario}</code></pre></div>
+  <p>Esa fórmula entre comillas se lee así: <code>minuto hora * * *</code>. Algunos ejemplos:</p>
+  <table class="t">
+    <thead><tr><th>Quiero</th><th>Escribo</th></tr></thead>
+    <tbody>
+      <tr><td>Todos los días a las 6:00</td><td><code>0 6 * * *</code></td></tr>
+      <tr><td>Todos los días a las 7:30</td><td><code>30 7 * * *</code></td></tr>
+      <tr><td>De lunes a viernes a las 8:00</td><td><code>0 8 * * 1-5</code></td></tr>
+    </tbody>
+  </table>
+  <p>Para ver el horario actual escribí <code>jarvis digest --schedule</code>; para apagarlo, <code>jarvis digest --schedule off</code>. Dos cosas a tener en cuenta: tu compu tiene que estar prendida a esa hora, y si el horario no coincide con el tuyo, ajustá <code>timezone</code> en la sección <code>[digest]</code> del archivo <code>~/.openjarvis/config.toml</code> (por ejemplo, <code>America/Montevideo</code>).</p>
+
+  <h2 id="problemas"><span class="n">7</span>Si algo falla</h2>
+  <p>Casi todo tiene arreglo rápido. Abrí el que se parezca a tu caso:</p>
+  <details>
+    <summary>Me dice «command not found: jarvis»</summary>
+    <div><p>Tu terminal todavía no sabe dónde está Jarvis. Cerrá la terminal y abrí una nueva. Si sigue igual, en Mac escribí <code>source ~/.zshrc</code> y en Linux o Ubuntu <code>source ~/.bashrc</code>.</p></div>
+  </details>
+  <details>
+    <summary>El instalador se cortó o se quedó trabado</summary>
+    <div><p>Volvé a pegar el mismo comando de instalación. Es seguro repetirlo: retoma lo que faltó y no rompe lo que ya está instalado. Después corré <code>jarvis doctor</code> para ver el estado.</p></div>
+  </details>
+  <details>
+    <summary>«No digest for today» (no hay resumen de hoy)</summary>
+    <div><p>Todavía no se generó el de hoy. Corré <code>jarvis digest --fresh</code> para armarlo ahora.</p></div>
+  </details>
+  <details>
+    <summary>El resumen sale con secciones vacías</summary>
+    <div><p>Revisá qué está conectado con <code>jarvis connect --list</code>. Si falta Google, repetí el paso 5C. Los permisos de Google se renuevan solos, pero si algún día deja de traer tu correo, volvé a correr <code>jarvis connect gdrive</code>.</p></div>
+  </details>
+  <details>
+    <summary>No se escucha el audio</summary>
+    <div><p>Comprobá que pusiste la clave del servicio de voz (Cartesia u OpenAI) y que tu cuenta ahí tiene saldo o créditos. Mientras lo resolvés, <code>jarvis digest --text-only</code> te muestra el resumen escrito.</p></div>
+  </details>
+  <details>
+    <summary>Dice que un modelo más grande no se pudo bajar</summary>
+    <div><p>Corré <code>jarvis doctor</code> para ver el estado. Los modelos grandes se bajan en segundo plano y, si se cortó el internet, hay que reintentar. Mientras tanto, Jarvis funciona con el modelo chico.</p></div>
+  </details>
+  <details>
+    <summary>Quiero desinstalarlo</summary>
+    <div><p>Escribí <code>jarvis-uninstall</code>. Borra Jarvis y su carpeta <code>~/.openjarvis</code>. Deja instalados Ollama, uv y las demás herramientas, por si las usás para otra cosa.</p></div>
+  </details>
+
+  <h2 id="datos"><span class="n">8</span>Cuidá tus datos</h2>
+  <ul class="check">
+    <li><div><b>Conectá solo lo que necesitás.</b>Un asistente que lee tu correo también puede equivocarse con lo que lee. Empezá con el resumen y nada más.</div></li>
+    <li><div><b>El secreto de cliente es como una contraseña.</b>No lo pegues en chats ni lo subas a ningún lado. Guardalo en un gestor de contraseñas.</div></li>
+    <li><div><b>Leé antes de ejecutar.</b>Con cualquier comando que descargue un programa de internet, abrí primero el enlace y mirá qué hace.</div></li>
+    <li><div><b>Revisá lo importante.</b>Un resumen automático es una ayuda, no una garantía. Lo que decide plata o plazos, confirmalo en la fuente.</div></li>
+  </ul>
+
+  <h2 id="mas"><span class="n">9</span>Qué más podés hacer</h2>
+  <p>El resumen de la mañana es solo un preset. Con el mismo comando <code>jarvis init --preset NOMBRE --force</code> probás los demás:</p>
+  <div class="grid2">
+    <div class="mini"><code>deep-research</code><p>Investiga varias fuentes sobre tus documentos y te responde con citas.</p></div>
+    <div class="mini"><code>scheduled-monitor</code><p>Un agente que corre en un horario y recuerda lo anterior.</p></div>
+    <div class="mini"><code>chat-simple</code><p>Una conversación liviana, sin herramientas. Es la que viene por defecto.</p></div>
+    <div class="mini"><code>code-assistant</code><p>Puede ejecutar código y tocar archivos. Solo para quien ya sabe lo que hace.</p></div>
+  </div>
+  <p>También hay una app de escritorio para descargar desde la <a href={`${repo}/releases/latest`} target="_blank" rel="noopener noreferrer">página de versiones</a>, y para mantener todo al día alcanza con:</p>
+  <div class="codewrap"><button type="button" class="copy">Copiar</button><pre class="code"><code>{actualizar}</code></pre></div>
+
+  <h2 id="glosario"><span class="n">10</span>Glosario sin vueltas</h2>
+  <table class="t">
+    <thead><tr><th>Palabra</th><th>Qué significa</th></tr></thead>
+    <tbody>
+      <tr><td>Terminal</td><td>Una ventana donde le das órdenes a la compu escribiendo, en vez de hacer clic.</td></tr>
+      <tr><td>Comando</td><td>Una orden escrita. La copiás, la pegás y apretás Enter.</td></tr>
+      <tr><td>Modelo local</td><td>Una IA que corre dentro de tu compu, sin mandar tus datos a una empresa.</td></tr>
+      <tr><td>Ollama</td><td>El programa que hace correr esos modelos en tu compu. Lo instala Jarvis solo.</td></tr>
+      <tr><td>Preset</td><td>Una configuración ya armada para un uso concreto, como el resumen de la mañana.</td></tr>
+      <tr><td>OAuth</td><td>La forma segura en que Google te deja dar permiso a una aplicación sin darle tu contraseña.</td></tr>
+      <tr><td>API key (clave)</td><td>Una contraseña para que un programa use un servicio, por ejemplo uno de voz.</td></tr>
+      <tr><td>Código abierto</td><td>Cualquiera puede ver cómo está hecho el programa y comprobar qué hace.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="comandos"><span class="n">11</span>Hoja de comandos</h2>
+  <p>Para tener a mano. Todos se escriben en la terminal:</p>
+  <table class="t">
+    <thead><tr><th>Para qué</th><th>Comando</th></tr></thead>
+    <tbody>
+      <tr><td>Abrir el chat</td><td><code>jarvis</code></td></tr>
+      <tr><td>Ver si todo está bien</td><td><code>jarvis doctor</code></td></tr>
+      <tr><td>Elegir una plantilla</td><td><code>jarvis init --preset NOMBRE --force</code></td></tr>
+      <tr><td>Conectar tu Google</td><td><code>jarvis connect gdrive</code></td></tr>
+      <tr><td>Ver qué está conectado</td><td><code>jarvis connect --list</code></td></tr>
+      <tr><td>Resumen ahora, en texto</td><td><code>jarvis digest --text-only</code></td></tr>
+      <tr><td>Resumen nuevo ahora</td><td><code>jarvis digest --fresh</code></td></tr>
+      <tr><td>Ver el resumen de hoy</td><td><code>jarvis digest</code></td></tr>
+      <tr><td>Programar el horario</td><td><code>jarvis digest --schedule "0 7 * * *"</code></td></tr>
+      <tr><td>Actualizar</td><td><code>jarvis self-update</code></td></tr>
+      <tr><td>Desinstalar</td><td><code>jarvis-uninstall</code></td></tr>
+    </tbody>
+  </table>
+  <p>Repositorio oficial: <a href={repo} target="_blank" rel="noopener noreferrer">{repo}</a></p>
 
   <h2>Más recursos gratis</h2>
-  <p>Además de Jarvis, tenés la biblioteca de recursos gratuitos de IA, en el Catálogo de recursos: <a href={biblioteca} target="_blank" rel="noopener noreferrer">abrir el catálogo →</a></p>
-
-  <div class="minicta">
-    La clase completa, de usar Claude a construir tu primer sistema, es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
-  </div>
-</RecursoLayout>
+  <p>Además de Jarvis, tenés la biblioteca de recursos gratuitos de IA en el Catálogo de recursos: <a href={biblioteca} target="_blank" rel="noopener noreferrer">abrir el catálogo →</a></p>
+</RecursoPremium>
