@@ -1,0 +1,144 @@
+---
+// Lead magnet · palabra clave ManyChat: EQUIPO (reel "Equipo dentro de Claude", formato mapa, 23/11/2026)
+// URL pública: /recursos/equipo-ia-dentro-de-claude
+// CTA del video: "Comentá la palabra EQUIPO, te paso cómo estructuraría cada una".
+// Formato de sub-agentes verificado en la doc oficial https://code.claude.com/docs/es/sub-agents (29/9/2026):
+// archivos Markdown con frontmatter name / description (y opcionales tools / model) en .claude/agents/.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const equipos = [
+  {
+    n: '1',
+    nombre: 'Equipo de investigación',
+    para: 'Busca información, revisa las fuentes y te trae solo lo importante.',
+    roles: 'Buscador · Revisor de fuentes · Resumidor',
+    prompt: `Sos mi EQUIPO DE INVESTIGACIÓN. Trabajás en 3 pasos y me mostrás el resultado de cada uno.
+1) BUSCADOR: buscá información actual sobre [TEMA]. Traé al menos 6 fuentes distintas.
+2) REVISOR DE FUENTES: de esas fuentes, descartá las que no tengan autor, fecha o datos verificables. Decime cuáles descartaste y por qué.
+3) RESUMIDOR: con las fuentes que quedaron, dame solo lo importante:
+- Qué cambió o qué es lo nuevo.
+- Qué me conviene probar.
+- Qué puedo ignorar.
+Criterios: nada de relleno; cada dato con su fuente; si dos fuentes se contradicen, decilo.`,
+  },
+  {
+    n: '2',
+    nombre: 'Equipo de contenido',
+    para: 'Uno encuentra ideas, otro arma el guion y otro revisa si vale la pena publicarlo.',
+    roles: 'Buscador de ideas · Guionista · Editor',
+    prompt: `Sos mi EQUIPO DE CONTENIDO para [TU NEGOCIO O TEMA], para la red [INSTAGRAM / TIKTOK / LINKEDIN].
+1) BUSCADOR DE IDEAS: proponé 8 ideas basadas en preguntas reales que se hace mi público. Una línea cada una.
+2) GUIONISTA: elegí las 2 mejores y escribí el guion de cada una: gancho de 1 frase, desarrollo en 3 puntos y cierre con una acción concreta.
+3) EDITOR: revisá los 2 guiones con estas preguntas y corregí lo que falle:
+- ¿El gancho se entiende en 3 segundos?
+- ¿Se puede contar en menos de 60 segundos?
+- ¿Le sirve a alguien o solo suena bien?
+Al final decime cuál publicarías primero y por qué.`,
+  },
+  {
+    n: '3',
+    nombre: 'Equipo de producto',
+    para: 'Le das una idea, la transforma en un plan, construye una primera versión y otro agente la revisa.',
+    roles: 'Planificador · Constructor · Revisor',
+    prompt: `Sos mi EQUIPO DE PRODUCTO. La idea es: [DESCRIBÍ LA IDEA EN UNA FRASE].
+1) PLANIFICADOR: convertí la idea en un plan: para quién es, qué problema resuelve, las 3 a 5 funciones mínimas y en qué orden construirlas.
+2) CONSTRUCTOR: armá la primera versión de la función más importante. Si es una página o una app simple, entregame el código completo en un solo archivo.
+3) REVISOR (actuá como otra persona, que no escribió el código): probá la versión con 5 casos, incluido uno que la rompa. Listá los errores y corregilos.
+Criterios: primero que funcione, después que sea lindo. Marcá como SUPUESTO todo lo que decidas sin preguntarme.`,
+  },
+  {
+    n: '4',
+    nombre: 'Equipo de operaciones',
+    para: 'Organiza documentos, tareas, seguimiento y todo lo que se repite.',
+    roles: 'Documentos · Tareas · Seguimiento',
+    prompt: `Sos mi EQUIPO DE OPERACIONES. Te paso lo que tengo pendiente: [PEGÁ TU LISTA, TUS NOTAS O TUS MAILS].
+1) DOCUMENTOS: decime qué documentos necesito tener ordenados y proponé una estructura de carpetas simple.
+2) TAREAS: convertí todo en una lista de tareas con responsable, fecha y prioridad (alta / media / baja).
+3) SEGUIMIENTO: marcá qué cosas se repiten todas las semanas y escribí el mensaje o recordatorio que habría que mandar en cada caso.
+Al final, dame una tabla: tarea · se repite (sí/no) · se puede automatizar (sí/no) · cómo.`,
+  },
+  {
+    n: '5',
+    nombre: 'Equipo de decisión',
+    para: 'En vez de preguntarle todo a una sola IA, varios agentes analizan el problema desde distintos lados antes de recomendarte el próximo paso.',
+    roles: 'Mirada financiera · Mirada del cliente · Mirada de riesgo · Moderador',
+    prompt: `Sos mi EQUIPO DE DECISIÓN. La decisión es: [DESCRIBÍ LA DECISIÓN, EJ.: ¿SUBO EL PRECIO?].
+Respondé como 3 agentes distintos, cada uno por separado y sin mirar lo que dijo el otro:
+1) MIRADA FINANCIERA: números, costos, margen. Si falta un dato, hacé un supuesto y marcalo.
+2) MIRADA DEL CLIENTE: cómo lo vería quien paga; qué objeciones tendría.
+3) MIRADA DE RIESGO: qué puede salir mal y cómo detectarlo a tiempo.
+4) MODERADOR: compará las 3 miradas, decime en qué coinciden y en qué no, y recomendame UN próximo paso concreto para esta semana.`,
+  },
+];
+
+const subagente = `---
+name: equipo-investigacion
+description: Busca información actual sobre un tema, descarta fuentes dudosas y devuelve solo lo importante. Usalo antes de escribir o decidir.
+---
+Sos el EQUIPO DE INVESTIGACIÓN.
+1) Buscá al menos 6 fuentes actuales.
+2) Descartá las que no tengan autor, fecha o datos verificables.
+3) Devolvé: qué cambió, qué conviene probar y qué se puede ignorar. Cada dato con su fuente.`;
+---
+<RecursoLayout
+  titulo="Tu equipo de IA dentro de Claude: los 5 equipos"
+  descripcion="Cómo armar 5 equipos de agentes dentro de Claude —investigación, contenido, producto, operaciones y decisión— con los roles de cada uno y el prompt listo para copiar."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="EQUIPO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>No necesitás una IA que haga todo. Necesitás varias IAs con trabajos claros. Acá tenés los 5 equipos del video, con los roles de cada uno y el prompt listo para pegar en Claude.</b></div>
+
+  <h2>Cómo usar esta guía</h2>
+  <ol class="steps">
+    <li><b>Elegí un equipo.</b> Empezá por el que más tiempo te ahorra hoy, no por los 5 a la vez.</li>
+    <li><b>Copiá su prompt</b> y reemplazá lo que está entre corchetes.</li>
+    <li><b>Guardalo en un Proyecto de Claude</b> (o como sub-agente en Claude Code) para no volver a escribirlo.</li>
+  </ol>
+  <div class="note"><b>La clave:</b> cada rol hace una sola cosa y entrega un resultado concreto. Si un rol "hace de todo", vuelve a ser una sola IA genérica.</div>
+
+  {equipos.map((e) => (
+    <>
+      <h2>{e.n}. {e.nombre}</h2>
+      <p>{e.para}</p>
+      <p><b>Roles:</b> {e.roles}</p>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{e.prompt}</code></pre>
+      </div>
+      {e.n === '3' ? (
+        <div class="minicta">
+          Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+        </div>
+      ) : null}
+    </>
+  ))}
+
+  <h2>Si usás Claude Code: un sub-agente por equipo</h2>
+  <p>En Claude Code cada equipo puede ser un sub-agente: un archivo Markdown en <b>.claude/agents/</b> (del proyecto) o en <b>~/.claude/agents/</b> (para todos tus proyectos). Cada uno trabaja en su propio contexto.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{subagente}</code></pre>
+  </div>
+  <p>Guardalo como <b>.claude/agents/equipo-investigacion.md</b>. También podés escribir <b>/agents</b> en Claude Code y pedirle que lo cree por vos.</p>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Necesito pagar Claude?</b> No para probarlo: los prompts funcionan en el chat gratis. Con un plan pago podés guardarlos en Proyectos y usarlos más seguido.</li>
+    <li><b>¿Tengo que armar los 5 equipos?</b> No. Empezá por uno y sumá otro cuando el primero ya te funcione.</li>
+    <li><b>¿Por qué separar los roles si es la misma IA?</b> Porque cada rol mira con un criterio distinto. En el equipo de decisión, separarlos evita que un agente repita lo que dijo el otro.</li>
+    <li><b>¿Y si un resultado no me sirve?</b> Pedile a ese rol que lo rehaga y decile qué falló. No arranques todo de nuevo.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Elegí el primer equipo que voy a usar.</li>
+    <li>Reemplacé todo lo que está entre corchetes.</li>
+    <li>Cada rol hace una sola cosa y entrega un resultado concreto.</li>
+    <li>Guardé el prompt en un Proyecto o como sub-agente.</li>
+  </ul>
+</RecursoLayout>
