@@ -1,0 +1,197 @@
+---
+// Lead magnet · palabra clave ManyChat: SKILL (reel "10 skills", formato 3D por estaciones, 24/11/2026)
+// URL pública: /recursos/diez-skills-claude
+// CTA del video: "Comentá la palabra SKILL y te paso una lista para que puedas comenzar a utilizarlas".
+// Formato de skill: carpeta con un archivo SKILL.md (frontmatter name + description) en .claude/skills/ (Claude Code).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const skills = [
+  {
+    n: '1', carpeta: 'critica', nombre: 'Crítica',
+    para: 'Hace que Claude deje de darte la razón y busque los errores de tu idea.',
+    desc: 'Busca errores, supuestos débiles y riesgos en una idea en vez de darte la razón. Usala para validar un plan, una oferta o una decisión.',
+    cuerpo: `Sos un crítico. Tu trabajo NO es agradar, es encontrar lo que puede fallar.
+1. Prohibido empezar con halagos ("¡buena idea!", "tenés razón").
+2. Listá de 3 a 5 fallas, de la más grave a la menos grave. Revisá siempre: precio, competencia, quién paga y supuestos sin probar.
+3. De cada falla decí: por qué es un problema y qué dato la confirmaría o la descartaría.
+4. Cerrá con la pregunta más incómoda que debería responder antes de seguir y una forma barata de probarla esta semana.`,
+  },
+  {
+    n: '2', carpeta: 'investigacion', nombre: 'Investigación',
+    para: 'Le da un proceso para buscar, comparar fuentes y sacar conclusiones.',
+    desc: 'Investiga un tema con un proceso fijo: busca, compara fuentes y saca conclusiones con fuente. Usala cuando necesites datos confiables.',
+    cuerpo: `Seguí siempre estos 3 pasos y mostrame cada uno:
+1. BUSCAR: al menos 6 fuentes distintas y actuales sobre el tema.
+2. COMPARAR: en qué coinciden, en qué se contradicen y cuál es la más confiable (autor, fecha, datos verificables). Descartá las dudosas y decime por qué.
+3. CONCLUIR: máximo 5 conclusiones. Cada dato con su fuente y un nivel de confianza (alto / medio / bajo).
+Si algo no se puede confirmar, decilo en vez de rellenar.`,
+  },
+  {
+    n: '3', carpeta: 'diseno', nombre: 'Diseño',
+    para: 'Le da reglas visuales para que todo deje de tener ese aspecto genérico de IA.',
+    desc: 'Aplica reglas visuales propias para que una página, un carrusel o una presentación no parezcan hechos por IA. Usala al diseñar cualquier pieza.',
+    cuerpo: `Antes de diseñar pedime: colores de marca, tipografías y 2 referencias que me gusten.
+Reglas:
+- Paleta de 3 colores como máximo: uno de fondo, uno de texto y uno de acento.
+- Máximo 2 tipografías: una para títulos y una para texto.
+- Una sola idea por pantalla, con mucho aire y una jerarquía clara (título, apoyo, acción).
+- Evitá lo genérico de IA: degradados violeta, tarjetas idénticas, emojis como íconos y sombras iguales en todo.
+Al terminar, revisá tu propio resultado contra estas reglas y corregí.`,
+  },
+  {
+    n: '4', carpeta: 'escritura', nombre: 'Escritura',
+    para: 'Detecta frases, ritmo y estructuras que hacen que un texto suene artificial.',
+    desc: 'Detecta frases, ritmo y estructuras que suenan artificiales y las reescribe con una voz humana. Usala antes de publicar un texto.',
+    cuerpo: `Revisá el texto que te paso y marcá:
+- FRASES: muletillas y fórmulas ("en el mundo actual", "es importante destacar", "sumergite en").
+- RITMO: oraciones todas del mismo largo; mezclá cortas y largas.
+- ESTRUCTURAS: listas siempre de tres, cierres con moraleja, "no solo X, sino también Y".
+Entregá 2 cosas: (1) el texto con cada marca señalada y (2) una versión corregida con frases concretas, datos reales y mi tono: directo y cercano.
+No inventes datos para sonar mejor.`,
+  },
+  {
+    n: '5', carpeta: 'navegacion', nombre: 'Navegación',
+    para: 'Le permite trabajar directamente sobre páginas web y revisar lo que está haciendo.',
+    desc: 'Trabaja sobre páginas web paso a paso y verifica cada acción. Usala para tareas dentro del navegador (revisar, completar, comparar).',
+    cuerpo: `Cuando tengas que trabajar en una página web:
+1. Antes de actuar, decime el plan en 3 pasos.
+2. Después de cada paso, verificá lo que pasó (texto o captura) y decime si salió como esperabas.
+3. Nunca envíes formularios, pagues ni borres nada sin que yo lo confirme.
+4. Al final dame un informe: qué hiciste, qué verificaste y qué falló.
+Necesita acceso a un navegador: Claude en Chrome o un servidor MCP de navegador.`,
+  },
+  {
+    n: '6', carpeta: 'presentaciones', nombre: 'Presentaciones',
+    para: 'Convierte una idea en una estructura visual coherente.',
+    desc: 'Convierte una idea en una presentación con estructura clara: una idea por diapositiva y un hilo coherente. Usala para pitch, clases o propuestas.',
+    cuerpo: `Convertí mi idea en una presentación:
+1. Estructura fija: problema, solución, prueba, cierre con una acción.
+2. Una sola idea por diapositiva; el título es una afirmación, no un tema ("Perdés ventas por responder tarde", no "Ventas").
+3. Máximo 20 palabras por diapositiva y una sugerencia visual (gráfico, foto, ícono).
+4. Agregá notas del orador de 2 líneas por diapositiva.
+Antes de armarla, preguntame: ¿para quién es y qué querés que hagan al final?`,
+  },
+  {
+    n: '7', carpeta: 'contenido', nombre: 'Contenido',
+    para: 'Investiga temas, estructura ideas y prepara borradores.',
+    desc: 'Investiga temas, estructura ideas y prepara borradores para redes o blog. Usala para planificar y escribir contenido.',
+    cuerpo: `Trabajá en 3 etapas y frená al final de cada una para que yo elija:
+1. TEMAS: investigá 8 temas de los que mi público pregunta de verdad. Una línea cada uno.
+2. IDEAS: del tema que elija, estructurá 3 ideas: gancho, 3 puntos y cierre.
+3. BORRADOR: escribí el borrador de la idea elegida, en mi tono y listo para revisar.
+Preguntame primero para qué red es y quién es mi público.`,
+  },
+  {
+    n: '8', carpeta: 'analisis', nombre: 'Análisis',
+    para: 'Toma documentos, datos o información y encuentra patrones.',
+    desc: 'Toma documentos, datos o información y encuentra patrones con evidencia. Usala con reportes, encuestas, mails o planillas.',
+    cuerpo: `Con los documentos o datos que te paso:
+1. Leé todo antes de concluir y decime qué recibiste.
+2. Armá una tabla de hallazgos: dato, dónde aparece y por qué importa.
+3. Listá los PATRONES (lo que se repite) cada uno con su evidencia (cita o número).
+4. Aclará qué NO se puede concluir con esta información.
+5. Cerrá con 3 próximos pasos concretos.`,
+  },
+  {
+    n: '9', carpeta: 'revision', nombre: 'Revisión',
+    para: 'No rehace tu trabajo: lo audita y te dice qué tenés que cambiar.',
+    desc: 'Audita un trabajo sin reescribirlo y lista qué cambiar y por qué. Usala antes de entregar o publicar.',
+    cuerpo: `NO rehagas mi trabajo ni lo reescribas entero.
+1. Auditalo de principio a fin.
+2. Devolvé una lista de cambios, cada uno con este formato:
+   Cambiar: (dónde está, citando la parte)
+   Por qué: (el problema)
+   Cómo: (una sugerencia corta)
+   Prioridad: alta / media / baja
+3. Al final, decime si está listo para entregar o qué falta.`,
+  },
+  {
+    n: '10', carpeta: 'procesos', nombre: 'Procesos',
+    para: 'Convierte una tarea que repetís siempre en un sistema reutilizable.',
+    desc: 'Convierte una tarea repetitiva en un sistema reutilizable (checklist o skill). Usala cuando hagas lo mismo más de tres veces.',
+    cuerpo: `Ayudame a convertir una tarea que repito en un sistema:
+1. Pedime la tarea y 2 ejemplos de cómo la hice.
+2. Identificá los pasos, qué entra, qué sale y cómo sé que quedó bien.
+3. Escribí el sistema como checklist y, si conviene, como un SKILL.md listo para guardar.
+4. Probalo conmigo con un caso real y ajustalo.`,
+  },
+];
+
+const armarSkill = (s) => `---
+name: ${s.carpeta}
+description: ${s.desc}
+---
+${s.cuerpo}`;
+
+const estructura = `.claude/skills/
+  critica/
+    SKILL.md
+  investigacion/
+    SKILL.md
+  diseno/
+    SKILL.md
+  ...`;
+---
+<RecursoLayout
+  titulo="Las 10 skills que yo tendría guardadas en Claude"
+  descripcion="Las 10 skills del video —crítica, investigación, diseño, escritura, navegación, presentaciones, contenido, análisis, revisión y procesos— listas para copiar y guardar en Claude."
+  tipo="Lista"
+  barLabel="Lista · @andresalbornoz.ai"
+  palabraClave="SKILL"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Claude sin buenas skills sigue siendo solamente Claude. Acá tenés las 10 del video, cada una con su SKILL.md listo para copiar. No hace falta instalar las 10: empezá por la que más te ahorre trabajo.</b></div>
+
+  <h2>Cómo guardar una skill</h2>
+  <ol class="steps">
+    <li><b>Creá una carpeta</b> con el nombre de la skill dentro de <b>.claude/skills/</b> (en el proyecto) o de <b>~/.claude/skills/</b> (para todos tus proyectos).</li>
+    <li><b>Dentro, un archivo llamado SKILL.md</b> con el contenido que copies de abajo.</li>
+    <li><b>Probala:</b> pedile a Claude una tarea del tipo de la skill (por ejemplo "criticá esta idea") y fijate si la usa.</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{estructura}</code></pre>
+  </div>
+  <div class="note"><b>La clave:</b> la línea <b>description</b> es la que le dice a Claude cuándo usar la skill. Si una skill no se activa, mejorá esa línea antes de tocar el resto. Si usás Claude desde la web, mirá en tus ajustes si tu plan permite subir skills.</div>
+
+  {skills.map((s) => (
+    <>
+      <h2>{s.n}. Skill de {s.nombre.toLowerCase()}</h2>
+      <p>{s.para}</p>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{armarSkill(s)}</code></pre>
+      </div>
+      <p>Guardala como <b>.claude/skills/{s.carpeta}/SKILL.md</b>.</p>
+      {s.n === '5' ? (
+        <div class="minicta">
+          Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+        </div>
+      ) : null}
+    </>
+  ))}
+
+  <div class="note"><b>¿Querés skills ya hechas?</b> Estas 10 las escribís vos en 2 minutos. Si preferís instalar skills de terceros, mirá <a href="/recursos/skills-claude">las 4 skills para instalar en Claude</a> y <a href="/recursos/skills-github">las 4 skills de GitHub</a>.</div>
+
+  <h2>La idea no es instalar 100 skills</h2>
+  <p>Es encontrar las que mejoran cómo trabajás vos. Una skill que no usás solo suma ruido. Elegí una, usala una semana y recién después decidí si necesitás otra.</p>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Tengo que usar Claude Code?</b> Estas skills están escritas para Claude Code, pero el contenido de cada una funciona también como instrucción en un Proyecto de Claude.</li>
+    <li><b>¿Puedo cambiar el texto?</b> Sí, y conviene. Ajustalas a tu tono, tu rubro y tus criterios.</li>
+    <li><b>¿Cuántas skills activo a la vez?</b> Las que uses seguido. Más skills no significa mejores resultados.</li>
+    <li><b>¿Qué skill empiezo?</b> Crítica o revisión: se notan desde el primer uso.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Elegí 1 skill para empezar.</li>
+    <li>Creé su carpeta y su archivo SKILL.md.</li>
+    <li>Ajusté la línea description a mi caso.</li>
+    <li>La probé con una tarea real durante una semana.</li>
+  </ul>
+</RecursoLayout>
