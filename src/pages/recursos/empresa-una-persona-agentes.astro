@@ -1,0 +1,122 @@
+---
+// Lead magnet · palabra clave ManyChat: EMPRESA (reel "Equipo en empresa", formato mapa, 23/11/2026)
+// URL pública: /recursos/empresa-una-persona-agentes
+// CTA del video: "Comentá la palabra EMPRESA y te paso una guía para que puedas aplicarlo en tus propias tareas o en tu negocio".
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const modulos = [
+  {
+    n: '1',
+    nombre: 'Marketing',
+    para: 'Un agente investiga qué está pasando, otro busca ideas, Claude prepara textos y guiones, y las herramientas visuales los convierten en imágenes o videos. Nada se publica sin tu aprobación.',
+    prompt: `Sos el MÓDULO DE MARKETING de mi negocio: [DESCRIBÍ TU NEGOCIO EN UNA FRASE]. Mi público es: [QUIÉN TE COMPRA].
+1) INVESTIGADOR: decime qué está pasando esta semana en mi rubro (tendencias, preguntas frecuentes, lo que publica la competencia).
+2) BUSCADOR DE IDEAS: con eso, proponé 5 ideas de publicaciones.
+3) REDACTOR: escribí el texto y el guion de las 2 mejores (gancho, desarrollo, cierre con una acción).
+4) VISUALES: para cada una, describí la imagen o el video que acompaña (qué se ve, texto en pantalla).
+Regla: entregame todo como BORRADOR para aprobar. No des nada por publicado.`,
+  },
+  {
+    n: '2',
+    nombre: 'Ventas',
+    para: 'Cada vez que aparece un contacto, organiza la información, prepara el seguimiento, recuerda cuándo volver a escribir y detecta quién todavía espera una respuesta.',
+    prompt: `Sos el MÓDULO DE VENTAS. Te paso mis contactos recientes: [PEGÁ NOMBRE, CANAL Y QUÉ PIDIÓ CADA UNO].
+1) FICHA: armá una tabla con nombre, canal, qué necesita y etapa (nuevo / interesado / esperando respuesta / cerrado).
+2) SEGUIMIENTO: para cada uno, escribí el próximo mensaje listo para mandar, corto y personal.
+3) RECORDATORIOS: decime cuándo volver a escribirle a cada uno (fecha y motivo).
+4) ALERTA: marcá en rojo quién lleva más de 48 horas sin respuesta.
+Recordá: conseguir contactos no sirve de nada si después nadie los sigue.`,
+  },
+  {
+    n: '3',
+    nombre: 'Operaciones',
+    para: 'Documentos, tareas, entregas, soporte y pagos: todo lo repetitivo pasa por sistemas que revisan qué falta y qué necesita atención.',
+    prompt: `Sos el MÓDULO DE OPERACIONES. Esto es lo que tengo en curso: [PEGÁ TUS PEDIDOS, ENTREGAS, FACTURAS Y CONSULTAS].
+Revisá estas 5 áreas y para cada una decime qué está bien, qué falta y qué necesita atención hoy:
+1) Documentos (contratos, firmas, presupuestos).
+2) Tareas (con responsable y fecha).
+3) Entregas (qué sale y cuándo).
+4) Soporte (consultas sin responder).
+5) Pagos (qué vence y qué falta cobrar).
+Al final, una lista de "hacer hoy" con máximo 5 puntos, ordenada por urgencia.`,
+  },
+  {
+    n: '4',
+    nombre: 'El Director',
+    para: 'Una IA que no ejecuta todo: mira tus objetivos, los divide en tareas y se las manda al agente correcto.',
+    prompt: `Sos el DIRECTOR de mi empresa. No ejecutás tareas: las repartís.
+Mi objetivo de este mes es: [TU OBJETIVO, EJ.: CERRAR 20 VENTAS].
+1) Dividí el objetivo en tareas concretas para esta semana.
+2) Asigná cada tarea a un módulo: MARKETING, VENTAS u OPERACIONES.
+3) Para cada tarea, escribí la instrucción exacta que le daría a ese módulo.
+4) Decime qué necesita mi aprobación antes de avanzar.`,
+  },
+];
+
+const resumen = `Sos mi ASISTENTE DE LA MAÑANA. Con todo lo que te pasé de marketing, ventas y operaciones, armame UNA sola página con 3 partes:
+1) QUÉ PASÓ: lo que quedó terminado desde ayer.
+2) QUÉ FALTA: lo pendiente, ordenado por urgencia.
+3) QUÉ NECESITA MI APROBACIÓN: lo que no puede avanzar sin mí.
+Máximo 10 renglones en total. Sin explicaciones largas.`;
+---
+<RecursoLayout
+  titulo="Tu empresa de una persona con agentes de IA"
+  descripcion="Cómo dividir tu negocio en 4 módulos de agentes —marketing, ventas, operaciones y un director— con el prompt de cada uno y el resumen de una página para cada mañana."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="EMPRESA"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>El cambio no es tener una IA que trabaja por vos. Es tener un sistema de IAs que trabaja bajo tu supervisión. Acá tenés los 4 módulos del video y el resumen de una página para revisar todo cada mañana.</b></div>
+
+  <h2>Cómo usar esta guía</h2>
+  <ol class="steps">
+    <li><b>Empezá por un módulo.</b> El que hoy te come más tiempo (para la mayoría, ventas).</li>
+    <li><b>Copiá el prompt</b> y completá lo que está entre corchetes con tus datos reales.</li>
+    <li><b>Sumá el Director</b> cuando tengas al menos dos módulos andando.</li>
+    <li><b>Cerrá el día con el resumen</b> de una página.</li>
+  </ol>
+  <div class="note"><b>Regla de oro:</b> los agentes preparan, vos aprobás. Nada sale a un cliente sin que lo hayas visto.</div>
+
+  {modulos.map((m) => (
+    <>
+      <h2>Módulo {m.n}: {m.nombre}</h2>
+      <p>{m.para}</p>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{m.prompt}</code></pre>
+      </div>
+      {m.n === '2' ? (
+        <div class="minicta">
+          Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+        </div>
+      ) : null}
+    </>
+  ))}
+
+  <h2>Tu página de cada mañana</h2>
+  <p>Todas las mañanas mirás una sola página: qué pasó, qué falta y qué necesita tu aprobación.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{resumen}</code></pre>
+  </div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Necesito saber programar?</b> No. Todo funciona pegando los prompts en Claude. Automatizarlo después (con n8n, por ejemplo) es un paso aparte.</li>
+    <li><b>¿Cuántos agentes necesito?</b> Para arrancar, uno por módulo. Dividí un módulo en más agentes recién cuando se quede corto.</li>
+    <li><b>¿Para qué el Director si yo ya decido?</b> Para no tener que pensar vos cómo bajar cada objetivo a tareas. Él propone, vos aprobás.</li>
+    <li><b>¿Sirve si trabajo solo?</b> Es justamente para eso: una empresa de una persona con un equipo que trabaja bajo tu supervisión.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Elegí el primer módulo y lo probé con datos reales.</li>
+    <li>Cada módulo me entrega borradores, no cosas publicadas.</li>
+    <li>El Director divide mi objetivo en tareas por módulo.</li>
+    <li>Reviso una sola página cada mañana.</li>
+  </ul>
+</RecursoLayout>
