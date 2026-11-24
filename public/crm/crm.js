@@ -19,6 +19,12 @@ var TIPOS={mensaje:'Mensaje',respuesta:'Respuesta',llamada:'Llamada',reunion:'Re
 var ENVIO={envio_confirmado:'Envío confirmado',sin_error_al_corte:'Sin error detectado al corte',demora_temporal:'Demora temporal',rebotado:'Rebotado',respuesta_automatica:'Respuesta automática',respuesta_humana:'Respuesta humana'};
 var CLASIF={interes_concreto:'Interés concreto',cordial_sin_compromiso:'Cordial sin compromiso',negativa_baja:'Negativa o baja',derivacion:'Derivación'};
 var MATS={ejemplo_referencia:'Ejemplo de referencia',propuesta_comercial:'Propuesta comercial',presupuesto:'Presupuesto'};
+/* carpetas, periodo y calificación (migración 20261124100000) */
+var CARPETAS=[['prospeccion_2026','Prospección 2026'],['ecommerce_montevideo','E-commerce Montevideo (sin contactar)'],['retail_mayor_montevideo','Retail mayor Montevideo (sin contactar)'],['transporte_sistema_viejo','Transporte (sistema viejo)'],['sin_origen','Sin origen'],['otro','Otra']];
+var PERIODOS=[['reciente','Reciente (desde 10/11)'],['historico','Histórico (contactado antes)'],['nunca_contactado','Nunca contactado']];
+var CALIF=[['A','A · prioridad'],['B','B · buen prospecto'],['C','C · dudoso'],['D','D · no sirve'],['sin_calificar','Sin calificar']];
+var VERIF=[['sin_verificar','Sin verificar'],['whatsapp','Verificado en WhatsApp'],['email','Verificado por email'],['llamada','Verificado por llamada'],['ambos','Verificado en varios canales']];
+function lbl(list,v){var x=list.filter(function(y){return y[0]===v})[0];return x?x[1]:(v||'—')}
 var ROLES={decide:'Decide',influye:'Influye',usa:'Usa',filtra:'Filtra',deriva:'Deriva'};
 var REVT={posible_duplicado:'Posibles duplicados',conflicto:'Conflictos',verificar_dato:'Verificar dato',sin_empresa:'Sin empresa',fecha_sin_verificar:'Fecha sin verificar',incompleto:'Incompletos',sin_desglosar:'Sin desglosar'};
 var CANALES=['Email','WhatsApp','Llamada','Reunión','LinkedIn','Instagram','Visita','Otro'];
@@ -164,7 +170,7 @@ VIEWS.pipeline=async function(){
 };
 
 /* ---------- EMPRESAS ---------- */
-var EF={q:'',nicho:'',etapa:'',atencion:'',origen:'',pais:'',nc:false,ec:false,nd:false,rv:false,orden:'atencion',page:0},ORIGENES=null;
+var EF={q:'',nicho:'',etapa:'',atencion:'',origen:'',pais:'',carpeta:'',periodo:'',calif:'',nc:false,ec:false,nd:false,rv:false,orden:'atencion',page:0},ORIGENES=null;
 VIEWS.empresas=async function(){
   var el=$('#v-empresas');
   if(!ORIGENES){var o=await q(sb.from('crm_empresas').select('origen,pais,nicho').limit(20000));var so={},sp={},sn={};o.data.forEach(function(x){if(x.origen)so[x.origen]=1;if(x.pais)sp[x.pais]=1;if(x.nicho)sn[x.nicho]=1});ORIGENES={o:Object.keys(so).sort(),p:Object.keys(sp).sort(),n:Object.keys(sn).sort()}}
@@ -175,20 +181,25 @@ VIEWS.empresas=async function(){
     '<select class="in" id="eat">'+opts(ATENCION,EF.atencion,'Toda atención')+'</select>'+
     '<select class="in" id="eor">'+opts(ORIGENES.o.map(function(x){return [x,x]}),EF.origen,'Todo origen')+'</select>'+
     '<select class="in" id="epa">'+opts(ORIGENES.p.map(function(x){return [x,x]}),EF.pais,'Todo país')+'</select>'+
+    '<select class="in" id="eca">'+opts(CARPETAS,EF.carpeta,'Toda carpeta')+'</select>'+
+    '<select class="in" id="epe">'+opts(PERIODOS,EF.periodo,'Todo periodo')+'</select>'+
+    '<select class="in" id="ecal">'+opts(CALIF,EF.calif,'Toda calificación')+'</select>'+
     '<select class="in" id="eord">'+opts([['atencion','Orden: próxima acción'],['out','Orden: último mensaje nuestro'],['in','Orden: última respuesta'],['nombre','Orden: nombre']],EF.orden)+'</select>'+
     '<label class="tog"><input type="checkbox" id="enc"'+(EF.nc?' checked':'')+'> No contactar</label>'+
     '<label class="tog"><input type="checkbox" id="eec"'+(EF.ec?' checked':'')+'> Error de canal</label>'+
     '<label class="tog"><input type="checkbox" id="end"'+(EF.nd?' checked':'')+'> Sin desglosar</label>'+
     '<label class="tog"><input type="checkbox" id="erv"'+(EF.rv?' checked':'')+'> Con revisión</label></div>';
   el.innerHTML=head+'<div class="empty">Cargando…</div>';
-  var b=sb.from('crm_v_empresas').select('id,nombre,rubro,nicho,ciudad,pais,origen,bases,etapa,atencion,ultimo_saliente,saliente_sin_fecha,ultima_respuesta,respuesta_sin_fecha,sin_desglosar,proxima_accion,proxima_fecha,responsable_accion,no_contactar,error_canal,n_revision,n_contactos',{count:'exact'});
+  var b=sb.from('crm_v_empresas').select('id,nombre,rubro,nicho,ciudad,pais,origen,bases,etapa,atencion,ultimo_saliente,saliente_sin_fecha,ultima_respuesta,respuesta_sin_fecha,sin_desglosar,proxima_accion,proxima_fecha,responsable_accion,no_contactar,error_canal,n_revision,n_contactos,carpeta,periodo,calificacion',{count:'exact'});
   if(EF.q)b=b.ilike('busqueda',qs(EF.q));if(EF.nicho)b=b.eq('nicho',EF.nicho);if(EF.etapa)b=b.eq('etapa',EF.etapa);if(EF.atencion)b=b.eq('atencion',EF.atencion);if(EF.origen)b=b.eq('origen',EF.origen);if(EF.pais)b=b.eq('pais',EF.pais);
+  if(EF.carpeta)b=b.eq('carpeta',EF.carpeta);if(EF.periodo)b=b.eq('periodo',EF.periodo);if(EF.calif)b=b.eq('calificacion',EF.calif);
   if(EF.nc)b=b.eq('no_contactar',true);if(EF.ec)b=b.eq('error_canal',true);if(EF.nd)b=b.eq('sin_desglosar',true);if(EF.rv)b=b.gt('n_revision',0);
   b=EF.orden==='out'?b.order('ultimo_saliente',{ascending:false,nullsFirst:false}):EF.orden==='in'?b.order('ultima_respuesta',{ascending:false,nullsFirst:false}):EF.orden==='nombre'?b.order('nombre'):b.order('proxima_fecha',{nullsFirst:false}).order('ultima_respuesta',{ascending:false,nullsFirst:false});
   var r=await q(b.order('nombre').range(EF.page*PAGE,EF.page*PAGE+PAGE-1));
   el.innerHTML=head+table(['Empresa','Etapa','Atención','Último mensaje nuestro','Última respuesta del prospecto','Próxima acción'],r.data.map(function(c){
-    return '<tr data-emp="'+c.id+'"><td><b>'+esc(c.nombre)+'</b>'+flags(c)+(c.n_revision?' <span class="chip warnf" title="Ítems para revisar">'+c.n_revision+' a revisar</span>':'')+'<div class="faint">'+(c.nicho?'<span style="color:var(--sl)">'+esc(c.nicho)+'</span> · ':'')+esc(uniq([c.rubro,c.ciudad,c.pais],[c.nicho]).join(' · ')||'')+'</div><div class="faint">'+esc((c.bases||[]).filter(function(x){return x}).join(' + '))+'</div></td><td>'+etapa(c.etapa)+'</td><td>'+(c.etapa==='sin_contactar'?'<span class="muted">—</span>':atenc(c.atencion))+'</td><td>'+cOut(c)+'</td><td>'+cIn(c)+'</td><td>'+cNext(c)+'</td></tr>'}),'Ninguna empresa coincide con los filtros.')+pager(r.count,EF,'emp');
+    return '<tr data-emp="'+c.id+'"><td><b>'+esc(c.nombre)+'</b>'+flags(c)+' <span class="chip">'+esc(lbl(CARPETAS,c.carpeta))+'</span> <span class="chip">'+esc(lbl(PERIODOS,c.periodo))+'</span> <span class="chip">Cal. '+esc(c.calificacion==='sin_calificar'?'—':c.calificacion)+'</span>'+(c.n_revision?' <span class="chip warnf" title="Ítems para revisar">'+c.n_revision+' a revisar</span>':'')+'<div class="faint">'+(c.nicho?'<span style="color:var(--sl)">'+esc(c.nicho)+'</span> · ':'')+esc(uniq([c.rubro,c.ciudad,c.pais],[c.nicho]).join(' · ')||'')+'</div><div class="faint">'+esc((c.bases||[]).filter(function(x){return x}).join(' + '))+'</div></td><td>'+etapa(c.etapa)+'</td><td>'+(c.etapa==='sin_contactar'?'<span class="muted">—</span>':atenc(c.atencion))+'</td><td>'+cOut(c)+'</td><td>'+cIn(c)+'</td><td>'+cNext(c)+'</td></tr>'}),'Ninguna empresa coincide con los filtros.')+pager(r.count,EF,'emp');
   bindF('#eq','q',EF);bindF('#eni','nicho',EF);bindF('#eet','etapa',EF);bindF('#eat','atencion',EF);bindF('#eor','origen',EF);bindF('#epa','pais',EF);bindF('#eord','orden',EF);
+  bindF('#eca','carpeta',EF);bindF('#epe','periodo',EF);bindF('#ecal','calif',EF);
   bindF('#enc','nc',EF);bindF('#eec','ec',EF);bindF('#end','nd',EF);bindF('#erv','rv',EF);
 };
 
@@ -421,7 +432,7 @@ function renderFicha(){
   var tabs=[['crono','Cronología ('+F.actividades.length+')'],['contactos','Contactos ('+F.contactos.length+')'],['materiales','Propuestas y materiales ('+F.materiales.length+')'],['tareas','Tareas y seguimientos ('+F.tareas.filter(function(t){return t.estado==='pendiente'}).length+')'],['datos','Datos y fuentes ('+F.fuentes.length+')'],['historial','Historial original']];
   $('#ficha').innerHTML='<div class="f-head"><div class="f-top"><div><p class="px-eb">'+esc(e.origen||'Origen sin dato')+'</p><h2>'+esc(e.nombre)+'</h2><div class="f-sub">'+(e.nicho?'<span style="color:var(--sl)">'+esc(e.nicho)+'</span>'+(e.nicho_fuente==='rubro'||e.nicho_fuente==='base'?' <span class="faint">(asignado por '+esc(e.nicho_fuente)+')</span>':'')+' · ':'')+esc(uniq([e.grupo,e.rubro,e.ciudad,e.pais],[e.nicho]).join(' · ')||'Rubro y ubicación pendientes de completar')+'</div>'+
     '<div class="f-flags">'+(e.no_contactar?'<span class="chip flag" title="'+esc(e.no_contactar_motivo||'')+'">No contactar</span>':'')+(v.error_canal?'<span class="chip warnf">Error de canal</span>':'')+(F.revision.filter(function(r){return r.estado==='abierta'}).length?'<span class="chip warnf">'+F.revision.filter(function(r){return r.estado==='abierta'}).length+' a revisar</span>':'')+(v.bases||[]).filter(Boolean).map(function(b){return '<span class="chip plain">'+esc(b)+'</span>'}).join('')+'</div></div>'+
-    '<div style="display:flex;gap:8px"><button class="px-btn g sm" data-fact="situacion">Editar situación</button><button class="x" data-fclose aria-label="Cerrar">×</button></div></div>'+resumen()+
+    '<div style="display:flex;gap:8px"><button class="px-btn g sm" data-fact="clasif">Carpeta y calificación</button><button class="px-btn g sm" data-fact="situacion">Editar situación</button><button class="x" data-fclose aria-label="Cerrar">×</button></div></div>'+resumen()+
     '<nav class="ftabs">'+tabs.map(function(t){return '<button data-ftab="'+t[0]+'" class="'+(ftab===t[0]?'on':'')+'">'+esc(t[1])+'</button>'}).join('')+'</nav></div><div class="f-body" id="fbody"></div>';
   renderFTab();
 }
@@ -492,6 +503,7 @@ function contactOpts(sel){return '<option value="">Sin contacto</option>'+F.cont
 function val(id){var e=$('#'+id);return e?e.value.trim():''}
 function fact(kind,id){
   var e=F.empresa,c=conv();
+  if(kind==='clasif'){clasificar();return}
   if(kind==='situacion'){
     modal('<h3 style="font-size:18px">Situación comercial</h3><p class="faint">Etapa y atención son independientes. Dejá la evidencia de por qué cambia la etapa.</p><div class="form">'+
       '<label class="f"><span>Etapa comercial</span><select class="in" id="s_et">'+opts(ETAPAS,c?c.etapa:'contacto_iniciado')+'</select></label>'+
@@ -594,9 +606,37 @@ function nuevaEmpresa(){
     [['nombre','Nombre *'],['rubro','Rubro'],['pais','País'],['ciudad','Ciudad'],['web','Web'],['telefono','Teléfono'],['origen','Origen'],['responsable','Responsable interno']].map(function(x){return '<label class="f"><span>'+esc(x[1])+'</span><input class="in" id="n_'+x[0]+'"></label>'}).join('')+'</div>'+
     '<div class="acts"><button class="px-btn p sm" id="n_ok">Crear</button><button class="px-btn g sm" data-close>Cancelar</button></div>');
   $('#n_ok').onclick=async function(){if(!val('n_nombre')){toast('Falta el nombre','warn');return}
+    // se leen los datos antes de cambiar el modal (la alerta de duplicados reemplaza el formulario)
     var cl='ui:'+uuid(),p={clave:cl,importado_en:new Date().toISOString()};['nombre','rubro','pais','ciudad','web','telefono','origen','responsable'].forEach(function(k){p[k]=val('n_'+k)});
+    // antes de crear: buscar posibles duplicados por nombre parecido o teléfono (no fusiona nada)
+    var dup=await q(sb.rpc('crm_posibles_duplicados',{p_nombre:p.nombre,p_telefono:p.telefono||null}));
+    if(dup.data&&dup.data.length){
+      modal('<h3 style="font-size:18px">Posibles duplicados</h3><p class="faint">Ya hay empresas que se parecen. Revisá antes de crear: no se fusiona sola.</p><ul style="padding-left:18px">'+dup.data.map(function(d){return '<li><b>'+esc(d.nombre)+'</b> · '+esc(d.pais||'sin país')+' · '+esc(d.origen||'sin origen')+' <span class="chip warnf">'+esc(d.motivo)+'</span></li>'}).join('')+'</ul>'+
+        '<div class="acts"><button class="px-btn p sm" id="dup_ok">Crear igual</button><button class="px-btn g sm" data-close>Cancelar</button></div>');
+      $('#dup_ok').onclick=function(){crearNueva(cl,p)};return;
+    }
+    crearNueva(cl,p);
+  };
+  async function crearNueva(cl,p){
     var rep=await guardar({empresas:[p]},'completar');if(!rep)return;closeModal();ORIGENES=null;
-    var r=await q(sb.from('crm_empresas').select('id').eq('clave',cl).single());openFicha(r.data.id);rerender()};
+    var r=await q(sb.from('crm_empresas').select('id').eq('clave',cl).single());openFicha(r.data.id);rerender();
+  }
+}
+
+/* ---------- carpeta y calificación de una empresa ---------- */
+function clasificar(){
+  var e=F.empresa;
+  modal('<h3 style="font-size:18px">Carpeta y calificación</h3><p class="faint">Cambiar esto no crea actividad: queda en el historial de cambios.</p><div class="form">'+
+    '<label class="f"><span>Carpeta</span><select class="in" id="cl_carpeta">'+opts(CARPETAS,e.carpeta)+'</select></label>'+
+    '<label class="f"><span>Calificación</span><select class="in" id="cl_cal">'+opts(CALIF,e.calificacion)+'</select></label>'+
+    '<label class="f full"><span>Motivo de la calificación</span><input class="in" id="cl_motivo" value="'+esc(e.calificacion_motivo||'')+'"></label>'+
+    '<label class="f"><span>Verificación</span><select class="in" id="cl_ver">'+opts(VERIF,e.verificacion)+'</select></label>'+
+    '<label class="f"><span>Fuente de la verificación</span><input class="in" id="cl_fuente" value="'+esc(e.verificado_fuente||'')+'" placeholder="Ej.: chat de WhatsApp del 24/11"></label></div>'+
+    '<div class="acts"><button class="px-btn p sm" id="cl_ok">Guardar</button><button class="px-btn g sm" data-close>Cancelar</button></div>');
+  $('#cl_ok').onclick=async function(){
+    await q(sb.rpc('crm_fijar_clasificacion',{p_empresa:e.id,p:{carpeta:val('cl_carpeta'),calificacion:val('cl_cal'),calificacion_motivo:val('cl_motivo')||null,verificacion:val('cl_ver'),verificado_fuente:val('cl_fuente')||null}}));
+    closeModal();toast('Guardado');await openFicha(e.id);rerender();
+  };
 }
 
 /* ---------- importar / exportar ---------- */
