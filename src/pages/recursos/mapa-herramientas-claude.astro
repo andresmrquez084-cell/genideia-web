@@ -1,0 +1,127 @@
+---
+// Lead magnet · palabra clave ManyChat: MAPA (reel "Funciones por categoría", formato 3D por estaciones, 24/11/2026)
+// URL pública: /recursos/mapa-herramientas-claude
+// CTA del video: "Comentá la palabra MAPA y te paso una selección organizada por categoría".
+// Sin nombres de herramientas inventados: por categoría, qué buscar + dónde conseguirlo (guías propias del sitio) + prompt para que Claude te recomiende.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const categorias = [
+  {
+    n: '1', nombre: 'Programar', uso: 'Si usás Claude para programar',
+    buscar: ['Planificar el trabajo antes de tocar código', 'Escribir código', 'Probar lo que se escribió', 'Revisar errores'],
+    prompt: `Uso Claude para PROGRAMAR. Mi proyecto es: [DESCRIBÍ TU PROYECTO Y TU LENGUAJE].
+Recomendame UNA sola herramienta (skill, plugin o conector) para cada una de estas 4 funciones: planificar el trabajo, escribir código, probarlo y revisar errores.
+Para cada una decime: qué hace, cómo se instala en mi caso y cuál es la primera tarea con la que la probaría. Marcá como SUPUESTO lo que no sepas.`,
+  },
+  {
+    n: '2', nombre: 'Investigar', uso: 'Si lo usás para investigar',
+    buscar: ['Búsqueda de información', 'Análisis de fuentes', 'Memoria (que recuerde lo que ya investigaste)', 'Organización de la información'],
+    prompt: `Uso Claude para INVESTIGAR sobre [TU TEMA O INDUSTRIA].
+Recomendame UNA herramienta (skill, plugin o conector) para cada función: búsqueda, análisis de fuentes, memoria y organización de la información.
+Para cada una decime qué problema resuelve, cómo se instala y cómo sabría si me está sirviendo después de una semana de uso.`,
+  },
+  {
+    n: '3', nombre: 'Diseñar', uso: 'Si lo usás para diseñar',
+    buscar: ['Definir la dirección visual', 'Tipografía', 'Interfaces', 'Revisión del resultado final'],
+    prompt: `Uso Claude para DISEÑAR [PÁGINAS / PRESENTACIONES / PIEZAS PARA REDES].
+Recomendame UNA herramienta (sobre todo skills) para cada función: dirección visual, tipografía, interfaces y revisión final del resultado.
+Para cada una decime qué regla o criterio aplica y cómo evita que el diseño parezca genérico.`,
+  },
+  {
+    n: '4', nombre: 'Crear contenido', uso: 'Si lo usás para crear contenido',
+    buscar: ['Investigación de temas', 'Guiones', 'Escritura', 'Edición', 'Análisis de referencias'],
+    prompt: `Uso Claude para CREAR CONTENIDO para [RED SOCIAL] sobre [TU TEMA].
+Recomendame UNA herramienta para cada función: investigación, guiones, escritura, edición y análisis de referencias.
+Para cada una decime cómo encaja en mi flujo (qué entra, qué sale) y cuál probaría primero.`,
+  },
+  {
+    n: '5', nombre: 'Trabajar y organizarte', uso: 'Si lo usás para trabajar o organizarte',
+    buscar: ['Documentos', 'Reuniones', 'Tareas repetitivas', 'Seguimiento'],
+    prompt: `Uso Claude para TRABAJAR Y ORGANIZARME. Mi día a día incluye: [DOCUMENTOS, REUNIONES, TAREAS QUE SE REPITEN, SEGUIMIENTO DE CLIENTES].
+Recomendame UNA herramienta (conector, plugin o skill) para cada función: documentos, reuniones, tareas repetitivas y seguimiento.
+Decime cuál me ahorra más tiempo y por dónde empezar.`,
+  },
+];
+
+const plan = `MI PLAN DE UNA SEMANA
+Categoría que elijo: ______________________
+Herramienta que agrego: ______________________
+Tarea real con la que la voy a usar: ______________________
+
+Lunes a domingo: la uso en esa tarea (aunque sea 10 minutos).
+Domingo, 3 preguntas:
+1. ¿Me ahorró tiempo o mejoró el resultado?
+2. ¿La usaría la semana que viene sin que me lo recuerden?
+3. ¿Me falta algo que ella no resuelve?
+Si respondo que sí a las dos primeras, la dejo y recién ahí elijo otra.`;
+---
+<RecursoLayout
+  titulo="El mapa de herramientas de Claude por categoría"
+  descripcion="Qué herramientas buscar en Claude según para qué lo uses —programar, investigar, diseñar, crear contenido u organizarte— y un plan de una semana para no instalar de más."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="MAPA"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>No necesitás todas las herramientas de Claude. Necesitás las correctas para el trabajo que hacés. Acá está el mapa de las 5 categorías del video y un prompt para que Claude te recomiende la herramienta de cada una.</b></div>
+
+  <h2>Cómo usar este mapa</h2>
+  <ol class="steps">
+    <li><b>Elegí tu categoría:</b> la del trabajo que más hacés con Claude.</li>
+    <li><b>Mirá qué funciones buscar</b> y copiá el prompt para que Claude te recomiende una herramienta por función.</li>
+    <li><b>Agregá una sola herramienta</b> y seguí el plan de una semana del final.</li>
+  </ol>
+  <div class="note"><b>La clave:</b> cada herramienta se instala con una tarea real en mente. Si no sabés para qué tarea la vas a usar esta semana, todavía no la necesitás.</div>
+
+  {categorias.map((c) => (
+    <>
+      <h2>{c.n}. {c.nombre}</h2>
+      <p>{c.uso}, buscá herramientas para:</p>
+      <ul class="arrow">
+        {c.buscar.map((b) => <li>{b}</li>)}
+      </ul>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{c.prompt}</code></pre>
+      </div>
+      {c.n === '3' ? (
+        <div class="minicta">
+          Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+        </div>
+      ) : null}
+    </>
+  ))}
+
+  <h2>Dónde conseguir las herramientas</h2>
+  <ul class="arrow">
+    <li><b>Skills:</b> <a href="/recursos/diez-skills-claude">las 10 skills que yo tendría guardadas</a> y <a href="/recursos/skills-github">4 skills de GitHub</a>.</li>
+    <li><b>Plugins de Claude Code:</b> <a href="/recursos/plugins-claude-code">5 plugins para Claude Code</a>.</li>
+    <li><b>Conectores:</b> <a href="/recursos/conectores-claude">conectores de Claude</a>, para llevar tus documentos, mails y tareas a la conversación.</li>
+  </ul>
+
+  <h2>No instales todo</h2>
+  <p>Agregarle 20 cosas a Claude que no vas a usar solamente agrega ruido: más opciones para elegir mal y más cosas para mantener. La regla es simple: <b>una categoría, una herramienta, una semana</b>.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{plan}</code></pre>
+  </div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Y si uso Claude para varias cosas?</b> Empezá por la que más tiempo te consume. Cuando esa funcione, pasás a la siguiente.</li>
+    <li><b>¿Skill, plugin o conector: cuál elijo?</b> Dejá que el prompt de tu categoría te lo diga; según la función, una opción encaja mejor que otra.</li>
+    <li><b>¿Cuánto tarda en notarse?</b> Con una semana de uso real alcanza para saber si la herramienta se queda o no.</li>
+    <li><b>¿Es gratis?</b> Los prompts funcionan en el chat. Algunas herramientas dependen de tu plan.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Elegí mi categoría.</li>
+    <li>Pegué el prompt y completé lo que está entre corchetes.</li>
+    <li>Elegí una sola herramienta y una tarea real.</li>
+    <li>La usé durante una semana antes de decidir si necesito otra.</li>
+  </ul>
+</RecursoLayout>
