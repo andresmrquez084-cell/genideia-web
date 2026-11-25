@@ -23,6 +23,8 @@ var MATS={ejemplo_referencia:'Ejemplo de referencia',propuesta_comercial:'Propue
 var CARPETAS=[['prospeccion_2026','Prospección 2026'],['ecommerce_montevideo','E-commerce Montevideo (sin contactar)'],['retail_mayor_montevideo','Retail mayor Montevideo (sin contactar)'],['transporte_sistema_viejo','Transporte (sistema viejo)'],['sin_origen','Sin origen'],['otro','Otra']];
 var PERIODOS=[['reciente','Reciente (desde 10/11)'],['historico','Histórico (contactado antes)'],['nunca_contactado','Nunca contactado']];
 var CALIF=[['A','A · prioridad'],['B','B · buen prospecto'],['C','C · dudoso'],['D','D · no sirve'],['sin_calificar','Sin calificar']];
+/* lista por asesor: prospección de Andrés y de Agustín, separadas dentro del mismo CRM (migración 20261125100000) */
+var ASESORES=[['Andrés','Andrés'],['Agustín Alves','Agustín Alves']];
 var VERIF=[['sin_verificar','Sin verificar'],['whatsapp','Verificado en WhatsApp'],['email','Verificado por email'],['llamada','Verificado por llamada'],['ambos','Verificado en varios canales']];
 function lbl(list,v){var x=list.filter(function(y){return y[0]===v})[0];return x?x[1]:(v||'—')}
 var ROLES={decide:'Decide',influye:'Influye',usa:'Usa',filtra:'Filtra',deriva:'Deriva'};
@@ -170,7 +172,7 @@ VIEWS.pipeline=async function(){
 };
 
 /* ---------- EMPRESAS ---------- */
-var EF={q:'',nicho:'',etapa:'',atencion:'',origen:'',pais:'',carpeta:'',periodo:'',calif:'',nc:false,ec:false,nd:false,rv:false,orden:'atencion',page:0},ORIGENES=null;
+var EF={q:'',nicho:'',etapa:'',atencion:'',origen:'',pais:'',carpeta:'',periodo:'',calif:'',asesor:'',nc:false,ec:false,nd:false,rv:false,orden:'atencion',page:0},ORIGENES=null;
 VIEWS.empresas=async function(){
   var el=$('#v-empresas');
   if(!ORIGENES){var o=await q(sb.from('crm_empresas').select('origen,pais,nicho').limit(20000));var so={},sp={},sn={};o.data.forEach(function(x){if(x.origen)so[x.origen]=1;if(x.pais)sp[x.pais]=1;if(x.nicho)sn[x.nicho]=1});ORIGENES={o:Object.keys(so).sort(),p:Object.keys(sp).sort(),n:Object.keys(sn).sort()}}
@@ -184,22 +186,24 @@ VIEWS.empresas=async function(){
     '<select class="in" id="eca">'+opts(CARPETAS,EF.carpeta,'Toda carpeta')+'</select>'+
     '<select class="in" id="epe">'+opts(PERIODOS,EF.periodo,'Todo periodo')+'</select>'+
     '<select class="in" id="ecal">'+opts(CALIF,EF.calif,'Toda calificación')+'</select>'+
+    '<select class="in" id="eas">'+opts(ASESORES.concat([['__sin','Sin asignar']]),EF.asesor,'Todo asesor')+'</select>'+
     '<select class="in" id="eord">'+opts([['atencion','Orden: próxima acción'],['out','Orden: último mensaje nuestro'],['in','Orden: última respuesta'],['nombre','Orden: nombre']],EF.orden)+'</select>'+
     '<label class="tog"><input type="checkbox" id="enc"'+(EF.nc?' checked':'')+'> No contactar</label>'+
     '<label class="tog"><input type="checkbox" id="eec"'+(EF.ec?' checked':'')+'> Error de canal</label>'+
     '<label class="tog"><input type="checkbox" id="end"'+(EF.nd?' checked':'')+'> Sin desglosar</label>'+
     '<label class="tog"><input type="checkbox" id="erv"'+(EF.rv?' checked':'')+'> Con revisión</label></div>';
   el.innerHTML=head+'<div class="empty">Cargando…</div>';
-  var b=sb.from('crm_v_empresas').select('id,nombre,rubro,nicho,ciudad,pais,origen,bases,etapa,atencion,ultimo_saliente,saliente_sin_fecha,ultima_respuesta,respuesta_sin_fecha,sin_desglosar,proxima_accion,proxima_fecha,responsable_accion,no_contactar,error_canal,n_revision,n_contactos,carpeta,periodo,calificacion',{count:'exact'});
+  var b=sb.from('crm_v_empresas').select('id,nombre,rubro,nicho,ciudad,pais,origen,bases,etapa,atencion,ultimo_saliente,saliente_sin_fecha,ultima_respuesta,respuesta_sin_fecha,sin_desglosar,proxima_accion,proxima_fecha,responsable_accion,no_contactar,error_canal,n_revision,n_contactos,carpeta,periodo,calificacion,asesor',{count:'exact'});
   if(EF.q)b=b.ilike('busqueda',qs(EF.q));if(EF.nicho)b=b.eq('nicho',EF.nicho);if(EF.etapa)b=b.eq('etapa',EF.etapa);if(EF.atencion)b=b.eq('atencion',EF.atencion);if(EF.origen)b=b.eq('origen',EF.origen);if(EF.pais)b=b.eq('pais',EF.pais);
   if(EF.carpeta)b=b.eq('carpeta',EF.carpeta);if(EF.periodo)b=b.eq('periodo',EF.periodo);if(EF.calif)b=b.eq('calificacion',EF.calif);
+  if(EF.asesor==='__sin')b=b.is('asesor',null);else if(EF.asesor)b=b.eq('asesor',EF.asesor);
   if(EF.nc)b=b.eq('no_contactar',true);if(EF.ec)b=b.eq('error_canal',true);if(EF.nd)b=b.eq('sin_desglosar',true);if(EF.rv)b=b.gt('n_revision',0);
   b=EF.orden==='out'?b.order('ultimo_saliente',{ascending:false,nullsFirst:false}):EF.orden==='in'?b.order('ultima_respuesta',{ascending:false,nullsFirst:false}):EF.orden==='nombre'?b.order('nombre'):b.order('proxima_fecha',{nullsFirst:false}).order('ultima_respuesta',{ascending:false,nullsFirst:false});
   var r=await q(b.order('nombre').range(EF.page*PAGE,EF.page*PAGE+PAGE-1));
   el.innerHTML=head+table(['Empresa','Etapa','Atención','Último mensaje nuestro','Última respuesta del prospecto','Próxima acción'],r.data.map(function(c){
-    return '<tr data-emp="'+c.id+'"><td><b>'+esc(c.nombre)+'</b>'+flags(c)+' <span class="chip">'+esc(lbl(CARPETAS,c.carpeta))+'</span> <span class="chip">'+esc(lbl(PERIODOS,c.periodo))+'</span> <span class="chip">Cal. '+esc(c.calificacion==='sin_calificar'?'—':c.calificacion)+'</span>'+(c.n_revision?' <span class="chip warnf" title="Ítems para revisar">'+c.n_revision+' a revisar</span>':'')+'<div class="faint">'+(c.nicho?'<span style="color:var(--sl)">'+esc(c.nicho)+'</span> · ':'')+esc(uniq([c.rubro,c.ciudad,c.pais],[c.nicho]).join(' · ')||'')+'</div><div class="faint">'+esc((c.bases||[]).filter(function(x){return x}).join(' + '))+'</div></td><td>'+etapa(c.etapa)+'</td><td>'+(c.etapa==='sin_contactar'?'<span class="muted">—</span>':atenc(c.atencion))+'</td><td>'+cOut(c)+'</td><td>'+cIn(c)+'</td><td>'+cNext(c)+'</td></tr>'}),'Ninguna empresa coincide con los filtros.')+pager(r.count,EF,'emp');
+    return '<tr data-emp="'+c.id+'"><td><b>'+esc(c.nombre)+'</b>'+flags(c)+' <span class="chip">'+esc(lbl(CARPETAS,c.carpeta))+'</span> <span class="chip">'+esc(lbl(PERIODOS,c.periodo))+'</span> <span class="chip">Cal. '+esc(c.calificacion==='sin_calificar'?'—':c.calificacion)+'</span> <span class="chip">'+esc(c.asesor||'Sin asesor')+'</span>'+(c.n_revision?' <span class="chip warnf" title="Ítems para revisar">'+c.n_revision+' a revisar</span>':'')+'<div class="faint">'+(c.nicho?'<span style="color:var(--sl)">'+esc(c.nicho)+'</span> · ':'')+esc(uniq([c.rubro,c.ciudad,c.pais],[c.nicho]).join(' · ')||'')+'</div><div class="faint">'+esc((c.bases||[]).filter(function(x){return x}).join(' + '))+'</div></td><td>'+etapa(c.etapa)+'</td><td>'+(c.etapa==='sin_contactar'?'<span class="muted">—</span>':atenc(c.atencion))+'</td><td>'+cOut(c)+'</td><td>'+cIn(c)+'</td><td>'+cNext(c)+'</td></tr>'}),'Ninguna empresa coincide con los filtros.')+pager(r.count,EF,'emp');
   bindF('#eq','q',EF);bindF('#eni','nicho',EF);bindF('#eet','etapa',EF);bindF('#eat','atencion',EF);bindF('#eor','origen',EF);bindF('#epa','pais',EF);bindF('#eord','orden',EF);
-  bindF('#eca','carpeta',EF);bindF('#epe','periodo',EF);bindF('#ecal','calif',EF);
+  bindF('#eca','carpeta',EF);bindF('#epe','periodo',EF);bindF('#ecal','calif',EF);bindF('#eas','asesor',EF);
   bindF('#enc','nc',EF);bindF('#eec','ec',EF);bindF('#end','nd',EF);bindF('#erv','rv',EF);
 };
 
@@ -629,12 +633,13 @@ function clasificar(){
   modal('<h3 style="font-size:18px">Carpeta y calificación</h3><p class="faint">Cambiar esto no crea actividad: queda en el historial de cambios.</p><div class="form">'+
     '<label class="f"><span>Carpeta</span><select class="in" id="cl_carpeta">'+opts(CARPETAS,e.carpeta)+'</select></label>'+
     '<label class="f"><span>Calificación</span><select class="in" id="cl_cal">'+opts(CALIF,e.calificacion)+'</select></label>'+
+    '<label class="f"><span>Asesor</span><select class="in" id="cl_asesor">'+opts(ASESORES,e.asesor,'Sin asesor')+'</select></label>'+
     '<label class="f full"><span>Motivo de la calificación</span><input class="in" id="cl_motivo" value="'+esc(e.calificacion_motivo||'')+'"></label>'+
     '<label class="f"><span>Verificación</span><select class="in" id="cl_ver">'+opts(VERIF,e.verificacion)+'</select></label>'+
     '<label class="f"><span>Fuente de la verificación</span><input class="in" id="cl_fuente" value="'+esc(e.verificado_fuente||'')+'" placeholder="Ej.: chat de WhatsApp del 24/11"></label></div>'+
     '<div class="acts"><button class="px-btn p sm" id="cl_ok">Guardar</button><button class="px-btn g sm" data-close>Cancelar</button></div>');
   $('#cl_ok').onclick=async function(){
-    await q(sb.rpc('crm_fijar_clasificacion',{p_empresa:e.id,p:{carpeta:val('cl_carpeta'),calificacion:val('cl_cal'),calificacion_motivo:val('cl_motivo')||null,verificacion:val('cl_ver'),verificado_fuente:val('cl_fuente')||null}}));
+    await q(sb.rpc('crm_fijar_clasificacion',{p_empresa:e.id,p:{carpeta:val('cl_carpeta'),calificacion:val('cl_cal'),asesor:val('cl_asesor'),calificacion_motivo:val('cl_motivo')||null,verificacion:val('cl_ver'),verificado_fuente:val('cl_fuente')||null}}));
     closeModal();toast('Guardado');await openFicha(e.id);rerender();
   };
 }
