@@ -1,0 +1,75 @@
+---
+// Lead magnet · palabra clave ManyChat: NEON (carrusel animado "Gemini 4 Neon: 5 proyectos", 25/11/2026)
+// URL pública: /recursos/proyectos-gemini-neon
+// CTA del carrusel: "Comentá NEON y te paso 5 prompts".
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const items = [
+  { n: '1', nombre: "Una Tierra 3D que brilla", para: "Inspirado en el proyecto de @HarshithLucky3.", prompt: "Construime una página web con un planeta Tierra en 3D que gira lentamente sobre un fondo de estrellas. Que tenga un brillo neón turquesa en los bordes, luces que parpadean en las ciudades y líneas curvas que conectan unos puntos con otros. Usá Three.js y que se vea fluido en el navegador." },
+  { n: '2', nombre: "Mariposas que se transforman", para: "Inspirado en el proyecto de @thtbee_.", prompt: "Hacé una animación en Three.js con una mariposa hecha de partículas luminosas que cambia de color y de forma, y que al final se deshace en una nube de luz. Fondo oscuro, movimiento suave y que se pueda mover la cámara con el mouse." },
+  { n: '3', nombre: "Fuego hecho de hexágonos", para: "Inspirado en el proyecto de @anicho.", prompt: "Armame un shader interactivo en la web donde una llama esté hecha de hexágonos. Quiero un panel con controles para cambiar el color, la altura y la velocidad del fuego, y que reaccione al mouse. Todo en un solo archivo HTML." },
+  { n: '4', nombre: "Un agujero negro que podés mover", para: "Inspirado en el proyecto de @kimmonismus.", prompt: "Creá un agujero negro 3D interactivo con disco de acreción y efecto de lente gravitacional. Agregá botones para cambiar el punto de vista de la cámara y un control deslizante para la distorsión. Que se vea realista y corra bien en el navegador." },
+  { n: '5', nombre: "Péndulos que dibujan una onda", para: "Inspirado en el proyecto de @goodhunt.", prompt: "Programá una simulación 3D de una onda de péndulos: una fila de esferas colgadas donde cada una tiene un período distinto, de modo que juntas formen patrones de interferencia que viajan. Colores neón sobre fondo negro y un control para la cantidad de péndulos." },
+];
+---
+<RecursoLayout
+  titulo="5 proyectos para construir con Gemini 4 Neon"
+  descripcion="Los 5 proyectos reales del carrusel (Tierra 3D, mariposas, fuego hexagonal, agujero negro y péndulos), con un prompt de arranque para armar uno parecido y cómo acceder a Gemini 4 Neon."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="NEON"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Google lanzó Gemini 4 Neon el 18 de noviembre y estos son 5 proyectos que ya hicieron con él. Acá tenés un prompt de arranque para armar uno parecido a cada uno, y cómo probar el modelo.</b></div>
+
+  <h2>Cómo probar Gemini 4 Neon</h2>
+  <ul class="arrow">
+    <li><b>Google AI Studio:</b> con el nivel de pago de la API de Gemini. Los suscriptores Pro y Ultra también pueden probarlo ahí.</li>
+    <li><b>Google Antigravity:</b> para suscriptores pagos de Google AI Pro y Ultra. Es donde se hicieron la mayoría de estos proyectos.</li>
+    <li><b>App de Gemini:</b> si sos Pro o Ultra, elegí Gemini 4 Neon en el selector de modelos.</li>
+  </ul>
+  <div class="note"><b>Dato clave:</b> varios de estos proyectos usaron el nivel de razonamiento alto (high) o muy alto (xhigh), y uno usó el comando /swarm de Antigravity para repartir el trabajo entre agentes. Si el resultado sale flojo, subí el nivel de razonamiento antes de tocar el prompt.</div>
+
+  <h2>Cómo usar los prompts</h2>
+  <ol class="steps">
+    <li><b>Pegá el prompt</b> en AI Studio o en Antigravity.</li>
+    <li><b>Pedí que sea un solo archivo HTML</b> si querés abrirlo directo en el navegador.</li>
+    <li><b>Iterá con pedidos chicos:</b> "más brillo", "más lento", "agregá un control para…". Cada cambio, un pedido.</li>
+  </ol>
+
+  {items.map((e) => (
+    <>
+      <h2>{e.n}. {e.nombre}</h2>
+      <p>{e.para}</p>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{e.prompt}</code></pre>
+      </div>
+      {e.n === '3' ? (
+        <div class="minicta">
+          Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+        </div>
+      ) : null}
+    </>
+  ))}
+
+  <div class="note"><b>Los proyectos originales:</b> los armaron @HarshithLucky3, @thtbee_, @anicho, @kimmonismus y @goodhunt, y Google los mostró en su nota "See what 5 builders are making with Gemini 4 Neon". Estos prompts son puntos de partida propios, no los prompts originales de los autores.</div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Necesito saber programar?</b> No para empezar: el modelo escribe el código. Sí te conviene saber abrir un archivo HTML en el navegador.</li>
+    <li><b>¿Sirve también con Claude?</b> Sí. Estos prompts funcionan en Claude para armar el mismo tipo de proyecto, aunque el resultado va a variar.</li>
+    <li><b>¿Cuánto cuesta?</b> Depende de tu plan. El uso por API se cobra por tokens y las suscripciones Pro y Ultra tienen sus propios límites.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Elegí dónde probar Neon (AI Studio, Antigravity o la app de Gemini).</li>
+    <li>Pegué 1 prompt y pedí un solo archivo HTML.</li>
+    <li>Subí el nivel de razonamiento si salió flojo.</li>
+    <li>Cambié algo del proyecto para hacerlo mío.</li>
+  </ul>
+</RecursoLayout>
