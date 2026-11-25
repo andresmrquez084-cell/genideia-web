@@ -1,29 +1,28 @@
 ---
 // Lead magnet B2B · palabra clave ManyChat: CLIENTES (carrusel animado "5 lugares donde tu restaurante pierde clientes", 25/11/2026)
 // URL pública: /recursos/fugas-clientes-restaurante
-// CTA del carrusel: "Comenta CLIENTES y recibe la guía".
+// CTA del carrusel B2B: "Comenta CLIENTES y te contamos cómo implementarlo" (contacto con el cliente interesado, no una guía).
 import RecursoLayout from '../../layouts/RecursoLayout.astro';
 
-const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const wa = 'https://wa.me/59892302941?text=' + encodeURIComponent('Hola, vi el carrusel de GENIDEIA sobre 5 lugares donde tu restaurante pierde clientes y quiero ver cómo implementarlo en tu restaurante.');
 
 const items = [
-  { n: '1', nombre: "El WhatsApp sin respuesta", problema: "Los mensajes llegan en plena hora de servicio y se contestan tarde, o nunca. El cliente reserva en otro lugar.", necesitas: "Un número de WhatsApp Business, tus horarios y mesas disponibles, y respuestas para las 10 preguntas más comunes.", medir: "Anota la hora en que llega cada mensaje y la hora en que lo contestas durante una semana. Calcula el promedio de espera.", primero: "Activa mensajes de bienvenida y respuestas rápidas en WhatsApp Business. Es gratis y se arma en una hora." },
-  { n: '2', nombre: "La reserva que nadie confirma", problema: "Hay mesas reservadas que quedan vacías porque el cliente olvidó la reserva o no avisó que no viene.", necesitas: "El listado de reservas con teléfono y un recordatorio por WhatsApp unas horas antes.", medir: "Cuenta cuántas reservas de la semana no se presentaron y multiplica por el consumo promedio por mesa: eso es lo que se pierde.", primero: "Confirma a mano las reservas de los fines de semana durante dos semanas y compara las ausencias." },
-  { n: '3', nombre: "Mesas vacías en la hora que más vale", problema: "En ciertas horas sobran mesas mientras otros restaurantes se llenan, y nadie lo mide.", necesitas: "Un registro simple de ocupación por hora (aunque sea en una planilla) y una promoción para esa franja.", medir: "Anota cuántas mesas hay ocupadas a las 20:00, 21:00 y 22:00 durante dos semanas y detecta el hueco.", primero: "Prueba una promoción pequeña para esa hora (un postre, una entrada) y mide si cambia la ocupación." },
-  { n: '4', nombre: "El cliente que no vuelve", problema: "El cliente vino una vez y nadie le escribió después. Sin recordatorio, se olvida del lugar.", necesitas: "Un contacto de cada cliente (con su permiso) y un mensaje de agradecimiento con un motivo para volver.", medir: "De los clientes del mes pasado, cuenta cuántos volvieron. Ese porcentaje es tu tasa de retorno.", primero: "Envía un mensaje de agradecimiento a los clientes de esta semana y mira cuántos responden o vuelven." },
-  { n: '5', nombre: "Las reseñas sin responder", problema: "Las reseñas, sobre todo las negativas, quedan a la vista de quien busca dónde ir, sin una respuesta tuya.", necesitas: "Acceso a tu perfil de reseñas y una guía de tono para responder con cordialidad.", medir: "Cuenta cuántas reseñas tienes sin responder y desde hace cuánto, y anota tu calificación promedio actual.", primero: "Responde hoy las 5 reseñas más recientes, empezando por las negativas." }
+  { n: '1', nombre: "El WhatsApp sin respuesta", problema: "Los mensajes llegan en plena hora de servicio y se contestan tarde, o nunca. El cliente reserva en otro lugar.", necesitas: "Un número de WhatsApp Business, tus horarios y mesas disponibles, y respuestas para las 10 preguntas más comunes.", medir: "Anota la hora en que llega cada mensaje y la hora en que lo contestas durante una semana. Calcula el promedio de espera.", primero: "Activa mensajes de bienvenida y respuestas rápidas en WhatsApp Business. Es gratis y se arma en una hora.", pasos: ["Charla de 30 minutos sobre tus horarios, mesas y preguntas frecuentes.", "Armamos y probamos las respuestas contigo.", "Lo conectamos a tu número de WhatsApp."] },
+  { n: '2', nombre: "La reserva que nadie confirma", problema: "Hay mesas reservadas que quedan vacías porque el cliente olvidó la reserva o no avisó que no viene.", necesitas: "El listado de reservas con teléfono y un recordatorio por WhatsApp unas horas antes.", medir: "Cuenta cuántas reservas de la semana no se presentaron y multiplica por el consumo promedio por mesa: eso es lo que se pierde.", primero: "Confirma a mano las reservas de los fines de semana durante dos semanas y compara las ausencias.", pasos: ["Usamos tu libro de reservas actual.", "Definimos el momento y el texto del recordatorio.", "Revisamos juntos las primeras confirmaciones."] },
+  { n: '3', nombre: "Mesas vacías en la hora que más vale", problema: "En ciertas horas sobran mesas mientras otros restaurantes se llenan, y nadie lo mide.", necesitas: "Un registro simple de ocupación por hora (aunque sea en una planilla) y una promoción para esa franja.", medir: "Anota cuántas mesas hay ocupadas a las 20:00, 21:00 y 22:00 durante dos semanas y detecta el hueco.", primero: "Prueba una promoción pequeña para esa hora (un postre, una entrada) y mide si cambia la ocupación.", pasos: ["Registramos la ocupación por hora durante unos días.", "Elegimos una promoción para la hora floja.", "Medimos juntos si cambia la ocupación."] },
+  { n: '4', nombre: "El cliente que no vuelve", problema: "El cliente vino una vez y nadie le escribió después. Sin recordatorio, se olvida del lugar.", necesitas: "Un contacto de cada cliente (con su permiso) y un mensaje de agradecimiento con un motivo para volver.", medir: "De los clientes del mes pasado, cuenta cuántos volvieron. Ese porcentaje es tu tasa de retorno.", primero: "Envía un mensaje de agradecimiento a los clientes de esta semana y mira cuántos responden o vuelven.", pasos: ["Definimos el mensaje de agradecimiento y el motivo para volver.", "Lo conectamos a cómo registras a tus clientes.", "Medimos cuántos vuelven."] },
+  { n: '5', nombre: "Las reseñas sin responder", problema: "Las reseñas, sobre todo las negativas, quedan a la vista de quien busca dónde ir, sin una respuesta tuya.", necesitas: "Acceso a tu perfil de reseñas y una guía de tono para responder con cordialidad.", medir: "Cuenta cuántas reseñas tienes sin responder y desde hace cuánto, y anota tu calificación promedio actual.", primero: "Responde hoy las 5 reseñas más recientes, empezando por las negativas.", pasos: ["Conectamos tu perfil de reseñas.", "Definimos el tono de las respuestas.", "Tú revisas y publicas cada respuesta sugerida."] }
 ];
 ---
 <RecursoLayout
-  titulo="5 lugares donde un restaurante pierde clientes sin darse cuenta"
-  descripcion="Guía de 5 fugas de clientes en un restaurante: cómo medir cada una antes de empezar y el primer paso para cerrarla."
-  tipo="Guía"
-  barLabel="Guía · GENIDEIA"
+  titulo="Cómo cerrar 5 fugas de clientes en tu restaurante"
+  descripcion="Cómo se implementa el cierre de cada una de las 5 fugas de clientes de un restaurante: qué necesitamos de tu parte y cómo seguimos."
+  tipo="Implementación"
+  barLabel="Implementación · GENIDEIA"
   palabraClave="CLIENTES"
-  masterclass={true}
-  mclassUrl={grupo}
+  masterclass={false}
 >
-  <div class="lead"><b>Estas son las 5 fugas del carrusel. Para cada una te explicamos qué pasa, qué necesitas para cerrarla, cómo medirla antes de empezar y cuál es el primer paso.</b></div>
+  <div class="lead"><b>Estas son las 5 fugas del carrusel y cómo las cerramos en tu restaurante: qué pasa en cada una, qué necesitamos de tu parte, cómo se pone en marcha y cómo seguimos.</b></div>
 
   <h2>Cómo usar esta guía</h2>
   <ul class="arrow">
@@ -36,16 +35,24 @@ const items = [
     <>
       <h2>{e.n}. {e.nombre}</h2>
       <p><b>Qué problema resuelve:</b> {e.problema}</p>
-      <p><b>Qué necesitas:</b> {e.necesitas}</p>
+      <p><b>Qué necesitamos de tu parte:</b> {e.necesitas}</p>
+      <h3>Cómo se implementa</h3>
+      <ol class="steps">
+        {e.pasos.map((p) => <li>{p}</li>)}
+      </ol>
       <p><b>Cómo medirlo antes de empezar:</b> {e.medir}</p>
       <div class="note"><b>Primer paso:</b> {e.primero}</div>
-      {e.n === '3' ? (
-        <div class="minicta">
-          ¿Quieres ver cómo se aplicaría en tu empresa? Escríbenos y lo conversamos: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
-        </div>
-      ) : null}
     </>
   ))}
+
+  <h2>Cómo seguimos</h2>
+  <ol class="steps">
+    <li><b>Nos cuentas tu caso por WhatsApp.</b> Un par de líneas alcanzan.</li>
+    <li><b>Charla de 30 minutos</b> para conocer cómo trabajas hoy y qué conviene implementar primero.</li>
+    <li><b>Te pasamos una propuesta con el precio</b> para tu caso, sin compromiso.</li>
+    <li><b>Lo ponemos en marcha por etapas,</b> sin frenar tu operación.</li>
+  </ol>
+  <div class="note"><b>¿Quieres ver cómo se implementaría en tu restaurante?</b> <a href={wa} target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp →</a></div>
 
   <h2>Preguntas frecuentes</h2>
   <ul class="arrow">

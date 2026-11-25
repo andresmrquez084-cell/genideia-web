@@ -1,29 +1,28 @@
 ---
 // Lead magnet B2B · palabra clave ManyChat: CLÍNICA (carrusel animado "5 sistemas digitales para tu clínica dental", 25/11/2026)
 // URL pública: /recursos/sistemas-clinica-dental
-// CTA del carrusel: "Comenta CLÍNICA y recibe la guía".
+// CTA del carrusel B2B: "Comenta CLÍNICA y te contamos cómo implementarlo" (contacto con el cliente interesado, no una guía).
 import RecursoLayout from '../../layouts/RecursoLayout.astro';
 
-const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const wa = 'https://wa.me/59892302941?text=' + encodeURIComponent('Hola, vi el carrusel de GENIDEIA sobre 5 sistemas digitales para tu clínica dental y quiero ver cómo implementarlo en tu clínica.');
 
 const items = [
-  { n: '1', nombre: "Turnos por WhatsApp", problema: "El teléfono suena mientras se atiende a otro paciente, las llamadas se pierden y cada turno se agenda a mano.", necesitas: "Tu agenda con horarios disponibles, un asistente conectado a WhatsApp y reglas por tipo de consulta (duración, profesional).", medir: "Cuenta las llamadas perdidas de una semana y cuánto lleva agendar cada turno en promedio.", primero: "Define los horarios que se pueden ofrecer sin confirmación y empieza solo con controles y limpiezas." },
-  { n: '2', nombre: "Recordatorios que funcionan", problema: "Los pacientes olvidan el turno y el sillón queda vacío sin que nadie pueda reaccionar a tiempo.", necesitas: "El listado de turnos con teléfono y un mensaje de recordatorio con opción de confirmar o reprogramar.", medir: "Cuenta los turnos de la semana pasada a los que no vino el paciente y divide por el total: es tu tasa de ausencias.", primero: "Envía un recordatorio por WhatsApp el día anterior durante dos semanas y compara la tasa de ausencias." },
-  { n: '3', nombre: "La ficha con odontograma", problema: "La ficha está en papel o dispersa, buscar el historial interrumpe la consulta y es difícil compartirla.", necesitas: "Un sistema de fichas clínicas con odontograma y la autorización de los pacientes para guardar sus datos.", medir: "Mide cuánto tarda recepción en encontrar una ficha y cuántas veces por día pasa.", primero: "Empieza cargando solo los pacientes con turno de la próxima semana, no todo el archivo." },
-  { n: '4', nombre: "Presupuesto en 2 minutos", problema: "Cada presupuesto se arma con calculadora y lista de precios aparte, y toma varios minutos.", necesitas: "Tu lista de precios por tratamiento y una plantilla de presupuesto que se pueda enviar por WhatsApp.", medir: "Cuenta cuántos presupuestos armas por semana y cuántos minutos lleva cada uno.", primero: "Carga tu lista de precios en una planilla ordenada. Es la base de todo lo demás." },
-  { n: '5', nombre: "El panel de la clínica", problema: "Para saber cómo va el día hay que preguntar sillón por sillón, y el cierre de caja se arma a mano.", necesitas: "Datos de agenda y de cobros en un mismo lugar y un tablero con ocupación e ingresos del día.", medir: "Anota cada día, durante una semana, cuántos pacientes se atendieron y cuántas horas quedaron libres.", primero: "Decide los 3 números que quieres ver cada día (pacientes, ingresos, horas libres) y arma el panel solo con esos." }
+  { n: '1', nombre: "Turnos por WhatsApp", problema: "El teléfono suena mientras se atiende a otro paciente, las llamadas se pierden y cada turno se agenda a mano.", necesitas: "Tu agenda con horarios disponibles, un asistente conectado a WhatsApp y reglas por tipo de consulta (duración, profesional).", medir: "Cuenta las llamadas perdidas de una semana y cuánto lleva agendar cada turno en promedio.", primero: "Define los horarios que se pueden ofrecer sin confirmación y empieza solo con controles y limpiezas.", pasos: ["Charla de 30 minutos sobre tu agenda y tus tipos de consulta.", "Armamos y probamos el asistente con tus horarios.", "Lo conectamos a tu WhatsApp y a tu agenda."] },
+  { n: '2', nombre: "Recordatorios que funcionan", problema: "Los pacientes olvidan el turno y el sillón queda vacío sin que nadie pueda reaccionar a tiempo.", necesitas: "El listado de turnos con teléfono y un mensaje de recordatorio con opción de confirmar o reprogramar.", medir: "Cuenta los turnos de la semana pasada a los que no vino el paciente y divide por el total: es tu tasa de ausencias.", primero: "Envía un recordatorio por WhatsApp el día anterior durante dos semanas y compara la tasa de ausencias.", pasos: ["Usamos la agenda de turnos que ya tienes.", "Definimos el texto y el momento del recordatorio.", "Revisamos juntos la tasa de ausencias."] },
+  { n: '3', nombre: "La ficha con odontograma", problema: "La ficha está en papel o dispersa, buscar el historial interrumpe la consulta y es difícil compartirla.", necesitas: "Un sistema de fichas clínicas con odontograma y la autorización de los pacientes para guardar sus datos.", medir: "Mide cuánto tarda recepción en encontrar una ficha y cuántas veces por día pasa.", primero: "Empieza cargando solo los pacientes con turno de la próxima semana, no todo el archivo.", pasos: ["Definimos qué datos de la ficha se cargan primero.", "Configuramos el odontograma y el historial.", "Pasamos los pacientes por etapas, empezando por los próximos turnos."] },
+  { n: '4', nombre: "Presupuesto en 2 minutos", problema: "Cada presupuesto se arma con calculadora y lista de precios aparte, y toma varios minutos.", necesitas: "Tu lista de precios por tratamiento y una plantilla de presupuesto que se pueda enviar por WhatsApp.", medir: "Cuenta cuántos presupuestos armas por semana y cuántos minutos lleva cada uno.", primero: "Carga tu lista de precios en una planilla ordenada. Es la base de todo lo demás.", pasos: ["Cargamos tu lista de precios por tratamiento.", "Armamos la plantilla de presupuesto para WhatsApp.", "Probamos con presupuestos reales antes de usarlo."] },
+  { n: '5', nombre: "El panel de la clínica", problema: "Para saber cómo va el día hay que preguntar sillón por sillón, y el cierre de caja se arma a mano.", necesitas: "Datos de agenda y de cobros en un mismo lugar y un tablero con ocupación e ingresos del día.", medir: "Anota cada día, durante una semana, cuántos pacientes se atendieron y cuántas horas quedaron libres.", primero: "Decide los 3 números que quieres ver cada día (pacientes, ingresos, horas libres) y arma el panel solo con esos.", pasos: ["Definimos contigo los 3 indicadores del día.", "Conectamos la agenda y los cobros.", "Armamos el panel y lo revisamos juntos."] }
 ];
 ---
 <RecursoLayout
-  titulo="5 sistemas digitales para una clínica dental"
-  descripcion="Guía de 5 sistemas digitales para una clínica dental: qué resuelve cada uno, qué se necesita, cómo medirlo y por dónde empezar."
-  tipo="Guía"
-  barLabel="Guía · GENIDEIA"
+  titulo="Cómo implementar 5 sistemas digitales en tu clínica dental"
+  descripcion="Cómo se implementa cada uno de los 5 sistemas digitales para una clínica dental: qué necesitamos de tu parte y cómo seguimos."
+  tipo="Implementación"
+  barLabel="Implementación · GENIDEIA"
   palabraClave="CLÍNICA"
-  masterclass={true}
-  mclassUrl={grupo}
+  masterclass={false}
 >
-  <div class="lead"><b>Estos son los 5 sistemas del carrusel. Para cada uno te contamos qué problema resuelve, qué necesitas, cómo medir tu punto de partida y el primer paso.</b></div>
+  <div class="lead"><b>Estos son los 5 sistemas del carrusel y cómo los implementamos en tu clínica: qué resuelve cada uno, qué necesitamos de tu parte, cómo se pone en marcha y cómo seguimos.</b></div>
 
   <h2>Antes de empezar</h2>
   <ul class="arrow">
@@ -36,16 +35,24 @@ const items = [
     <>
       <h2>{e.n}. {e.nombre}</h2>
       <p><b>Qué problema resuelve:</b> {e.problema}</p>
-      <p><b>Qué necesitas:</b> {e.necesitas}</p>
+      <p><b>Qué necesitamos de tu parte:</b> {e.necesitas}</p>
+      <h3>Cómo se implementa</h3>
+      <ol class="steps">
+        {e.pasos.map((p) => <li>{p}</li>)}
+      </ol>
       <p><b>Cómo medirlo antes de empezar:</b> {e.medir}</p>
       <div class="note"><b>Primer paso:</b> {e.primero}</div>
-      {e.n === '3' ? (
-        <div class="minicta">
-          ¿Quieres ver cómo se aplicaría en tu empresa? Escríbenos y lo conversamos: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
-        </div>
-      ) : null}
     </>
   ))}
+
+  <h2>Cómo seguimos</h2>
+  <ol class="steps">
+    <li><b>Nos cuentas tu caso por WhatsApp.</b> Un par de líneas alcanzan.</li>
+    <li><b>Charla de 30 minutos</b> para conocer cómo trabajas hoy y qué conviene implementar primero.</li>
+    <li><b>Te pasamos una propuesta con el precio</b> para tu caso, sin compromiso.</li>
+    <li><b>Lo ponemos en marcha por etapas,</b> sin frenar tu operación.</li>
+  </ol>
+  <div class="note"><b>¿Quieres ver cómo se implementaría en tu clínica?</b> <a href={wa} target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp →</a></div>
 
   <h2>Preguntas frecuentes</h2>
   <ul class="arrow">

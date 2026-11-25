@@ -1,29 +1,28 @@
 ---
 // Lead magnet B2B · palabra clave ManyChat: SOLUCIONES (carrusel animado "5 soluciones con IA para tu empresa", 25/11/2026)
 // URL pública: /recursos/soluciones-ia-empresas
-// CTA del carrusel: "Comenta SOLUCIONES y recibe la guía".
+// CTA del carrusel B2B: "Comenta SOLUCIONES y te contamos cómo implementarlo" (contacto con el cliente interesado, no una guía).
 import RecursoLayout from '../../layouts/RecursoLayout.astro';
 
-const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const wa = 'https://wa.me/59892302941?text=' + encodeURIComponent('Hola, vi el carrusel de GENIDEIA sobre 5 soluciones con IA para tu empresa y quiero ver cómo implementarlo en tu empresa.');
 
 const items = [
-  { n: '1', nombre: "Cotizar con una foto", problema: "El cliente espera días a que alguien vaya a medir antes de recibir un precio, y muchas veces se va con otro proveedor.", necesitas: "Tus precios por unidad (m², hora, material), un asistente conectado a WhatsApp y 3 o 4 fotos reales de trabajos anteriores para ajustarlo.", medir: "Anota cuántas cotizaciones pides por semana, cuánto tardas en responder cada una y cuántas terminan en trabajo. Si respondes en más de un día, hay clientes que se pierden en la espera.", primero: "Elige el tipo de trabajo más repetido y arma su tabla de precios. Empieza solo con ese." },
-  { n: '2', nombre: "Cargar la llamada al CRM sola", problema: "Después de cada llamada alguien pasa los datos a mano, y parte de la información se pierde o se carga tarde.", necesitas: "Un CRM (aunque sea una planilla), las llamadas grabadas con permiso de los clientes y una herramienta que transcriba y complete los campos.", medir: "Mide cuánto tiempo lleva cargar una llamada y cuántas llamadas por semana se quedan sin cargar.", primero: "Define los 4 o 5 datos que siempre necesitas (interés, fecha, cantidad, próximo paso) y empieza solo por esos." },
-  { n: '3', nombre: "Mapa de calor del local", problema: "Los turnos y el personal se arman por intuición, y la fila crece en horas que nadie midió.", necesitas: "Una o dos cámaras con IA que cuenten personas, sin guardar rostros, y un tablero con horas pico y zonas.", medir: "Durante una semana, anota a mano la cantidad de personas en 3 horarios del día. Es la línea de base para comparar.", primero: "Revisa con tu asesor las reglas de privacidad antes de instalar cámaras y avisa a clientes y equipo." },
-  { n: '4', nombre: "Aviso antes de perder un cliente", problema: "Un cliente que compraba seguido deja de hacerlo y nadie lo nota hasta que ya se fue.", necesitas: "El historial de compras o visitas de cada cliente y un criterio de cuánto tiempo sin comprar es demasiado.", medir: "Saca de tu historial a los clientes que compraban cada mes y no volvieron en 60 días. Esa lista ya muestra cuánto se escapa.", primero: "Escribe a mano a 5 de esos clientes con un mensaje cordial. El resultado te dice si vale automatizarlo." },
-  { n: '5', nombre: "Un gemelo digital de tu empresa", problema: "Cada área trabaja en su propia herramienta y nadie ve el panorama completo, así que los problemas se descubren tarde.", necesitas: "Acceso a los datos de ventas, stock, atención y entregas, y un tablero que los junte con alertas por área.", medir: "Lista qué herramienta usa cada área y quién necesita ver qué. Señala dónde la información llega con más de un día de retraso.", primero: "Conecta solo dos áreas que hoy se pisen (por ejemplo ventas y stock) y suma el resto después." }
+  { n: '1', nombre: "Cotizar con una foto", problema: "El cliente espera días a que alguien vaya a medir antes de recibir un precio, y muchas veces se va con otro proveedor.", necesitas: "Tus precios por unidad (m², hora, material), un asistente conectado a WhatsApp y 3 o 4 fotos reales de trabajos anteriores para ajustarlo.", medir: "Anota cuántas cotizaciones pides por semana, cuánto tardas en responder cada una y cuántas terminan en trabajo. Si respondes en más de un día, hay clientes que se pierden en la espera.", primero: "Elige el tipo de trabajo más repetido y arma su tabla de precios. Empieza solo con ese.", pasos: ["Charla de 30 minutos para conocer tus precios y cómo cotizas hoy.", "Armamos y probamos el asistente con fotos reales de tus trabajos.", "Lo conectamos a tu WhatsApp y lo ajustamos con los primeros pedidos."] },
+  { n: '2', nombre: "Cargar la llamada al CRM sola", problema: "Después de cada llamada alguien pasa los datos a mano, y parte de la información se pierde o se carga tarde.", necesitas: "Un CRM (aunque sea una planilla), las llamadas grabadas con permiso de los clientes y una herramienta que transcriba y complete los campos.", medir: "Mide cuánto tiempo lleva cargar una llamada y cuántas llamadas por semana se quedan sin cargar.", primero: "Define los 4 o 5 datos que siempre necesitas (interés, fecha, cantidad, próximo paso) y empieza solo por esos.", pasos: ["Revisamos cómo usas hoy el CRM y qué datos necesitas de cada llamada.", "Configuramos la transcripción y los campos que se completan solos.", "Probamos con llamadas reales y ajustamos antes de usarlo en todo el equipo."] },
+  { n: '3', nombre: "Mapa de calor del local", problema: "Los turnos y el personal se arman por intuición, y la fila crece en horas que nadie midió.", necesitas: "Una o dos cámaras con IA que cuenten personas, sin guardar rostros, y un tablero con horas pico y zonas.", medir: "Durante una semana, anota a mano la cantidad de personas en 3 horarios del día. Es la línea de base para comparar.", primero: "Revisa con tu asesor las reglas de privacidad antes de instalar cámaras y avisa a clientes y equipo.", pasos: ["Relevamos el local y definimos dónde conviene ubicar las cámaras.", "Instalamos y calibramos el conteo de personas, cuidando la privacidad.", "Armamos el tablero de horas pico y lo revisamos juntos."] },
+  { n: '4', nombre: "Aviso antes de perder un cliente", problema: "Un cliente que compraba seguido deja de hacerlo y nadie lo nota hasta que ya se fue.", necesitas: "El historial de compras o visitas de cada cliente y un criterio de cuánto tiempo sin comprar es demasiado.", medir: "Saca de tu historial a los clientes que compraban cada mes y no volvieron en 60 días. Esa lista ya muestra cuánto se escapa.", primero: "Escribe a mano a 5 de esos clientes con un mensaje cordial. El resultado te dice si vale automatizarlo.", pasos: ["Usamos el historial de compras que ya registras.", "Definimos contigo cuánto tiempo sin comprar es una señal de alerta.", "Revisamos juntos los primeros avisos y los mensajes sugeridos."] },
+  { n: '5', nombre: "Un gemelo digital de tu empresa", problema: "Cada área trabaja en su propia herramienta y nadie ve el panorama completo, así que los problemas se descubren tarde.", necesitas: "Acceso a los datos de ventas, stock, atención y entregas, y un tablero que los junte con alertas por área.", medir: "Lista qué herramienta usa cada área y quién necesita ver qué. Señala dónde la información llega con más de un día de retraso.", primero: "Conecta solo dos áreas que hoy se pisen (por ejemplo ventas y stock) y suma el resto después.", pasos: ["Relevamos qué herramienta usa cada área y qué datos se comparten.", "Conectamos primero dos áreas y armamos el tablero con alertas.", "Sumamos el resto de las áreas por etapas."] }
 ];
 ---
 <RecursoLayout
-  titulo="5 soluciones con IA que tu empresa puede tener"
-  descripcion="Guía de 5 soluciones con IA para empresas: qué problema resuelve cada una, qué se necesita, cómo medirlo antes de empezar y cuál es el primer paso."
-  tipo="Guía"
-  barLabel="Guía · GENIDEIA"
+  titulo="Cómo implementar 5 soluciones con IA en tu empresa"
+  descripcion="Cómo se implementa cada una de las 5 soluciones con IA del carrusel: qué problema resuelve, qué necesitamos de tu parte y cómo seguimos."
+  tipo="Implementación"
+  barLabel="Implementación · GENIDEIA"
   palabraClave="SOLUCIONES"
-  masterclass={true}
-  mclassUrl={grupo}
+  masterclass={false}
 >
-  <div class="lead"><b>Estas son las 5 soluciones del carrusel. Para cada una te contamos qué problema resuelve, qué necesitas, cómo medir tu punto de partida y por dónde empezar sin complicarte.</b></div>
+  <div class="lead"><b>Estas son las 5 soluciones del carrusel y cómo las implementamos en tu empresa: qué problema resuelve cada una, qué necesitamos de tu parte, cómo se pone en marcha y cómo seguimos.</b></div>
 
   <h2>Antes de elegir</h2>
   <ul class="arrow">
@@ -36,16 +35,24 @@ const items = [
     <>
       <h2>{e.n}. {e.nombre}</h2>
       <p><b>Qué problema resuelve:</b> {e.problema}</p>
-      <p><b>Qué necesitas:</b> {e.necesitas}</p>
+      <p><b>Qué necesitamos de tu parte:</b> {e.necesitas}</p>
+      <h3>Cómo se implementa</h3>
+      <ol class="steps">
+        {e.pasos.map((p) => <li>{p}</li>)}
+      </ol>
       <p><b>Cómo medirlo antes de empezar:</b> {e.medir}</p>
       <div class="note"><b>Primer paso:</b> {e.primero}</div>
-      {e.n === '3' ? (
-        <div class="minicta">
-          ¿Quieres ver cómo se aplicaría en tu empresa? Escríbenos y lo conversamos: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
-        </div>
-      ) : null}
     </>
   ))}
+
+  <h2>Cómo seguimos</h2>
+  <ol class="steps">
+    <li><b>Nos cuentas tu caso por WhatsApp.</b> Un par de líneas alcanzan.</li>
+    <li><b>Charla de 30 minutos</b> para conocer cómo trabajas hoy y qué conviene implementar primero.</li>
+    <li><b>Te pasamos una propuesta con el precio</b> para tu caso, sin compromiso.</li>
+    <li><b>Lo ponemos en marcha por etapas,</b> sin frenar tu operación.</li>
+  </ol>
+  <div class="note"><b>¿Quieres ver cómo se implementaría en tu empresa?</b> <a href={wa} target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp →</a></div>
 
   <h2>Preguntas frecuentes</h2>
   <ul class="arrow">
@@ -61,6 +68,6 @@ const items = [
     <li>Elegí la solución que ataca mi mayor dolor.</li>
     <li>Medí mi punto de partida durante una semana.</li>
     <li>Definí el primer paso chico de esa solución.</li>
-    <li>Reservé una charla para ver cómo aplicarlo.</li>
+    <li>Escribí a GENIDEIA para ver cómo implementarlo en mi empresa.</li>
   </ul>
 </RecursoLayout>
