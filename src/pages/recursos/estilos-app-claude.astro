@@ -1,0 +1,68 @@
+---
+// Lead magnet · palabra clave ManyChat: ESTILO (carrusel animado "La misma app, 5 diseños", 25/11/2026)
+// URL pública: /recursos/estilos-app-claude
+// CTA del carrusel: "Comentá ESTILO y te paso los 5 prompts de diseño".
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const estilos = [
+  { n: '1', nombre: 'Dashboard oscuro premium', para: "Apps de datos que tienen que verse premium.", prompt: "Armame una app de seguimiento de gastos con saldo del mes, gráfico de evolución, tres movimientos y una barra de ahorro. Diseño: dashboard oscuro premium, fondo casi negro, un único acento verde lima neón con brillo suave, barra lateral de íconos, tarjetas con borde fino y cifras enormes." },
+  { n: '2', nombre: 'Minimalista editorial', para: "Herramientas que quieren sentirse como una revista.", prompt: "Armame una app de seguimiento de gastos con saldo del mes, gráfico de evolución, tres movimientos y una barra de ahorro. Diseño: minimalista editorial, papel crema, tipografía serif en cursiva para las cifras, líneas finas negras como una tabla de revista y un único punto de color terracota." },
+  { n: '3', nombre: 'Estilo Apple', para: "Apps simples que cualquiera entiende al instante.", prompt: "Armame una app de seguimiento de gastos con saldo del mes, gráfico de evolución, tres movimientos y una barra de ahorro. Diseño: estilo Apple, fondo gris claro, tarjetas blancas con esquinas muy redondeadas y sombra suave, anillo de progreso para el ahorro, íconos en círculos de colores y azul como acento." },
+  { n: '4', nombre: 'Glassmorphism', para: "Landings y apps que quieren llamar la atención.", prompt: "Armame una app de seguimiento de gastos con saldo del mes, gráfico de evolución, tres movimientos y una barra de ahorro. Diseño: glassmorphism, fondo con degradado violeta, magenta y coral con manchas de luz que se mueven, tarjetas de vidrio esmerilado translúcido con borde blanco y texto blanco." },
+  { n: '5', nombre: 'Retro futurista', para: "Herramientas para devs o proyectos con personalidad.", prompt: "Armame una app de seguimiento de gastos con saldo del mes, gráfico de evolución, tres movimientos y una barra de ahorro. Diseño: retro futurista, terminal con fondo negro, texto verde fósforo y magenta neón, tipografía monoespaciada, bordes punteados, barra de progreso con bloques y líneas de escaneo." },
+];
+---
+<RecursoLayout
+  titulo="La misma app en 5 estilos de diseño: los prompts"
+  descripcion="Cinco prompts de diseño (dashboard oscuro, editorial, estilo Apple, glassmorphism y retro futurista) para pedirle a Claude la misma app con una cara completamente distinta."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="ESTILO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Una misma app puede verse como cinco productos distintos. Todo depende de cómo se lo pidas a Claude. Acá tenés los 5 estilos del carrusel, cada uno con su prompt de diseño listo para copiar.</b></div>
+
+  <h2>Cómo usarlos</h2>
+  <ol class="steps">
+    <li><b>Reemplazá la parte de la app.</b> Cada prompt empieza con un ejemplo (un tracker de gastos). Cambialo por lo que vos quieras construir: un CRM, un calendario, un panel de ventas.</li>
+    <li><b>Dejá intacta la parte de diseño.</b> Es la que define el estilo: colores, tipografía, tarjetas y movimiento.</li>
+    <li><b>Probá dos estilos con la misma app</b> y quedate con el que mejor le queda a tu público.</li>
+  </ol>
+  <div class="note"><b>La clave:</b> un estilo se pide con detalles concretos (colores, tipografía, forma de las tarjetas), no con adjetivos sueltos como "moderno" o "lindo". Cuanto más específico, menos genérico sale.</div>
+
+  {estilos.map((e) => (
+    <>
+      <h2>{e.n}. {e.nombre}</h2>
+      <p>Ideal para: {e.para.charAt(0).toLowerCase() + e.para.slice(1)}</p>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{e.prompt}</code></pre>
+      </div>
+      {e.n === '3' ? (
+        <div class="minicta">
+          Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+        </div>
+      ) : null}
+    </>
+  ))}
+
+  <div class="note"><b>¿Querés instalarla como app?</b> Desde el 24 de noviembre, Claude permite instalar lo que construye como app en Mac o Windows. Mirá la guía <a href="/recursos/instalar-apps-claude">las 5 apps que podés instalar en tu compu</a>.</div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Puedo mezclar dos estilos?</b> Sí, pero conviene elegir uno como base y tomar solo un detalle del otro (por ejemplo, la tipografía).</li>
+    <li><b>¿Qué hago si sale genérico?</b> Sumá referencias: pedile que use colores exactos (con su código) y una tipografía concreta.</li>
+    <li><b>¿Sirve para una web y no una app?</b> Sí. Los mismos prompts de diseño funcionan para landings y paneles.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Elegí el estilo que mejor le queda a mi público.</li>
+    <li>Cambié la parte de la app por la mía.</li>
+    <li>Dejé el bloque de diseño tal cual.</li>
+    <li>Probé al menos dos estilos y comparé.</li>
+  </ul>
+</RecursoLayout>
