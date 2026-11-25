@@ -1,0 +1,76 @@
+---
+// Lead magnet · palabra clave ManyChat: MUNDO (carrusel animado "Genie 4: mundos", 25/11/2026)
+// URL pública: /recursos/mundos-genie-4
+// CTA del carrusel: "Comentá MUNDO y te paso 5 prompts".
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const items = [
+  { n: '1', nombre: "Una ciudad cyberpunk", para: "Un mundo para recorrer de noche.", prompt: "Vista en primera persona caminando por una avenida de una ciudad cyberpunk de noche, con lluvia fina, carteles de neón en idiomas distintos y vapor saliendo del suelo. Autos voladores pasan por encima. Audio: lluvia sobre el asfalto, zumbido eléctrico de los carteles y pasos sobre charcos." },
+  { n: '2', nombre: "Un museo interactivo", para: "Un mundo para explorar sala por sala.", prompt: "Vista en primera persona dentro de un museo de arte moderno, con salas amplias, luz cálida, esculturas en el centro y cuadros enormes en las paredes. Hay pocas personas y un silencio tranquilo. Audio: pasos sobre piso de madera, murmullos lejanos y un eco suave." },
+  { n: '3', nombre: "Un mundo medieval", para: "Un mundo para caminar por un pueblo.", prompt: "Vista en primera persona caminando por un pueblo medieval de piedra al amanecer, con un mercado que se está armando, humo de las chimeneas y un castillo en la colina al fondo. Audio: campanas lejanas, gallos, carretas sobre empedrado y gente que se saluda." },
+  { n: '4', nombre: "Un simulador de producto", para: "Un mundo para mostrar un producto en su lugar.", prompt: "Vista en primera persona dentro de un taller moderno donde hay una bicicleta eléctrica sobre un banco de trabajo, con luz natural por una ventana grande. Quiero poder acercarme y mirarla de cerca desde distintos ángulos. Audio: ambiente tranquilo de taller y un leve zumbido del motor." },
+  { n: '5', nombre: "Un escenario educativo", para: "Un mundo para aprender dentro de la escena.", prompt: "Vista en primera persona dentro de una célula gigante, flotando entre orgánulos de colores que se mueven despacio: mitocondrias, núcleo y retículo. Luz azulada y partículas en suspensión. Audio: sonido grave y suave, como bajo el agua, con pulsos leves." },
+];
+---
+<RecursoLayout
+  titulo="5 mundos para crear con Genie 4: los prompts"
+  descripcion="Cinco prompts para crear mundos interactivos con Genie 4 de Google (ciudad cyberpunk, museo, mundo medieval, simulador de producto y escenario educativo), con cómo acceder y cómo escribirlos."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="MUNDO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Genie 4 convierte un texto en un mundo por el que podés moverte, con audio incluido. Acá tenés 5 prompts listos para copiar y la forma de escribir los tuyos.</b></div>
+
+  <h2>Cómo acceder a Genie 4</h2>
+  <ul class="arrow">
+    <li><b>Project Genie:</b> disponible para suscriptores elegibles de Google AI Ultra. Si sos Google AI Pro, podés anotarte en la lista de espera en labs.google/projectgenie.</li>
+    <li><b>Gemini API y Google AI Studio:</b> Genie 4 también está disponible para desarrolladores. La guía oficial está en aistudio.google.com/docs/genie.</li>
+    <li><b>Qué te da:</b> mundos continuos en los que te movés con el teclado (W, A, S, D y las flechas), con audio nativo y la posibilidad de cambiar el clima, la luz o los objetos mientras recorrés.</li>
+  </ul>
+
+  <h2>Cómo escribir un prompt de mundo</h2>
+  <ol class="steps">
+    <li><b>Empezá con la perspectiva:</b> "Vista en primera persona…". Define desde dónde mirás.</li>
+    <li><b>Describí el lugar, la luz y el estilo:</b> qué hay adelante, a qué hora es y cómo se ve (realista, pintura, dibujo).</li>
+    <li><b>Cerrá con una línea de audio:</b> escribí "Audio:" y describí los sonidos del ambiente. Genie 4 los genera junto con la imagen.</li>
+    <li><b>Después cambialo en vivo:</b> mientras explorás podés escribir otro texto, por ejemplo "que empiece a nevar fuerte", para modificar el mundo.</li>
+  </ol>
+  <div class="note"><b>Ojo:</b> la primera imagen tarda unos segundos en aparecer. Genie 4 sigue siendo investigación: puede fallar en la latencia de la cámara, en las interacciones físicas complejas y en mantener los objetos iguales por mucho tiempo.</div>
+
+  {items.map((e) => (
+    <>
+      <h2>{e.n}. {e.nombre}</h2>
+      <p>{e.para}</p>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{e.prompt}</code></pre>
+      </div>
+      {e.n === '3' ? (
+        <div class="minicta">
+          Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+        </div>
+      ) : null}
+    </>
+  ))}
+
+  <div class="note"><b>Los mundos del carrusel</b> son demos de Google y de creadores: "Villa Giallo" (Will, BLVCKL!GHT), "The Life of Ants" (Anand Gandhi) y las demos de Project Genie de Google DeepMind. Estos prompts son puntos de partida propios para armar mundos parecidos.</div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Puedo compartir lo que creo?</b> Sí: Project Genie tiene una galería de la comunidad donde podés publicar mundos para que otros los exploren y los remezclen.</li>
+    <li><b>¿Los videos y el audio quedan marcados?</b> Todo lo que se genera en Project Genie lleva marca de agua SynthID.</li>
+    <li><b>¿Sirve para algo más que jugar?</b> Sí: simuladores de producto, escenarios para enseñar, recorridos de lugares y prototipos de juegos.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Confirmé si tengo acceso (Ultra, lista de espera de Pro o la API).</li>
+    <li>Elegí 1 prompt y lo adapté a mi idea.</li>
+    <li>Agregué una línea de audio.</li>
+    <li>Probé cambiar el mundo en vivo con un texto nuevo.</li>
+  </ul>
+</RecursoLayout>
