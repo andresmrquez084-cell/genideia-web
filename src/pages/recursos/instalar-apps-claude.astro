@@ -1,0 +1,101 @@
+---
+// Lead magnet · palabra clave ManyChat: INSTALAR (carrusel animado "Claude hace apps", 25/11/2026)
+// URL pública: /recursos/instalar-apps-claude
+// CTA del carrusel: "Comentá INSTALAR y te paso los 5 prompts".
+// Fuente de la función: Centro de ayuda de Claude, "Instalar un artefacto como aplicación" (beta, 24/11/2026).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const apps = [
+  {
+    n: '1', nombre: 'Tu día en una app',
+    para: 'Un panel con tus tareas, tu foco y tus gastos de la semana.',
+    prompt: `Armame un panel personal con mis tareas del día (que pueda tildar), un contador de horas de foco y mis gastos de la semana en un gráfico de barras. Que se vea limpio, con tarjetas, y que guarde mis datos. Quiero poder instalarlo como app en mi computadora.`,
+  },
+  {
+    n: '2', nombre: 'Tu CRM propio',
+    para: 'Cada cliente en su etapa, sin pagar una licencia.',
+    prompt: `Construime un CRM simple con cuatro columnas: Nuevo, Contactado, Propuesta y Cerrado. Cada cliente es una tarjeta con nombre y monto que puedo arrastrar de una columna a otra. Arriba mostrame el total en plata de lo que está por cerrar y de lo ya cerrado. Que guarde los datos y se pueda instalar como app.`,
+  },
+  {
+    n: '3', nombre: 'Tu calendario de contenido',
+    para: 'Qué publicás cada día, de un vistazo.',
+    prompt: `Hacé un calendario semanal de contenido, de lunes a domingo. Cada pieza es de un tipo (Reel, Carrusel, Story o Live) con su color, y puedo marcarla como publicada. Arriba contame cuántas piezas llevo en la semana. Que guarde los datos y se pueda instalar como app.`,
+  },
+  {
+    n: '4', nombre: 'Tus gastos al día',
+    para: 'Cuánto entra, cuánto sale y a dónde va.',
+    prompt: `Armame un tracker de finanzas personales: saldo del mes, un gráfico de línea con la evolución, la lista de movimientos (ingresos y gastos, con categoría) y una barra de ahorro hacia una meta que yo defina. Que guarde los datos y se pueda instalar como app.`,
+  },
+  {
+    n: '5', nombre: 'Tu segundo cerebro',
+    para: 'Notas conectadas que se encuentran solas.',
+    prompt: `Construime un segundo cerebro: un buscador de notas, la lista de mis notas y un mapa donde cada nota se conecta con las relacionadas, para encontrar ideas rápido. Quiero poder crear, editar y enlazar notas. Que guarde los datos y se pueda instalar como app.`,
+  },
+];
+---
+<RecursoLayout
+  titulo="Las 5 apps que podés pedirle a Claude e instalar en tu compu"
+  descripcion="Cinco prompts para que Claude construya una app (panel personal, CRM, calendario de contenido, finanzas y segundo cerebro) y cómo instalarla en tu Mac o Windows con ventana e ícono propios."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="INSTALAR"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Desde el 24 de noviembre, lo que Claude construye para vos se puede instalar como una app en tu Mac o Windows, con su propia ventana y su ícono. Acá tenés los 5 prompts del carrusel y los pasos para instalarlas.</b></div>
+
+  <h2>Antes de empezar</h2>
+  <ul class="arrow">
+    <li><b>Es una función en beta.</b> Funciona en <b>Claude para Mac o Windows</b> (versión 6.28899.0 o más nueva). No está disponible en Linux, web ni celular.</li>
+    <li><b>Si no ves la opción</b>, actualizá Claude Desktop. En Mac: Claude → Check for Updates. En Windows: menú ☰ → Help → Check for Updates.</li>
+    <li><b>Usa tu límite:</b> construir la app y los pedidos que ella le haga a Claude cuentan en el límite de tu plan.</li>
+  </ul>
+
+  <h2>Cómo instalar una app</h2>
+  <ol class="steps">
+    <li><b>Pedile la app a Claude</b> en un chat con el prompt de abajo y esperá a que aparezca el resultado.</li>
+    <li><b>Abrí el resultado</b> en la ventana principal de Claude Desktop.</li>
+    <li><b>Abrí el menú del título</b> (o hacé clic derecho) y elegí <b>Install as app</b>. También está en <b>Share</b>.</li>
+    <li><b>Confirmá con Install.</b> Después la abrís desde la carpeta <b>Claude Apps</b> (Mac: dentro de Aplicaciones; Windows: menú Inicio), como cualquier otra.</li>
+  </ol>
+  <div class="note"><b>Ojo:</b> "Agregar al Dock" o "Agregar acceso directo" del navegador es solo un atajo. No instala la app ni le da las funciones de escritorio.</div>
+
+  {apps.map((a) => (
+    <>
+      <h2>{a.n}. {a.nombre}</h2>
+      <p>{a.para}</p>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{a.prompt}</code></pre>
+      </div>
+      {a.n === '3' ? (
+        <div class="minicta">
+          Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+        </div>
+      ) : null}
+    </>
+  ))}
+
+  <h2>Permisos: vos decidís</h2>
+  <p>Una app instalada puede pedirte permiso para mandar notificaciones, usar atajos de teclado, mostrar un ícono en la barra de menú o, el nivel más alto, acceso completo a tu computadora. Te pregunta cada vez y respondés <b>Allow</b> o <b>Don't allow</b>.</p>
+  <div class="note"><b>Cuidado con el acceso completo:</b> una app con acceso completo puede ejecutar programas y leer, cambiar o borrar tus archivos. Para estas 5 apps no hace falta. Dalo solo si confiás en quien la escribió, y recordá que Anthropic no revisa las apps antes de que las instales.</div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Puedo cambiarla después?</b> Sí. Es el mismo artefacto: si le pedís cambios a Claude, la app se actualiza. Después de cada cambio te vuelve a pedir los permisos.</li>
+    <li><b>¿Cómo la desinstalo?</b> En Claude Desktop: File → Apps → elegís la app → Uninstall. No borra el artefacto.</li>
+    <li><b>¿Necesito internet?</b> Sí: para abrirla tenés que estar online y con sesión iniciada en Claude Desktop.</li>
+    <li><b>¿Y si no se instala?</b> Los artefactos hechos con plantillas de Docs, Slides o Sheets no se pueden instalar. Pedile a Claude una app, no un documento.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Actualicé Claude Desktop.</li>
+    <li>Elegí 1 app para empezar.</li>
+    <li>Le pegué el prompt a Claude y revisé el resultado.</li>
+    <li>La instalé con Install as app.</li>
+    <li>Le pedí un cambio para que se ajuste a mi caso.</li>
+  </ul>
+</RecursoLayout>
