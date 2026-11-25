@@ -1,0 +1,103 @@
+---
+// Lead magnet · palabra clave ManyChat: MODELO (carrusel animado "El mismo pedido a 4 IAs", 25/11/2026)
+// URL pública: /recursos/elegir-modelo-claude
+// CTA del carrusel: "Comentá MODELO y te paso una guía para elegir qué modelo de Claude usar, con los precios oficiales".
+// Precios y datos: documentación oficial de Anthropic (platform.claude.com/docs/en/models/overview), consultada el 25/11/2026.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const modelos = [
+  { nombre: 'Claude Haiku 5.5', entrada: 'desde US$ 0,10', salida: 'desde US$ 0,50', velocidad: 'La más rápida', esfuerzo: 'medio', para: 'Tareas de mucho volumen y respuesta rápida: clasificar, extraer datos, derivar consultas.' },
+  { nombre: 'Claude Sonnet 5.5', entrada: 'US$ 2', salida: 'US$ 10', velocidad: 'Rápida', esfuerzo: 'alto', para: 'La mejor combinación de velocidad e inteligencia para el trabajo del día a día.' },
+  { nombre: 'Claude Opus 5.5', entrada: 'US$ 4', salida: 'US$ 20', velocidad: 'Moderada', esfuerzo: 'medio', para: 'Programación de larga duración y trabajo de conocimiento.' },
+  { nombre: 'Claude Fable 5.2', entrada: 'US$ 8', salida: 'US$ 40', velocidad: 'Moderada', esfuerzo: 'alto', para: 'Razonamiento exigente y trabajo autónomo de largo plazo.' },
+];
+
+const ejemplos = [
+  { autor: '@automators_', url: 'https://www.instagram.com/automators_/', que: 'Una isla 3D en bloques con castillo, hecha por Haiku, Sonnet, Opus y Fable con el mismo pedido.' },
+  { autor: '@sairahul1', url: 'https://x.com/sairahul1/status/2120320608718221528', que: 'Sonnet, Opus y Fable dibujando el cuerpo humano en movimiento.' },
+  { autor: '@0xSatoshiv', url: 'https://x.com/0xSatoshiv/status/2125298713556078868', que: 'Una catapulta disparando a un castillo, con Fable y Opus.' },
+  { autor: '@0xmurasame', url: 'https://x.com/0xmurasame/status/2123137280369979500', que: 'Una persecución en el lejano Oeste, con Fable y Opus.' },
+];
+
+const prueba = `Armame un juego 3D en un solo archivo HTML, con three.js:
+- Una isla hecha de bloques (estilo voxel) con un castillo, un río y caminos de tierra.
+- Una cámara que gire despacio alrededor de la isla.
+- Un panel arriba a la izquierda que muestre la oleada de enemigos, el oro y la vida del castillo.
+Que se pueda abrir directo en el navegador.`;
+---
+<RecursoLayout
+  titulo="Qué modelo de Claude elegir según el trabajo"
+  descripcion="Haiku 5.5, Sonnet 5.5, Opus 5.5 y Fable 5.2: precios oficiales, para qué sirve cada uno, cómo calcular cuánto cuesta una tarea y cómo hacer tu propia prueba con el mismo pedido."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="MODELO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Los cuatro modelos de Claude pueden recibir el mismo pedido y dar resultados muy distintos, con precios muy distintos. Acá tenés los datos oficiales de cada uno, para qué sirve y cómo hacer tu propia prueba.</b></div>
+
+  <h2>Los 4 modelos, con datos oficiales</h2>
+  <p>Precios por millón de tokens, según la documentación de Anthropic (consultada el 25/11/2026). Los precios pueden cambiar: revisalos siempre en la fuente.</p>
+  {modelos.map((m) => (
+    <div class="note">
+      <b>{m.nombre}</b><br />
+      Entrada: <b>{m.entrada}</b> · Salida: <b>{m.salida}</b> por millón de tokens<br />
+      Velocidad: {m.velocidad} · Esfuerzo por defecto en la API: {m.esfuerzo}<br />
+      <i>Para qué:</i> {m.para}
+    </div>
+  ))}
+  <ul class="arrow">
+    <li><b>Lo que comparten:</b> ventana de contexto de 1 millón de tokens, hasta 128.000 tokens de salida y conocimiento hasta junio de 2026.</li>
+    <li><b>Descuentos oficiales:</b> la API por lotes (Batch) cuesta 50% menos, y leer desde la caché de prompts cuesta una fracción del precio de entrada.</li>
+    <li><b>Fuente:</b> <a href="https://platform.claude.com/docs/en/models/overview" target="_blank" rel="noopener noreferrer">platform.claude.com/docs/en/models/overview</a></li>
+  </ul>
+
+  <h2>Cómo calcular cuánto cuesta una tarea</h2>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>costo = (tokens de entrada ÷ 1.000.000 × precio de entrada)
+      + (tokens de salida ÷ 1.000.000 × precio de salida)</code></pre>
+  </div>
+  <p><b>Ejemplo</b> (cifras de ejemplo: 100.000 tokens de entrada y 20.000 de salida, con los precios oficiales de arriba):</p>
+  <ul class="arrow">
+    <li>Haiku 5.5: unos <b>US$ 0,02</b></li>
+    <li>Sonnet 5.5: unos <b>US$ 0,40</b></li>
+    <li>Opus 5.5: unos <b>US$ 0,80</b></li>
+    <li>Fable 5.2: unos <b>US$ 1,60</b></li>
+  </ul>
+  <div class="note"><b>Ojo:</b> el costo real depende de cuánto "piensa" y cuánto escribe el modelo en tu tarea, que cambia de un modelo a otro. Por eso conviene medir con tu propio caso.</div>
+
+  <h2>Hacé tu propia prueba con el mismo pedido</h2>
+  <ol class="steps">
+    <li><b>Abrí una sesión nueva por modelo</b> y pegá exactamente el mismo pedido en cada una.</li>
+    <li><b>Anotá tiempo y costo</b> de cada corrida (los tokens los muestra la herramienta que uses).</li>
+    <li><b>Compará el resultado</b> abriendo los cuatro archivos lado a lado.</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{prueba}</code></pre>
+  </div>
+
+  <h2>Ejemplos reales de otros usuarios</h2>
+  <p>Estas comparaciones las publicaron sus autores. Los costos y tiempos que muestran en sus videos son los de sus corridas, no precios oficiales.</p>
+  <ul class="arrow">
+    {ejemplos.map((e) => <li><b><a href={e.url} target="_blank" rel="noopener noreferrer">{e.autor}</a>:</b> {e.que}</li>)}
+  </ul>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Cuál conviene para empezar?</b> Depende del trabajo: para tareas rápidas y baratas, Haiku o Sonnet; para trabajos largos de código, Opus; para problemas muy exigentes, Fable.</li>
+    <li><b>¿El más caro siempre da mejor resultado?</b> No necesariamente. Probá con tu caso antes de decidir.</li>
+    <li><b>¿Y si uso Claude en la web, sin API?</b> El costo por token no te aplica: lo que cuenta es el uso incluido en tu plan.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Elegí un pedido concreto y corto.</li>
+    <li>Lo pegué igual en cada modelo.</li>
+    <li>Anoté tiempo y costo de cada uno.</li>
+    <li>Comparé los resultados lado a lado.</li>
+  </ul>
+</RecursoLayout>
