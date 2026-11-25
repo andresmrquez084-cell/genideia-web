@@ -24,7 +24,7 @@ var CARPETAS=[['prospeccion_2026','Prospección 2026'],['ecommerce_montevideo','
 var PERIODOS=[['reciente','Reciente (desde 10/11)'],['historico','Histórico (contactado antes)'],['nunca_contactado','Nunca contactado']];
 var CALIF=[['A','A · prioridad'],['B','B · buen prospecto'],['C','C · dudoso'],['D','D · no sirve'],['sin_calificar','Sin calificar']];
 /* lista por asesor: prospección de Andrés y de Agustín, separadas dentro del mismo CRM (migración 20261125100000) */
-var ASESORES=[['Andrés','Andrés'],['Agustín Alves','Agustín Alves']];
+var ASESORES=[['Andrés','Andrés'],['Agustín Alvez','Agustín Alvez']];
 var VERIF=[['sin_verificar','Sin verificar'],['whatsapp','Verificado en WhatsApp'],['email','Verificado por email'],['llamada','Verificado por llamada'],['ambos','Verificado en varios canales']];
 function lbl(list,v){var x=list.filter(function(y){return y[0]===v})[0];return x?x[1]:(v||'—')}
 var ROLES={decide:'Decide',influye:'Influye',usa:'Usa',filtra:'Filtra',deriva:'Deriva'};
@@ -239,6 +239,106 @@ function conclusiones(x,p0,V){
   if(vs.length>1){var chicas=vs.every(function(v){return v.n<MIN_N});L.push([chicas?'wait':'',chicas?'Variantes con pocos envíos: no comparar todavía.':'Comparación de variantes disponible.',vs.map(function(v){return v.variante+': '+v.respondieron+'/'+v.n}).join(' · ')])}
   return L;
 }
+
+/* ---------- AGUSTÍN ALVEZ (asesor) ----------
+   Vista propia para la prospección de este asesor. Empresas: crm_empresas.asesor = AG.
+   Actividades: crm_actividades.asesor = AG (el disparador la completa al cargar, según la empresa).
+   Para sumar más asesores: agregarlos a ASESORES y crear una vista igual con otro nombre. */
+var AG='Agustín Alvez';
+var AGF={r:'mes',sub:'prospectos',q:''},AGD=null;
+var AGR=[['hoy','Hoy'],['semana','Últimos 7 días'],['mes','Este mes'],['30d','Últimos 30 días'],['todo','Histórico']];
+var AGSUB=[['prospectos','Prospectos'],['emails','Emails'],['whatsapp','WhatsApp'],['seguimientos','Seguimientos']];
+function diaUY(ts){return ts?new Date(ts).toLocaleDateString('en-CA',{timeZone:TZ}):''}
+function agDesde(r){var t=today();if(r==='hoy')return t;if(r==='semana')return addDays(t,-6);if(r==='mes')return t.slice(0,8)+'01';if(r==='30d')return addDays(t,-29);return ''}
+function agEnRango(a){var d=agDesde(AGF.r);return !d||diaUY(a.fecha_hecho)>=d}
+function setN(arr){var o={};arr.forEach(function(x){if(x)o[x]=1});return Object.keys(o).length}
+function esRespuesta(a){return a.direccion==='entrante'&&a.tipo!=='nota'}
+VIEWS.agustin=async function(){
+  var el=$('#v-agustin');
+  el.innerHTML='<div class="vh"><div><p class="px-eb">Asesor</p><h1>Agustín Alvez</h1><p>Su prospección, separada de la de Andrés: empresas asignadas, emails, WhatsApp y seguimientos. Se asigna desde la ficha de cada empresa (Clasificar → Asesor). Lo cargado antes de asignar queda en la cuenta de Andrés.</p></div></div><div class="empty">Cargando…</div>';
+  var rs=await Promise.all([
+    q(sb.from('crm_v_empresas').select('id,nombre,nicho,pais,ciudad,carpeta,periodo,calificacion,etapa,atencion,ultimo_saliente,ultima_respuesta,proxima_accion,proxima_fecha,responsable_accion,no_contactar,error_canal').eq('asesor',AG).order('nombre').limit(5000)),
+    q(sb.from('crm_empresas').select('id,asesor_desde').eq('asesor',AG).limit(5000)),
+    q(sb.from('crm_actividades').select('id,empresa_id,tipo,direccion,canal,fecha_hecho,clasificacion,estado_envio,asunto').eq('asesor',AG).order('fecha_hecho',{ascending:false,nullsFirst:false}).limit(5000))
+  ]);
+  var E=rs[0].data,desde={},byId={};
+  rs[1].data.forEach(function(x){desde[x.id]=x.asesor_desde});
+  E.forEach(function(x){byId[x.id]=x});
+  var ids=E.map(function(x){return x.id});
+  var T=ids.length?(await q(sb.from('crm_v_tareas').select('id,empresa_id,empresa,accion,fecha,responsable,estado').in('empresa_id',ids).eq('estado','pendiente').order('fecha',{nullsFirst:false}).limit(5000))).data:[];
+  AGD={E:E,desde:desde,byId:byId,T:T,A:rs[2].data};
+  paintAg();
+};
+function paintAg(){
+  var el=$('#v-agustin'),E=AGD.E,A=AGD.A,T=AGD.T,t=today();
+  var Ar=A.filter(agEnRango);
+  var envios=Ar.filter(function(a){return a.direccion==='saliente'&&(a.tipo==='mensaje'||a.tipo==='seguimiento')}).length;
+  var resp=Ar.filter(esRespuesta);
+  var empResp=setN(resp.map(function(a){return a.empresa_id}));
+  var pos=resp.filter(function(a){return a.clasificacion==='interes_concreto'||a.clasificacion==='cordial_sin_compromiso'}).length;
+  var neg=resp.filter(function(a){return a.clasificacion==='negativa_baja'}).length;
+  var der=resp.filter(function(a){return a.clasificacion==='derivacion'||a.tipo==='derivacion'}).length;
+  var esPres=function(a){return a.direccion==='saliente'&&(a.tipo==='propuesta'||a.tipo==='material')};
+  var pres=Ar.filter(esPres).length;
+  var reu=Ar.filter(function(a){return a.tipo==='reunion'}).length;
+  var primeraPres={};A.forEach(function(a){if(esPres(a)&&a.fecha_hecho){var p=primeraPres[a.empresa_id];if(!p||a.fecha_hecho<p)primeraPres[a.empresa_id]=a.fecha_hecho}});
+  var respPost=setN(A.filter(function(a){return esRespuesta(a)&&agEnRango(a)&&a.fecha_hecho&&primeraPres[a.empresa_id]&&a.fecha_hecho>primeraPres[a.empresa_id]}).map(function(a){return a.empresa_id}));
+  var contactados=E.filter(function(x){return x.ultimo_saliente});
+  var sinResp=contactados.filter(function(x){return !x.ultima_respuesta}).length;
+  var sinCont=E.filter(function(x){return x.etapa==='sin_contactar'}).length;
+  var ganados=E.filter(function(x){return x.etapa==='ganado'}).length;
+  var venc=T.filter(function(x){return x.fecha&&x.fecha<t}).length;
+  var canal=function(c){return Ar.filter(function(a){return a.canal===c})};
+  var head='<div class="vh"><div><p class="px-eb">Asesor · Agustín Alvez</p><h1>Agustín Alvez</h1><p>Su prospección, separada de la de Andrés. Las empresas entran acá al asignar el asesor en la ficha; los envíos y respuestas se atribuyen a él al cargarse.</p></div></div>';
+  var rango='<div class="filters"><select class="in" id="agr" aria-label="Rango de fechas">'+opts(AGR,AGF.r)+'</select><span class="faint">Envíos, respuestas y presentaciones usan este rango. Prospectos y seguimientos muestran el estado actual.</span></div>';
+  var kp='<div class="kpis">'+
+    kpi('Asignados',E.length,'empresas con Agustín como asesor','')+
+    kpi('Sin contactar',sinCont,'todavía sin ningún envío','')+
+    kpi('Contactados',contactados.length,'con al menos un envío (histórico)','')+
+    kpi('Envíos',envios,'mensajes y seguimientos en el rango','s')+
+    kpi('Respuestas',empResp,'empresas que respondieron en el rango','')+
+    kpi('Sin respuesta',sinResp,'contactados sin respuesta (histórico)',sinResp?'warn':'')+
+    kpi('Interés o cordial',pos,'respuestas positivas en el rango','')+
+    kpi('Negativas o bajas',neg,'en el rango','')+
+    kpi('Derivaciones',der,'en el rango','')+
+    kpi('Presentaciones',pres,'propuestas o material enviado en el rango','')+
+    kpi('Respondieron tras presentación',respPost,'empresas que contestaron después de una presentación','')+
+    kpi('Reuniones',reu,'en el rango','')+
+    kpi('Seguimientos pendientes',T.length,venc+' vencido(s)',venc?'warn':'')+
+    kpi('Clientes',ganados,'etapa ganado','')+'</div>';
+  var cnt={prospectos:E.length,emails:canal('Email').length,whatsapp:canal('WhatsApp').length,seguimientos:T.length};
+  var tabs='<div class="filters" style="margin-top:6px">'+AGSUB.map(function(s){return '<button class="px-btn sm '+(AGF.sub===s[0]?'p':'g')+'" data-agtab="'+s[0]+'">'+esc(s[1])+' <span class="cnt">'+cnt[s[0]]+'</span></button>'}).join('')+'</div>';
+  el.innerHTML=head+rango+kp+tabs+'<div id="agbody">'+agBody()+'</div>';
+  $('#agr').onchange=function(){AGF.r=this.value;paintAg()};
+  $$('#v-agustin [data-agtab]').forEach(function(b){b.onclick=function(){AGF.sub=b.dataset.agtab;paintAg()}});
+  var inp=$('#agq');if(inp)inp.oninput=function(){AGF.q=this.value;var p=this.selectionStart;$('#agbody').innerHTML=agBody();var n=$('#agq');if(n){n.focus();n.setSelectionRange(p,p)}};
+}
+function agBody(){
+  if(AGF.sub==='emails')return agCanal('Email');
+  if(AGF.sub==='whatsapp')return agCanal('WhatsApp');
+  if(AGF.sub==='seguimientos')return agSeguimientos();
+  return agProspectos();
+}
+function agProspectos(){
+  var qq=AGF.q.trim().toLowerCase();
+  var L=AGD.E.filter(function(x){return !qq||String(x.nombre||'').toLowerCase().indexOf(qq)>=0||String(x.nicho||'').toLowerCase().indexOf(qq)>=0||String(x.ciudad||'').toLowerCase().indexOf(qq)>=0});
+  return '<div class="filters"><input class="in q" id="agq" placeholder="Buscar prospecto de Agustín" value="'+esc(AGF.q)+'"></div>'+
+    table(['Empresa','Etapa','Atención','Último mensaje nuestro','Última respuesta del prospecto','Próxima acción'],L.map(function(c){
+      return '<tr data-emp="'+c.id+'"><td><b>'+esc(c.nombre)+'</b>'+flags(c)+' <span class="chip">'+esc(lbl(CARPETAS,c.carpeta))+'</span> <span class="chip">'+esc(lbl(PERIODOS,c.periodo))+'</span> <span class="chip">Cal. '+esc(c.calificacion==='sin_calificar'?'—':c.calificacion)+'</span><div class="faint">'+esc([AGD.desde[c.id]?'Asignada el '+fd(AGD.desde[c.id]):'',c.nicho,c.ciudad,c.pais].filter(Boolean).join(' · '))+'</div></td><td>'+etapa(c.etapa)+'</td><td>'+(c.etapa==='sin_contactar'?'<span class="muted">—</span>':atenc(c.atencion))+'</td><td>'+cOut(c)+'</td><td>'+cIn(c)+'</td><td>'+cNext(c)+'</td></tr>'}),
+      'Todavía no hay prospectos asignados a Agustín. Se asignan desde la ficha de la empresa (Clasificar → Asesor).')}
+function agCanal(canal){
+  var L=AGD.A.filter(function(a){return a.canal===canal&&agEnRango(a)});
+  return table(['Fecha','Empresa','Dirección','Tipo','Asunto','Estado o clasificación'],L.map(function(a){
+    var em=AGD.byId[a.empresa_id];
+    return '<tr'+(a.empresa_id&&em?' data-emp="'+a.empresa_id+'"':'')+'><td>'+fdt(a.fecha_hecho)+'</td><td><b>'+esc(em?em.nombre:'—')+'</b></td><td>'+(a.direccion==='entrante'?'Del prospecto':a.direccion==='saliente'?'Nuestro':'Interno')+'</td><td>'+esc(TIPOS[a.tipo]||a.tipo)+'</td><td>'+esc(a.asunto||'—')+'</td><td>'+esc(ENVIO[a.estado_envio]||CLASIF[a.clasificacion]||'Sin dato')+'</td></tr>'}),
+    'Sin registros de '+canal+' en este rango.');
+}
+function agSeguimientos(){
+  return table(['Vence','Empresa','Acción','Responsable'],AGD.T.map(function(x){
+    return '<tr data-emp="'+x.empresa_id+'"><td>'+(x.fecha?dchip(x.fecha):'<span class="sv">Sin fecha</span>')+'</td><td><b>'+esc(x.empresa)+'</b></td><td>'+esc(x.accion||'—')+'</td><td>'+esc(x.responsable||'—')+'</td></tr>'}),
+    'No hay seguimientos pendientes de Agustín.');
+}
+
 VIEWS.nichos=async function(){
   var el=$('#v-nichos');
   el.innerHTML='<div class="vh"><div><p class="px-eb">Categorías de prospectos</p><h1>Nichos</h1><p>Cuántas empresas hay por nicho, cuántas se contactaron, cuántas respondieron y qué se puede concluir con la evidencia que hay.</p></div><label class="f"><span>Ventana de observación</span><select class="in" id="nven">'+opts([['1','1 día'],['3','3 días'],['7','7 días'],['14','14 días']],String(NV))+'</select></label></div><div class="empty">Calculando…</div>';
