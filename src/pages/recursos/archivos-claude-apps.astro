@@ -1,0 +1,83 @@
+---
+// Lead magnet · palabra clave ManyChat: ARCHIVO (carrusel animado "Claude mueve archivos", 25/11/2026)
+// URL pública: /recursos/archivos-claude-apps
+// CTA del carrusel: "Comentá ARCHIVO y te paso los 5 prompts".
+// Fuente: Centro de ayuda de Claude, "Enviar archivos a aplicaciones conectadas y guardar archivos de ellas" (beta, 24/11/2026).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const flujos = [
+  { n: '1', nombre: "Crear y mandar un archivo", para: "Guardar lo que Claude crea sin pasos de más.", prompt: "Armá la propuesta para [CLIENTE] en PDF y subila a mi carpeta Propuestas de [APP]." },
+  { n: '2', nombre: "Pedir un informe y guardarlo", para: "Tener cada informe en su carpeta sin copiar y pegar.", prompt: "Hacé el informe de ventas de noviembre en Excel y guardalo en mi carpeta Informes de [APP]." },
+  { n: '3', nombre: "Traer un documento y revisarlo", para: "Revisar documentos sin descargarlos ni subirlos.", prompt: "Traé el contrato de [CLIENTE] de mi carpeta Contratos de [APP] y marcame las cláusulas que debería revisar." },
+  { n: '4', nombre: "Recibir lo que produce otra app", para: "Analizar reportes sin exportar ni arrastrar nada.", prompt: "Traé el reporte mensual de [APP], resumilo en 5 puntos y decime qué cambió respecto al mes pasado." },
+  { n: '5', nombre: "Mover un archivo de una app a otra", para: "Pasar archivos entre apps sin descargar ni subir.", prompt: "Traé el presupuesto de [APP 1], pasalo a PDF y guardalo en mi carpeta Clientes de [APP 2]." },
+];
+---
+<RecursoLayout
+  titulo="Claude manda y trae archivos de tus apps: 5 flujos"
+  descripcion="Cinco prompts para que Claude envíe archivos a tus apps conectadas y guarde los que ellas ofrecen, sin descargar, subir ni copiar y pegar. Con requisitos y límites."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="ARCHIVO"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Desde el 24 de noviembre, Claude puede enviar un archivo a una app que conectaste y guardar un archivo que la app ofrece. Acá tenés los 5 flujos del carrusel, cada uno con su prompt listo para copiar.</b></div>
+
+  <h2>Antes de empezar</h2>
+  <ul class="arrow">
+    <li><b>Es una función en beta.</b> Se está activando de a poco en los planes Pro, Max y Ultra. En Team y Enterprise la tiene que activar un dueño de la organización.</li>
+    <li><b>Dónde funciona:</b> chats en la web, Claude Desktop y las apps de iOS y Android, y Claude Code. No funciona en chats incógnito ni en tareas programadas.</li>
+    <li><b>Qué apps sirven:</b> las del directorio de conectores cuyo desarrollador agregó soporte de archivos. Los conectores personalizados que agregás vos no sirven.</li>
+    <li><b>Si no te funciona</b>, actualizá Claude y empezá un chat nuevo: muchos chats viejos no pueden enviar ni guardar archivos.</li>
+  </ul>
+
+  <h2>Cómo hacerlo</h2>
+  <ol class="steps">
+    <li><b>Conectá la app</b> desde el directorio de conectores de Claude.</li>
+    <li><b>Pedile el flujo</b> con uno de los prompts de abajo, cambiando lo que está entre corchetes.</li>
+    <li><b>Aprobá el primer envío.</b> Claude te pregunta antes de mandar el primer archivo a cada app. Revisá el archivo y la app antes de permitir.</li>
+  </ol>
+
+  {flujos.map((f) => (
+    <>
+      <h2>{f.n}. {f.nombre}</h2>
+      <p>Ideal para: {f.para.charAt(0).toLowerCase() + f.para.slice(1)}</p>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{f.prompt}</code></pre>
+      </div>
+      {f.n === '3' ? (
+        <div class="minicta">
+          Esto es una parte de la serie <b>Claude desde 0</b>. La clase completa —de usar Claude a construir tu primer sistema— es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+        </div>
+      ) : null}
+    </>
+  ))}
+
+  <h2>Límites que conviene saber</h2>
+  <ul class="arrow">
+    <li><b>Tamaño:</b> hasta 500 MB por archivo. Podés enviar hasta 10 archivos a la vez en un chat (8 en Claude Code en tu compu).</li>
+    <li><b>Carpetas:</b> Claude manda archivos, no carpetas.</li>
+    <li><b>Archivos que se guardan:</b> en un chat quedan en ese chat. En Claude Code se guardan en tu compu y se borran a los 30 días, así que copiá los que quieras conservar.</li>
+    <li><b>Cada app puede poner sus propios límites</b> de tamaño o de tipos de archivo.</li>
+  </ul>
+  <div class="note"><b>Ojo con la seguridad:</b> un archivo que viene de una app puede contener texto escrito para engañar a Claude. Conectá solo apps en las que confíes. Borrar el chat no borra el archivo de la app conectada.</div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Puede mandar un archivo que Claude crea?</b> Sí. Puede ser un archivo que hizo en la misma conversación.</li>
+    <li><b>¿Me pide permiso siempre?</b> Antes del primer archivo a cada app, sí. Después puede enviar sin preguntar, según tus permisos.</li>
+    <li><b>¿Y si falla un envío?</b> Revisá primero la app: el archivo puede haber llegado igual.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Conecté una app desde el directorio de conectores.</li>
+    <li>Empecé un chat nuevo con Claude actualizado.</li>
+    <li>Probé 1 flujo con un archivo de prueba.</li>
+    <li>Aprobé el primer envío revisando archivo y app.</li>
+  </ul>
+</RecursoLayout>
