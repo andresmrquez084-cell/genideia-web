@@ -1,0 +1,66 @@
+---
+// Lead magnet B2B · palabra clave ManyChat: CLÍNICA (carrusel animado "5 sistemas digitales para tu clínica dental", 25/11/2026)
+// URL pública: /recursos/sistemas-clinica-dental
+// CTA del carrusel: "Comenta CLÍNICA y recibe la guía".
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const items = [
+  { n: '1', nombre: "Turnos por WhatsApp", problema: "El teléfono suena mientras se atiende a otro paciente, las llamadas se pierden y cada turno se agenda a mano.", necesitas: "Tu agenda con horarios disponibles, un asistente conectado a WhatsApp y reglas por tipo de consulta (duración, profesional).", medir: "Cuenta las llamadas perdidas de una semana y cuánto lleva agendar cada turno en promedio.", primero: "Define los horarios que se pueden ofrecer sin confirmación y empieza solo con controles y limpiezas." },
+  { n: '2', nombre: "Recordatorios que funcionan", problema: "Los pacientes olvidan el turno y el sillón queda vacío sin que nadie pueda reaccionar a tiempo.", necesitas: "El listado de turnos con teléfono y un mensaje de recordatorio con opción de confirmar o reprogramar.", medir: "Cuenta los turnos de la semana pasada a los que no vino el paciente y divide por el total: es tu tasa de ausencias.", primero: "Envía un recordatorio por WhatsApp el día anterior durante dos semanas y compara la tasa de ausencias." },
+  { n: '3', nombre: "La ficha con odontograma", problema: "La ficha está en papel o dispersa, buscar el historial interrumpe la consulta y es difícil compartirla.", necesitas: "Un sistema de fichas clínicas con odontograma y la autorización de los pacientes para guardar sus datos.", medir: "Mide cuánto tarda recepción en encontrar una ficha y cuántas veces por día pasa.", primero: "Empieza cargando solo los pacientes con turno de la próxima semana, no todo el archivo." },
+  { n: '4', nombre: "Presupuesto en 2 minutos", problema: "Cada presupuesto se arma con calculadora y lista de precios aparte, y toma varios minutos.", necesitas: "Tu lista de precios por tratamiento y una plantilla de presupuesto que se pueda enviar por WhatsApp.", medir: "Cuenta cuántos presupuestos armas por semana y cuántos minutos lleva cada uno.", primero: "Carga tu lista de precios en una planilla ordenada. Es la base de todo lo demás." },
+  { n: '5', nombre: "El panel de la clínica", problema: "Para saber cómo va el día hay que preguntar sillón por sillón, y el cierre de caja se arma a mano.", necesitas: "Datos de agenda y de cobros en un mismo lugar y un tablero con ocupación e ingresos del día.", medir: "Anota cada día, durante una semana, cuántos pacientes se atendieron y cuántas horas quedaron libres.", primero: "Decide los 3 números que quieres ver cada día (pacientes, ingresos, horas libres) y arma el panel solo con esos." }
+];
+---
+<RecursoLayout
+  titulo="5 sistemas digitales para una clínica dental"
+  descripcion="Guía de 5 sistemas digitales para una clínica dental: qué resuelve cada uno, qué se necesita, cómo medirlo y por dónde empezar."
+  tipo="Guía"
+  barLabel="Guía · GENIDEIA"
+  palabraClave="CLÍNICA"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Estos son los 5 sistemas del carrusel. Para cada uno te contamos qué problema resuelve, qué necesitas, cómo medir tu punto de partida y el primer paso.</b></div>
+
+  <h2>Antes de empezar</h2>
+  <ul class="arrow">
+    <li><b>Cuida los datos de tus pacientes.</b> Antes de guardar o enviar información, revisa la normativa de protección de datos que te aplica.</li>
+    <li><b>Empieza por lo que más horas te quita.</b> Normalmente son los turnos y las ausencias.</li>
+    <li><b>Un sistema a la vez.</b> Cada uno funciona por separado y después se conectan.</li>
+  </ul>
+
+  {items.map((e) => (
+    <>
+      <h2>{e.n}. {e.nombre}</h2>
+      <p><b>Qué problema resuelve:</b> {e.problema}</p>
+      <p><b>Qué necesitas:</b> {e.necesitas}</p>
+      <p><b>Cómo medirlo antes de empezar:</b> {e.medir}</p>
+      <div class="note"><b>Primer paso:</b> {e.primero}</div>
+      {e.n === '3' ? (
+        <div class="minicta">
+          ¿Quieres ver cómo se aplicaría en tu empresa? Escríbenos y lo conversamos: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+        </div>
+      ) : null}
+    </>
+  ))}
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Sirve para un consultorio con un solo sillón?</b> Sí. Los turnos y los recordatorios son los que más se notan en consultorios chicos.</li>
+    <li><b>¿Tengo que dejar mi sistema actual?</b> No necesariamente. Se puede empezar conectando lo que ya usas.</li>
+    <li><b>¿Cuánto cuesta?</b> Depende de la cantidad de pacientes y de los sistemas que elijas. Escríbenos con tu caso y te pasamos el precio.</li>
+  </ul>
+
+  <div class="note"><b>Sobre los ejemplos del carrusel:</b> los nombres, montos y cifras son ficticios y sirven para mostrar la idea. El resultado real depende de cada empresa y de cómo se implemente.</div>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Medí mis llamadas perdidas y mis ausencias.</li>
+    <li>Elegí un sistema para empezar.</li>
+    <li>Revisé cómo cuidar los datos de mis pacientes.</li>
+    <li>Definí el primer paso de ese sistema.</li>
+  </ul>
+</RecursoLayout>

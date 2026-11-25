@@ -1,0 +1,66 @@
+---
+// Lead magnet B2B · palabra clave ManyChat: SOLUCIONES (carrusel animado "5 soluciones con IA para tu empresa", 25/11/2026)
+// URL pública: /recursos/soluciones-ia-empresas
+// CTA del carrusel: "Comenta SOLUCIONES y recibe la guía".
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const items = [
+  { n: '1', nombre: "Cotizar con una foto", problema: "El cliente espera días a que alguien vaya a medir antes de recibir un precio, y muchas veces se va con otro proveedor.", necesitas: "Tus precios por unidad (m², hora, material), un asistente conectado a WhatsApp y 3 o 4 fotos reales de trabajos anteriores para ajustarlo.", medir: "Anota cuántas cotizaciones pides por semana, cuánto tardas en responder cada una y cuántas terminan en trabajo. Si respondes en más de un día, hay clientes que se pierden en la espera.", primero: "Elige el tipo de trabajo más repetido y arma su tabla de precios. Empieza solo con ese." },
+  { n: '2', nombre: "Cargar la llamada al CRM sola", problema: "Después de cada llamada alguien pasa los datos a mano, y parte de la información se pierde o se carga tarde.", necesitas: "Un CRM (aunque sea una planilla), las llamadas grabadas con permiso de los clientes y una herramienta que transcriba y complete los campos.", medir: "Mide cuánto tiempo lleva cargar una llamada y cuántas llamadas por semana se quedan sin cargar.", primero: "Define los 4 o 5 datos que siempre necesitas (interés, fecha, cantidad, próximo paso) y empieza solo por esos." },
+  { n: '3', nombre: "Mapa de calor del local", problema: "Los turnos y el personal se arman por intuición, y la fila crece en horas que nadie midió.", necesitas: "Una o dos cámaras con IA que cuenten personas, sin guardar rostros, y un tablero con horas pico y zonas.", medir: "Durante una semana, anota a mano la cantidad de personas en 3 horarios del día. Es la línea de base para comparar.", primero: "Revisa con tu asesor las reglas de privacidad antes de instalar cámaras y avisa a clientes y equipo." },
+  { n: '4', nombre: "Aviso antes de perder un cliente", problema: "Un cliente que compraba seguido deja de hacerlo y nadie lo nota hasta que ya se fue.", necesitas: "El historial de compras o visitas de cada cliente y un criterio de cuánto tiempo sin comprar es demasiado.", medir: "Saca de tu historial a los clientes que compraban cada mes y no volvieron en 60 días. Esa lista ya muestra cuánto se escapa.", primero: "Escribe a mano a 5 de esos clientes con un mensaje cordial. El resultado te dice si vale automatizarlo." },
+  { n: '5', nombre: "Un gemelo digital de tu empresa", problema: "Cada área trabaja en su propia herramienta y nadie ve el panorama completo, así que los problemas se descubren tarde.", necesitas: "Acceso a los datos de ventas, stock, atención y entregas, y un tablero que los junte con alertas por área.", medir: "Lista qué herramienta usa cada área y quién necesita ver qué. Señala dónde la información llega con más de un día de retraso.", primero: "Conecta solo dos áreas que hoy se pisen (por ejemplo ventas y stock) y suma el resto después." }
+];
+---
+<RecursoLayout
+  titulo="5 soluciones con IA que tu empresa puede tener"
+  descripcion="Guía de 5 soluciones con IA para empresas: qué problema resuelve cada una, qué se necesita, cómo medirlo antes de empezar y cuál es el primer paso."
+  tipo="Guía"
+  barLabel="Guía · GENIDEIA"
+  palabraClave="SOLUCIONES"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Estas son las 5 soluciones del carrusel. Para cada una te contamos qué problema resuelve, qué necesitas, cómo medir tu punto de partida y por dónde empezar sin complicarte.</b></div>
+
+  <h2>Antes de elegir</h2>
+  <ul class="arrow">
+    <li><b>Empieza por un dolor, no por una herramienta.</b> Elige la solución que ataque el problema que hoy más tiempo o plata te cuesta.</li>
+    <li><b>Mide primero.</b> Sin un punto de partida no vas a saber si funcionó.</li>
+    <li><b>Una a la vez.</b> Cada solución se puede aplicar por separado y después sumar las demás.</li>
+  </ul>
+
+  {items.map((e) => (
+    <>
+      <h2>{e.n}. {e.nombre}</h2>
+      <p><b>Qué problema resuelve:</b> {e.problema}</p>
+      <p><b>Qué necesitas:</b> {e.necesitas}</p>
+      <p><b>Cómo medirlo antes de empezar:</b> {e.medir}</p>
+      <div class="note"><b>Primer paso:</b> {e.primero}</div>
+      {e.n === '3' ? (
+        <div class="minicta">
+          ¿Quieres ver cómo se aplicaría en tu empresa? Escríbenos y lo conversamos: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+        </div>
+      ) : null}
+    </>
+  ))}
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Necesito cambiar todo mi sistema?</b> No. Estas soluciones se pueden conectar a lo que ya usas (WhatsApp, planillas, CRM).</li>
+    <li><b>¿Cuánto tarda ponerlas en marcha?</b> Depende de la solución y de tus datos. Lo definimos después de conocer tu caso.</li>
+    <li><b>¿Cuánto cuesta?</b> Depende de la solución y del volumen de tu empresa. Escríbenos con tu caso y te pasamos el precio.</li>
+  </ul>
+
+  <div class="note"><b>Sobre los ejemplos del carrusel:</b> los nombres, montos y cifras son ficticios y sirven para mostrar la idea. El resultado real depende de cada empresa y de cómo se implemente.</div>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Elegí la solución que ataca mi mayor dolor.</li>
+    <li>Medí mi punto de partida durante una semana.</li>
+    <li>Definí el primer paso chico de esa solución.</li>
+    <li>Reservé una charla para ver cómo aplicarlo.</li>
+  </ul>
+</RecursoLayout>

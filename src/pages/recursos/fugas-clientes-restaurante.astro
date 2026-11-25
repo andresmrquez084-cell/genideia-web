@@ -1,0 +1,67 @@
+---
+// Lead magnet B2B · palabra clave ManyChat: CLIENTES (carrusel animado "5 lugares donde tu restaurante pierde clientes", 25/11/2026)
+// URL pública: /recursos/fugas-clientes-restaurante
+// CTA del carrusel: "Comenta CLIENTES y recibe la guía".
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const items = [
+  { n: '1', nombre: "El WhatsApp sin respuesta", problema: "Los mensajes llegan en plena hora de servicio y se contestan tarde, o nunca. El cliente reserva en otro lugar.", necesitas: "Un número de WhatsApp Business, tus horarios y mesas disponibles, y respuestas para las 10 preguntas más comunes.", medir: "Anota la hora en que llega cada mensaje y la hora en que lo contestas durante una semana. Calcula el promedio de espera.", primero: "Activa mensajes de bienvenida y respuestas rápidas en WhatsApp Business. Es gratis y se arma en una hora." },
+  { n: '2', nombre: "La reserva que nadie confirma", problema: "Hay mesas reservadas que quedan vacías porque el cliente olvidó la reserva o no avisó que no viene.", necesitas: "El listado de reservas con teléfono y un recordatorio por WhatsApp unas horas antes.", medir: "Cuenta cuántas reservas de la semana no se presentaron y multiplica por el consumo promedio por mesa: eso es lo que se pierde.", primero: "Confirma a mano las reservas de los fines de semana durante dos semanas y compara las ausencias." },
+  { n: '3', nombre: "Mesas vacías en la hora que más vale", problema: "En ciertas horas sobran mesas mientras otros restaurantes se llenan, y nadie lo mide.", necesitas: "Un registro simple de ocupación por hora (aunque sea en una planilla) y una promoción para esa franja.", medir: "Anota cuántas mesas hay ocupadas a las 20:00, 21:00 y 22:00 durante dos semanas y detecta el hueco.", primero: "Prueba una promoción pequeña para esa hora (un postre, una entrada) y mide si cambia la ocupación." },
+  { n: '4', nombre: "El cliente que no vuelve", problema: "El cliente vino una vez y nadie le escribió después. Sin recordatorio, se olvida del lugar.", necesitas: "Un contacto de cada cliente (con su permiso) y un mensaje de agradecimiento con un motivo para volver.", medir: "De los clientes del mes pasado, cuenta cuántos volvieron. Ese porcentaje es tu tasa de retorno.", primero: "Envía un mensaje de agradecimiento a los clientes de esta semana y mira cuántos responden o vuelven." },
+  { n: '5', nombre: "Las reseñas sin responder", problema: "Las reseñas, sobre todo las negativas, quedan a la vista de quien busca dónde ir, sin una respuesta tuya.", necesitas: "Acceso a tu perfil de reseñas y una guía de tono para responder con cordialidad.", medir: "Cuenta cuántas reseñas tienes sin responder y desde hace cuánto, y anota tu calificación promedio actual.", primero: "Responde hoy las 5 reseñas más recientes, empezando por las negativas." }
+];
+---
+<RecursoLayout
+  titulo="5 lugares donde un restaurante pierde clientes sin darse cuenta"
+  descripcion="Guía de 5 fugas de clientes en un restaurante: cómo medir cada una antes de empezar y el primer paso para cerrarla."
+  tipo="Guía"
+  barLabel="Guía · GENIDEIA"
+  palabraClave="CLIENTES"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Estas son las 5 fugas del carrusel. Para cada una te explicamos qué pasa, qué necesitas para cerrarla, cómo medirla antes de empezar y cuál es el primer paso.</b></div>
+
+  <h2>Cómo usar esta guía</h2>
+  <ul class="arrow">
+    <li><b>Mide antes de arreglar.</b> Cada fuga tiene un número simple que puedes sacar esta semana.</li>
+    <li><b>Cierra una fuga a la vez.</b> Empieza por la que más plata te cuesta.</li>
+    <li><b>Lo manual sirve para probar.</b> Si funciona a mano, vale la pena automatizarlo.</li>
+  </ul>
+
+  {items.map((e) => (
+    <>
+      <h2>{e.n}. {e.nombre}</h2>
+      <p><b>Qué problema resuelve:</b> {e.problema}</p>
+      <p><b>Qué necesitas:</b> {e.necesitas}</p>
+      <p><b>Cómo medirlo antes de empezar:</b> {e.medir}</p>
+      <div class="note"><b>Primer paso:</b> {e.primero}</div>
+      {e.n === '3' ? (
+        <div class="minicta">
+          ¿Quieres ver cómo se aplicaría en tu empresa? Escríbenos y lo conversamos: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+        </div>
+      ) : null}
+    </>
+  ))}
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Sirve para un restaurante chico?</b> Sí. Varias de estas mejoras se empiezan a mano, sin gastar.</li>
+    <li><b>¿Tengo que usar un sistema nuevo?</b> No necesariamente. Se puede empezar con WhatsApp Business y una planilla.</li>
+    <li><b>¿Cuánto cuesta automatizarlo?</b> Depende de cuántos mensajes, reservas y clientes tengas. Escríbenos con tu caso y te pasamos el precio.</li>
+  </ul>
+
+  <div class="note"><b>Sobre los ejemplos del carrusel:</b> los nombres, montos y cifras son ficticios y sirven para mostrar la idea. El resultado real depende de cada empresa y de cómo se implemente.</div>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Medí mi tiempo de respuesta por una semana.</li>
+    <li>Conté las reservas que no se presentaron.</li>
+    <li>Identifiqué mi hora más floja.</li>
+    <li>Escribí a los clientes de esta semana.</li>
+    <li>Respondí mis últimas 5 reseñas.</li>
+  </ul>
+</RecursoLayout>
