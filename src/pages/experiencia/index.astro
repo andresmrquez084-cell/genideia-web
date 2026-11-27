@@ -2,8 +2,9 @@
 // Portfolio de experiencia aplicada: evolución, proyectos, diagnósticos y equipo.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PROJECTS from '../../data/experiencia.json';
+import ProtoCover from '../../components/ProtoCover.astro';
 
-type P = (typeof PROJECTS)[number] & { mock?: string; url?: string; actionLabel?: string };
+type P = (typeof PROJECTS)[number] & { mock?: string; url?: string; actionLabel?: string; proto?: any };
 const projects = PROJECTS as P[];
 // Ordenado por el problema que resuelve, no por tecnología. Presencia digital va al final: fue la primera etapa.
 const CATS = ['Todos', 'E-commerce', 'Gestión interna', 'Diagnósticos', 'Soluciones propias', 'Presencia digital'];
@@ -167,17 +168,10 @@ const pad = (n: number) => String(n).padStart(2, '0');
             <div class="ex-cover">
               {p.image ? (
                 <img src={p.image} alt="" loading="lazy" decoding="async" />
+              ) : p.proto ? (
+                <ProtoCover p={p.proto} />
               ) : (
-                <div class={`ex-mock m-${p.mock}`} aria-hidden="true">
-                  {p.mock === 'landing' && (<><i class="a"></i><i class="b"></i><i class="c"></i><i class="btn">Agendar</i></>)}
-                  {p.mock === 'route' && (<svg viewBox="0 0 300 170"><path class="rt" d="M20 140 C 80 140, 70 40, 140 60 S 220 140, 280 30" /><circle r="6" class="mv"><animateMotion dur="4s" repeatCount="indefinite" path="M20 140 C 80 140, 70 40, 140 60 S 220 140, 280 30" /></circle><circle cx="20" cy="140" r="5" class="pt" /><circle cx="140" cy="60" r="5" class="pt" /><circle cx="280" cy="30" r="5" class="pt" /></svg>)}
-                  {p.mock === 'content' && Array.from({ length: 12 }).map((_, k) => <i style={`--k:${k}`}></i>)}
-                  {p.mock === 'gym' && ['Socio 0142', 'Socio 0278', 'Socio 0311', 'Socio 0459'].map((s, k) => <div class="r" style={`--k:${k}`}><span>{s}</span><b>{k === 2 ? 'Renovar' : 'Activo'}</b></div>)}
-                  {p.mock === 'sign' && (<><div class="doc"><i></i><i></i><i></i><i></i><svg viewBox="0 0 160 50"><path d="M5 35 C 25 5, 35 45, 55 25 S 85 5, 95 30 S 130 40, 155 15" /></svg></div><b class="st">Firmado ✓</b></>)}
-                  {p.mock === 'agents' && (<><div class="hub">Agentes</div>{[['Empresa A', 20, 72], ['Empresa B', 50, 88], ['Empresa C', 80, 72], ['WhatsApp', 80, 34], ['Email', 22, 40]].map((n, k) => <span style={`--k:${k};left:${n[1]}%;top:${n[2]}%`}>{n[0]}</span>)}</>)}
-                  {p.mock === 'crm' && ['Nuevo', 'Contactado', 'Reunión', 'Propuesta'].map((c, k) => <div class="col" style={`--k:${k}`}><small>{c}</small>{Array.from({ length: 3 - (k > 1 ? 1 : 0) }).map(() => <i></i>)}</div>)}
-                  {p.mock === 'chat' && (<><span class="in">¿Tenés lugar el jueves?</span><span class="out">Sí, a las 15:00 o 17:30.</span><span class="in">15:00 dale</span><span class="out">Listo, quedó agendado ✓</span></>)}
-                </div>
+                <div class="ex-mock" aria-hidden="true"></div>
               )}
               <span class="ex-state"><i class={`ex-dot ${p.stateClass}`}></i>{p.state}</span>
             </div>
@@ -405,44 +399,10 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .ex-area b{display:block;margin:6px 0 6px;font-family:Montserrat,sans-serif;font-size:16px}
   .ex-area sup{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:400;color:#7E8796;margin-left:6px}
   .ex-area p{margin:0;font-size:13px;line-height:1.45;color:#B8BEC7}
-  /* mocks sin captura */
+  /* portada vacía (sin imagen ni prototipo) */
   .ex-mock{position:absolute;inset:0;padding:22px;background:radial-gradient(circle at 80% 10%,rgba(0,200,255,.22),transparent 55%),linear-gradient(160deg,#0C1A33,#060C18)}
-  .m-landing i{display:block;border-radius:8px;background:rgba(255,255,255,.1);margin-bottom:10px}
-  .m-landing .a{width:60%;height:18px;background:linear-gradient(90deg,#fff,#BFEFFF)}.m-landing .b{width:80%;height:10px}.m-landing .c{width:45%;height:10px}
-  .m-landing .btn{font-style:normal;display:inline-block;width:auto;height:auto;padding:8px 16px;margin-top:8px;font-size:12px;font-family:Poppins,sans-serif;color:#fff;background:linear-gradient(135deg,#007BFF,#00C8FF);border-radius:999px;animation:exPulse 2s infinite}
-  @keyframes exPulse{50%{box-shadow:0 0 0 10px rgba(0,200,255,0),0 0 24px rgba(0,200,255,.6)}}
-  .m-route svg{width:100%;height:100%}
-  .m-route .rt{fill:none;stroke:rgba(191,239,255,.35);stroke-width:2;stroke-dasharray:6 7;animation:exDash 1.6s linear infinite}
-  @keyframes exDash{to{stroke-dashoffset:-26}}
-  .m-route .mv{fill:#00C8FF;filter:drop-shadow(0 0 6px #00C8FF)}.m-route .pt{fill:#0C1A33;stroke:#BFEFFF;stroke-width:2}
-  .m-content{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;align-content:center}
-  .m-content i{aspect-ratio:1;border-radius:8px;background:rgba(255,255,255,.07);animation:exTile 4.8s calc(var(--k)*.3s) infinite}
-  @keyframes exTile{0%,10%{background:rgba(255,255,255,.07)}20%,70%{background:linear-gradient(135deg,rgba(0,123,255,.7),rgba(0,200,255,.4))}85%,100%{background:rgba(255,255,255,.07)}}
-  .m-gym{display:grid;gap:8px;align-content:center}
-  .m-gym .r{display:flex;justify-content:space-between;padding:9px 12px;border-radius:10px;background:rgba(255,255,255,.05);font-family:"JetBrains Mono",monospace;font-size:11px;color:#B8BEC7;animation:exIn .6s calc(var(--k)*.25s) both}
-  .m-gym .r b{font-weight:500;color:#4BE39A}.m-gym .r:nth-child(3) b{color:#F5B94B}
   @keyframes exIn{from{opacity:0;transform:translateY(8px)}}
-  .m-sign{display:grid;place-items:center}
-  .m-sign .doc{width:62%;padding:14px;border-radius:8px;background:#F2F4F7}
-  .m-sign .doc i{display:block;height:6px;border-radius:3px;background:#CDD3DC;margin-bottom:7px}.m-sign .doc i:nth-child(2){width:80%}.m-sign .doc i:nth-child(4){width:55%}
-  .m-sign svg{width:70%;height:auto}.m-sign path{fill:none;stroke:#007BFF;stroke-width:3;stroke-linecap:round;stroke-dasharray:260;stroke-dashoffset:260;animation:exSign 3.6s infinite}
-  @keyframes exSign{50%,90%{stroke-dashoffset:0}100%{stroke-dashoffset:0;opacity:0}}
-  .m-sign .st{position:absolute;right:18px;bottom:18px;font-family:"JetBrains Mono",monospace;font-size:11px;color:#4BE39A;animation:exFade 3.6s infinite}
-  @keyframes exFade{0%,45%{opacity:0}55%,90%{opacity:1}100%{opacity:0}}
-  .m-chat{display:flex;flex-direction:column;justify-content:center;gap:8px}
-  .m-chat span{max-width:72%;padding:8px 12px;border-radius:14px;font-size:12px;animation:exChat 6s infinite both}
-  .m-chat .in{align-self:flex-start;background:rgba(255,255,255,.1);border-bottom-left-radius:4px}
-  .m-chat .out{align-self:flex-end;background:linear-gradient(135deg,#0A7A4F,#12A06A);border-bottom-right-radius:4px}
-  .m-chat span:nth-child(2){animation-delay:.9s}.m-chat span:nth-child(3){animation-delay:1.8s}.m-chat span:nth-child(4){animation-delay:2.7s}
-  @keyframes exChat{0%{opacity:0;transform:translateY(8px)}8%,85%{opacity:1;transform:none}100%{opacity:0}}
 
-  .m-agents{display:grid;place-items:center}
-  .m-agents .hub{position:relative;z-index:1;padding:10px 16px;border-radius:999px;font-family:Montserrat,sans-serif;font-size:13px;color:#fff;background:linear-gradient(135deg,#007BFF,#00C8FF);box-shadow:0 0 30px -4px #00C8FF}
-  .m-agents span{position:absolute;padding:5px 10px;border-radius:999px;font-family:"JetBrains Mono",monospace;font-size:10.5px;color:#BFEFFF;background:#0B1324;box-shadow:inset 0 0 0 1px rgba(0,200,255,.35);translate:-50% -50%;white-space:nowrap;animation:exIn .6s calc(var(--k)*.2s) both}
-  .m-crm{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;align-content:center}
-  .m-crm .col{display:grid;gap:6px;align-content:start}
-  .m-crm small{font-family:"JetBrains Mono",monospace;font-size:9.5px;color:#7E8796;margin-bottom:2px}
-  .m-crm i{display:block;height:26px;border-radius:7px;background:rgba(255,255,255,.07);box-shadow:inset 3px 0 0 rgba(0,200,255,.6);animation:exIn .5s calc(var(--k)*.2s) both}
   /* diagnósticos */
   .ex-diag{display:grid;grid-template-columns:1fr 1fr;gap:22px}
   .ex-kl-b{padding:22px}
@@ -505,6 +465,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .ex-m-img img{width:100%;display:block;max-height:440px;object-fit:cover;object-position:top;animation:exZoom 1s cubic-bezier(.2,.8,.2,1)}
   @keyframes exZoom{from{transform:scale(1.06);opacity:.4}}
   .ex-m-img .ex-mock{position:relative;height:300px}
+  .ex-m-img:has(.pc){max-height:none}
+  .ex-m-img .pc{position:relative;width:100%;aspect-ratio:16/10}
   .ex-m-b{padding:26px 30px 30px}
   .ex-m-b h2{margin:12px 0 4px;font-size:clamp(24px,3vw,34px);letter-spacing:-.03em;line-height:1.1}
   .ex-m-meta{display:flex;flex-wrap:wrap;gap:8px}
@@ -550,7 +512,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     .ex-m-b{padding:20px}.ex-m-cols{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){
-    .ex-flow span,.ex-mock *,.ex-hub .ring,.ex-hub .nd.warn{animation:none!important}
+    .ex-flow span,.ex-hub .ring,.ex-hub .nd.warn{animation:none!important}
     .ex-dk{transition:none}
   }
 </style>
@@ -627,7 +589,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     var p = P.find(function (x) { return x.id === id; }); if (!p) return;
     var L = list(); cur = L.indexOf(id); if (cur < 0) { L = order; cur = order.indexOf(id); }
     mi.textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(L.length).padStart(2, '0');
-    var src = document.querySelector('.ex-card[data-open="' + id + '"] .ex-mock');
+    var src = document.querySelector('.ex-card[data-open="' + id + '"] .ex-cover > .pc, .ex-card[data-open="' + id + '"] .ex-mock');
     var img = p.image ? '<div class="ex-m-img"><img src="' + full(p.image) + '" alt="' + esc(p.title) + '"></div>' : (src ? '<div class="ex-m-img">' + src.outerHTML + '</div>' : '');
     var how = p.cat === 'Diagnósticos' ? 'Es un diagnóstico / diseño de solución. No se presenta como implantación productiva ni como resultado económico ya obtenido.' : 'El estado indicado arriba describe el alcance real del proyecto.';
     var act = p.access === 'public' && p.url ? '<a class="px-btn p sm" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer">' + esc(p.actionLabel || 'Abrir ↗') + '</a>' : '<small>Acceso privado: se muestra con capturas o explicación del alcance.</small>';

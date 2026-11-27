@@ -1,0 +1,118 @@
+---
+// Portada de proyecto con el lenguaje de las demos de propuestas-interactivas:
+// ventana de sistema (menú, indicador, curva, flujo) + celular con la acción del caso.
+// Todo se mide en cqw para que la misma pieza sirva en la tarjeta y en la ficha ampliada.
+// Los datos son de ejemplo: nunca cargar información real de clientes acá.
+export interface Proto {
+  app: string;
+  nav: string[];
+  activo?: number;
+  kicker: string;
+  titulo: string;
+  num: string;
+  numLabel: string;
+  num2?: string;
+  num2Label?: string;
+  pasos: [string, string][];
+  estado: string;
+  movil?: { k: string; t: string; b: string; nota?: string };
+}
+const { p } = Astro.props as { p: Proto };
+const act = p.activo ?? 0;
+---
+<div class="pc" aria-hidden="true">
+  <div class={`pc-win ${p.movil ? '' : 'full'}`}>
+    <div class="pc-top"><b>✦ {p.app} · GENIDEIA</b><span>DEMO / DATOS DE EJEMPLO</span><i></i></div>
+    <div class="pc-body">
+      <nav class="pc-nav">
+        <small>OPERACIONES</small>
+        {p.nav.map((n, i) => <span class={i === act ? 'on' : ''}>{n}</span>)}
+      </nav>
+      <div class="pc-main">
+        <small class="pc-k">{p.kicker}</small>
+        <b class="pc-t">{p.titulo}</b>
+        <div class="pc-nums">
+          <div><b class="pc-n">{p.num}</b><small>{p.numLabel}</small></div>
+          {p.num2 && <div class="pc-n2"><small>{p.num2Label}</small><b>{p.num2}</b></div>}
+          <svg class="pc-curve" viewBox="0 0 300 90" preserveAspectRatio="none">
+            <defs><linearGradient id="pcg" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#26c9ec" stop-opacity=".28" /><stop offset="1" stop-color="#26c9ec" stop-opacity="0" /></linearGradient></defs>
+            <path d="M0 82 C40 78 60 74 90 58 S140 50 165 62 S210 40 235 24 S275 4 300 14 L300 90 L0 90Z" fill="url(#pcg)" />
+            <path class="ln" d="M0 82 C40 78 60 74 90 58 S140 50 165 62 S210 40 235 24 S275 4 300 14" />
+          </svg>
+        </div>
+        <small class="pc-k pc-fk">FLUJO DE LA OPERACIÓN</small>
+        <div class="pc-flow">
+          {p.pasos.slice(0, 2).map((s, i) => <div><small>{String(i + 1).padStart(2, '0')}</small><b>{s[0]}</b><span>{s[1]}</span></div>)}
+        </div>
+        <div class="pc-st"><i></i>{p.estado}<em><b></b></em></div>
+      </div>
+    </div>
+  </div>
+  {p.movil && (
+    <div class="pc-ph">
+      <div class="pc-ph-s">
+        <div class="pc-ph-bar"><span>9:41</span><i></i></div>
+        <b class="pc-ph-brand">✦ GENIDEIA</b>
+        <small>{p.movil.k}</small>
+        <b class="pc-ph-t">{p.movil.t}</b>
+        <div class="pc-ph-c"><span>↗</span>{p.movil.b}</div>
+        <div class="pc-ph-btn">Revisar</div>
+        <em>{p.movil.nota || 'Simulación · Sin datos reales'}</em>
+      </div>
+    </div>
+  )}
+</div>
+
+<style is:global>
+  .pc{position:absolute;inset:0;container-type:inline-size;overflow:hidden;font-family:Poppins,sans-serif;color:#E8F1FA;
+    background:radial-gradient(circle at 85% 0%,rgba(0,140,255,.28),transparent 55%),linear-gradient(160deg,#0B1A33,#050B17)}
+  .pc *{box-sizing:border-box}
+  .pc-win{position:absolute;left:4cqw;top:13cqw;right:24cqw;bottom:4cqw;display:flex;flex-direction:column;border-radius:1.8cqw;overflow:hidden;
+    background:linear-gradient(170deg,#0F2440,#0A1628 60%);box-shadow:0 0 0 .25cqw rgba(120,190,255,.16),0 3cqw 6cqw -2cqw rgba(0,0,0,.6)}
+  .pc-win.full{right:4cqw}
+  .pc-top{display:flex;align-items:center;gap:2cqw;padding:1.6cqw 2.2cqw;border-bottom:1px solid rgba(255,255,255,.07)}
+  .pc-top b{font-family:Montserrat,sans-serif;font-size:1.55cqw;letter-spacing:.12em;white-space:nowrap}
+  .pc-top span{margin-left:auto;font-size:1.05cqw;letter-spacing:.14em;color:#7E9AB8;white-space:nowrap}
+  .pc-top i{width:1.1cqw;height:1.1cqw;border-radius:50%;background:#3EE0B5;box-shadow:0 0 1.2cqw #3EE0B5;flex:none}
+  .pc-body{flex:1;display:grid;grid-template-columns:22% 1fr;min-height:0}
+  .pc-nav{display:flex;flex-direction:column;gap:.5cqw;padding:2cqw 1.4cqw;border-right:1px solid rgba(255,255,255,.07)}
+  .pc-nav small{font-size:.95cqw;letter-spacing:.18em;color:#6F88A6;margin:0 0 .8cqw .8cqw}
+  .pc-nav span{display:flex;align-items:center;gap:1cqw;padding:1cqw .9cqw;border-radius:1cqw;font-size:1.35cqw;color:#B9C8D9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pc-nav span::before{content:"";flex:none;width:.95cqw;height:.95cqw;border-radius:50%;box-shadow:inset 0 0 0 .2cqw #8FA6C0}
+  .pc-nav span.on{color:#fff;background:rgba(38,201,236,.12)}
+  .pc-nav span.on::before{background:#3EE0B5;box-shadow:0 0 .9cqw #3EE0B5}
+  .pc-main{display:flex;flex-direction:column;padding:2.2cqw 2.6cqw 1.6cqw;min-width:0}
+  .pc-k{font-size:1.05cqw;letter-spacing:.16em;color:#3FD0E8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pc-t{font-family:Montserrat,sans-serif;font-size:3.1cqw;line-height:1.1;letter-spacing:-.02em;margin:.6cqw 0 1cqw}
+  .pc-nums{position:relative;display:flex;align-items:flex-end;gap:3cqw;min-height:9cqw;padding-bottom:1cqw;border-bottom:1px solid rgba(255,255,255,.07)}
+  .pc-nums>div{position:relative;z-index:1;display:grid}
+  .pc-n{font-family:Montserrat,sans-serif;font-size:6cqw;line-height:1}
+  .pc-nums small{font-size:1cqw;letter-spacing:.14em;color:#A9BBCF;margin-top:.5cqw}
+  .pc-n2{align-self:center}.pc-n2 b{font-family:Montserrat,sans-serif;font-size:2.4cqw;color:#3FD0E8}
+  .pc-curve{position:absolute;right:0;bottom:0;width:58%;height:100%}
+  .pc-curve .ln{fill:none;stroke:#3FC6EA;stroke-width:2.4;stroke-dasharray:420;stroke-dashoffset:420;animation:pcDraw 2.4s .3s cubic-bezier(.3,.7,.2,1) forwards}
+  @keyframes pcDraw{to{stroke-dashoffset:0}}
+  .pc-fk{margin-top:1.4cqw;color:#D7E3F0}
+  .pc-flow{display:grid;grid-template-columns:1fr 1fr;gap:2cqw;margin-top:1cqw}
+  .pc-flow div{display:grid;gap:.3cqw;padding:1.2cqw 1.5cqw;border-radius:1.4cqw;background:rgba(255,255,255,.035);box-shadow:inset 0 0 0 .18cqw rgba(120,190,255,.16);min-width:0}
+  .pc-flow small{font-size:1cqw;color:#3FD0E8}
+  .pc-flow b{font-size:1.35cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pc-flow span{font-size:1.1cqw;color:#8FA6C0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pc-st{display:flex;align-items:center;gap:1cqw;margin-top:auto;padding-top:1.2cqw;font-size:1.15cqw;color:#C9D6E4}
+  .pc-st i{width:1cqw;height:1cqw;border-radius:50%;background:#3EE0B5;flex:none}
+  .pc-st em{margin-left:auto;width:9cqw;height:.35cqw;border-radius:1cqw;background:rgba(255,255,255,.12);overflow:hidden}
+  .pc-st em b{display:block;height:100%;width:30%;background:#3FD0E8;animation:pcBar 3.2s ease-in-out infinite alternate}
+  @keyframes pcBar{to{width:85%}}
+  .pc-ph{position:absolute;right:3cqw;top:14cqw;bottom:3cqw;aspect-ratio:.52;padding:.9cqw;border-radius:3.2cqw;background:#0C1A2E;box-shadow:0 0 0 .3cqw rgba(120,190,255,.22),0 3cqw 6cqw -2cqw rgba(0,0,0,.7)}
+  .pc-ph-s{height:100%;display:flex;flex-direction:column;padding:1.4cqw 1.5cqw;border-radius:2.5cqw;background:linear-gradient(180deg,#F4F8FC,#E6EEF6);color:#0D2440;overflow:hidden}
+  .pc-ph-bar{display:flex;align-items:center;justify-content:space-between;font-size:1cqw;font-weight:600;margin-bottom:1.6cqw}
+  .pc-ph-bar i{width:5cqw;height:1.3cqw;border-radius:1cqw;background:#0D2440}
+  .pc-ph-brand{font-size:1.15cqw;letter-spacing:.14em;color:#0E5C9C;margin-bottom:1.4cqw}
+  .pc-ph-s>small{font-size:.9cqw;letter-spacing:.14em;color:#0E7EA8;font-weight:600}
+  .pc-ph-t{font-family:Montserrat,sans-serif;font-size:1.6cqw;line-height:1.15;margin:.5cqw 0 1.2cqw}
+  .pc-ph-c{display:grid;justify-items:center;gap:.6cqw;padding:1.4cqw .8cqw;border-radius:1.6cqw;background:linear-gradient(160deg,#103A66,#0A5C8C);color:#fff;font-size:1.05cqw;text-align:center}
+  .pc-ph-c span{display:grid;place-items:center;width:3.6cqw;height:3.6cqw;border-radius:50%;box-shadow:inset 0 0 0 .2cqw #6FE3F5;font-size:1.6cqw;color:#6FE3F5}
+  .pc-ph-btn{margin-top:auto;padding:1cqw;border-radius:1.2cqw;text-align:center;font-size:1.1cqw;font-weight:600;color:#fff;background:linear-gradient(90deg,#0E4C86,#1186B0)}
+  .pc-ph-s>em{font-style:normal;font-size:.8cqw;color:#5D7690;text-align:center;margin-top:.7cqw}
+  @media (prefers-reduced-motion:reduce){.pc-curve .ln{animation:none;stroke-dashoffset:0}.pc-st em b{animation:none}}
+</style>
