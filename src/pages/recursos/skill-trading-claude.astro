@@ -1,0 +1,130 @@
+---
+// Lead magnet · palabra clave ManyChat: TRADE (reel Mapa Pop "Skill de trading para Claude", 27/11/2026)
+// URL pública: /recursos/skill-trading-claude
+// Fuente verificada el 27/11/2026: github.com/Jakeschincariol/day-trader-skill (MIT, sin registro ni API key, Python 3.8+).
+// 11 skills; la "máquina del tiempo" es /trader-timemachine: 10.000 sesiones simuladas + cada vez que el setup apareció antes,
+// construida con los últimos 60 días de velas de 5 minutos. Avisos del README resumidos abajo (no es asesoramiento financiero).
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const repo = 'https://github.com/Jakeschincariol/day-trader-skill';
+
+const plugin = `/plugin marketplace add Jakeschincariol/day-trader-skill
+/plugin install day-trader-skill@day-trader-skill`;
+
+const carpetas = `git clone https://github.com/Jakeschincariol/day-trader-skill.git
+cp -r day-trader-skill/trader-* ~/.claude/skills/`;
+
+const enlace = `https://github.com/Jakeschincariol/day-trader-skill
+install skill`;
+
+const skills = [
+  ['trader-scanner', 'Revisa miles de gráficos buscando setups: rupturas del rango de apertura, banderas, rebotes de sobreventa.'],
+  ['trader-news', 'Sigue las noticias de cada acción que mirás y marca cuáles la están moviendo.'],
+  ['trader-entry', 'Mira un setup vela por vela y te avisa el momento de entrar.'],
+  ['trader-exit', 'Define tu stop y tu objetivo antes de entrar, para que sepas cuándo salir.'],
+  ['trader-timemachine', 'La máquina del tiempo: simula 10.000 sesiones de esa operación y repasa cada vez que el setup apareció antes.'],
+  ['trader-risk', 'Revisa cada operación contra tus límites y frena la que se pase.'],
+  ['trader-budget', 'Calcula el tamaño de cada posición según tu presupuesto y tu pérdida máxima por operación.'],
+  ['trader-broker', 'Manda las órdenes aprobadas a tu bróker. Por defecto en modo práctica (paper), y nunca sin tu "sí".'],
+  ['trader-alerts', 'Te avisa cuando un precio, un stop o la apertura del mercado llegan.'],
+  ['trader-analyst', 'Lee los reportes de resultados de las empresas y te resume qué cambió.'],
+  ['trader-pelosi', 'Lee las declaraciones públicas de compras y ventas de acciones de congresistas de EE. UU. apenas se publican.'],
+];
+
+const prompts = [
+  `Usá trader-scanner y buscá rupturas del rango de apertura en estas acciones: [tu lista].`,
+  `Con trader-timemachine, simulá esta operación antes de que arriesgue nada: [acción, precio de entrada, stop y objetivo].`,
+  `Con trader-budget, decime de qué tamaño sería la posición si mi presupuesto es [monto] y no quiero perder más de [monto] por operación.`,
+];
+---
+<RecursoLayout
+  titulo="Skill de trading para Claude: instalación completa"
+  descripcion="Las 11 skills gratis que convierten a Claude en un analista de trading: qué hace cada una, cómo instalarlas y cómo usar la máquina del tiempo sin arriesgar plata."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="TRADE"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Son 11 skills gratis para Claude: buscan oportunidades en los gráficos, siguen las noticias, te dicen cuándo entrar y simulan la operación 10.000 veces antes de que arriesgues un dólar.</b></div>
+
+  <div class="alert"><b>Antes de empezar:</b> esto no es asesoramiento financiero. Es software que lee datos públicos y hace cuentas; no conoce tu situación ni ve el futuro. La mayoría de las personas que hacen day trading pierden plata. Probá siempre en modo práctica primero y, si necesitás consejo, hablá con un profesional habilitado.</div>
+
+  <h2>El proyecto</h2>
+  <p>Gratis, licencia MIT, sin registro y sin API key. Usa datos públicos (gráficos de Yahoo Finance, listas de Nasdaq, la SEC y la Cámara de Representantes de EE. UU.). Necesitás Python 3.8 o más nuevo.</p>
+  <p>Repositorio oficial: <a href={repo} target="_blank" rel="noopener noreferrer">{repo.replace('https://', '')}</a></p>
+
+  <h2>Instalarla: opción 1, como plugin (recomendada)</h2>
+  <ol class="steps">
+    <li>Abrí Claude Code.</li>
+    <li>Pegá los dos comandos.</li>
+    <li>Las skills aparecen como <b>/day-trader-skill:trader-scanner</b>, etc.</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{plugin}</code></pre>
+  </div>
+
+  <h2>Opción 2: pegarle el enlace a Claude</h2>
+  <p>Es lo que muestra el video: pegás esto en Claude y él la instala.</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{enlace}</code></pre>
+  </div>
+
+  <h2>Opción 3: copiar las carpetas</h2>
+  <p>Si preferís nombres cortos (<b>/trader-scanner</b> en vez de <b>/day-trader-skill:trader-scanner</b>), pegá esto en la terminal:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{carpetas}</code></pre>
+  </div>
+
+  <h2>Las 11 skills</h2>
+  <ul class="arrow">
+    {skills.map(([n, d]) => <li><b>/{n}:</b> {d}</li>)}
+  </ul>
+
+  <h2>La máquina del tiempo, bien entendida</h2>
+  <p>Toma los últimos 60 días de velas de 5 minutos de esa acción, simula 10.000 sesiones posibles y además repasa cada vez que ese mismo setup apareció antes. Te devuelve las probabilidades de que la operación salga bien o mal.</p>
+  <div class="note"><b>Es una simulación, no una predicción.</b> El futuro puede traer cosas que esos 60 días no tuvieron: un reporte de resultados, una suspensión, una noticia. Usala como chequeo de realidad, nunca como promesa.</div>
+
+  <div class="minicta">
+    La clase completa, de usar Claude a construir tu primer sistema, es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Tres pedidos para arrancar</h2>
+  <p>Completá lo que está entre corchetes con tus datos:</p>
+  {prompts.map((p) => (
+    <div class="codewrap">
+      <button class="copy">Copiar</button>
+      <pre class="code"><code>{p}</code></pre>
+    </div>
+  ))}
+
+  <h2>Reglas de seguridad del propio proyecto</h2>
+  <ul class="arrow">
+    <li><b>Ninguna orden pasa sin tu "sí".</b> Solo /trader-broker puede mandar una orden, y solo después de que /trader-risk la apruebe y vos escribas "sí" en el chat.</li>
+    <li><b>Primero en práctica.</b> El modo paper viene activado por defecto. Las claves del bróker van en variables de entorno, nunca en el chat.</li>
+    <li><b>En Claude, el permiso del bróker en "Needs approval",</b> nunca en "Always allow". Así tenés un segundo control.</li>
+    <li><b>Los datos son gratis y no oficiales.</b> Pueden llegar con demora. Confirmá contra tu bróker antes de decidir.</li>
+    <li><b>Un stop es un plan, no una garantía.</b> En un mercado rápido la orden puede ejecutarse peor que el precio que pusiste.</li>
+  </ul>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Es gratis?</b> Sí, las 11 skills. Necesitás tu plan de Claude.</li>
+    <li><b>¿Opera solo?</b> No. Analiza y propone; las órdenes solo salen con tu aprobación, y por defecto en modo práctica.</li>
+    <li><b>¿Sirve para mercados de Latinoamérica?</b> Está pensada para acciones de EE. UU. (datos de Yahoo Finance, Nasdaq y la SEC).</li>
+    <li><b>¿Y los impuestos?</b> Dependen de tu país. Nada de esto es asesoramiento impositivo.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Instalé las skills y las veo en Claude Code.</li>
+    <li>Dejé el modo práctica activado.</li>
+    <li>El permiso del bróker está en "Needs approval".</li>
+    <li>Corrí la máquina del tiempo antes de cualquier operación.</li>
+    <li>Defino stop y objetivo antes de entrar.</li>
+  </ul>
+</RecursoLayout>

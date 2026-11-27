@@ -1,0 +1,114 @@
+---
+// Lead magnet · palabra clave ManyChat: LOCAL (reel Mapa Pop "Open Higgsfield", 27/11/2026)
+// URL pública: /recursos/open-higgsfield-local
+// Fuente verificada el 27/11/2026: github.com/mojomast/open-higgsfield-skills (MIT, Kyle Durepos).
+// 37 skills (orquestador video-director + el resto). Corre con modelos abiertos en ComfyUI (LTX, FLUX Klein, Qwen, Wan).
+// Requisitos del README: ComfyUI por HTTP (local, Google Colab con túnel o hosteado); GPU 16 GB (draft), 24 GB (standard),
+// 40 GB (max); Python 3.9+ y ffmpeg; los pesos de los modelos NO vienen en el repo y tienen sus propias licencias.
+// El precio de Higgsfield (US$ 129/mes) es el que dice el reel; acá no se repite.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const repo = 'https://github.com/mojomast/open-higgsfield-skills';
+
+const instalar = `git clone https://github.com/mojomast/open-higgsfield-skills
+cd open-higgsfield-skills
+mkdir -p ~/.claude/skills && cp -r skills/* ~/.claude/skills/`;
+
+const chequeo = `Usá la skill comfyui-preflight y revisá si mi servidor de ComfyUI en [dirección] tiene todo lo que necesita video-director para el nivel draft.`;
+
+const video = `Usá la skill video-director. Quiero un video de [duración] segundos sobre [tu idea], en formato 9:16, nivel draft. Antes de generar, mostrame el plan de tomas y esperá mi aprobación.`;
+
+const cambio = `Rehacé la toma [número]: [qué querés cambiar]. Dejá el resto igual.`;
+
+const flujo = [
+  ['Idea', 'Le contás la idea en una frase. Te hace como mucho 3 preguntas.'],
+  ['Chequeo', 'Revisa tu ComfyUI y elige el nivel según tu GPU: draft (16 GB), standard (24 GB) o max (40 GB).'],
+  ['Guion y tomas', 'Arma la biblia de la historia y la lista de tomas, y espera tu aprobación antes de gastar nada.'],
+  ['Imágenes', 'Genera las imágenes clave y un juez las revisa; si una falla, la corrige o la rehace.'],
+  ['Video', 'Anima cada toma, con labios sincronizados si hay diálogo, y controla la continuidad entre tomas.'],
+  ['Sonido', 'Voz en off, música y efectos.'],
+  ['Final', 'Corrección de color, subtítulos, armado y exportación en 16:9, 9:16, 1:1 o 4:5.'],
+];
+---
+<RecursoLayout
+  titulo="Open Higgsfield: tu director de cine con IA, gratis y local"
+  descripcion="El kit completo con el paso a paso: 37 skills para Claude que convierten una idea en un video terminado, con modelos abiertos y sin pagar créditos por video."
+  tipo="Guía"
+  barLabel="Guía · @andresalbornoz.ai"
+  palabraClave="LOCAL"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Le contás una idea a Claude y él escribe el guion, crea las imágenes y arma el video con voces y subtítulos. Todo desde un mismo lugar, con modelos abiertos que corren en tu GPU.</b></div>
+
+  <h2>El proyecto</h2>
+  <p>Open Higgsfield son 37 skills de código abierto (licencia MIT) creadas por Kyle Durepos. La principal, <b>video-director</b>, coordina a las demás: guion, imágenes, animación, voces, música, subtítulos y armado final.</p>
+  <p>Repositorio oficial: <a href={repo} target="_blank" rel="noopener noreferrer">{repo.replace('https://', '')}</a></p>
+
+  <div class="alert"><b>Lo que tenés que saber antes:</b> el software es gratis y no pagás créditos por video, pero necesita potencia. Corre sobre <b>ComfyUI</b> y pide una GPU con al menos 16 GB de memoria (24 GB para el nivel estándar). Si no tenés una, la opción documentada es Google Colab, que según tu plan puede tener costo.</div>
+
+  <h2>Qué necesitás</h2>
+  <ul class="check">
+    <li>Claude Code (o cualquier agente que lea skills).</li>
+    <li>ComfyUI funcionando: en tu compu, en Google Colab con un túnel o en un servidor.</li>
+    <li>GPU de 16 GB (draft), 24 GB (standard) o 40 GB (max). En Colab, una L4 o una A100.</li>
+    <li>Python 3.9 o más nuevo y ffmpeg.</li>
+    <li>Los modelos se bajan aparte: cada skill trae su lista en <b>references/requirements.md</b>.</li>
+  </ul>
+
+  <h2>Paso 1: instalar las 37 skills</h2>
+  <p>Pegá esto en la terminal:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{instalar}</code></pre>
+  </div>
+
+  <h2>Paso 2: chequear tu ComfyUI</h2>
+  <p>Antes del primer video, pedile a Claude que revise si tu servidor tiene todos los nodos y modelos. No genera nada, solo mira:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{chequeo}</code></pre>
+  </div>
+
+  <h2>Paso 3: tu primer video</h2>
+  <p>Completá lo que está entre corchetes:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{video}</code></pre>
+  </div>
+
+  <div class="minicta">
+    La clase completa, de usar Claude a construir tu primer sistema, es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Paso 4: pedir cambios</h2>
+  <p>No tenés que llevar nada a otra herramienta. Le pedís el cambio en el mismo chat:</p>
+  <div class="codewrap">
+    <button class="copy">Copiar</button>
+    <pre class="code"><code>{cambio}</code></pre>
+  </div>
+
+  <h2>De la idea al video terminado</h2>
+  <ol class="steps">
+    {flujo.map(([t, d]) => <li><b>{t}:</b> {d}</li>)}
+  </ol>
+  <div class="note">Guarda todo (prompts, semillas, modelos y costos) en un solo archivo, así podés retomar un video donde lo dejaste.</div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Es gratis de verdad?</b> El software sí, y no hay créditos por video. Lo que pagás, si no tenés GPU, es el uso de Google Colab u otro servidor.</li>
+    <li><b>¿Funciona en mi notebook?</b> Solo si tiene una GPU con 16 GB de memoria o más. Si no, usá Colab.</li>
+    <li><b>¿Puedo usar los videos comercialmente?</b> El código es MIT, pero cada modelo tiene su propia licencia (por ejemplo, la de LTX-2 no es de código abierto estándar). Revisala antes de vender algo.</li>
+    <li><b>¿Sirve con otros agentes además de Claude?</b> Sí, las skills no dependen de un agente en particular.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Tengo ComfyUI andando (local o en Colab).</li>
+    <li>Copié las 37 skills a ~/.claude/skills.</li>
+    <li>Corrí el chequeo de comfyui-preflight.</li>
+    <li>Hice mi primer video en nivel draft.</li>
+    <li>Revisé las licencias de los modelos que usé.</li>
+  </ul>
+</RecursoLayout>
