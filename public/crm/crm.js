@@ -17,7 +17,7 @@ var ATENCION=[
   ['esperando_derivacion','Esperando derivación interna','#B79CFF'],['pausado','Pausado','#D7B4FF'],['cerrado','Cerrado','#7E8796']];
 var TIPOS={mensaje:'Mensaje',respuesta:'Respuesta',llamada:'Llamada',reunion:'Reunión',propuesta:'Propuesta',material:'Material enviado',seguimiento:'Seguimiento',derivacion:'Derivación',rebote:'Rebote',baja:'Baja',nota:'Nota'};
 var ENVIO={envio_confirmado:'Envío confirmado',sin_error_al_corte:'Sin error detectado al corte',demora_temporal:'Demora temporal',rebotado:'Rebotado',respuesta_automatica:'Respuesta automática',respuesta_humana:'Respuesta humana'};
-var CLASIF={interes_concreto:'Interés concreto',cordial_sin_compromiso:'Cordial sin compromiso',negativa_baja:'Negativa o baja',derivacion:'Derivación'};
+var CLASIF={interes_concreto:'Interés concreto (positiva)',solicita_info:'Solicita información',cordial_sin_compromiso:'Cordial sin compromiso',derivacion:'Derivación',negativa_baja:'Negativa o baja',sin_interes_definido:'Sin interés definido'};
 var MATS={ejemplo_referencia:'Ejemplo de referencia',propuesta_comercial:'Propuesta comercial',presupuesto:'Presupuesto'};
 /* carpetas, periodo y calificación (migración 20261124100000) */
 var CARPETAS=[['prospeccion_2026','Prospección 2026'],['ecommerce_montevideo','E-commerce Montevideo (sin contactar)'],['retail_mayor_montevideo','Retail mayor Montevideo (sin contactar)'],['transporte_sistema_viejo','Transporte (sistema viejo)'],['sin_origen','Sin origen'],['otro','Otra']];
@@ -844,6 +844,7 @@ $('#loginForm').addEventListener('submit',async function(e){e.preventDefault();$
   if(!window.supabase){setSync('bad','Sin conexión');toast('No se pudo cargar la conexión con la base.','bad');return}
   sb=window.supabase.createClient(SB_URL,SB_KEY);
   if(window.GenideiaPanel)GenideiaPanel({sb:sb,views:VIEWS,$:$,esc:esc,table:table,kpi:kpi,opts:opts,modal:modal,guardar:guardar,q:q,toast:toast,closeModal:closeModal,show:show,fdt:fdt,view:function(){return view},me:function(){return me}});
+  if(window.GenideiaMulticanal)GenideiaMulticanal({sb:sb,views:VIEWS,$:$,esc:esc,table:table,kpi:kpi,opts:opts,modal:modal,guardar:guardar,q:q,toast:toast,closeModal:closeModal,show:show,fdt:fdt,fd:fd,me:function(){return me}});
   var s=await sb.auth.getSession();if(s.data.session)enter();else showLogin();
 })();
 })();
