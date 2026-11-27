@@ -269,7 +269,7 @@ function copiar(o){
 
 /* ---------- acciones que registran actividad ---------- */
 function avanza(o,meta){return rk(meta)>rk(o.embudo)&&o.embudo!=='ganado'&&o.embudo!=='perdido'?meta:null}
-function convPatch(o,extra){var c=Object.assign({clave:o.clave,empresa:o.empresa_clave},extra);Object.keys(c).forEach(function(k){if(c[k]===undefined)delete c[k]});return c}
+function convPatch(o,extra){var c=Object.assign({clave:o.clave,empresa:o.empresa_clave},o.nueva?{canal:o.canal,canal_origen:o.canal,responsable:o.asesor_empresa}:{},extra);Object.keys(c).forEach(function(k){if(c[k]===undefined)delete c[k]});return c}
 function campoProx(o,req){return '<label class="f"><span>Próxima acción'+(req?' (obligatoria)':'')+'</span><input class="in" id="x_pa" value="'+esc(o.proximo_paso||'')+'" placeholder="Ej.: enviar el video de ejemplos"></label><label class="f"><span>Fecha de seguimiento</span><input class="in" type="date" id="x_pf" value="'+esc(o.proximo_paso_fecha||'')+'"></label>'}
 function canalSel(def){return '<label class="f"><span>Canal de esta interacción</span><select class="in" id="x_ca">'+opts(CANAL,def||'Instagram')+'</select></label>'}
 function asesorDe(o){return o.asesor_empresa||null}
@@ -415,6 +415,59 @@ function paintCM(){
   ['r','as','co','ni','pa'].forEach(function(k){$('#cm_'+k).onchange=function(){CM[k]=this.value;paintCM()}});
 }
 
+
+/* ==================== CARTERA (validación de prospectos históricos) ====================
+   Lee crm_v_cartera (migración 20261127120000). Aprobar no es contactar: el estado pasa a "contactado"
+   solo cuando hay un mensaje saliente registrado. Abrir WhatsApp o copiar el mensaje no registra nada. */
+var VAL=[['aprobado','Aprobado'],['pendiente_verificacion','Pendiente de verificación'],['no_calificado','No calificado'],['duplicado','Duplicado'],['no_contactar','No contactar'],['revision_necesaria','Revisión necesaria']];
+var CEST={verificado:'Verificado',pendiente:'Pendiente de comprobación',no_disponible:'No disponible',no_apto:'No apto'};
+var CCOL={verificado:'#4BE39A',pendiente:'#FFB84D',no_disponible:'#7E8796',no_apto:'#FF6B7A'};
+var ECON={aprobado_disponible:'Aprobado · disponible',asignado_sin_contactar:'Asignado · sin contactar',contactado:'Contactado'};
+var CA={as:'',vista:'aprobados',lote:'',q:''},CD=null;
+V.cartera=async function(){var el=$('#v-cartera');if(!CD)el.innerHTML=head('Cartera validada','Prospectos históricos revisados uno por uno: identidad, encaje, canales verificados y duplicados.')+'<div class="empty">Cargando…</div>';
+  CD=await pages('crm_v_cartera','*');await load();paintCA()};
+function canalChip(k,c){if(!c)return '';var col=CCOL[c.estado]||'#7E8796';return '<span class="chip" style="--c:'+col+'" title="'+esc([c.valor,c.fuente,c.nota,c.fecha].filter(Boolean).join(' · '))+'">'+esc(k)+': '+esc(CEST[c.estado]||c.estado)+'</span>'}
+function waUrl(c,msg){if(!c||c.estado!=='verificado'||!c.valor)return '';var v=String(c.valor);if(/^https?:\/\//.test(v))return v;var d=v.replace(/\D/g,'');
+  if(d.indexOf('5980')===0)d='598'+d.slice(4);return 'https://wa.me/'+d+(msg?'?text='+encodeURIComponent(msg):'')}
+function paintCA(){
+  var L=CD.filter(function(x){return (!CA.as||(CA.as==='sin'?!x.asesor:x.asesor===CA.as))&&(!CA.lote||x.validacion_lote===CA.lote)&&(!CA.q||(x.nombre+' '+(x.nicho||'')).toLowerCase().indexOf(CA.q.toLowerCase())>=0)});
+  var ap=L.filter(function(x){return x.validacion==='aprobado'}),pe=L.filter(function(x){return x.validacion==='pendiente_verificacion'||x.validacion==='revision_necesaria'}),de=L.filter(function(x){return ['no_calificado','duplicado','no_contactar'].indexOf(x.validacion)>=0});
+  var cnt=function(f){return ap.filter(f).length};
+  var lotes={};CD.forEach(function(x){if(x.validacion_lote)lotes[x.validacion_lote]=1});
+  var html=head('Cartera validada','Prospectos históricos revisados uno por uno. Aprobado no es contactado: el estado cambia solo cuando se registra un envío.')+
+    '<div class="filters"><select class="in" id="ca_as">'+opts([['','Todos los asesores']].concat(ASES).concat([['sin','Sin asignar']]),CA.as)+'</select><select class="in" id="ca_lote">'+opts(Object.keys(lotes).sort().map(function(k){return [k,k]}),CA.lote,'Todos los lotes')+'</select><input class="in q" id="ca_q" placeholder="Buscar empresa o nicho" value="'+esc(CA.q)+'"></div>'+
+    '<div class="kpis">'+kpi('Aprobados',ap.length,'disponibles para tandas','ok')+kpi('Asignados sin contactar',cnt(function(x){return x.estado_contacto==='asignado_sin_contactar'}),'reservados, sin envío registrado','s')+kpi('Contactados',cnt(function(x){return x.estado_contacto==='contactado'}),'con un mensaje registrado','')+
+    kpi('WhatsApp verificado',cnt(function(x){return (x.canales.whatsapp||{}).estado==='verificado'}),'empresas aprobadas','')+kpi('Email verificado',cnt(function(x){return (x.canales.email||{}).estado==='verificado'}),'empresas aprobadas','')+kpi('Instagram verificado',cnt(function(x){return (x.canales.instagram||{}).estado==='verificado'}),'empresas aprobadas','')+
+    kpi('Pendientes',pe.length,'falta información','warn')+kpi('Descartes y duplicados',de.length,'no se prospectan','')+'</div>'+
+    '<div class="filters"><button class="px-btn sm '+(CA.vista==='aprobados'?'p':'g')+'" data-cav="aprobados">Aprobados <span class="cnt">'+ap.length+'</span></button><button class="px-btn sm '+(CA.vista==='pendientes'?'p':'g')+'" data-cav="pendientes">Pendientes <span class="cnt">'+pe.length+'</span></button><button class="px-btn sm '+(CA.vista==='descartes'?'p':'g')+'" data-cav="descartes">Descartes y duplicados <span class="cnt">'+de.length+'</span></button></div>';
+  if(CA.vista==='aprobados')html+=ap.length?'<div class="grid3">'+ap.map(fichaCA).join('')+'</div>':'<div class="empty">No hay aprobados con estos filtros.</div>';
+  else{var T=CA.vista==='pendientes'?pe:de;html+=table(['Empresa','Estado','Motivo','Evidencia','Lote'],T.map(function(x){return '<tr data-emp="'+x.id+'"><td><b>'+esc(x.nombre)+'</b><div class="faint">'+esc([x.nicho,x.pais].filter(Boolean).join(' · '))+'</div></td><td><span class="chip">'+esc(lbl(VAL,x.validacion))+'</span></td><td class="w">'+esc(x.validacion_motivo||'')+'</td><td class="w faint">'+esc(x.validacion_evidencia||'')+'</td><td class="faint">'+esc(x.validacion_lote||'')+'</td></tr>'}),'Nada en esta lista.')}
+  $('#v-cartera').innerHTML=html;
+  $('#ca_as').onchange=function(){CA.as=this.value;paintCA()};$('#ca_lote').onchange=function(){CA.lote=this.value;paintCA()};
+  $('#ca_q').oninput=function(){CA.q=this.value;var p=this.selectionStart;paintCA();var n=$('#ca_q');n.focus();n.setSelectionRange(p,p)};
+}
+function fichaCA(x){var c=x.canales||{},borr=/borrador/.test(x.mensaje_sugerido_estado||''),wa=waUrl(c.whatsapp,borr?'':x.mensaje_sugerido);
+  var est=x.estado_contacto;
+  return '<div class="card mc-card"><div class="mc-top"><div><b>'+esc(x.nombre)+'</b><span class="faint">'+esc([x.nicho,x.pais].filter(Boolean).join(' · '))+'</span></div><span class="chip" style="--c:'+(est==='contactado'?'#4BE39A':'#38D6FF')+'">'+esc(ECON[est]||'—')+'</span></div>'+
+    '<dl class="mc-dl"><dt>Responsable</dt><dd>'+(x.asesor?esc(x.asesor):'<span class="sv">Sin asignar</span>')+'</dd><dt>Canal preferente</dt><dd>'+esc(x.canal_preferente||'—')+'</dd>'+
+    '<dt>Actividad</dt><dd>'+esc(x.actividad_verificada||'—')+'</dd><dt>Origen</dt><dd>'+esc(x.origen||'—')+'</dd>'+
+    (c.email&&c.email.valor?'<dt>Email</dt><dd class="mono">'+esc(c.email.valor)+'</dd>':'')+(c.whatsapp&&c.whatsapp.valor?'<dt>WhatsApp</dt><dd class="mono">'+esc(c.whatsapp.valor)+'</dd>':'')+
+    (c.instagram&&c.instagram.valor?'<dt>Instagram</dt><dd><a class="mono" href="'+esc(igUrl(c.instagram.valor))+'" target="_blank" rel="noopener noreferrer">@'+esc(c.instagram.valor)+'</a></dd>':'')+'</dl>'+
+    '<div class="f-flags">'+canalChip('WhatsApp',c.whatsapp)+canalChip('Email',c.email)+canalChip('Instagram',c.instagram)+'</div>'+
+    (x.mensaje_sugerido?'<p class="mc-msg">'+esc(x.mensaje_sugerido)+'</p>':'')+(borr?'<span class="chip warnf">Borrador: falta aprobar el párrafo de comercios. WhatsApp abre sin texto.</span>':'')+
+    '<div class="mc-acts">'+(wa?'<a class="px-btn g xs" href="'+esc(wa)+'" target="_blank" rel="noopener noreferrer">Abrir WhatsApp</a>':'')+(x.mensaje_sugerido?'<button class="px-btn g xs" data-ca="copiar" data-i="'+x.id+'">Copiar mensaje</button>':'')+
+    (x.mensaje_instagram?'<button class="px-btn g xs" data-ca="copiar_ig" data-i="'+x.id+'">Copiar mensaje IG</button>':'')+
+    (x.asesor&&est!=='contactado'?'<button class="px-btn p xs" data-ca="enviado" data-i="'+x.id+'">Registrar enviado</button>':'')+'<button class="px-btn g xs" data-emp="'+x.id+'">Ficha</button></div></div>'}
+document.addEventListener('click',async function(ev){var el=ev.target.closest('[data-cav],[data-ca]');if(!el)return;
+  if(el.dataset.cav){CA.vista=el.dataset.cav;paintCA();return}
+  ev.stopPropagation();var x=CD.find(function(y){return y.id===el.dataset.i});if(!x)return;
+  if(el.dataset.ca==='copiar'||el.dataset.ca==='copiar_ig'){var t=el.dataset.ca==='copiar'?x.mensaje_sugerido:x.mensaje_instagram;
+    try{await navigator.clipboard.writeText(t);toast('Copiado. Todavía no cuenta como enviado.','ok')}catch(e){toast('No se pudo copiar automáticamente.','warn')}return}
+  if(el.dataset.ca==='enviado'){var o={id:'cart:'+x.id,clave:'conv:'+x.clave,empresa_clave:x.clave,empresa_id:x.id,empresa:x.nombre,embudo:'prospecto',asesor_empresa:x.asesor,canal:x.canal_preferente,canal_origen:x.canal_preferente,nueva:true};
+    var exist=D.O.find(function(y){return y.empresa_id===x.id});if(exist){o=exist}
+    store('mc_txt:'+o.id,x.mensaje_sugerido||'');enviado(o)}
+},true);
+
 /* ---------- Hoy: suma oportunidades sin próxima acción y reuniones sin resultado ---------- */
 var hoyOrig=V.hoy;
 V.hoy=async function(){await hoyOrig();try{await load();var S=necesitan(D.O),sin=reunionesSinResultado();if(!S.length&&!sin.length)return;
@@ -424,7 +477,7 @@ V.hoy=async function(){await hoyOrig();try{await load();var S=necesitan(D.O),sin
   el.appendChild(box)}catch(e){console.error(e)}};
 
 /* ---------- clics ---------- */
-function rerenderMC(){var v=(location.hash||'').slice(1).split('/')[0];if(v==='instagram')paintIG();else if(v==='reuniones')paintReu();else if(v==='comercial')paintCM();else if(V[v])V[v]()}
+function rerenderMC(){var v=(location.hash||'').slice(1).split('/')[0];if(v==='instagram')paintIG();else if(v==='reuniones')paintReu();else if(v==='comercial')paintCM();else if(v==='cartera'){pages('crm_v_cartera','*').then(function(r){CD=r;paintCA()})}else if(V[v])V[v]()}
 document.addEventListener('click',function(ev){var t=ev.target,el;
   if((el=t.closest('[data-igsub]'))){IG.sub=el.dataset.igsub;paintIG();return}
   if((el=t.closest('[data-igtanda]'))){IG.tanda=el.dataset.igtanda;IG.sub='fichas';IG.n=30;paintIG();return}
