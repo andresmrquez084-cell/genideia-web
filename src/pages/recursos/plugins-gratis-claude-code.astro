@@ -1,0 +1,152 @@
+---
+// Lead magnet · palabra clave ManyChat: PLUGINS (reel Mapa Pop "5 plugins de IA para Claude Code", 27/11/2026)
+// URL pública: /recursos/plugins-gratis-claude-code
+// Fuentes verificadas el 27/11/2026 (READMEs oficiales):
+//   FreeLLMAPI       github.com/tashfeenahmed/freellmapi (MIT) · 10.100 M tokens/mes, 87 proveedores, 1.313 endpoints.
+//                    El reel dice 7.000 M y 600 modelos: el proyecto creció; acá van las cifras actuales.
+//   Lemo-Opuscar     github.com/lemomo-ai/lemo-opuscar · 99 estilos (el reel dice "más de 60").
+//   Ponytail         github.com/DietrichGebert/ponytail · el proyecto promete +50 % menos tokens; prueba independiente
+//                    de JetBrains (80 tareas, citada en greenchapel.dev 26/11/2026): ~-15 % código, ~-10 % costo.
+//   Agent Reach      github.com/Panniantong/Agent-Reach (MIT) · instalar SOLO desde GitHub (en PyPI hay otro paquete).
+//   NVIDIA SkillSpector github.com/NVIDIA/SkillSpector (Apache 2.0) · Python 3.12+, 71 patrones, 17 categorías.
+// OJO: la palabra PLUGINS ya apuntaba a /recursos/plugins-claude-code (reel del 28/9). Hay que repuntarla en ManyChat.
+import RecursoLayout from '../../layouts/RecursoLayout.astro';
+
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+
+const plugins = [
+  {
+    n: 1,
+    nombre: 'FreeLLMAPI',
+    repo: 'https://github.com/tashfeenahmed/freellmapi',
+    que: 'Junta los modelos gratis de 87 proveedores detrás de una sola dirección compatible con OpenAI. Si un modelo da error o se queda sin cupo, pasa solo al siguiente de tu lista.',
+    dato: 'Hoy el repo anuncia 10.100 millones de tokens por mes y 1.313 modelos gratis (en el video dijimos 7.000 millones y 600: el proyecto sigue sumando).',
+    pasos: [
+      'Instalalo con el comando de abajo (en la terminal, no adentro de Claude Code).',
+      'Abrí su panel, entrá a la página Keys y cargá las claves gratis de los proveedores que quieras usar.',
+      'Conectalo a Claude Code con el segundo comando, usando la clave unificada que te da el panel.',
+    ],
+    codigo: `curl -fsSL https://freellmapi.co/install.sh | bash`,
+    codigo2: `npx freellmapi setup-claude --url http://localhost:3001 --api-key TU-CLAVE-UNIFICADA`,
+    ojo: 'El mismo autor aclara que es para experimentar y aprender, no para producción: los planes gratis tienen topes diarios y la calidad baja a última hora del día, hasta que se reinician.',
+  },
+  {
+    n: 2,
+    nombre: 'Lemo-Opuscar',
+    repo: 'https://github.com/lemomo-ai/lemo-opuscar',
+    que: 'Le enseña a Claude Code a hacer videos animados con código. Trae una biblioteca de estilos listos (pizarra, caricatura, pixel, neón y muchos más), cada uno con un corto de ejemplo.',
+    dato: 'El repo tiene hoy 99 estilos, y podés crear los tuyos.',
+    pasos: [
+      'Pegá los dos comandos en la terminal.',
+      'Abrí Claude Code y llamalo con /lemo-opuscar:lemo-opuscar.',
+      'Contale qué querés explicar y elegí un estilo.',
+    ],
+    codigo: `claude plugin marketplace add lemomo-ai/lemo-opuscar\nclaude plugin install lemo-opuscar@lemolab`,
+    ojo: 'Para actualizarlo: claude plugin marketplace update lemolab && claude plugin update lemo-opuscar@lemolab.',
+  },
+  {
+    n: 3,
+    nombre: 'Ponytail',
+    repo: 'https://github.com/DietrichGebert/ponytail',
+    que: 'Un conjunto de reglas que hace que Claude trabaje como un programador senior "vago": reusa lo que ya existe, no agrega abstracciones de más y no construye lo que no le pediste. Menos código escrito = menos tokens.',
+    dato: 'El proyecto promete más de 50 % menos tokens sin perder precisión. Una prueba independiente de JetBrains (80 tareas) midió menos de lo prometido: cerca de 15 % menos código y 10 % menos costo, con la misma calidad. El ahorro es grande cuando Claude tiende a construir de más, y casi nulo en tareas que ya eran simples.',
+    pasos: [
+      'Abrí Claude Code.',
+      'Pegá los dos comandos (van adentro de Claude Code, con la barra).',
+      'Reiniciá Claude Code si te lo pide.',
+    ],
+    codigo: `/plugin marketplace add DietrichGebert/ponytail\n/plugin install ponytail@ponytail`,
+    ojo: 'Instalalo como plugin, no copiando solo la skill: en la prueba independiente, la skill suelta nunca se activó sola.',
+  },
+  {
+    n: 4,
+    nombre: 'Agent Reach',
+    repo: 'https://github.com/Panniantong/Agent-Reach',
+    que: 'Le da a tu agente acceso para leer y buscar en internet sin pagar APIs: X, Reddit, YouTube, GitHub, LinkedIn (empleos), Instagram (perfiles y publicaciones), Facebook y más, con una sola herramienta de terminal.',
+    dato: 'X, Reddit, Instagram, Facebook y la búsqueda dentro de LinkedIn necesitan que inicies sesión (cookies). YouTube, GitHub y la web funcionan sin login.',
+    pasos: [
+      'Necesitás uv (el instalador de Python). Si no lo tenés, Claude Code te lo instala.',
+      'Pegá los dos comandos en la terminal. El segundo te guía para configurar cada plataforma.',
+      'O más fácil: pegale a Claude Code el pedido de abajo y que lo haga él.',
+    ],
+    codigo: `uv tool install https://github.com/Panniantong/Agent-Reach/releases/latest/download/agent-reach.zip\nagent-reach setup`,
+    codigo2: `Instalá Agent Reach siguiendo esta guía oficial: https://raw.githubusercontent.com/Panniantong/Agent-Reach/main/docs/install.md`,
+    ojo: 'Nunca lo instales desde PyPI: hay otro paquete con el mismo nombre que no es este proyecto. Y para las plataformas con login, usá una cuenta secundaria y respetá sus términos de uso.',
+  },
+  {
+    n: 5,
+    nombre: 'NVIDIA SkillSpector',
+    repo: 'https://github.com/NVIDIA/SkillSpector',
+    que: 'El antivirus para skills: revisa una skill antes de que la instales y busca 71 patrones de riesgo en 17 categorías (inyección de prompts, robo de datos, permisos de más, dependencias peligrosas, malware conocido).',
+    dato: 'Te devuelve un puntaje de 0 a 100: SAFE (0–20), CAUTION (21–50) o DO NOT INSTALL (51–100). Gratis y de código abierto, de NVIDIA.',
+    pasos: [
+      'Necesitás Python 3.12 o 3.13.',
+      'Instalalo con el primer comando.',
+      'Bajá la skill que querés probar (sin instalarla) y escaneá su carpeta con el segundo comando.',
+    ],
+    codigo: `python -m pip install --upgrade skillspector`,
+    codigo2: `skillspector scan ./carpeta-de-la-skill/ --no-llm`,
+    ojo: 'Con --no-llm hace el análisis estático, sin gastar en ningún modelo. Si tenés una clave de API configurada, podés sacarlo para un análisis más profundo.',
+  },
+];
+---
+<RecursoLayout
+  titulo="Los 5 plugins de IA para Claude Code (gratis)"
+  descripcion="FreeLLMAPI, Lemo-Opuscar, Ponytail, Agent Reach y NVIDIA SkillSpector: qué hace cada uno, el link oficial y el comando para instalarlo."
+  tipo="Lista"
+  barLabel="Lista · @andresalbornoz.ai"
+  palabraClave="PLUGINS"
+  masterclass={true}
+  mclassUrl={grupo}
+>
+  <div class="lead"><b>Los 5 del video, con el link oficial de cada uno y el comando para instalarlo. Todos son gratis y de código abierto. Revisamos cada repositorio el 27/11/2026: si algo cambió desde el video, lo aclaramos.</b></div>
+
+  <div class="note"><b>Empezá por el 5.</b> Instalá primero SkillSpector y usalo para revisar cualquier skill que bajes de internet, incluidas las de esta lista.</div>
+
+  {plugins.map((p) => (
+    <>
+      <h2>{p.n} · {p.nombre}</h2>
+      <p>{p.que}</p>
+      <ul class="arrow">
+        <li><b>El dato:</b> {p.dato}</li>
+      </ul>
+      <ol class="steps">
+        {p.pasos.map((s) => <li>{s}</li>)}
+      </ol>
+      <div class="codewrap">
+        <button class="copy">Copiar</button>
+        <pre class="code"><code>{p.codigo}</code></pre>
+      </div>
+      {p.codigo2 && (
+        <div class="codewrap">
+          <button class="copy">Copiar</button>
+          <pre class="code"><code>{p.codigo2}</code></pre>
+        </div>
+      )}
+      <div class="alert"><b>Ojo:</b> {p.ojo}</div>
+      <p style="font-size:13px">Repositorio oficial: <a href={p.repo} target="_blank" rel="noopener noreferrer">{p.repo.replace('https://', '')}</a></p>
+    </>
+  ))}
+
+  <div class="minicta">
+    La clase completa, de usar Claude a construir tu primer sistema, es gratis: <a href={grupo} target="_blank" rel="noopener noreferrer">entrar al grupo →</a>
+  </div>
+
+  <h2>Preguntas frecuentes</h2>
+  <ul class="arrow">
+    <li><b>¿Son todos gratis?</b> Sí, el software es gratis y de código abierto. FreeLLMAPI usa los planes gratis de cada proveedor, que tienen topes.</li>
+    <li><b>¿Dónde pego cada comando?</b> Los que empiezan con <b>/plugin</b> van adentro de Claude Code. El resto va en la terminal.</li>
+    <li><b>¿Es seguro el curl … | bash?</b> Baja y ejecuta un script de internet. Abrí el link en el navegador y leélo antes de correrlo.</li>
+    <li><b>¿Los necesito todos?</b> No. Ponytail y FreeLLMAPI si te quedás sin uso; Lemo-Opuscar si hacés videos; Agent Reach si investigás en redes; SkillSpector siempre.</li>
+    <li><b>Instalé uno y no aparece.</b> Cerrá y volvé a abrir Claude Code, o escribí <b>/reload-plugins</b>. En <b>/plugin</b> ves lo que tenés instalado.</li>
+  </ul>
+
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>Instalé SkillSpector y escaneo cada skill antes de instalarla.</li>
+    <li>Leí los scripts antes de correr un curl … | bash.</li>
+    <li>Instalé solo los plugins que voy a usar.</li>
+    <li>Para Agent Reach uso una cuenta secundaria en las plataformas con login.</li>
+    <li>Probé cada uno con un pedido real.</li>
+  </ul>
+</RecursoLayout>
