@@ -5,11 +5,19 @@ import PROJECTS from '../../data/experiencia.json';
 
 type P = (typeof PROJECTS)[number] & { mock?: string; url?: string; actionLabel?: string };
 const projects = PROJECTS as P[];
-const CATS = ['Todos', 'Webs', 'Apps', 'Sistemas', 'Herramientas', 'Diagnósticos', 'Automatizaciones'];
+// Ordenado por el problema que resuelve, no por tecnología. Presencia digital va al final: fue la primera etapa.
+const CATS = ['Todos', 'E-commerce', 'Gestión interna', 'Diagnósticos', 'Soluciones propias', 'Presencia digital'];
+const AREAS = [
+  ['E-commerce', 'Tiendas y canales de venta online con catálogo, carrito y cobro.'],
+  ['Gestión interna', 'Pedidos, operación, documentación y atención que hoy dependen de planillas y chats.'],
+  ['Diagnósticos', 'Relevamiento de procesos antes de construir: qué se repite, dónde falla y cuánto vale resolverlo.'],
+  ['Soluciones propias', 'Los sistemas con los que operamos GENIDEIA todos los días.'],
+];
 const count = (c: string) => (c === 'Todos' ? projects.length : projects.filter((p) => p.cat === c).length);
-const deck = projects.filter((p) => p.image).slice(0, 7);
-const WIDE = new Set(['donhers', 'contentos', 'tms', 'vanzza-web']);
-const TALL = new Set(['habits']);
+const DECK = ['tms', 'vanzza-web', 'donhers', 'acesur', 'genideiaos', 'hcea', 'contentos'];
+const deck = DECK.map((id) => projects.find((p) => p.id === id)).filter((p): p is P => !!p && !!p.image);
+const WIDE = new Set(['donhers', 'vanzza-web', 'genideiaos']);
+const TALL = new Set<string>();
 
 const ETAPAS = [
   ['Web & Marketing', 'Landings, e-commerce, branding, captación y presencia digital.', ['Landings', 'E-commerce', 'Branding']],
@@ -53,8 +61,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
         </div>
         <div class="ex-stats px-rv">
           <div><b data-count={projects.length}>0</b><span>proyectos en el portfolio</span></div>
-          <div><b data-count="6">0</b><span>etapas de evolución</span></div>
-          <div><b data-count="100" data-pre="+" data-suf="K">0</b><span>reproducciones de una pieza</span></div>
+          <div><b data-count={count('Diagnósticos')}>0</b><span>empresas en diagnóstico</span></div>
+          <div><b data-count={AREAS.length}>0</b><span>áreas de solución</span></div>
         </div>
       </div>
       <div class="ex-deck" aria-label="Proyectos destacados">
@@ -139,8 +147,13 @@ const pad = (n: number) => String(n).padStart(2, '0');
     <!-- PROYECTOS -->
     <section class="px-sec" id="proyectos">
       <div class="px-head">
-        <div><p class="px-eb">Trabajo desarrollado</p><h2 class="px-split">Proyectos, sistemas <em>y herramientas.</em></h2></div>
-        <p class="px-side px-rv">Cada ficha distingue su estado real. Los sistemas privados se muestran con capturas o explicación del alcance, sin exponer su acceso.</p>
+        <div><p class="px-eb">Trabajo desarrollado</p><h2 class="px-split">Ordenado por <em>el problema que resuelve.</em></h2></div>
+        <p class="px-side px-rv">Cada ficha indica su estado real: en uso, prototipo, diagnóstico o en desarrollo. Los sistemas privados se muestran con capturas o con el alcance, sin exponer su acceso.</p>
+      </div>
+      <div class="ex-areas px-rv">
+        {AREAS.map((a, i) => (
+          <button class="ex-area" data-area={a[0]}><span>{pad(i + 1)}</span><b>{a[0]}<sup>{count(a[0])}</sup></b><p>{a[1]}</p></button>
+        ))}
       </div>
       <div class="ex-filters" role="tablist">
         {CATS.map((c, i) => <button class={i === 0 ? 'on' : ''} data-cat={c}>{c}<sup>{count(c)}</sup></button>)}
@@ -161,6 +174,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
                   {p.mock === 'content' && Array.from({ length: 12 }).map((_, k) => <i style={`--k:${k}`}></i>)}
                   {p.mock === 'gym' && ['Socio 0142', 'Socio 0278', 'Socio 0311', 'Socio 0459'].map((s, k) => <div class="r" style={`--k:${k}`}><span>{s}</span><b>{k === 2 ? 'Renovar' : 'Activo'}</b></div>)}
                   {p.mock === 'sign' && (<><div class="doc"><i></i><i></i><i></i><i></i><svg viewBox="0 0 160 50"><path d="M5 35 C 25 5, 35 45, 55 25 S 85 5, 95 30 S 130 40, 155 15" /></svg></div><b class="st">Firmado ✓</b></>)}
+                  {p.mock === 'agents' && (<><div class="hub">Agentes</div>{[['Empresa A', 20, 72], ['Empresa B', 50, 88], ['Empresa C', 80, 72], ['WhatsApp', 80, 34], ['Email', 22, 40]].map((n, k) => <span style={`--k:${k};left:${n[1]}%;top:${n[2]}%`}>{n[0]}</span>)}</>)}
+                  {p.mock === 'crm' && ['Nuevo', 'Contactado', 'Reunión', 'Propuesta'].map((c, k) => <div class="col" style={`--k:${k}`}><small>{c}</small>{Array.from({ length: 3 - (k > 1 ? 1 : 0) }).map(() => <i></i>)}</div>)}
                   {p.mock === 'chat' && (<><span class="in">¿Tenés lugar el jueves?</span><span class="out">Sí, a las 15:00 o 17:30.</span><span class="in">15:00 dale</span><span class="out">Listo, quedó agendado ✓</span></>)}
                 </div>
               )}
@@ -268,7 +283,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     <div class="ex-sheet" role="dialog" aria-modal="true" aria-labelledby="exMT">
       <div class="ex-sheet-top">
         <button class="ex-nav" data-step="-1" aria-label="Proyecto anterior">←</button>
-        <span id="exMI">01 / 19</span>
+        <span id="exMI">01 / {pad(projects.length)}</span>
         <button class="ex-nav" data-step="1" aria-label="Proyecto siguiente">→</button>
         <button class="ex-x" data-close aria-label="Cerrar">×</button>
       </div>
@@ -383,6 +398,13 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .ex-sum{margin:0 0 14px;font-size:14px;color:#B8BEC7}
   .ex-card .px-go{font-size:13px}
 
+  .ex-areas{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+  .ex-area{all:unset;cursor:pointer;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.03);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);transition:box-shadow .25s,background .25s}
+  .ex-area:hover,.ex-area:focus-visible{background:rgba(0,200,255,.06);box-shadow:inset 0 0 0 1px rgba(0,200,255,.4)}
+  .ex-area span{font-family:"JetBrains Mono",monospace;font-size:11px;color:#00C8FF}
+  .ex-area b{display:block;margin:6px 0 6px;font-family:Montserrat,sans-serif;font-size:16px}
+  .ex-area sup{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:400;color:#7E8796;margin-left:6px}
+  .ex-area p{margin:0;font-size:13px;line-height:1.45;color:#B8BEC7}
   /* mocks sin captura */
   .ex-mock{position:absolute;inset:0;padding:22px;background:radial-gradient(circle at 80% 10%,rgba(0,200,255,.22),transparent 55%),linear-gradient(160deg,#0C1A33,#060C18)}
   .m-landing i{display:block;border-radius:8px;background:rgba(255,255,255,.1);margin-bottom:10px}
@@ -414,6 +436,13 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .m-chat span:nth-child(2){animation-delay:.9s}.m-chat span:nth-child(3){animation-delay:1.8s}.m-chat span:nth-child(4){animation-delay:2.7s}
   @keyframes exChat{0%{opacity:0;transform:translateY(8px)}8%,85%{opacity:1;transform:none}100%{opacity:0}}
 
+  .m-agents{display:grid;place-items:center}
+  .m-agents .hub{position:relative;z-index:1;padding:10px 16px;border-radius:999px;font-family:Montserrat,sans-serif;font-size:13px;color:#fff;background:linear-gradient(135deg,#007BFF,#00C8FF);box-shadow:0 0 30px -4px #00C8FF}
+  .m-agents span{position:absolute;padding:5px 10px;border-radius:999px;font-family:"JetBrains Mono",monospace;font-size:10.5px;color:#BFEFFF;background:#0B1324;box-shadow:inset 0 0 0 1px rgba(0,200,255,.35);translate:-50% -50%;white-space:nowrap;animation:exIn .6s calc(var(--k)*.2s) both}
+  .m-crm{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;align-content:center}
+  .m-crm .col{display:grid;gap:6px;align-content:start}
+  .m-crm small{font-family:"JetBrains Mono",monospace;font-size:9.5px;color:#7E8796;margin-bottom:2px}
+  .m-crm i{display:block;height:26px;border-radius:7px;background:rgba(255,255,255,.07);box-shadow:inset 3px 0 0 rgba(0,200,255,.6);animation:exIn .5s calc(var(--k)*.2s) both}
   /* diagnósticos */
   .ex-diag{display:grid;grid-template-columns:1fr 1fr;gap:22px}
   .ex-kl-b{padding:22px}
@@ -500,6 +529,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     .ex-ev-sub{margin-bottom:0}
     .ex-tms-g,.ex-diag{grid-template-columns:1fr}
     .ex-grid{grid-template-columns:1fr 1fr}
+    .ex-areas{grid-template-columns:1fr 1fr}
   }
   @media (max-width:640px){
     .ex-stats{grid-template-columns:1fr 1fr 1fr;gap:8px}.ex-stats div{padding:10px}.ex-stats b{font-size:22px}.ex-stats span{font-size:10.5px}
@@ -514,6 +544,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     .ex-filters button{flex:none}
     .ex-chain b{font-size:9.5px!important}.ex-chain button span{width:28px;height:28px}.ex-chain-line{top:14px}
     .ex-row{flex-direction:column;align-items:flex-start}
+    .ex-areas{grid-template-columns:1fr;gap:8px}.ex-area{padding:13px 15px}
     .ex-modal{padding:0;align-items:end}
     .ex-sheet{max-height:92vh;border-radius:24px 24px 0 0}
     .ex-m-b{padding:20px}.ex-m-cols{grid-template-columns:1fr}
@@ -570,6 +601,9 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
   /* filtros */
   var grid = document.getElementById('exGrid'), items = grid.querySelectorAll('.ex-card'), fbtn = document.querySelectorAll('.ex-filters button'), order = P.map(function (p) { return p.id; });
+  document.querySelectorAll('[data-area]').forEach(function (a) {
+    a.addEventListener('click', function () { var b = document.querySelector('.ex-filters [data-cat="' + a.dataset.area + '"]'); if (b) { b.click(); var f = document.querySelector('.ex-filters'); scrollTo({ top: f.getBoundingClientRect().top + scrollY - 96, behavior: reduce ? 'auto' : 'smooth' }); } });
+  });
   fbtn.forEach(function (b) {
     b.addEventListener('click', function () {
       var c = b.dataset.cat;
