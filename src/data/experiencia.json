@@ -99,7 +99,39 @@
   ],
   "proof": "Portada construida a partir del HTML real del prototipo de Cevven proporcionado para este portfolio.",
   "access": "private",
-  "mock": "gym"
+  "proto": {
+   "app": "Gimnasio",
+   "nav": [
+    "Socios",
+    "Membresías",
+    "Pagos",
+    "Clases",
+    "Acceso"
+   ],
+   "activo": 1,
+   "kicker": "MEMBRESÍAS / VENCIMIENTOS",
+   "titulo": "Renovaciones de la semana",
+   "num": "8",
+   "numLabel": "POR VENCER",
+   "num2": "5",
+   "num2Label": "SIN ASISTIR",
+   "pasos": [
+    [
+     "Aviso de vencimiento",
+     "Por WhatsApp"
+    ],
+    [
+     "Pago registrado",
+     "Membresía renovada"
+    ]
+   ],
+   "estado": "Seguimiento de renovaciones",
+   "movil": {
+    "k": "ACCESO",
+    "t": "Membresía activa",
+    "b": "Acceso permitido"
+   }
+  }
  },
  {
   "id": "bot",
@@ -120,7 +152,38 @@
   ],
   "proof": "Portada representativa del bot de WhatsApp. La demostración se muestra en reunión.",
   "access": "private",
-  "mock": "chat"
+  "proto": {
+   "app": "Asistente",
+   "nav": [
+    "Conversaciones",
+    "Agenda",
+    "Seguimiento",
+    "Derivadas"
+   ],
+   "activo": 0,
+   "kicker": "WHATSAPP / CONSULTAS",
+   "titulo": "Consultas atendidas hoy",
+   "num": "23",
+   "numLabel": "RESPONDIDAS",
+   "num2": "6",
+   "num2Label": "TURNOS AGENDADOS",
+   "pasos": [
+    [
+     "Consulta por texto o audio",
+     "El asistente responde"
+    ],
+    [
+     "Turno en el calendario",
+     "Con recordatorio"
+    ]
+   ],
+   "estado": "Retomando a los indecisos",
+   "movil": {
+    "k": "WHATSAPP",
+    "t": "Turno agendado",
+    "b": "Jueves 15:00"
+   }
+  }
  },
  {
   "id": "firmador",
@@ -140,7 +203,38 @@
   ],
   "proof": "Herramienta desarrollada. Se muestra en reunión mientras preparamos su nueva versión pública.",
   "access": "private",
-  "mock": "sign"
+  "proto": {
+   "app": "Contratos",
+   "nav": [
+    "Documentos",
+    "Firmas",
+    "Pendientes",
+    "Archivo"
+   ],
+   "activo": 2,
+   "kicker": "FIRMAS / ESTADO",
+   "titulo": "Contratos por firmar",
+   "num": "3",
+   "numLabel": "PENDIENTES DE FIRMA",
+   "num2": "12",
+   "num2Label": "FIRMADOS EN EL MES",
+   "pasos": [
+    [
+     "Contrato preparado",
+     "Datos completos"
+    ],
+    [
+     "Firma digital",
+     "Desde el celular"
+    ]
+   ],
+   "estado": "Esperando firma",
+   "movil": {
+    "k": "CONTRATO",
+    "t": "Firmar documento",
+    "b": "Listo para firmar"
+   }
+  }
  },
  {
   "id": "agcontent",
@@ -162,7 +256,38 @@
   "access": "public",
   "url": "https://drive.google.com/file/d/1E5MVehS-mHx3quEMXBEt3JwhYqeNw_fb/view?usp=sharing",
   "actionLabel": "Ver explicación →",
-  "mock": "content"
+  "proto": {
+   "app": "Inmobiliaria",
+   "nav": [
+    "Propiedades",
+    "Activos",
+    "Piezas",
+    "Publicación"
+   ],
+   "activo": 0,
+   "kicker": "PROPIEDADES / CONTENIDO",
+   "titulo": "Propiedades con material",
+   "num": "17",
+   "numLabel": "PROPIEDADES CARGADAS",
+   "num2": "42",
+   "num2Label": "PIEZAS LISTAS",
+   "pasos": [
+    [
+     "Ficha de la propiedad",
+     "Fotos y datos"
+    ],
+    [
+     "Piezas por formato",
+     "Post, reel e historia"
+    ]
+   ],
+   "estado": "Preparando publicación",
+   "movil": {
+    "k": "PIEZA",
+    "t": "Aprobar publicación",
+    "b": "Reel listo"
+   }
+  }
  },
  {
   "id": "kluver",
@@ -223,7 +348,39 @@
   ],
   "proof": "Relevamiento en curso. La solución se define con las respuestas del cliente.",
   "access": "private",
-  "mock": "agents"
+  "proto": {
+   "app": "Prospección multiempresa",
+   "nav": [
+    "Prospectos",
+    "Empresas",
+    "WhatsApp",
+    "Correo",
+    "Derivaciones"
+   ],
+   "activo": 0,
+   "kicker": "PROSPECTOS / ASIGNACIÓN",
+   "titulo": "Prospectos compartidos",
+   "num": "6",
+   "numLabel": "EMPRESAS DEL GRUPO",
+   "num2": "8",
+   "num2Label": "PREGUNTAS RELEVADAS",
+   "pasos": [
+    [
+     "Prospecto asignado",
+     "Una empresa por comprador"
+    ],
+    [
+     "Derivación a persona",
+     "Según reglas acordadas"
+    ]
+   ],
+   "estado": "Relevamiento en curso",
+   "movil": {
+    "k": "AGENTE",
+    "t": "Derivar conversación",
+    "b": "Requiere persona"
+   }
+  }
  },
  {
   "id": "genideiaos",
@@ -264,7 +421,39 @@
   ],
   "proof": "Sistema interno en uso diario. Se muestra en reunión.",
   "access": "private",
-  "mock": "crm"
+  "proto": {
+   "app": "CRM comercial",
+   "nav": [
+    "Hoy",
+    "Embudo",
+    "Instagram",
+    "Reuniones",
+    "Métricas"
+   ],
+   "activo": 1,
+   "kicker": "EMBUDO / ASESORES",
+   "titulo": "Oportunidades activas",
+   "num": "22",
+   "numLabel": "EN SEGUIMIENTO",
+   "num2": "4",
+   "num2Label": "REUNIONES AGENDADAS",
+   "pasos": [
+    [
+     "Primer contacto",
+     "Email, WhatsApp o Instagram"
+    ],
+    [
+     "Reunión",
+     "Resultado registrado"
+    ]
+   ],
+   "estado": "Seguimientos del día",
+   "movil": {
+    "k": "SEGUIMIENTO",
+    "t": "Registrar respuesta",
+    "b": "Respondió"
+   }
+  }
  },
  {
   "id": "contentos",
@@ -323,7 +512,39 @@
   ],
   "proof": "Proyecto de presencia digital. Acceso público a la web del cliente.",
   "access": "private",
-  "mock": "landing"
+  "proto": {
+   "app": "Centro estético",
+   "nav": [
+    "Consultas",
+    "Reservas",
+    "Servicios",
+    "Promociones",
+    "Seguimiento"
+   ],
+   "activo": 1,
+   "kicker": "RESERVAS / AGENDA",
+   "titulo": "Turnos de la semana",
+   "num": "14",
+   "numLabel": "RESERVAS CONFIRMADAS",
+   "num2": "3",
+   "num2Label": "POR CONFIRMAR",
+   "pasos": [
+    [
+     "Consulta por WhatsApp",
+     "Desde la web"
+    ],
+    [
+     "Turno propuesto",
+     "Según disponibilidad"
+    ]
+   ],
+   "estado": "Esperando confirmación",
+   "movil": {
+    "k": "RESERVA",
+    "t": "Confirmar turno",
+    "b": "Jueves 15:00"
+   }
+  }
  },
  {
   "id": "lorena",
@@ -343,7 +564,38 @@
   ],
   "proof": "Ficha de proyecto. El acceso completo no es público.",
   "access": "private",
-  "mock": "landing"
+  "proto": {
+   "app": "Asesora inmobiliaria",
+   "nav": [
+    "Consultas",
+    "Propiedades",
+    "Visitas",
+    "Opiniones"
+   ],
+   "activo": 0,
+   "kicker": "CONSULTAS / ORIGEN",
+   "titulo": "Consultas desde la landing",
+   "num": "9",
+   "numLabel": "CONSULTAS NUEVAS",
+   "num2": "4",
+   "num2Label": "VISITAS COORDINADAS",
+   "pasos": [
+    [
+     "Visita a la landing",
+     "Compra, venta o inversión"
+    ],
+    [
+     "Consulta por WhatsApp",
+     "Con el interés indicado"
+    ]
+   ],
+   "estado": "Consulta lista para responder",
+   "movil": {
+    "k": "CONSULTA",
+    "t": "Coordinar visita",
+    "b": "Nueva consulta"
+   }
+  }
  },
  {
   "id": "tbo",
@@ -363,7 +615,39 @@
   ],
   "proof": "Ficha de proyecto y documentación de negocio.",
   "access": "private",
-  "mock": "route"
+  "proto": {
+   "app": "Cadetería",
+   "nav": [
+    "Solicitudes",
+    "Envíos",
+    "Repartos",
+    "Entregas",
+    "Clientes"
+   ],
+   "activo": 1,
+   "kicker": "ENVÍOS / SEGUIMIENTO",
+   "titulo": "Envíos en curso",
+   "num": "11",
+   "numLabel": "EN REPARTO",
+   "num2": "26",
+   "num2Label": "ENTREGADOS HOY",
+   "pasos": [
+    [
+     "Solicitud de envío",
+     "Desde la web"
+    ],
+    [
+     "Entrega con foto",
+     "Confirmación al cliente"
+    ]
+   ],
+   "estado": "Siguiendo el reparto",
+   "movil": {
+    "k": "ENVÍO",
+    "t": "Entregado con foto",
+    "b": "Confirmado"
+   }
+  }
  },
  {
   "id": "campero",
