@@ -241,3 +241,20 @@ details.src summary{cursor:pointer;font-size:13px}
   .tbl .hide-m{display:none}
   .menu{right:16px;left:16px;width:auto}
 }
+
+/* ---------- multicanal: fichas de Instagram, seguimiento y reuniones ---------- */
+.mc-card{display:flex;flex-direction:column;gap:10px}
+.mc-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.mc-top>div{min-width:0;display:grid;gap:2px}.mc-top b{font-size:15.5px;overflow-wrap:anywhere}
+.mc-dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;margin:0;font-size:13px}
+.mc-dl dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--tx3);padding-top:2px}
+.mc-dl dd{margin:0;min-width:0;overflow-wrap:anywhere;color:var(--tx2)}
+.mc-msg{margin:0;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:12.5px;color:var(--tx2);white-space:pre-line;max-height:7.5em;overflow:hidden}
+.mc-msg.in{border-color:rgba(0,200,255,.18)}
+.mc-acts{display:flex;flex-wrap:wrap;gap:6px}
+.mc-acts .px-btn{min-height:34px}
+.mc-row{display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.02);margin-bottom:6px;align-items:center}
+.mc-main{min-width:0;display:grid;gap:2px}.mc-main small{color:var(--tx3);font-size:12.5px;overflow-wrap:anywhere}
+.mc-pick{display:grid;gap:6px;max-height:50vh;overflow:auto;margin:10px 0}
+.mc-pick .tog{height:auto;min-height:40px;padding:6px 12px}
+@media (max-width:640px){.mc-row{flex-direction:column;align-items:stretch}.mc-acts .px-btn{flex:1 1 auto}}

@@ -7,7 +7,7 @@ function humana(a){return a.direccion==='entrante'&&['respuesta','mensaje','llam
 function saliente(a){return a.direccion==='saliente'&&['mensaje','material','propuesta','seguimiento','llamada','reunion'].indexOf(a.tipo)>=0}
 function tiempo(a){var t=Date.parse(a.fecha_hecho);return Number.isFinite(t)?t:null}
 function exacta(a){return tiempo(a)!==null&&(!a.fecha_precision||a.fecha_precision==='exacta')}
-function reaccion(a){var r=extra(a).reaccion;if(REACCIONES[r])return r;return {interes_concreto:'interes_concreto',cordial_sin_compromiso:'cordial',negativa_baja:'negativa',derivacion:'derivacion'}[a.clasificacion]||(a.tipo==='baja'?'baja':'sin_clasificar')}
+function reaccion(a){var r=extra(a).reaccion;if(REACCIONES[r])return r;return {interes_concreto:'interes_concreto',solicita_info:'acepta_material',cordial_sin_compromiso:'cordial',sin_interes_definido:'cordial',negativa_baja:'negativa',derivacion:'derivacion'}[a.clasificacion]||(a.tipo==='baja'?'baja':'sin_clasificar')}
 function material(a){return a.tipo==='material'||a.tipo==='propuesta'||extra(a).fase==='presentacion'}
 function fase(a){return material(a)?'Presentación':a.tipo==='seguimiento'?'Seguimiento':'Primer contacto'}
 function sameThread(a,b){return a.empresa_id===b.empresa_id&&(!a.conversacion_id||!b.conversacion_id||a.conversacion_id===b.conversacion_id)}
