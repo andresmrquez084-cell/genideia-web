@@ -1,0 +1,48 @@
+---
+import RecursoPremium from '../../layouts/RecursoPremium.astro';
+const grupo = 'https://chat.whatsapp.com/CWcuWdngHQ1FcrkQijYK1A?mode=gi_t';
+const biblioteca = 'https://docs.google.com/document/d/1a3hze3j_NUeDKzMBQRtg4zWwTDlCs1l2xemB8LIgIrs/edit';
+const piezas = [
+ {id:'google',label:'Presencia en Google',intro:'Si alguien busca lo que vendés y encuentra a tu competencia antes que a vos, tu web todavía no cumple su primera función.',ejemplo:'Un taller aparece en Maps cuando alguien busca un mecánico cerca. La ficha muestra ubicación, horarios y cómo contactarlo.',acciones:['Buscá tu negocio y tu rubro desde Google Maps.','Completá o reclamá tu Perfil de Empresa si tu negocio es elegible.','Revisá horarios, teléfono, ubicación y enlace a tu web.'],url:'https://www.google.com/business/',herramienta:'Perfil de Empresa de Google'},
+ {id:'catalogo',label:'Contenido y catálogo',intro:'Una persona que ya te encontró necesita entender qué ofrecés sin tener que preguntarte todo por mensaje.',ejemplo:'Un restaurante muestra su menú y precios; un taller explica los servicios que realiza; una clínica muestra sus especialidades.',acciones:['Mostrá productos o servicios con descripciones claras.','Indicá precios cuando corresponda, o cómo solicitar una cotización.','Mantené actualizados horarios, disponibilidad e información de contacto.']},
+ {id:'movil',label:'Experiencia móvil',intro:'No alcanza con que la web se vea bien en tu computadora. Tiene que funcionar desde el teléfono, incluso con una conexión lenta.',ejemplo:'Un cliente abre el catálogo desde la calle y encuentra lo que busca sin ampliar la pantalla ni esperar fotos enormes.',acciones:['Abrí la página desde tu teléfono usando datos móviles.','Comprobá que textos, botones y formularios se puedan utilizar sin ampliar la pantalla.','Revisá las imágenes pesadas y medí el rendimiento.'],url:'https://pagespeed.web.dev/',herramienta:'PageSpeed Insights'},
+ {id:'conversion',label:'Conversión',intro:'Una visita no es una venta. El siguiente paso debe estar claro y disponible en el momento en que el cliente decide avanzar.',ejemplo:'Una persona puede reservar un turno, solicitar una cotización o iniciar una compra sin esperar a que alguien lea su mensaje.',acciones:['Definí la acción principal que querés que realice el cliente.','Ubicá un botón claro de reserva, compra, consulta o cotización.','Probá el recorrido completo hasta recibir la confirmación.']},
+ {id:'procesos',label:'Procesos y automatización',intro:'Cuando entra una consulta o una reserva, el trabajo no debería depender de que alguien copie los datos manualmente.',ejemplo:'Una reserva actualiza la agenda, dispara una confirmación y queda registrada para que el equipo pueda hacer seguimiento.',acciones:['Identificá una tarea repetitiva después de cada consulta o venta.','Definí qué datos necesitás registrar y quién debe recibirlos.','Automatizá un proceso sencillo y conservá una opción de atención humana.']},
+ {id:'analitica',label:'Analítica',intro:'Si no sabés cómo llegan los clientes ni qué hacen en la página, no podés distinguir qué funciona de lo que hay que mejorar.',ejemplo:'Un negocio mide cuántas visitas llegan desde Google y cuántas terminan en una reserva o consulta.',acciones:['Medí visitas y fuentes de tráfico.','Registrá las acciones que representan una oportunidad comercial.','Revisá los resultados periódicamente y compará con consultas o ventas reales.'],url:'https://search.google.com/search-console/about',herramienta:'Google Search Console'},
+];
+const indice = [{id:'que',label:'Qué vas a lograr'}, ...piezas.map(({id,label})=>({id,label})), {id:'plan',label:'Tu plan de acción'}, {id:'prompt',label:'Auditá tu web con IA'}, {id:'dudas',label:'Preguntas frecuentes'}];
+const prompt = 'Actuá como auditor de sistemas digitales para negocios. Mi negocio es [rubro], mi sitio es [URL] y mi objetivo comercial es [objetivo]. Evaluá presencia en Google, catálogo, experiencia móvil, conversión, automatización y analítica. Separá los hallazgos verificables de lo que no puedas comprobar. Para cada pieza indicá qué funciona, qué falta, cómo comprobarlo y qué acción priorizar. No inventes métricas ni datos privados. Terminá con tres acciones ordenadas por impacto y esfuerzo.';
+---
+<RecursoPremium titulo="Las 6 piezas de una web que trabaja para tu negocio" descripcion="Guía práctica para evaluar tu presencia digital, detectar oportunidades de mejora y convertir tu web en un sistema comercial." tipo="Guía" barLabel="Guía · @andresalbornoz.ai" palabraClave="WEB" chips={['6 piezas', 'Checklist interactivo', 'Para cualquier negocio', 'Sin saber programar']} indice={indice} mclassUrl={grupo}>
+  <Fragment slot="titulo">Las 6 piezas de <em>una web que trabaja</em> para tu negocio</Fragment>
+  <Fragment slot="lead">Tener una página web no es lo mismo que tener un sistema. En esta guía vas a descubrir qué necesita tu negocio para que lo encuentren, entiendan qué ofrecés, puedan avanzar y vos puedas medir lo que funciona.</Fragment>
+  <h2 id="que"><span class="n">1</span>Qué vas a lograr</h2>
+  <p>Recorré las seis piezas del video y tildá únicamente lo que ya comprobaste en tu negocio. Tus respuestas quedan guardadas en este navegador.</p>
+  <div class="grid2"><div class="mini"><b>Una web informativa</b><p>Muestra quién sos y qué ofrecés.</p></div><div class="mini"><b>Una web como sistema</b><p>Conecta la búsqueda, la información, la acción del cliente y tu operación.</p></div></div>
+  <div class="note"><div>No necesitás implementar todo de golpe. Primero resolvé la pieza que está frenando el recorrido de tus clientes.</div></div>
+  {piezas.map((p,i)=><Fragment>
+    <h2 id={p.id}><span class="n">{i+2}</span>{p.label}</h2>
+    <p>{p.intro}</p>
+    <div class="card"><h3>Ejemplo en un negocio real</h3><p>{p.ejemplo}</p></div>
+    <h3>Comprobá si ya lo tenés</h3>
+    <ul class="check">{p.acciones.map(a=><li><div><b>{a}</b></div></li>)}</ul>
+    {p.url && <p>Herramienta para empezar: <a href={p.url} target="_blank" rel="noopener noreferrer">{p.herramienta}</a>.</p>}
+  </Fragment>)}
+  <h2 id="plan"><span class="n">8</span>Tu plan de acción</h2>
+  <p>Volvé a mirar lo que quedó sin tildar. Priorizá según dónde se interrumpe el recorrido del cliente.</p>
+  <table class="t"><thead><tr><th>Si el problema es...</th><th>Empezá por...</th></tr></thead><tbody>
+  <tr><td>No me encuentran</td><td>Presencia en Google.</td></tr><tr><td>Preguntan siempre lo mismo</td><td>Contenido y catálogo.</td></tr><tr><td>Abandonan la página</td><td>Experiencia móvil y claridad de la oferta.</td></tr><tr><td>Visitan pero no avanzan</td><td>Conversión.</td></tr><tr><td>Se pierden consultas o reservas</td><td>Procesos y automatización.</td></tr><tr><td>No sé qué funciona</td><td>Analítica.</td></tr>
+  </tbody></table>
+  <ol class="steps"><li><div><b>Hoy:</b> recorré tu web como si fueras un cliente nuevo.</div></li><li><div><b>Esta semana:</b> corregí el principal obstáculo que detectaste.</div></li><li><div><b>Después:</b> medí si el cambio mejora las consultas, reservas o ventas.</div></li></ol>
+  <h2 id="prompt"><span class="n">9</span>Auditá tu web con IA</h2>
+  <p>Copiá este prompt en Claude o ChatGPT y completá los datos entre corchetes. Si la herramienta no puede abrir tu web, adjuntá capturas y describí tus procesos.</p>
+  <div class="codewrap"><button type="button" class="copy">Copiar</button><pre class="code"><code>{prompt}</code></pre></div>
+  <h2 id="dudas"><span class="n">10</span>Preguntas frecuentes</h2>
+  <button type="button" class="expand" data-expand-all>Abrir todas las respuestas</button>
+  <details><summary>¿Necesito una tienda online?</summary><div><p>No necesariamente. La acción principal depende de tu negocio: comprar, reservar, pedir presupuesto o consultar.</p></div></details>
+  <details><summary>¿Puedo empezar si solo tengo redes sociales?</summary><div><p>Sí. Completá tu presencia en Google si sos elegible y definí qué información y acciones debería centralizar tu página.</p></div></details>
+  <details><summary>¿Tengo que automatizar todo?</summary><div><p>No. Empezá con una tarea repetitiva y comprobá que funciona antes de conectar otros procesos.</p></div></details>
+  <details><summary>¿Cómo sé si mejoró mi web?</summary><div><p>Compará las acciones comerciales y los resultados reales antes y después del cambio. No te quedes solo con el número de visitas.</p></div></details>
+  <h2>Más recursos gratis</h2>
+  <p>Encontrá más guías y recursos de IA en el <a href={biblioteca} target="_blank" rel="noopener noreferrer">Catálogo de recursos →</a>.</p>
+</RecursoPremium>
